@@ -36,7 +36,9 @@ namespace NightRiderWPF
                     case "SamplePage":
                         PageViewer.Navigate(new SamplePage());
                         break;
-                        // Your cases here
+                    case "PartsInventoryPage":
+                        PageViewer.Navigate(new PartsInventoryPage());
+                        break;
                 }
             }
         }
