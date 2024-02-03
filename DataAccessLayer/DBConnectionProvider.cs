@@ -9,7 +9,7 @@ namespace DataAccessLayer
 {
     internal class DBConnectionProvider
     {
-        static string connectionString = @"Data Source=localhost;Initial Catalog=Night_Rider;Integrated Security=True";
+        static string connectionString = @"Data Source=localhost\SQLEXPRESS;Initial Catalog=Night_Rider;Integrated Security=True";
 
         public static SqlConnection GetConnection()
         {
