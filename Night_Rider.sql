@@ -2467,3 +2467,50 @@ VALUES
     (100004, '1C4RJFAG5FC123456', '2024-05-01', NULL, 'Assignment started on May 1', 1)
 	go
 
+/******************
+Create the update_part stored procedure
+***************/
+print '' Print '***Create the update_part stored procedure***' 
+GO
+CREATE PROCEDURE [dbo].[sp_update_part]
+(
+    @part_id                [int],
+
+    @new_Part_Name          [nvarchar](30),
+    @new_Part_Qty           [int],
+    @new_Item_Description   [nvarchar](100),
+    @new_Item_Specifications    [nvarchar](MAX),
+    @new_Part_Photo_URL     [nvarchar](255),
+    @new_ordered_qty        [int],
+    @new_stock_lvl          [int],
+
+    @old_Part_Name          [nvarchar](30),
+    @old_Part_Qty           [int],
+    @old_Item_Description   [nvarchar](100),
+    @old_Item_Specifications    [nvarchar](MAX),
+    @old_Part_Photo_URL     [nvarchar](255),
+    @old_ordered_qty        [int],
+    @old_stock_lvl          [int]
+
+)
+AS
+    BEGIN 
+        UPDATE      [Parts_Inventory]
+        SET         [Part_Name] = @new_Part_Name,
+                    [Part_Quantity] = @new_Part_Qty,
+                    [Item_Description] = @new_Item_Description,
+                    [Item_Specifications] = @new_Item_Specifications,
+                    [Part_Photo_URL] = @new_Part_Photo_URL,
+                    [Ordered_Qty] = @new_ordered_qty,
+                    [Stock_Level] = @new_stock_lvl
+        WHERE       @part_id = [Parts_Inventory_ID]
+            AND     @old_Part_Name = [Part_Name]
+            AND     @old_Part_Qty = [Part_Quantity]
+            AND     @old_Item_Description = [Item_Description]
+            AND     @old_Item_Specifications = [Item_Specifications]
+            AND     @old_Part_Photo_URL = [Part_Photo_URL]
+            AND     @old_ordered_qty = [Ordered_Qty]
+            AND     @old_stock_lvl = [Stock_Level]
+        SELECT      @@ROWCOUNT
+    END
+GO
