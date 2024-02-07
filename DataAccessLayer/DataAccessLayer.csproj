@@ -42,8 +42,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DBConnectionProvider.cs" />
-    <Compile Include="Parts_InventoryAccessor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="VehicleAccessor.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DataAccessInterfaces\DataAccessInterfaces.csproj">

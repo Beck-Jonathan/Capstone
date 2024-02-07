@@ -41,9 +41,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IParts_InventoryManager.cs" />
-    <Compile Include="Parts_InventoryManager.cs" />
+    <Compile Include="IVehicleManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="VehicleManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DataAccessFakes\DataAccessFakes.csproj">
