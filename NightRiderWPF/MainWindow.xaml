@@ -20,6 +20,7 @@
             </Grid.ColumnDefinitions>
             <ListBox Grid.Column="0" SelectionChanged="ListBox_SelectionChanged">
                 <ListBoxItem Content="Sample Page" x:Name="SamplePage"  Margin="0" />
+                <ListBoxItem Content="View Client List" x:Name="ViewClientList"  Margin="0" />
                 <!-- copy the above and replace relevant values. -->
             </ListBox>
             <Border Grid.Column="1" BorderBrush="Black" BorderThickness="2px">

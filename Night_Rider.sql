@@ -2467,3 +2467,27 @@ VALUES
     (100004, '1C4RJFAG5FC123456', '2024-05-01', NULL, 'Assignment started on May 1', 1)
 	go
 
+/******************
+Create sp_select_all_client Stored Procedure
+***************/
+print '' print '*** creating sp_select_all_client ***'
+GO
+CREATE PROCEDURE [dbo].[sp_select_all_client]
+AS 
+	BEGIN
+		SELECT	[Client_ID],
+				[Given_Name],
+				[Family_Name],
+				[Middle_Name],
+				[DOB],
+				[Email],
+				[City],
+				[Region],
+				[Address],
+				[Text_Number],
+				[Voice_Number],
+				[Postal_Code],
+				[Is_Active]
+		FROM	[Client]
+	END
+GO
