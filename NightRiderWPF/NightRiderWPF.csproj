@@ -55,13 +55,17 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="DeveloperView\SamplePage.xaml">
+    <Page Include="DeveloperView\AdminCreateNewEmployee.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="InventoryAudit.xaml">
-      <SubType>Designer</SubType>
+	<Page Include="InventoryAudit.xaml">
+        <SubType>Designer</SubType>
+		<Generator>MSBuild:Compile</Generator>
+	</Page>
+    <Page Include="DeveloperView\SamplePage.xaml">
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -71,8 +75,8 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DeveloperView\SamplePage.xaml.cs">
-      <DependentUpon>SamplePage.xaml</DependentUpon>
+    <Compile Include="DeveloperView\AdminCreateNewEmployee.xaml.cs">
+      <DependentUpon>AdminCreateNewEmployee.xaml</DependentUpon>
     </Compile>
     <Compile Include="InventoryAudit.xaml.cs">
       <DependentUpon>InventoryAudit.xaml</DependentUpon>
@@ -126,5 +130,6 @@
       <Name>LogicLayer</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
