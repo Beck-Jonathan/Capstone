@@ -59,10 +59,21 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Compile Include="ViewClientList.xaml.cs">
+      <DependentUpon>ViewClientList.xaml</DependentUpon>
+    </Compile>
     <Page Include="DeveloperView\SamplePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>    
+    <Page Include="DeveloperView\AdminCreateNewEmployee.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
+	<Page Include="InventoryAudit.xaml">
+        <SubType>Designer</SubType>
+		<Generator>MSBuild:Compile</Generator>
+	</Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -74,13 +85,20 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DeveloperView\SamplePage.xaml.cs">
-      <DependentUpon>SamplePage.xaml</DependentUpon>
+    <Compile Include="DeveloperView\AdminCreateNewEmployee.xaml.cs">
+      <DependentUpon>AdminCreateNewEmployee.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="InventoryAudit.xaml.cs">
+      <DependentUpon>InventoryAudit.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="ViewClientList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -126,5 +144,6 @@
       <Name>LogicLayer</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
