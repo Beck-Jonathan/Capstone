@@ -30,13 +30,13 @@
         <Border Grid.Column="3" BorderBrush="Black" BorderThickness="1px" Grid.RowSpan="4"></Border>
         <Border Grid.Column="4" BorderBrush="Black" BorderThickness="1px" Grid.RowSpan="4"></Border>
         <Border Grid.Column="5" BorderBrush="Black" BorderThickness="1px" Grid.RowSpan="4"></Border>
-
-
+        
+        
         <!-- Bad example of how you would want to make a smaller box within the page. -->
         <Grid Grid.Row="1" Grid.RowSpan="2" Grid.Column="3" Grid.ColumnSpan="2" Background="#EDE9E3">
             <TextBlock>Hello, World!</TextBlock>
         </Grid>
-
+        
     </Grid>
 
 </Page>

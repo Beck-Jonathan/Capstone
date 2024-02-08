@@ -1,4 +1,5 @@
-﻿using NightRiderWPF.DeveloperView;
+﻿
+using NightRiderWPF.DeveloperView;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -40,6 +41,9 @@ namespace NightRiderWPF
                         PageViewer.Navigate(new ViewClientList());
                         break;
                         // Your cases here
+                    case "AdminCreateEmployeePage":
+                        PageViewer.Navigate(new AdminCreateNewEmployee());
+                        break;
                 }
             }
         }

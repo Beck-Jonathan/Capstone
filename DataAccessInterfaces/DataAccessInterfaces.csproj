@@ -42,6 +42,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IClientAccessor.cs" />
+    <Compile Include="IParts_InventoryAccessor.cs" />
+    <Compile Include="IEmployeeAccessor.cs" />
+    <Compile Include="IRoleAccessor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
