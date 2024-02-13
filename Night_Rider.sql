@@ -1547,7 +1547,8 @@ print '' Print '***Creating [dbo].[Login] table***'
 CREATE TABLE [dbo].[Login] 
 (
 	[Username]				[nvarchar](50)				NOT NULL,
-	[PasswordHash]			[nvarchar](100)				NOT NULL DEFAULT 
+  -- default password: newpassword
+	[Password_Hash]			[nvarchar](100)				NOT NULL DEFAULT 
 		'9c9064c59f1ffa2e174ee754d2979be80dd30db552ec03e7e327e9b1a4bd594e',
 	[Client_ID]				[int]						NULL,
 	[Employee_ID]				[int]						NULL,
@@ -1568,7 +1569,7 @@ GO
 print '' Print '***Creating Index for [dbo].[Login] table***' 
 GO
 CREATE UNIQUE INDEX [idx_login_Username_and_ID]
-	ON [dbo].[Login] ([Username],[Client_ID])
+	ON [dbo].[Login] ([Username], [Client_ID])
 GO
 
 /******************
@@ -1577,16 +1578,18 @@ Insert Sample Data For The  Login table
 print '' Print '***Insert Sample Data For The  Login table***' 
  go 
 
-INSERT INTO [dbo].[Login]
-        ([Username], [Client_ID],
-        [Security_Question_1],[Security_Response_1],
-        [Security_Question_2],[Security_Response_2],
-        [Security_Question_3],[Security_Response_3])
+INSERT INTO [dbo].[Login] (
+        [Username],
+        [Client_ID],
+        [Employee_ID],
+        [Security_Question_1], [Security_Response_1],
+        [Security_Question_2], [Security_Response_2],
+        [Security_Question_3], [Security_Response_3])
     VALUES
-        ('JoeSmith1994',100000,'what is your favorite animal?','lion', null, null, null, null),
-        ('Jacmar125',100001, 'what is your favorite animal?', 'Ocelot', 'what is your favorite food?', 'Ramen', null, null),
-        ('Lebold2202',100002, 'what is your favorite animal?', 'Foxes', 'what is your favorite food?', 'Spaghetti','what was your first dogs name?','Lola'),
-        ('XxToiletDestroyer42069xX',100003, null, null, null, null, null, null)
+        ('JoeSmith1994', NULL, 100000, 'what is your favorite animal?','lion', NULL, NULL, NULL, NULL),
+        ('Jacmar125', 100001, NULL, 'what is your favorite animal?', 'Ocelot', 'what is your favorite food?', 'Ramen', NULL, NULL),
+        ('Lebold2202', NULL, 100003, 'what is your favorite animal?', 'Foxes', 'what is your favorite food?', 'Spaghetti','what was your first dogs name?','Lola'),
+        ('PatNew999', NULL, 100003, NULL, NULL, NULL, NULL, NULL, NULL)
 GO
 
 /******************
@@ -2467,3 +2470,113 @@ VALUES
     (100004, '1C4RJFAG5FC123456', '2024-05-01', NULL, 'Assignment started on May 1', 1)
 	go
 
+print '' print '*** creating sp_authenticate_client_for_security_questions ***'
+GO
+CREATE PROCEDURE [dbo].[sp_authenticate_client_for_security_questions] (
+  @Username [nvarchar](50),
+  @Password_Hash [nvarchar](100)
+)
+AS
+BEGIN
+  SELECT [Security_Question_1], [Security_Question_2], [Security_Question_3]
+  FROM [dbo].[Login]
+  WHERE
+    [Active] = 1
+    AND [Client_ID] IS NOT NULL
+    AND [Username] = @Username
+    AND [Password_Hash] = @Password_Hash;
+END;
+GO
+
+print '' print '*** creating sp_authenticate_client_with_security_responses ***'
+GO
+CREATE PROCEDURE [dbo].[sp_authenticate_client_with_security_responses] (
+  @Username [nvarchar](50),
+  @Password_Hash [nvarchar](100),
+  @Security_Response_1 [nvarchar](100) = NULL,
+  @Security_Response_2 [nvarchar](100) = NULL,
+  @Security_Response_3 [nvarchar](100) = NULL
+)
+AS
+BEGIN
+  SELECT
+    cr.[Client_Role_ID],
+    cr.[Role_Description],
+    c.[Client_ID],
+    c.[Given_Name],
+    c.[Family_Name],
+    c.[Address],
+    c.[City],
+    c.[Voice_Number],
+    c.[Email]
+  FROM [dbo].[Client] c
+  LEFT JOIN [dbo].[Client_Client_Role] ccr ON c.[Client_ID] = ccr.[Client_ID]
+  JOIN [dbo].[Client_Role] cr ON ccr.[Client_Role_ID] = cr.[Client_Role_ID]
+  JOIN [dbo].[Login] l ON c.[Client_ID] = l.[Client_ID]
+  WHERE
+    l.[Active] = 1
+    AND c.[Is_Active] = 1
+    AND l.[Username] = @Username
+    AND l.[Password_Hash] = @Password_Hash
+    AND (l.[Security_Response_1] IS NULL OR l.[Security_Response_1] = @Security_Response_1)
+    AND (l.[Security_Response_2] IS NULL OR l.[Security_Response_2] = @Security_Response_2)
+    AND (l.[Security_Response_3] IS NULL OR l.[Security_Response_3] = @Security_Response_3);
+END;
+GO
+
+print '' print '*** creating sp_authenticate_employee_for_security_questions ***'
+GO
+CREATE PROCEDURE [dbo].[sp_authenticate_employee_for_security_questions] (
+  @Username [nvarchar](50),
+  @Password_Hash [nvarchar](100)
+)
+AS
+BEGIN
+  SELECT [Security_Question_1], [Security_Question_2], [Security_Question_3]
+  FROM [dbo].[Login]
+  WHERE
+    [Active] = 1
+    AND [Employee_ID] IS NOT NULL
+    AND [Username] = @Username
+    AND [Password_Hash] = @Password_Hash;
+END;
+GO
+
+print '' print '*** creating sp_authenticate_employee_with_security_responses ***'
+GO
+CREATE PROCEDURE [dbo].[sp_authenticate_employee_with_security_responses] (
+  @Username [nvarchar](50),
+  @Password_Hash [nvarchar](100),
+  @Security_Response_1 [nvarchar](100) = NULL,
+  @Security_Response_2 [nvarchar](100) = NULL,
+  @Security_Response_3 [nvarchar](100) = NULL
+)
+AS
+BEGIN
+  SELECT
+    er.[Role_ID],
+    e.[Employee_ID],
+    e.[Given_Name],
+    e.[Family_Name],
+    e.[Address],
+    e.[Address2],
+    e.[City],
+    e.[State],
+    e.[Country],
+    e.[Zip],
+    e.[Phone_Number],
+    e.[Email],
+    e.[Position]
+  FROM [dbo].[Employee] e
+  LEFT JOIN [dbo].[Employee_Role] er ON e.[Employee_ID] = er.[Employee_ID]
+  JOIN [dbo].[Login] l ON e.[Employee_ID] = l.[Employee_ID]
+  WHERE
+    l.[Active] = 1
+    AND e.[Is_Active] = 1
+    AND l.[Username] = @Username
+    AND l.[Password_Hash] = @Password_Hash
+    AND (l.[Security_Response_1] IS NULL OR l.[Security_Response_1] = @Security_Response_1)
+    AND (l.[Security_Response_2] IS NULL OR l.[Security_Response_2] = @Security_Response_2)
+    AND (l.[Security_Response_3] IS NULL OR l.[Security_Response_3] = @Security_Response_3);
+END;
+GO

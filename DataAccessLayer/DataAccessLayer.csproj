@@ -42,6 +42,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DBConnectionProvider.cs" />
+    <Compile Include="Helpers\SqlDataReaderHelpers.cs" />
+    <Compile Include="LoginAccessor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
