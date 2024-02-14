@@ -72,9 +72,9 @@ namespace LogicLayerTests
                 Email = "joseph@company.com",
                 Position = "Maintenance Manager",
                 Is_Active = true,
-                Employee_Roles = new List<Role>
+                Roles = new List<Role>
                 {
-                    new Role { Role_ID = "Admin", Is_Active = true }
+                    new Role { RoleID = "Admin", IsActive = true }
                 }
             };
             _employeeManager.AddEmployee(newEmployee);
@@ -104,7 +104,7 @@ namespace LogicLayerTests
                 Email = "fred@company.com",
                 Position = "Maintenance II",
                 Is_Active = true,
-                Employee_Roles = new List<Role> { new Role { Role_ID = "Maintenance", Is_Active = true } }
+                Roles = new List<Role> { new Role { RoleID = "Maintenance", IsActive = true } }
             };
             _employeeManager.AddEmployee(employee);
 

@@ -368,8 +368,8 @@ namespace DataAccessInterfaces
                     {
                         Role role = new Role()
                         {
-                            Role_ID = reader.GetString(0),
-                            Is_Active = true
+                            RoleID = reader.GetString(0),
+                            IsActive = true
                         };
                         roleList.Add(role);
                     }

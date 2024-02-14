@@ -8,29 +8,22 @@ using System.Threading.Tasks;
 namespace DataObjects
 {
     /// <summary>
-    /// AUTHOR: James Williamss
+    /// AUTHOR: Jared Hutton, James Williams
     /// <br />
     /// CREATED: 2024-02-01
     /// <br />
     ///     Represents the roles of employees within the organization
     /// </summary>
-    /// 
-    /// <remarks>
-    /// UPDATER: James Williams
-    /// <br />
-    /// UPDATED: 2024-02-01
-    /// <br />
-    /// 
-    /// initial creation
-    /// </remarks>
     public class Role
     {
-
-        public string Role_ID { get; set; }
-        public bool Is_Active { get; set; }
-
+        public string RoleID { get; set; }
+        public bool IsActive { get; set; }
     }
 
-  
+    /// <inheritdoc/>
+    public class Role_VM : Role
+    {
+        public List<Employee_VM> Employees { get; set; } 
+    }
 }
-// Checked by Nathan Toothaker
+

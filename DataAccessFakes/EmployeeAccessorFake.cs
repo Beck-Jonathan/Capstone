@@ -49,7 +49,7 @@ namespace DataAccessFakes
                 Email = "tess@company.com",
                 Position = "Admin Manager",
                 Is_Active = true,
-                Employee_Roles = new List<Role> { new Role { Role_ID = "Admin", Is_Active = true } }
+                Roles = new List<Role> { new Role { RoleID = "Admin", IsActive = true } }
             });
             _fakeEmployees.Add(new Employee_VM()
             {
@@ -66,7 +66,7 @@ namespace DataAccessFakes
                 Email = "fred@company.com",
                 Position = "Maintenance II",
                 Is_Active = true,
-                Employee_Roles = new List<Role> { new Role { Role_ID = "Maintenance", Is_Active = true } }
+                Roles = new List<Role> { new Role {RoleID = "Maintenance", IsActive = true } }
             });
 
             fakeEmployee = new List<Employee_VM>() {
@@ -243,13 +243,13 @@ namespace DataAccessFakes
                 if (employee.Employee_ID == employee_ID)
                 {
 
-                    foreach (var employeeRole in employee.Employee_Roles)
+                    foreach (var employeeRole in employee.Roles)
                     {
-                        employeeRoles.Add(new Role() { Role_ID = employeeRole.Role_ID, Is_Active = true });
+                        employeeRoles.Add(new Role() { RoleID = employeeRole.RoleID, IsActive = true });
                         rows++;
                     }
 
-                    employee.Employee_Roles = employeeRoles;
+                    employee.Roles = employeeRoles;
                 }
 
             }
@@ -301,7 +301,7 @@ namespace DataAccessFakes
             {
                 if(employee_ID == employee.Employee_ID)
                 {
-                    roles = employee.Employee_Roles;
+                    roles = employee.Roles;
                 } 
                
             }

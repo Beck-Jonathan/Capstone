@@ -7,21 +7,12 @@ using System.Threading.Tasks;
 namespace DataObjects
 {
     /// <summary>
-    /// AUTHOR: James Williams, Jared Hutton, Parker Svoboda
+    /// AUTHOR: James Williams, Jared Hutton, Parker Svoboda, Jacob Wendt
     /// <br />
     /// CREATED: 2024-02-01
     /// <br />
     ///     Represents an employee within the organization
     /// </summary>
-    /// 
-    /// <remarks>
-    /// UPDATER: James Williams, Jared Hutton, Parker Svoboda
-    /// <br />
-    /// UPDATED: 2024-02-01
-    /// <br />
-    /// 
-    ///     Initial creation
-    /// </remarks>
     public class Employee
     {
         public int Employee_ID { get; set; }
@@ -39,13 +30,9 @@ namespace DataObjects
         public bool Is_Active { get; set; }
     }
 
+    /// <inheritdoc />
     public class Employee_VM : Employee
     {
-        public IEnumerable<Role> Employee_Roles { get; set; }
-
-
+        public IEnumerable<Role> Roles { get; set; }
     }
-
-
 }
-// Checked by Nathan Toothaker

@@ -81,10 +81,10 @@ namespace LogicLayer
              
                 int rows = 0;
                 // Creates a copy of Employe_Roles to be iterated
-                var rolesCopy = newEmployee.Employee_Roles.ToList();
+                var rolesCopy = newEmployee.Roles.ToList();
                 foreach (var role in rolesCopy)
                 {
-                    string roleName = role.Role_ID;
+                    string roleName = role.RoleID;
                     //inserts new record(s) and returns number of rows inserted
                     rows = _employeeAccessor.InsertEmployeeRoles(newID, roleName);
                 }
