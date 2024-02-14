@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,11 +8,11 @@ using System.Threading.Tasks;
 namespace DataObjects
 {
     /// <summary>
-    /// AUTHOR: Jared Hutton
+    /// AUTHOR: Jared Hutton, James Williams
     /// <br />
     /// CREATED: 2024-02-01
     /// <br />
-    ///     Represents a role exposing permissions for employees
+    ///     Represents the roles of employees within the organization
     /// </summary>
     public class Role
     {
@@ -25,3 +26,4 @@ namespace DataObjects
         public List<Employee_VM> Employees { get; set; } 
     }
 }
+

@@ -13,6 +13,15 @@ namespace DataObjects
     /// <br />
     ///     Represents a client using the services provided by the organization
     /// </summary>
+    /// 
+    /// <remarks>
+    /// UPDATER: Isabella Rosenbohm
+    /// <br />
+    /// UPDATED: 2024-02-13
+    /// <br />
+    /// 
+    ///     Changed Client_VM property from "username" to "Username"
+    /// </remarks>
     public class Client
     {
         public int ClientID { get; set; }

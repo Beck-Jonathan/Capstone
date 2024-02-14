@@ -43,9 +43,13 @@
   <ItemGroup>
     <Compile Include="Client.cs" />
     <Compile Include="ClientRole.cs" />
-    <Compile Include="Employee.cs" />
     <Compile Include="Login.cs" />
+    <Compile Include="Parts_Inventory.cs" />
+    <Compile Include="Employee.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ValidationHelpers.cs" />
+    <Compile Include="Vehicle.cs" />
+    <Compile Include="VehicleType.cs" />
     <Compile Include="Role.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

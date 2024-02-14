@@ -37,8 +37,21 @@ namespace NightRiderWPF
                         PageViewer.Navigate(new SamplePage());
                         break;
                         // Your cases here
+                    case "AdminViewClientList":
+                        PageViewer.Navigate(new AdminViewClientList());
+                        break;
+                    case "AdminCreateEmployeePage":
+                        PageViewer.Navigate(new AdminCreateNewEmployee());
+                        break;
+                    case "PartsPersonViewParts":
+                        PageViewer.Navigate(new PartsInventoryPage());
+                        break;
+                    case "AdminEmployeeListPage":
+                        PageViewer.Navigate(new AdminEmployeeListPage());
+                        break;
                 }
             }
         }
     }
 }
+// checked by James Williams

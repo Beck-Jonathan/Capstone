@@ -1,0 +1,75 @@
+﻿<Window x:Class="NightRiderWPF.ConsumerMain"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:NightRiderWPF"
+        xmlns:resources="clr-namespace:NightRiderWPF.Resources"
+        mc:Ignorable="d"
+        Title="Consumer Main" Height="850" Width="1050" ResizeMode="CanMinimize">
+    <Grid Background="{x:Static resources:Statics.BackgroundMain}" Height="800" Width="1000">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="29*"/>
+            <RowDefinition Height="61*"/>
+            <RowDefinition Height="570px" />
+            <RowDefinition Height="50px" />
+        </Grid.RowDefinitions>
+        <Border Grid.Row="0" BorderBrush="Black" BorderThickness="3px" Grid.RowSpan="2">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="250px"></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Image Source="{x:Static resources:Statics.LogoWide}" Grid.Column="0" />
+                <Label Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" 
+                       Content="Hello, User!" />
+                <Grid Grid.Column="3" x:Name="LoginGrid">
+                    <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"></ColumnDefinition>
+                        <ColumnDefinition Width="2*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" 
+                           x:Name="lblUsername" Content="Username:" />
+                    <TextBox Grid.Row="0" Grid.Column="1" HorizontalAlignment="Stretch" 
+                             VerticalAlignment="Center" x:Name="txtUsername" />
+                    <Label Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" 
+                           x:Name="lblPassword" Content="Password:" />
+                    <PasswordBox Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" 
+                                 VerticalAlignment="Center" x:Name="pwdPassword" />
+                    <Button Grid.Row="2" Grid.Column="0" Content="Log In" x:Name="btnLogin"
+                            Background="{x:Static resources:Statics.SecondaryColor}" Foreground="{x:Static resources:Statics.ButtonText}"/>
+                    <Button Grid.Row="2" Grid.Column="1" Content="Don't have an account?" x:Name="btnCreateAccount" 
+                            Background="{x:Static resources:Statics.SecondaryColor}" Foreground="{x:Static resources:Statics.ButtonText}"/>
+                </Grid>
+            </Grid>
+        </Border>
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="800px" />
+            </Grid.ColumnDefinitions>
+            <Border Grid.Column="0" BorderBrush="Black" BorderThickness="2px">
+                <StackPanel x:Name="stackMainNav">
+                    <Button Content="Clients" x:Name="btnClients" Height="50px" Foreground="{x:Static resources:Statics.ButtonText}"
+                            Background="{x:Static resources:Statics.SecondaryColor}" Click="btnClients_Click" />
+                    <Button Content="Employees" x:Name="btnEmployees" Height="50px" Foreground="{x:Static resources:Statics.ButtonText}"
+                            Background="{x:Static resources:Statics.SecondaryColor}" Click="btnEmployees_Click" />
+                    <Button Content="Vehicles" x:Name="btnVehicles" Height="50px" Foreground="{x:Static resources:Statics.ButtonText}"
+                            Background="{x:Static resources:Statics.SecondaryColor}" Click="btnVehicles_Click" />
+                    <Button Content="Maintenance" x:Name="btnMaintenance" Height="50px" Foreground="{x:Static resources:Statics.ButtonText}"
+                            Background="{x:Static resources:Statics.SecondaryColor}" Click="btnMaintenance_Click" />
+                </StackPanel>
+            </Border>
+            <Border Grid.Column="1" BorderBrush="Black" BorderThickness="2px">
+                <Frame x:Name="PageViewer" />
+            </Border>
+        </Grid>
+        <TextBlock Grid.Row="3" Text="©2024&#x0a;Kirkwood Community College Software Development Capstone 2024SP CRF02"></TextBlock>
+    </Grid>
+</Window>

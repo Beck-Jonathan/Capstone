@@ -5,27 +5,63 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:NightRiderWPF"
         mc:Ignorable="d"
-        Title="MainWindow" Height="850" Width="1050">
+        Title="MainWindow" Height="850" Width="1050" ResizeMode="CanMinimize">
     <Grid Background="AliceBlue" Height="800" Width="1000">
         <Grid.RowDefinitions>
-            <RowDefinition></RowDefinition>
+            <RowDefinition Height="29*"/>
+            <RowDefinition Height="61*"/>
             <RowDefinition Height="570px"></RowDefinition>
             <RowDefinition Height="50px"></RowDefinition>
         </Grid.RowDefinitions>
-        <Border Grid.Row="0" BorderBrush="Black" BorderThickness="3px"></Border>
-        <Grid Grid.Row="1">
+        <Border Grid.Row="0" BorderBrush="Black" BorderThickness="3px" Grid.RowSpan="2">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="250px"></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Image Source="Resources/Images/Nightrider-01.png" Grid.Column="0" />
+                <Label Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" 
+                       Content="Hello, User!&#x0a;&#x0a;Developer View"  />
+                <Grid Grid.Column="3" x:Name="LoginGrid">
+                    <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"></ColumnDefinition>
+                        <ColumnDefinition Width="2*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" 
+                           x:Name="lblUsername" Content="Username:" />
+                    <TextBox Grid.Row="0" Grid.Column="1" HorizontalAlignment="Stretch" 
+                             VerticalAlignment="Center" x:Name="txtUsername" />
+                    <Label Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" 
+                           x:Name="lblPassword" Content="Password:" />
+                    <PasswordBox Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" 
+                                 VerticalAlignment="Center" x:Name="pwdPassword" />
+                    <Button Grid.Row="2" Grid.Column="0" Content="Log In" x:Name="btnLogin" />
+                    <Button Grid.Row="2" Grid.Column="1" Content="Don't have an account?" x:Name="btnCreateAccount" />
+                </Grid>
+            </Grid>
+        </Border>
+        <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition Width="800px" />
             </Grid.ColumnDefinitions>
             <ListBox Grid.Column="0" SelectionChanged="ListBox_SelectionChanged">
                 <ListBoxItem Content="Sample Page" x:Name="SamplePage"  Margin="0" />
+                <ListBoxItem Content="Admin View Client List" x:Name="AdminViewClientList"  Margin="0" />
+                <ListBoxItem Content="Admin Create Employee" x:Name="AdminCreateEmployeePage"  Margin="0" />
+                <ListBoxItem Content="Parts Person View Parts" x:Name="PartsPersonViewParts"  Margin="0" />
                 <!-- copy the above and replace relevant values. -->
             </ListBox>
             <Border Grid.Column="1" BorderBrush="Black" BorderThickness="2px">
                 <Frame x:Name="PageViewer" />
             </Border>
         </Grid>
-        <TextBlock Grid.Row="2" Text="Copyright Kirkwood Community College Software Development Capstone 2024SP CRF02"></TextBlock>
+        <TextBlock Grid.Row="3" Text="©2024&#x0a;Kirkwood Community College Software Development Capstone 2024SP CRF02"></TextBlock>
     </Grid>
 </Window>

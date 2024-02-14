@@ -1,0 +1,84 @@
+﻿<Page x:Class="NightRiderWPF.DeveloperView.AdminCreateNewEmployee"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:NightRiderWPF.DeveloperView"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="AdminCreateNewEmployee">
+
+    <Grid Background="AliceBlue">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80"/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="120"/>
+            <ColumnDefinition Width="180"/>
+            <ColumnDefinition Width="120"/>
+            <ColumnDefinition Width="180"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Label Content="Create Profile" FontSize="25" HorizontalAlignment="Center" FontWeight="Bold" Margin="5" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2"/>
+
+        <Label Grid.Column="1" Grid.Row="1" Content="*Given Name:" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0 0 10 0"/>
+        <TextBox x:Name="txtGivenName" TabIndex="1" Grid.Row="1" Grid.Column="2" Margin="5" VerticalAlignment="Center" Padding="5"/>
+
+        <Label Grid.Column="3" Grid.Row="1" Content="*Family Name:" VerticalAlignment="Center" FontSize="15" HorizontalAlignment="Right" Margin="0 0 10 0"/>
+        <TextBox x:Name="txtFamilyName" TabIndex="2" Grid.Row="1" Grid.Column="4" Margin="5" VerticalAlignment="Center" Padding="5"/>
+
+        <Label Grid.Column="3" Grid.Row="2" Content="*DOB:" FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 10 0"/>
+        <DatePicker x:Name="dateDOB" TabIndex="4" Grid.Row="2" Grid.Column="4" SelectedDateFormat="Short" 
+                            FirstDayOfWeek="Monday" VerticalAlignment="Center"/>
+
+        <Label Grid.Column="1" Grid.Row="2" Content="*Email:" FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 10 0"/>
+        <TextBox x:Name="txtEmail" TabIndex="3" Grid.Row="2" Grid.Column="2" Margin="5" VerticalAlignment="Center" Padding="5" InputScope="EmailUserName"/>
+
+        <Label Grid.Column="3" Grid.Row="4" Content="*Zip:" FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 10 0"/>
+        <TextBox x:Name="txtZip" TabIndex="8" Grid.Row="4" Grid.Column="4" Margin="5" VerticalAlignment="Center" Padding="5" InputScope="PostalCode"/>
+
+        <Label Grid.Column="1" Grid.Row="3" Content="*Address 1:" FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 10 0"/>
+        <TextBox x:Name="txtAddress1" TabIndex="5" Grid.Row="3" Grid.Column="2" Margin="5" VerticalAlignment="Center" Padding="5" InputScope="AddressStreet"/>
+
+        <Label Grid.Column="3" Grid.Row="3" Content="Address 2:" FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 10 0"/>
+        <TextBox x:Name="txtAddress2" TabIndex="6" Grid.Row="3" Grid.Column="4" Margin="5" VerticalAlignment="Center" Padding="5" InputScope="AddressStreet"/>
+
+        <Label Grid.Column="1" Grid.Row="4" Content="*City:" FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 10 0"/>
+        <TextBox x:Name="txtCity" TabIndex="7" Grid.Row="4" Grid.Column="2" Margin="5" VerticalAlignment="Center" Padding="5" InputScope="AddressCity"/>
+
+        <Label Grid.Column="1" Grid.Row="5" Content="*Country:" FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 10 0"/>
+        <TextBox x:Name="txtCountry" TabIndex="9" Grid.Row="5" Grid.Column="2" Margin="5" VerticalAlignment="Center" Padding="5" InputScope="AddressCountryName" />
+
+        <Label Grid.Column="3" Grid.Row="5" Content="*State:" FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 10 0"/>
+        <ComboBox x:Name="cboState" TabIndex="10" Grid.Row="5" Grid.Column="4" Margin="5" VerticalAlignment="Center" Padding="5"/>
+
+        <Label Grid.Column="3" Grid.Row="6" Content="*Phone:" FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 10 0"/>
+        <TextBox x:Name="txtPhone" TabIndex="11" Grid.Row="6" Grid.Column="4" Margin="5" VerticalAlignment="Center" Padding="5" InputScope="TelephoneNumber"/>
+
+        <Label Grid.Column="1" Grid.Row="6" Content="*Roles:" FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 10 0"/>
+        <ListBox x:Name="lstRoles" Grid.Row="6" Grid.Column="2" Grid.RowSpan="2" Padding="5" Margin="5" SelectionMode="Multiple" />
+
+        <Label Grid.Column="3" Grid.Row="7" Content="*Position:" FontSize="15" HorizontalAlignment="Right"  Margin="0 0 10 0"/>
+        <TextBox x:Name="txtPosition" TabIndex="12" Grid.Row="7" Grid.Column="4" Margin="5" VerticalAlignment="Center" Padding="5" />
+
+        <Label Content="* = Required Field" Grid.Row="8" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="5"/>
+        <Button x:Name="btnCreateEmployee" Grid.Row="8" Grid.Column="4" Content="Create" Margin="5" Width="70" HorizontalAlignment="Right" Click="btnCreateEmployee_Click"/>
+        <Button x:Name="btnBack" Grid.Row="8" Grid.Column="4" Content="Back" Margin="5" Width="70" HorizontalAlignment="Left" Click="btnBack_Click"/>
+
+    </Grid>
+
+
+
+</Page>
