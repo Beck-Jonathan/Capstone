@@ -25,7 +25,7 @@ namespace DataAccessInterfaces
         /// Jonathan Beck
         /// Created: 2024/01/31
         /// 
-        /// Retreives Part_Inventory by Part_InventoryID
+        /// Retrieves Part_Inventory by Part_InventoryID
         /// </summary>
         ///
         /// <remarks>
@@ -36,7 +36,7 @@ namespace DataAccessInterfaces
         /// Jonathan Beck
         /// Created: 2024/01/31
         /// 
-        /// Retreives all parts_inventory records
+        /// Retrieves all parts_inventory records
         /// </summary>
         ///
         /// <remarks>

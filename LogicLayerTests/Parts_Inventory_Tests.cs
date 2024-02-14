@@ -100,7 +100,7 @@ namespace LogicLayerTests
         /// Jonathan Beck
         /// Created: 2024/01/31
         /// 
-        /// Test that correct part is retreived with a particular key
+        /// Test that correct part is retrieved with a particular key
         /// </summary>
         ///
         /// <remarks>

@@ -1,10 +1,8 @@
-
 USE Night_Rider;
 GO
-print ''
-print '*** Create the sp_add_vehicle stored procedure ***'
+print '' print '*** creating sp_add_vehicle ***'
 GO
-
+ -- AUTHOR: Chris Baenziger
 CREATE PROCEDURE [dbo].[sp_add_vehicle]
     (
     @VIN                    [nvarchar](17),
@@ -23,47 +21,5 @@ BEGIN
     VALUES
         (@VIN, @Vehicle_Number, @Vehicle_Mileage, @Vehicle_License_Plate, @Vehicle_Type, @Max_Passengers, @Description, @Date_Entered)
     SELECT SCOPE_IDENTITY();
-END
-GO
-
-
-print ''
-print '*** Create the sp_select_vehicle_types stored procedure ***'
-GO
-
-CREATE PROCEDURE [dbo].[sp_select_vehicle_types]
-AS
-BEGIN
-    SELECT [Vehicle_Type]
-    FROM [Vehicle_Type]
-    WHERE [Is_Active] = 1
-END
-GO
-
-
-print ''
-print '*** Create the sp_select_vehicle_makes stored procedure ***'
-GO
-
-CREATE PROCEDURE [dbo].[sp_select_vehicle_makes]
-AS
-BEGIN
-    SELECT [Vehicle_Make]
-    FROM [Model_Lookup]
-    WHERE [Active] = 1
-END
-GO
-
-
-print ''
-print '*** Create the sp_select_vehicle_models stored procedure ***'
-GO
-
-CREATE PROCEDURE [dbo].[sp_select_vehicle_models]
-AS
-BEGIN
-    SELECT [Vehicle_Model]
-    FROM [Model_Lookup]
-    WHERE [Active] = 1
 END
 GO

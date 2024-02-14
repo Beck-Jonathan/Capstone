@@ -72,15 +72,33 @@ namespace NightRiderWPF
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                if (_employee != null)
+                {
+                    GivenNametxt.Text = _employee.Given_Name;
+                    FamilyNametxt.Text = _employee.Family_Name;
+                    Phonetxt.Text = _employee.Phone_Number;
+                    Citytxt.Text = _employee.City;
+                    Statetxt.Text = _employee.State;
+                    Emailtxt.Text = _employee.Email;
+                    Addresstxt.Text = _employee.Address;
+                    Ziptxt.Text = _employee.Zip;
+                }
+                else
+                {
+                    MessageBox.Show("Employee not found.", "No data to show.",
+                    MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+            }
+            catch (Exception ex)
+            {
 
-            GivenNametxt.Text = _employee.Given_Name;
-            FamilyNametxt.Text = _employee.Family_Name;
-            Phonetxt.Text = _employee.Phone_Number;
-            Citytxt.Text = _employee.City;
-            Statetxt.Text = _employee.State;
-            Emailtxt.Text = _employee.Email;
-            Addresstxt.Text = _employee.Address;
-            Ziptxt.Text = _employee.Zip;
+                MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message,
+                        "Employee Retrieval Failed.", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            
 
 
 

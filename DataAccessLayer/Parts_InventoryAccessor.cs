@@ -29,7 +29,7 @@ namespace DataAccessLayer
         /// Jonathan Beck
         /// Created: 2024/01/31
         /// 
-        /// Retreives Part_Inventory by Part_InventoryID
+        /// Retrieves Part_Inventory by Part_InventoryID
         /// </summary>
         ///<Throws>Argument Exception if item not found</Throws>
         /// <remarks>
