@@ -105,6 +105,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="DeveloperView\ViewWorkOrderPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="InventoryAudit.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -122,6 +126,9 @@
     </Compile>
     <Compile Include="DeveloperView\AdminCreateNewEmployee.xaml.cs">
       <DependentUpon>AdminCreateNewEmployee.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DeveloperView\ViewWorkOrderPage.xaml.cs">
+      <DependentUpon>ViewWorkOrderPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="InventoryAudit.xaml.cs">
       <DependentUpon>InventoryAudit.xaml</DependentUpon>

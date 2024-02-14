@@ -41,7 +41,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IServiceOrderManager.cs" />
     <Compile Include="IVehicleManager.cs" />
+    <Compile Include="ServiceOrderManager.cs" />
     <Compile Include="VehicleManager.cs" />
     <Compile Include="ClientManager.cs" />
     <Compile Include="IClientManager.cs" />
