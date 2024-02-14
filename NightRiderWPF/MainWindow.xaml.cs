@@ -37,10 +37,9 @@ namespace NightRiderWPF
                     case "SamplePage":
                         PageViewer.Navigate(new SamplePage());
                         break;
-                    case "ViewClientList":
-                        PageViewer.Navigate(new ViewClientList());
+                    case "AdminViewClientList":
+                        PageViewer.Navigate(new AdminViewClientList());
                         break;
-                        // Your cases here
                     case "AdminCreateEmployeePage":
                         PageViewer.Navigate(new AdminCreateNewEmployee());
                         break;

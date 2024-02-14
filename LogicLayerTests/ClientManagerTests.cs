@@ -33,7 +33,7 @@ namespace LogicLayerTests
                     TextNumber = "123-123-1234",
                     VoiceNumber = "321-321-4321",
                     IsActive = true,
-                    username = "foobar123"
+                    Username = "foobar123"
                 },
                 new Client_VM
                 {
@@ -49,7 +49,7 @@ namespace LogicLayerTests
                     TextNumber = "523-123-1235",
                     VoiceNumber = "721-321-4328",
                     IsActive = false,
-                    username = "joedirt35"
+                    Username = "joedirt35"
                 }
             };
             _clientManager = new ClientManager(new ClientAccessorFake(testClientList));

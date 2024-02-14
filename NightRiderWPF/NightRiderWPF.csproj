@@ -65,14 +65,21 @@
     <Compile Include="DeveloperView\AdminViewEmployee.xaml.cs">
       <DependentUpon>AdminViewEmployee.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewClientList.xaml.cs">
-      <DependentUpon>ViewClientList.xaml</DependentUpon>
-    </Compile>
     <Page Include="AdminEmployeeListPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="DeveloperView\AdminViewEmployee.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Compile Include="AdminViewClientDetail.xaml.cs">
+      <DependentUpon>AdminViewClientDetail.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AdminViewClientList.xaml.cs">
+      <DependentUpon>AdminViewClientList.xaml</DependentUpon>
+    </Compile>
+    <Page Include="AdminViewClientDetail.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -109,7 +116,7 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="ViewClientList.xaml">
+    <Page Include="AdminViewClientList.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
