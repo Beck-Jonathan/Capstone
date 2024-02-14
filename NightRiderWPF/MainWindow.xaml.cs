@@ -1,5 +1,4 @@
-﻿
-using NightRiderWPF.DeveloperView;
+﻿using NightRiderWPF.DeveloperView;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -37,6 +36,7 @@ namespace NightRiderWPF
                     case "SamplePage":
                         PageViewer.Navigate(new SamplePage());
                         break;
+                        // Your cases here
                     case "AdminViewClientList":
                         PageViewer.Navigate(new AdminViewClientList());
                         break;
@@ -52,9 +52,9 @@ namespace NightRiderWPF
                     case "ViewWorkOrderPage":
                         PageViewer.Navigate(new ViewWorkOrderPage());
                         break;
-
                 }
             }
         }
     }
 }
+// checked by James Williams

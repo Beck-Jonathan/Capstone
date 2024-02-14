@@ -13,15 +13,6 @@ namespace DataObjects
     /// <br />
     ///     Represents a client using the services provided by the organization
     /// </summary>
-    /// 
-    /// <remarks>
-    /// UPDATER: Isabella Rosenbohm, Jared Hutton, Jacob Wendt, Jared Roberts
-    /// <br />
-    /// UPDATED: 2024-02-01
-    /// <br />
-    /// 
-    ///     Initial creation
-    /// </remarks>
     public class ClientRole
     {
         public string ClientRoleID { get; set; }

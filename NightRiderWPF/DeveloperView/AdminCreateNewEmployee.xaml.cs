@@ -51,7 +51,7 @@ namespace NightRiderWPF.DeveloperView
                 //Generates a list box of possible employee roles
                 foreach (var role in _roleManager.GetAllRoles())
                 {
-                    _roles.Add(role.Role_ID.ToString());
+                    _roles.Add(role.RoleID.ToString());
                 }
 
                 lstRoles.ItemsSource = _roles;
@@ -135,7 +135,7 @@ namespace NightRiderWPF.DeveloperView
             List<Role> employeeRoles = new List<Role>();
             foreach (var selectedItem in lstRoles.SelectedItems)
             {
-                employeeRoles.Add(new Role() { Role_ID = selectedItem.ToString() });
+                employeeRoles.Add(new Role() { RoleID = selectedItem.ToString() });
             }
             if (employeeRoles.Count == 0)
             {
@@ -143,7 +143,7 @@ namespace NightRiderWPF.DeveloperView
                 return;
             }
 
-            newEmployee.Employee_Roles = employeeRoles;
+            newEmployee.Roles = employeeRoles;
 
             //Inserts new Employee database record
             try

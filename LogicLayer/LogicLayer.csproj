@@ -42,6 +42,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IServiceOrderManager.cs" />
+    <Compile Include="AppData\Authentication.cs" />
+    <Compile Include="LoginManager.cs" />
+    <Compile Include="Utilities\IPasswordHasher.cs" />
+    <Compile Include="Utilities\PasswordHasher.cs" />
     <Compile Include="IVehicleManager.cs" />
     <Compile Include="ServiceOrderManager.cs" />
     <Compile Include="VehicleManager.cs" />
@@ -74,5 +78,6 @@
       <Name>DataObjects</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

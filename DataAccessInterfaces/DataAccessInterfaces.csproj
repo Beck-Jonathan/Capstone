@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IServiceOrderAccessor.cs" />
+    <Compile Include="ILoginAccessor.cs" />
     <Compile Include="IVehicleAccessor.cs" />
     <Compile Include="IClientAccessor.cs" />
     <Compile Include="IParts_InventoryAccessor.cs" />
