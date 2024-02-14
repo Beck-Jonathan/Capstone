@@ -1,5 +1,4 @@
-﻿
-using NightRiderWPF.DeveloperView;
+﻿using NightRiderWPF.DeveloperView;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -37,18 +36,10 @@ namespace NightRiderWPF
                     case "SamplePage":
                         PageViewer.Navigate(new SamplePage());
                         break;
-                    case "AdminViewClientList":
-                        PageViewer.Navigate(new AdminViewClientList());
-                        break;
-                    case "AdminCreateEmployeePage":
-                        PageViewer.Navigate(new AdminCreateNewEmployee());
-                        break;
-                    case "AdminEmployeeListPage":
-                        PageViewer.Navigate(new AdminEmployeeListPage());
-                        break;
-                   
+                        // Your cases here
                 }
             }
         }
     }
 }
+// checked by James Williams

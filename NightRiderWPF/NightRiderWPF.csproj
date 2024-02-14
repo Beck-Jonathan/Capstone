@@ -55,6 +55,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Resources\Statics.cs" />
     <Page Include="AddUpdateDeleteVehicle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -62,10 +63,17 @@
     <Compile Include="AdminEmployeeListPage.xaml.cs">
       <DependentUpon>AdminEmployeeListPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ConsumerMain.xaml.cs">
+      <DependentUpon>ConsumerMain.xaml</DependentUpon>
+    </Compile>
     <Compile Include="DeveloperView\AdminViewEmployee.xaml.cs">
       <DependentUpon>AdminViewEmployee.xaml</DependentUpon>
     </Compile>
     <Page Include="AdminEmployeeListPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ConsumerMain.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -165,6 +173,9 @@
       <Name>LogicLayer</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Resources\Images\NightRider-01.png" />
+    <Resource Include="Resources\Images\NightRider-02.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
