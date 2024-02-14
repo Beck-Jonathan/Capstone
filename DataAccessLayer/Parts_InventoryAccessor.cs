@@ -167,7 +167,7 @@ namespace DataAccessLayer
             cmd.Parameters.Add("@old_stock_lvl", SqlDbType.Int);
            
             //We need to set the parameter values
-            cmd.Parameters["@Parts_Inventory_ID"].Value = oldPart.Parts_Inventory_ID;
+            cmd.Parameters["@part_id"].Value = oldPart.Parts_Inventory_ID;
 
             cmd.Parameters["@new_Part_Name"].Value = newPart.Part_Name;
             cmd.Parameters["@new_Part_Qty"].Value = newPart.Part_Quantity;

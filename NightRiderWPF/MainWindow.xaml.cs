@@ -44,6 +44,9 @@ namespace NightRiderWPF
                     case "AdminCreateEmployeePage":
                         PageViewer.Navigate(new AdminCreateNewEmployee());
                         break;
+                    case "PartsPersonViewParts":
+                        PageViewer.Navigate(new PartsInventoryPage());
+                        break;
                 }
             }
         }

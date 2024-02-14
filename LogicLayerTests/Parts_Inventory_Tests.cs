@@ -95,6 +95,79 @@ namespace LogicLayerTests
             actual = _mgr.EditParts_Inventory(oldPart, newPart);
         }
 
+        [TestMethod]
+        /// <summary>
+        /// Jonathan Beck
+        /// Created: 2024/01/31
+        /// 
+        /// Test that correct part is retreived with a particular key
+        /// </summary>
+        ///
+        /// <remarks>
+        /// Updater Name: Max Fare
+        /// Updated: 2024-02-06
+        /// </remarks>
+        public void TestgetParts_InventoryByPrimaryKeyGetsCorrectPart()
+        {
+            //arrage
+            int partid = 1;
+            string actual = "";
+            string expected = "Sprocket";
+            Parts_Inventory part = null;
+            //act
+            actual = _mgr.GetParts_InventoryByID(partid).Part_Name;
+
+            //assert
+            Assert.AreEqual(actual, expected);
+
+        }
+        /// <summary>
+        /// Jonathan Beck
+        /// Created: 2024/01/31
+        /// 
+        /// Test that an exception is thrown if a part can not be found
+        /// </summary>
+        ///
+        /// <remarks>
+        /// Updater Name: Max Fare
+        /// Updated: 2024-02-06
+        /// </remarks>
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void TestgetParts_InventoryByPrimaryKeyFailsWithBadData()
+        {
+            //arrange
+            Parts_Inventory part = null;
+            int partid = 1000;
+            //act
+            part = _mgr.GetParts_InventoryByID(partid);
+            //assert nothing to do
+        }
+        /// <summary>
+        /// Jonathan Beck
+        /// Created: 2024/02/02
+        /// 
+        /// Test that grabbing the full list of parts records returns the full list of part records
+        /// </summary>
+        ///
+        /// <remarks>
+        /// Updater Name
+        /// Updated: yyyy/mm/dd
+        /// </remarks>
+        [TestMethod]
+        public void TestGetActivePartsInventoryReturnsAllActiveInventorty()
+        {
+            //arrange
+            int exepcted = 3;
+            int actual = 0;
+            //act
+            actual = _mgr.GetActiveParts_Inventory().Count;
+            //assert
+            Assert.AreEqual(exepcted, actual);
+
+
+        }
+
         // Reviewed By: John Beck
     }
 }

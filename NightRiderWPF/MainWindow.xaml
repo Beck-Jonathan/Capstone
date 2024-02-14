@@ -22,6 +22,7 @@
                 <ListBoxItem Content="Sample Page" x:Name="SamplePage"  Margin="0" />
                 <ListBoxItem Content="View Client List" x:Name="ViewClientList"  Margin="0" />
                 <ListBoxItem Content="Admin Create Employee" x:Name="AdminCreateEmployeePage"  Margin="0" />
+                <ListBoxItem Content="Parts Person View Parts" x:Name="PartsPersonViewParts"  Margin="0" />
                 <!-- copy the above and replace relevant values. -->
             </ListBox>
             <Border Grid.Column="1" BorderBrush="Black" BorderThickness="2px">
