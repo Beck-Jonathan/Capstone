@@ -11,10 +11,21 @@ using System.Data;
 namespace DataAccessLayer
 {
     /// <summary>
-    /// AUTHOR: Chris Baenziger
+    /// AUTHOR: Chris Baenziger, Everett DeVaux
     /// CREATED: 2024-02-01
     ///     Accessor to retrieve vehicle information from the database.
     /// </summary>
+    ///     
+    /// <remarks>
+    /// UPDATER: Everett DeVaux
+    /// <br />
+    /// UPDATED: 2024-02-13
+    /// <br />
+    /// 
+    ///     Update comments go here, include method or methods were changed or added 
+    ///     (no other details necessary).
+    ///     A new remark should be added for each update.
+    /// </remarks>
 
     public class VehicleAccessor : IVehicleAccessor
     {
@@ -240,5 +251,71 @@ namespace DataAccessLayer
             return types;
 
         }
+
+        /// <summary>
+        ///     Accessor that allows us to pull the specific info for the Vehicle Lookup List
+        /// </summary>
+        /// <returns>
+        ///    <see cref="List{Vehicle}">Vehicle</see> List of Vehicle objects
+        /// </returns>
+        /// <remarks>
+        ///    Exceptions:
+        /// <br />
+        ///    <see cref="ApplicationException">Exception</see>: Thrown when error encountered
+        /// <br /><br />
+        ///    CONTRIBUTOR: Everett DeVaux
+        /// <br />
+        ///    CREATED: 2024-02-10
+        /// <br />
+        /// <br />
+        ///    UPDATER: [Updater's Name]
+        /// <br />
+        ///    UPDATED: yyyy-MM-dd
+        /// <br />
+        ///     Initial Creation
+        /// </remarks>
+        public List<Vehicle> SelectVehicleForLookupList()
+        {
+            List<Vehicle> output = new List<Vehicle>();
+            var conn = DBConnectionProvider.GetConnection();
+            var commandText = "sp_select_all_vehicles_for_vehicle_lookup_list";
+            var cmd = new SqlCommand(commandText, conn);
+
+            try
+            {
+                conn.Open();
+                var reader = cmd.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        output.Add(new Vehicle()
+                        {
+                            VehicleMake = reader.GetString(0),
+                            VehicleNumber = reader.GetString(1),
+                            VehicleModel = reader.GetString(2),
+                            MaxPassengers = reader.GetInt32(3),
+                            VehicleMileage = reader.GetInt32(4),
+                            VehicleDescription = reader.GetString(5),
+                        });
+                    }
+                }
+                else
+                {
+                    throw new ApplicationException("Vehicle not found.");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return output;
+        }
+        //Checked by James Williams
+
     }
 }
