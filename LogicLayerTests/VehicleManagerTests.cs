@@ -33,7 +33,7 @@ namespace LogicLayerTests
         public void TestSetup()
         {
             _vehicleManager = new VehicleManager(new VehicleAccessorFakes());
-            _vehicleLookupMgr = new VehicleManager(new VehicleAccessorFake());
+            _vehicleLookupMgr = new VehicleManager(new VehicleAccessorFakes());
 
         }
 

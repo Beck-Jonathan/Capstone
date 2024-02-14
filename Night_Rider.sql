@@ -1,4 +1,4 @@
-DROP DATABASE IF EXISTS Night_Rider;
+    DROP DATABASE IF EXISTS Night_Rider;
 GO
 CREATE DATABASE Night_Rider;
 GO
@@ -3051,3 +3051,27 @@ print ''
 print '*** create sp_lookup_model_lookup_id_from_make_model_year ***'
 GO
 
+/*************************
+For Vehicle Lookup List 
+***************/
+-- Initial Creator: Everett DeVaux
+-- Creation Date: 2024-02-08
+-- Last Modified: Everett DeVaux
+-- Modification Description: Initial Creation
+-- Stored Procedure Description: Select all vehicles/vehicle details for the vehicle lookup list.
+print '' print '*** creating sp_select_all_vehicles_for_vehicle_lookup_list ***'
+GO
+CREATE PROCEDURE [dbo].[sp_select_all_vehicles_for_vehicle_lookup_list]
+AS
+    BEGIN
+        SELECT 
+            [Vehicle].[Vehicle_Number],
+            [Model_Lookup].[Vehicle_Make],
+            [Model_Lookup].[Vehicle_Model],
+            [Model_Lookup].[Max_Passengers],
+            [Vehicle].[Vehicle_Mileage],
+            [Vehicle].[Description]
+        FROM  [dbo].[Vehicle]
+        INNER JOIN [dbo].[Model_Lookup] ON [Vehicle].[VIN] = [Model_Lookup].[VIN]
+    END
+GO
