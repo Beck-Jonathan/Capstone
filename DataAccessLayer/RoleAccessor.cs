@@ -29,7 +29,7 @@ namespace DataAccessInterfaces
                 {
                     while (reader.Read())
                     {
-                        roles.Add(new Role() { Role_ID = reader.GetString(0), Is_Active = true });
+                        roles.Add(new Role() { RoleID = reader.GetString(0), IsActive = true });
                     }
                 }
                 else
