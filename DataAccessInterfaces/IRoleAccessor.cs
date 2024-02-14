@@ -46,7 +46,7 @@ namespace DataAccessInterfaces
         ///     Initial Creation
         /// </remarks>
         IEnumerable<Role> GetAllRoles();
-
+       
     }
 }
 // Checked by Nathan Toothaker

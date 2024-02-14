@@ -192,6 +192,18 @@ namespace NightRiderWPF.DeveloperView
                 cbo.Items.Add(state);
             }
         }
+
+        private void btnBack_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.NavigationService.CanGoBack)
+            {
+                this.NavigationService.GoBack();
+            }
+            else
+            {
+                MessageBox.Show("No page to go back to.");
+            }
+        }
     }
 }
 // Checked by Nathan Toothaker

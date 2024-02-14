@@ -2997,3 +2997,57 @@ AS
         SELECT      @@ROWCOUNT
     END
 GO
+
+
+print '' Print '***Create the retreive Employee List script for the Employee table***' 
+ go 
+ CREATE PROCEDURE [dbo].[sp_select_all_employees]
+AS
+BEGIN
+    SELECT
+        [Employee_ID],
+        [Given_Name],
+        [Family_Name],
+        [Address],
+        [Address2],
+        [City],
+        [State],
+        [Country],
+        [Zip],
+        [Phone_Number],
+        [Email],
+        [Position],
+        [Is_Active]
+    FROM
+        Employee;
+END;
+GO
+-- Checked by James Williams
+
+
+
+-- Initial Creator: James Williams
+-- Creation Date: 2024-02-06
+-- Last Modified: James Williams
+-- Modification Description: Initial Creation
+-- Stored Procedure Description: Select employee role(s) by Employee_ID
+print '' print'***SP to get employee_roles by employee_id ***'
+go
+CREATE PROCEDURE [dbo].[sp_get_roles_by_employee_id]
+(
+	@p_Employee_ID				[INT]
+)
+as
+BEGIN
+	SELECT [Role_ID]
+	FROM [dbo].[Employee_Role]
+	WHERE @p_Employee_ID = Employee_ID AND 
+		Is_Active = 1
+END
+go
+
+
+print ''
+print '*** create sp_lookup_model_lookup_id_from_make_model_year ***'
+GO
+
