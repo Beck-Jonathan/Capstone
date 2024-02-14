@@ -63,6 +63,36 @@ namespace LogicLayer
         IEnumerable<Role> GetRolesByEmployeeID(int employeeID);
         // Reviewed By Steven Sanchez
 
+        /// <summary>
+        ///   retrieves an employee by ID
+        /// </summary>
+        /// <param>
+        ///    Employee_ID
+        /// </param>
+        /// <returns>
+        ///     <see cref="Employee_VM"/>: returns an employee.
+        /// </returns>
+        /// <remarks>
+        ///    Parameters: id
+        /// <br />
+        /// <br /><br />
+        ///    Exceptions:None
+        /// <br />
+        /// <br /><br />
+        ///    CONTRIBUTOR: Steven Sanchez
+        /// <br />
+        ///    CREATED: 2024-02-11
+        /// <br /><br />
+        ///    UPDATER: updater_name
+        /// <br />
+        ///    UPDATED: yyyy-MM-dd
+        /// <br />
+        ///     Update comments go here. Explain what you changed in this method.
+        ///     A new remark should be added for each update to this method.
+        /// </remarks>
+        Employee_VM GetEmployee(int id);
+        // Checked by Jared R.
+
     }
 }
 // Checked by Nathan Toothaker

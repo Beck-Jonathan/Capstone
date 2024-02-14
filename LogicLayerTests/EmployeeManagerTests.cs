@@ -131,6 +131,88 @@ namespace LogicLayerTests
             IEnumerable<Role> roles = _employeeManager.GetRolesByEmployeeID(id);
         }
         //Reviewed by Steven Sanchez
+
+        /// <summary>
+        ///   Test to verify that the GetEmployee method returns null when
+        ///   provided with an incorrect employee ID that does not exist.
+        /// </summary>
+        /// <param>
+        ///    None
+        /// </param>
+        /// <returns>
+        ///     <see cref="_employeeManager"/>: Returns null.
+        /// </returns>
+        /// <remarks>
+        ///    Parameters:None
+        /// <br />
+        /// <br /><br />
+        ///    Exceptions:Argument Exception
+        /// <br />
+        ///  <see cref="ArgumentException">ArgumentException</see>:Thrown when an employee is not found in the database.
+        /// <br /><br />
+        ///    CONTRIBUTOR: Steven Sanchez
+        /// <br />
+        ///    CREATED: 2024-02-11
+        /// <br /><br />
+        ///    UPDATER: updater_name
+        /// <br />
+        ///    UPDATED: yyyy-MM-dd
+        /// <br />
+        ///     Update comments go here. Explain what you changed in this method.
+        ///     A new remark should be added for each update to this method.
+        /// </remarks>
+        [TestMethod]
+        public void TestGetEmployeeReturnsIncorrectEmployeeThrowsArgumentException()
+        {
+            // Arrange
+            int incorrectEmployeeId = 999; // ID that doesn't exist 
+
+            // Act & Assert Test fails when connected to database  
+            Assert.ThrowsException<ArgumentException>(() => _employeeManager.GetEmployee(incorrectEmployeeId));
+        }
+
+        /// <summary>
+        ///   Test to verify that the GetEmployee method returns an Employee when
+        ///   provided with a correct ID that does exist.
+        /// </summary>
+        /// <param>
+        ///    None
+        /// </param>
+        /// <returns>
+        ///     <see cref="_employeeManager"/>: Returns employee by id.
+        /// </returns>
+        /// <remarks>
+        ///    Parameters:None
+        /// <br />
+        /// <br /><br />
+        ///    Exceptions:None
+        /// <br />
+        /// <br /><br />
+        ///    CONTRIBUTOR: Steven Sanchez
+        /// <br />
+        ///    CREATED: 2024-02-11
+        /// <br /><br />
+        ///    UPDATER: updater_name
+        /// <br />
+        ///    UPDATED: yyyy-MM-dd
+        /// <br />
+        ///     Update comments go here. Explain what you changed in this method.
+        ///     A new remark should be added for each update to this method.
+        /// </remarks>
+        [TestMethod]
+        public void TestGetEmployeeReturnsCorrectEmployee()
+        {
+            // Arrange
+            int correctEmployeeId = 100000; // Employee ID exists in the fake data
+
+            // Act 
+            var correctEmployee = _employeeManager.GetEmployee(correctEmployeeId);
+
+            // Assert
+            Assert.IsNotNull(correctEmployee, "Correct employee should be found");
+            Assert.AreEqual(correctEmployeeId, correctEmployee.Employee_ID, "Employee IDs should match");
+        }
+        // checked by Jared R.
     }
 }
 // Checked by Nathan Toothaker

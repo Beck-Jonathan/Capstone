@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppData\Authentication.cs" />
     <Compile Include="IVehicleManager.cs" />
     <Compile Include="VehicleManager.cs" />
     <Compile Include="ClientManager.cs" />

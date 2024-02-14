@@ -312,6 +312,40 @@ namespace DataAccessFakes
             return roles;
         }
         // Reviewed By Steven Sanchez
+
+        /// <summary>
+        ///   retrieve an employee by ID from fakeEmployee 
+        /// </summary>
+        /// <param>
+        ///    Employee_ID
+        /// </param>
+        /// <returns>
+        ///     <see cref="Employee_VM"/>: returns a fake employee.
+        /// </returns>
+        /// <remarks>
+        ///    Parameters: id
+        /// <br />
+        /// <br /><br />
+        ///    Exceptions:None
+        /// <br />
+        /// <br /><br />
+        ///    CONTRIBUTOR: Steven Sanchez
+        /// <br />
+        ///    CREATED: 2024-02-11
+        /// <br /><br />
+        ///    UPDATER: updater_name
+        /// <br />
+        ///    UPDATED: yyyy-MM-dd
+        /// <br />
+        ///     Update comments go here. Explain what you changed in this method.
+        ///     A new remark should be added for each update to this method.
+        /// </remarks>
+
+        public Employee_VM GetEmployee(int id)
+        {
+            return fakeEmployee.FirstOrDefault(e => e.Employee_ID == id);
+        }
+        // reviewed by james
     }
 }
 // Checked by Nathan Toothaker

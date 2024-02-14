@@ -15,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using LogicLayer.AppData;
 
 namespace NightRiderWPF
 {
@@ -48,6 +49,9 @@ namespace NightRiderWPF
                         break;
                     case "AdminEmployeeListPage":
                         PageViewer.Navigate(new AdminEmployeeListPage());
+                        break;
+                    case "EmployeeProfilePage":
+                        PageViewer.Navigate(new EmployeeProfilePage(Authentication.AuthenticatedEmployee));
                         break;
 
                 }

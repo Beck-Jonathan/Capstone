@@ -202,6 +202,56 @@ namespace LogicLayer
             return roles;
         }
         // Reviewed By Steven Sanchez
+
+        /// <summary>
+        ///     gets an employee's record
+        /// </summary>
+        /// <param>
+        ///    Employee_ID
+        /// </param>
+        /// <returns>
+        ///    <see cref="Employee_VM results"/>: Returns an employee .
+        /// </returns>
+        /// <remarks>
+        ///    Parameters:id
+        /// <br />
+        /// <br /><br />
+        ///    Exceptions: ArgumentException
+        /// <br />
+        ///    <see cref="ArgumentException">ArgumentException</see>:Thrown when an employee is not found in the database.
+        /// <br />
+        ///    <br / >
+        ///    CONTRIBUTOR: Steven Sanchez
+        /// <br />
+        ///    CREATED: 2024-02-11
+        /// <br /><br />
+        ///    UPDATER: updater_name
+        /// <br />
+        ///    UPDATED: yyyy-MM-dd
+        /// <br />
+        ///     Update comments go here. Explain what you changed in this method.
+        ///     A new remark should be added for each update to this method.
+        /// </remarks>
+
+        public Employee_VM GetEmployee(int id)
+        {
+            Employee_VM result = null;
+            try
+            {
+                result = _employeeAccessor.GetEmployee(id);
+                if (result == null)
+                {
+                    throw new ArgumentException("Employee not found in the database.");
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            return result;
+        }
+        // checked by Jared R.
     }
 }
 // Checked by Nathan Toothaker
