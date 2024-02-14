@@ -44,12 +44,12 @@ namespace DataAccessLayer
                             // Middle_Name should be GetString(3)
                             DOB = reader.GetDateTime(4),
                             Email = reader.GetString(5),
-                            PostalCode = reader.GetString(6),
-                            City = reader.GetString(7),
-                            Region = reader.GetString(8),
-                            Address = reader.GetString(9),
-                            TextNumber = reader.GetString(10),
-                            VoiceNumber = reader.GetString(11),
+                            City = reader.GetString(6),
+                            Region = reader.GetString(7),
+                            Address = reader.GetString(8),
+                            TextNumber = reader.GetString(9),
+                            VoiceNumber = reader.GetString(10),
+                            PostalCode = reader.GetString(11),
                             IsActive = reader.GetBoolean(12)
                         });
                     }

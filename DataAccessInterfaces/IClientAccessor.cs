@@ -26,13 +26,15 @@ namespace DataAccessInterfaces
         ///     Method does not take in any parameters.
         /// </summary>
         /// <remarks>
-        ///    Exceptions:
-        /// <br />
-        ///   Throws an exception when the database connection fails.
-        /// <br /><br />
-        ///    CONTRIBUTOR: Isabella Rosenbohm
-        /// <br />
-        ///    CREATED: 2024-02-05
+        /// Exceptions:
+        ///     Throws an exception when the database connection fails.
+        /// <br/><br/>
+        /// CONTRIBUTOR: Isabella Rosenbohm <br/>
+        /// CREATED: 2024-02-05
+        /// <br/><br/>
+        /// UPDATER: Isabella Rosenbohm <br/>
+        /// UPDATED: 2024-02-13 <br/>
+        ///     Changed the order of params in clients.Add() section as it was incorrect before
         /// </remarks>
         IEnumerable<Client_VM> SelectAllClients();
         IEnumerable<Client_VM> SelectClients();
