@@ -48,6 +48,20 @@ namespace LogicLayer
         /// Updated: yyyy/mm/dd 
         int EditParts_Inventory(Parts_Inventory oldPart, Parts_Inventory newPart);
 
+        /// <summary>
+        /// Jonathan Beck
+        /// Created: 2024/01/31
+        /// 
+        /// Retreives all Part_Inventory records
+        /// </summary>
+        ///
+        /// <remarks>
+        /// Updater Name
+        /// Updated: yyyy/mm/dd 
+
+        List<Parts_Inventory> GetActiveParts_Inventory();
+
+
         // Reviewed By: John Beck
     }
 

@@ -104,6 +104,34 @@ namespace LogicLayer
             }
             return result;
         }
+
+        /// <summary>
+        /// Jonathan Beck
+        /// Created: 2024/02/01
+        /// 
+        /// Retreives all part inventory records
+        /// <throws> Argument Exception if item not found</throws>
+        /// </summary>
+        ///
+        /// <remarks>
+        /// Updater Name: Max Fare
+        /// Updated: yyyy/mm/dd 
+        public List<Parts_Inventory> GetActiveParts_Inventory()
+        {
+            List<Parts_Inventory> result = null;
+            try
+            {
+                result = _parts_inventoryaccessor.selectAllParts_Inventory();
+                if (result.Count == 0) { throw new ArgumentException("Inventory not found"); }
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            return result;
+        }
+
         // Reviewed By: John Beck
     }
 }

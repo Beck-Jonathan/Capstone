@@ -60,6 +60,20 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Compile Include="DeveloperView\AddUpdateDeleteParts_Inventory.xaml.cs">
+      <DependentUpon>AddUpdateDeleteParts_Inventory.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DeveloperView\PartsInventoryPage.xaml.cs">
+      <DependentUpon>PartsInventoryPage.xaml</DependentUpon>
+    </Compile>
+    <Page Include="DeveloperView\AddUpdateDeleteParts_Inventory.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DeveloperView\PartsInventoryPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Compile Include="AdminEmployeeListPage.xaml.cs">
       <DependentUpon>AdminEmployeeListPage.xaml</DependentUpon>
     </Compile>

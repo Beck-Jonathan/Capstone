@@ -6,7 +6,7 @@ USE Night_Rider;
 GO
 print '' Print '***Create the retreive by key script for the Parts_Inventory table***' 
  go 
-CREATE PROCEDURE [DBO].[sp_retreive_by_pk_Parts_Inventory]
+CREATE PROCEDURE [DBO].[sp_select_part_by_part_id]
 (@Parts_Inventory_ID [int]
 )
 as
@@ -32,7 +32,7 @@ Create the retreive by all script for the Parts_Inventory table
 ***************/
 print '' Print '***Create the retreive by all script for the Parts_Inventory table***' 
  go 
-CREATE PROCEDURE [DBO].[sp_retreive_by_all_Parts_Inventory]
+CREATE PROCEDURE [DBO].[sp_select_all_part]
 AS
 begin 
  SELECT 

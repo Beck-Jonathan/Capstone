@@ -38,7 +38,7 @@ namespace NightRiderWPF
     public partial class InventoryAudit : Window
     {
         private Parts_InventoryManager _parts_inventoryManager;
-        private Parts_Inventory _part;
+        public  Parts_Inventory _part;
 
         //test constuctor
         public InventoryAudit()
@@ -128,21 +128,34 @@ namespace NightRiderWPF
         /// </remarks>
         private void btnSubmit_Click(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                int x = Convert.ToInt32(txtboxActualQoH.Text.ToString());
+                if (x < 0) {
+                    throw new ArgumentException();
+                }
+            }
+            catch {
+                MessageBox.Show("Please enter a postive number");
+                return;
+            }
+
             if(txtboxActualQoH.Text.Length >= 1)
             {
                 try
                 {
-                    Parts_Inventory newPart = new Parts_Inventory()
-                    {
-                        Parts_Inventory_ID = _part.Parts_Inventory_ID,
-                        Part_Name = _part.Part_Name,
-                        Part_Quantity = Convert.ToInt32(txtboxActualQoH.ToString()),
-                        Item_Description = _part.Item_Description,
-                        Item_Specifications = _part.Item_Specifications,
-                        Part_Photo_URL = _part.Part_Photo_URL,
-                        Ordered_Qty = _part.Ordered_Qty,
-                        Stock_Level = _part.Stock_Level
-                    };
+                    Parts_Inventory newPart = new Parts_Inventory();
+                    newPart.Parts_Inventory_ID = _part.Parts_Inventory_ID;
+                    newPart.Part_Name = _part.Part_Name;
+                    newPart.Part_Quantity = Convert.ToInt32(txtboxActualQoH.Text.ToString().Trim());
+                    newPart.Item_Description = _part.Item_Description;
+                    newPart.Item_Specifications = _part.Item_Specifications;
+                    newPart.Part_Photo_URL = _part.Part_Photo_URL;
+                    newPart.Ordered_Qty = _part.Ordered_Qty;
+                    newPart.Stock_Level = _part.Stock_Level;
+                        
+
+                   
                     if(1 == _parts_inventoryManager.EditParts_Inventory(_part, newPart))
                     {
                         MessageBox.Show("Audit Successful");
@@ -155,7 +168,7 @@ namespace NightRiderWPF
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Something went wrong, inventory not changed.\n", ex.InnerException.ToString());
+                    MessageBox.Show("Something went wrong, inventory not changed.\n");
                 }
             }
             else
