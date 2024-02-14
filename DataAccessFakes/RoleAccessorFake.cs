@@ -36,11 +36,11 @@ namespace DataAccessFakes
         private List<Role> _roles = new List<Role>();
         public RoleAccessorFake()
         {
-            _roles.Add(new Role() { Role_ID = "Administrator", Is_Active = true });
-            _roles.Add(new Role() { Role_ID = "Maintenance", Is_Active = true });
-            _roles.Add(new Role() { Role_ID = "Fleet Manager", Is_Active = true });
+            _roles.Add(new Role() { RoleID = "Administrator", IsActive = true });
+            _roles.Add(new Role() { RoleID = "Maintenance", IsActive = true });
+            _roles.Add(new Role() { RoleID = "Fleet Manager", IsActive = true });
             // purposeful duplicate entry to check that GetAllRoles() only returns unique Role_ID elements
-            _roles.Add(new Role() { Role_ID = "Fleet Manager", Is_Active = true });
+            _roles.Add(new Role() { RoleID = "Fleet Manager", IsActive = true });
 
         }
 
@@ -80,7 +80,7 @@ namespace DataAccessFakes
         {
             //Only return unique roles. This LINQ query groups all of the similar Role_ID properties and then only returns
             //the first element of each group.
-            List<Role> roles = _roles.GroupBy(r => r.Role_ID).Select(group => group.First()).ToList();
+            List<Role> roles = _roles.GroupBy(r => r.RoleID).Select(group => group.First()).ToList();
 
             if (roles.Count < 1)
             {

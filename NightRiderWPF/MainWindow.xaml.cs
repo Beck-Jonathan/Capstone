@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using LogicLayer.AppData;
 
 namespace NightRiderWPF
 {
@@ -52,9 +53,14 @@ namespace NightRiderWPF
                     case "VehicleLookupListPage":
                         PageViewer.Navigate(new VehicleLookupListPage());
                         break;
+                    case "EmployeeProfilePage":
+                        PageViewer.Navigate(new EmployeeProfilePage(Authentication.AuthenticatedEmployee));
+                        break;
+                    case "ViewWorkOrderPage":
+                        PageViewer.Navigate(new ViewWorkOrderPage());
+                        break;
                 }
             }
         }
     }
 }
-// checked by James Williams

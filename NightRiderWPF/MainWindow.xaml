@@ -57,6 +57,9 @@
                 <ListBoxItem Content="Admin Create Employee" x:Name="AdminCreateEmployeePage"  Margin="0" />
                 <ListBoxItem Content="Parts Person View Parts" x:Name="PartsPersonViewParts"  Margin="0" />
                 <ListBoxItem Content="Vehicle Lookup List" x:Name="VehicleLookupListPage"  Margin="0" />
+                <ListBoxItem Content="Admin View Employees" x:Name="AdminEmployeeListPage"  Margin="0" />
+                <ListBoxItem Content="Employee Profile" x:Name="EmployeeProfilePage"  Margin="0" />
+                <ListBoxItem Content="View Work Order" x:Name="ViewWorkOrderPage"  Margin="0" />
                 <!-- copy the above and replace relevant values. -->
             </ListBox>
             <Border Grid.Column="1" BorderBrush="Black" BorderThickness="2px">

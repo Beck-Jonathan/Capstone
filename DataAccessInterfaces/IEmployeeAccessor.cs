@@ -66,6 +66,36 @@ namespace DataAccessInterfaces
        
         IEnumerable<Role> GetRolesByEmployeeID(int employee_ID);
         // Reviewed By Steven Sanchez
+
+        /// <summary>
+        ///   retrieves an employee by ID from Employee_Fakes 
+        /// </summary>
+        /// <param>
+        ///    Employee_ID
+        /// </param>
+        /// <returns>
+        ///     <see cref="Employee_VM"/>: returns a fake employee.
+        /// </returns>
+        /// <remarks>
+        ///    Parameters: id
+        /// <br />
+        /// <br /><br />
+        ///    Exceptions:None
+        /// <br />
+        /// <br /><br />
+        ///    CONTRIBUTOR: Steven Sanchez
+        /// <br />
+        ///    CREATED: 2024-02-11
+        /// <br /><br />
+        ///    UPDATER: updater_name
+        /// <br />
+        ///    UPDATED: yyyy-MM-dd
+        /// <br />
+        ///     Update comments go here. Explain what you changed in this method.
+        ///     A new remark should be added for each update to this method.
+        /// </remarks>
+        Employee_VM GetEmployee(int id);
+        // checked by Jared R.
     }
 }
 // Checked by Nathan Toothaker

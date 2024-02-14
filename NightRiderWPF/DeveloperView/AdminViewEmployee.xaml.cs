@@ -59,7 +59,7 @@ namespace NightRiderWPF.DeveloperView
             lstRolesView.Items.Clear();
             foreach(var role in _roles)
             {
-                lstRolesView.Items.Add(role.Role_ID.ToString());
+                lstRolesView.Items.Add(role.RoleID.ToString());
             }
         }
 

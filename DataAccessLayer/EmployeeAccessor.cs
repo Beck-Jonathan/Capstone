@@ -368,8 +368,8 @@ namespace DataAccessInterfaces
                     {
                         Role role = new Role()
                         {
-                            Role_ID = reader.GetString(0),
-                            Is_Active = true
+                            RoleID = reader.GetString(0),
+                            IsActive = true
                         };
                         roleList.Add(role);
                     }
@@ -393,6 +393,83 @@ namespace DataAccessInterfaces
             return roles;
         }
         // Reviewed By Steven Sanchez
+
+        /// <summary>
+        ///     gets an employees from the Employee Table
+        /// </summary>
+        /// <param>
+        ///    Employee_ID int
+        /// </param>
+        /// <returns>
+        ///     <see cref="Employee_VM"/>: returns an employees from the database.
+        /// </returns>
+        /// <remarks>
+        ///    Parameters:id int
+        /// <br />
+        /// <br /><br />
+        ///    Exceptions: SqlException
+        /// <br />
+        ///    <see cref="SqlException">SqlException</see>: Thrown when a SQL Server error occurs.
+        ///    <br / >
+        ///    CONTRIBUTOR: Steven Sanchez
+        /// <br />
+        ///    CREATED: 2024-02-11
+        /// <br /><br />
+        ///    UPDATER: updater_name
+        /// <br />
+        ///    UPDATED: yyyy-MM-dd
+        /// <br />
+        ///     Update comments go here. Explain what you changed in this method.
+        ///     A new remark should be added for each update to this method.
+        /// </remarks>
+        public Employee_VM GetEmployee(int id)
+        {
+            Employee_VM employee = new Employee_VM();
+            // start with a connection object
+            var conn = DBConnectionProvider.GetConnection();
+            // set the command text
+            var commandText = "sp_select_employee_by_id";
+            // create the command object
+            var cmd = new SqlCommand(commandText, conn);
+            // set the command type
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@Employee_ID", id);
+            try
+            {
+                //open the connection 
+                conn.Open();  //execute the command and capture result
+                var reader = cmd.ExecuteReader();
+                //process the results
+                if (reader.HasRows)
+                    while (reader.Read())
+                    {
+                        var Employee = new Employee_VM();
+                        Employee.Given_Name = reader.GetString(1);
+                        Employee.Family_Name = reader.GetString(2);
+                        Employee.Address = reader.GetString(3);
+                        Employee.Address2 = reader.IsDBNull(4) ? null : reader.GetString(4);
+                        Employee.City = reader.GetString(5);
+                        Employee.State = reader.GetString(6);
+                        Employee.Country = reader.GetString(7);
+                        Employee.Zip = reader.GetString(8);
+                        Employee.Phone_Number = reader.GetString(9);
+                        Employee.Email = reader.GetString(10);
+                        Employee.Position = reader.GetString(11);
+                        Employee.Is_Active = reader.GetBoolean(12);
+                    }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return employee;
+
+        }
+        // checked by Jared R.
     }
 }
 // Checked by Nathan Toothaker

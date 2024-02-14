@@ -112,11 +112,24 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="LoginWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="DeveloperView\AdminCreateNewEmployee.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="DeveloperView\VehicleLookupListPage.xaml">
+	  <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="EmployeeProfilePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+	</Page>
+    <Page Include="DeveloperView\ViewWorkOrderPage.xaml">
+
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -138,8 +151,17 @@
     <Compile Include="DeveloperView\AdminCreateNewEmployee.xaml.cs">
       <DependentUpon>AdminCreateNewEmployee.xaml</DependentUpon>
     </Compile>
+    <Compile Include="EmployeeProfilePage.xaml.cs">
+      <DependentUpon>EmployeeProfilePage.xaml</DependentUpon>
+	</Compile>
+    <Compile Include="DeveloperView\ViewWorkOrderPage.xaml.cs">
+      <DependentUpon>ViewWorkOrderPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="InventoryAudit.xaml.cs">
       <DependentUpon>InventoryAudit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="LoginWindow.xaml.cs">
+      <DependentUpon>LoginWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
