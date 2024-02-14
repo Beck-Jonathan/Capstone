@@ -74,7 +74,8 @@
         <TextBox x:Name="txtPosition" TabIndex="12" Grid.Row="7" Grid.Column="4" Margin="5" VerticalAlignment="Center" Padding="5" />
 
         <Label Content="* = Required Field" Grid.Row="8" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="5"/>
-        <Button x:Name="btnCreateEmployee" Grid.Row="8" Grid.Column="4" Content="Create" Margin="20 5 20 10" Click="btnCreateEmployee_Click"/>
+        <Button x:Name="btnCreateEmployee" Grid.Row="8" Grid.Column="4" Content="Create" Margin="5" Width="70" HorizontalAlignment="Right" Click="btnCreateEmployee_Click"/>
+        <Button x:Name="btnBack" Grid.Row="8" Grid.Column="4" Content="Back" Margin="5" Width="70" HorizontalAlignment="Left" Click="btnBack_Click"/>
 
     </Grid>
 

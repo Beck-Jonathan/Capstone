@@ -5,6 +5,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 
 namespace LogicLayerTests
@@ -108,6 +109,28 @@ namespace LogicLayerTests
             _employeeManager.AddEmployee(employee);
 
         }
+
+        [TestMethod]
+        public void TestGetRolesByEmployeeIDRoleCountPasses()
+        {
+            int id = 2;
+            int expectedCount = 1;
+            int actualCount = 0;
+            IEnumerable<Role> roles = _employeeManager.GetRolesByEmployeeID(id);
+            actualCount = roles.Count();
+
+            Assert.AreEqual(expectedCount, actualCount);
+        }
+        //Reviewed by Steven Sanchez
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void TestGetRolesByEmployeeIDThrowsArgumentException()
+        {
+            int id = 7;
+            IEnumerable<Role> roles = _employeeManager.GetRolesByEmployeeID(id);
+        }
+        //Reviewed by Steven Sanchez
     }
 }
 // Checked by Nathan Toothaker

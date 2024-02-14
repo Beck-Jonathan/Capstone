@@ -15,12 +15,12 @@ namespace DataObjects
     /// </summary>
     /// 
     /// <remarks>
-    /// UPDATER: Isabella Rosenbohm, Jared Hutton, Jacob Wendt, Jared Roberts
+    /// UPDATER: Isabella Rosenbohm
     /// <br />
-    /// UPDATED: 2024-02-01
+    /// UPDATED: 2024-02-13
     /// <br />
     /// 
-    ///     Initial creation
+    ///     Changed Client_VM property from "username" to "Username"
     /// </remarks>
     public class Client
     {
@@ -41,7 +41,7 @@ namespace DataObjects
     /// <inheritdoc/>
     public class Client_VM : Client
     {
-        public string username { get; set; }
+        public string Username { get; set; }
         public IEnumerable<ClientRole> Roles { get; set; }
     }
 }

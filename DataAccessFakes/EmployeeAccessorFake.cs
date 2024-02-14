@@ -26,6 +26,7 @@ namespace DataAccessFakes
     /// </remarks>
     public class EmployeeAccessorFake : IEmployeeAccessor
     {
+        private IEnumerable<Employee_VM> fakeEmployee = new List<Employee_VM>();
         private List<Employee_VM> _fakeEmployees = new List<Employee_VM>();
 
         public EmployeeAccessorFake()
@@ -67,6 +68,55 @@ namespace DataAccessFakes
                 Is_Active = true,
                 Employee_Roles = new List<Role> { new Role { Role_ID = "Maintenance", Is_Active = true } }
             });
+
+            fakeEmployee = new List<Employee_VM>() {
+                new Employee_VM() {
+                    Employee_ID = 100000,
+                    Given_Name = "John",
+                    Family_Name = "Doe",
+                    Address = "123 Main St",
+                    Address2 = "",
+                    City = "Anytown",
+                    State = "CA",
+                    Country = "USA",
+                    Zip = "12345",
+                    Phone_Number = "1234567890",
+                    Email = "john@company.com",
+                    Position = "Admin",
+                    Is_Active = true
+                },
+                new Employee_VM() {
+
+                    Employee_ID = 100001,
+                    Given_Name = "Jane",
+                    Family_Name = "Doe",
+                    Address = "456 Main St",
+                    Address2 = "",
+                    City = "Anytown",
+                    State = "CA",
+                    Country = "USA",
+                    Zip = "12345",
+                    Phone_Number = "0987654321",
+                    Email = "jane@company.com",
+                    Position = "Mechanic",
+                    Is_Active = true
+                },
+                new Employee_VM() {
+                    Employee_ID = 100002,
+                    Given_Name = "Jake",
+                    Family_Name = "Doe",
+                    Address = "789 Main St",
+                    Address2 = "",
+                    City = "Anytown",
+                    State = "CA",
+                    Country = "USA",
+                    Zip = "12345",
+                    Phone_Number = "1234567890",
+                    Email = "jake@company.com",
+                    Position = "Driver",
+                    Is_Active = true
+                }
+            };
         }
 
         /// <summary>
@@ -210,6 +260,58 @@ namespace DataAccessFakes
 
             return rows;
         }
+
+        /// <summary>
+        ///   returns List of employee fakes
+        /// </summary>
+        /// <param>
+        ///    None
+        /// </param>
+        /// <returns>
+        ///    <see cref="List">List</see>: returns the list of fake employees.
+        /// </returns>
+        /// <remarks>
+        ///    Parameters:None
+        /// <br />
+        /// <br /><br />
+        ///    Exceptions:None
+        /// <br />
+        /// <br /><br />
+        ///    CONTRIBUTOR: Steven Sanchez
+        /// <br />
+        ///    CREATED: 2024-02-03
+        /// <br /><br />
+        ///    UPDATER: updater_name
+        /// <br />
+        ///    UPDATED: yyyy-MM-dd
+        /// <br />
+        ///     Update comments go here. Explain what you changed in this method.
+        ///     A new remark should be added for each update to this method.
+        /// </remarks>
+        public IEnumerable<Employee_VM> GetEmployees()
+        {
+            return fakeEmployee;
+        }
+
+
+        public IEnumerable<Role> GetRolesByEmployeeID(int employee_ID)
+        {
+            IEnumerable<Role> roles = null;
+            foreach(var employee in _fakeEmployees)
+            {
+                if(employee_ID == employee.Employee_ID)
+                {
+                    roles = employee.Employee_Roles;
+                } 
+               
+            }
+            if(roles == null)
+            {
+                throw new ArgumentException("No roles found");
+            }
+            return roles;
+        }
+        // Reviewed By Steven Sanchez
     }
 }
 // Checked by Nathan Toothaker

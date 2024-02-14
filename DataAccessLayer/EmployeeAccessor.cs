@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -12,6 +13,10 @@ namespace DataAccessInterfaces
 {
     public class EmployeeAccessor : IEmployeeAccessor
     {
+        /// <inheritdoc/>
+        
+
+
         /// <summary>
         /// AUTHOR: James Williams
         /// <br />
@@ -261,6 +266,133 @@ namespace DataAccessInterfaces
             }
             return rows;
         }
+
+        /// <summary>
+        ///     gets all employees from the Employee Table
+        /// </summary>
+        /// <param>
+        ///    None
+        /// </param>
+        /// <returns>
+        ///     <see cref="IEnumerable{Employee_VM}"/>: returns the list of employees from the database.
+        /// </returns>
+        /// <remarks>
+        ///    Parameters:None
+        /// <br />
+        /// <br /><br />
+        ///    Exceptions: SqlException
+        /// <br />
+        ///    <see cref="SqlException">SqlException</see>: Thrown when a SQL Server error occurs.
+        ///    <br / >
+        ///    CONTRIBUTOR: Steven Sanchez
+        /// <br />
+        ///    CREATED: 2024-02-03
+        /// <br /><br />
+        ///    UPDATER: updater_name
+        /// <br />
+        ///    UPDATED: yyyy-MM-dd
+        /// <br />
+        ///     Update comments go here. Explain what you changed in this method.
+        ///     A new remark should be added for each update to this method.
+        /// </remarks>
+        public IEnumerable<Employee_VM> GetEmployees()
+        {
+            List<Employee_VM> employeeList = new List<Employee_VM>();
+            // start with a connection object
+            var conn = DBConnectionProvider.GetConnection();
+            // set the command text
+            var commandText = "sp_select_all_employees";
+            // create the command object
+            var cmd = new SqlCommand(commandText, conn);
+            // set the command type
+            cmd.CommandType = CommandType.StoredProcedure;
+            // There are no parameters to set or add
+            try
+            {
+                //open the connection 
+                conn.Open();  //execute the command and capture result
+                var reader = cmd.ExecuteReader();
+                //process the results
+                if (reader.HasRows)
+                    while (reader.Read())
+                    {
+                        var Employee = new Employee_VM();
+                        Employee.Employee_ID = reader.GetInt32(0);
+                        Employee.Given_Name = reader.GetString(1);
+                        Employee.Family_Name = reader.GetString(2);
+                        Employee.Address = reader.GetString(3);
+                        Employee.Address2 = reader.IsDBNull(4) ? null : reader.GetString(4);
+                        Employee.City = reader.GetString(5);
+                        Employee.State = reader.GetString(6);
+                        Employee.Country = reader.GetString(7);
+                        Employee.Zip = reader.GetString(8);
+                        Employee.Phone_Number = reader.GetString(9);
+                        Employee.Email = reader.GetString(10);
+                        Employee.Position = reader.GetString(11);
+                        Employee.Is_Active = reader.GetBoolean(12);
+
+
+                        employeeList.Add(Employee);
+                    }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return employeeList;
+        }
+
+        public IEnumerable<Role> GetRolesByEmployeeID(int employee_ID)
+        {
+            IEnumerable<Role> roles = null;
+            List<Role> roleList = new List<Role>();
+
+            var conn = DBConnectionProvider.GetConnection();
+            var cmdText = "sp_get_roles_by_employee_id";
+            var cmd = new SqlCommand(cmdText, conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            cmd.Parameters.Add("@p_Employee_ID", SqlDbType.Int).Value = employee_ID;
+
+            try
+            {
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        Role role = new Role()
+                        {
+                            Role_ID = reader.GetString(0),
+                            Is_Active = true
+                        };
+                        roleList.Add(role);
+                    }
+                }
+                else
+                {
+                    throw new ApplicationException("No roles found");
+                }
+                roles = roleList;
+            }
+            
+            catch (Exception ex)
+            {
+                throw new ApplicationException("Error retrieving roles", ex);
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            return roles;
+        }
+        // Reviewed By Steven Sanchez
     }
 }
 // Checked by Nathan Toothaker
