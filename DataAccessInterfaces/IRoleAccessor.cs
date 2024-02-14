@@ -33,7 +33,7 @@ namespace DataAccessInterfaces
         /// <remarks>
         ///    Exceptions:
         /// <br />
-        ///    <see cref="ApplicationException">ApplicationException</see>: Thrown when no roles retreived from database.
+        ///    <see cref="ApplicationException">ApplicationException</see>: Thrown when no roles retrieved from database.
         /// <br /><br />
         ///    CONTRIBUTOR: James Williams
         /// <br />

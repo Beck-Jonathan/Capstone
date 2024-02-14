@@ -9,7 +9,7 @@ Create the [dbo].[Vendor] table
 ***************/
 print ''
 Print '***Create the [dbo].[Vendor] table***' 
- go
+ GO
 
 
 CREATE TABLE [dbo].[Vendor]
@@ -41,7 +41,7 @@ Insert Sample Data For The  Vendor table
 ***************/
 print ''
 Print '***Insert Sample Data For The  Vendor table***' 
- go 
+ GO 
 
 GO
 INSERT INTO [dbo].[Vendor]
@@ -59,7 +59,7 @@ Create the [dbo].[Purchase_Order] table
 ***************/
 print ''
 Print '***Create the [dbo].[Purchase_Order] table***' 
- go
+ GO
 CREATE TABLE [dbo].[Purchase_Order]
 (
     [Purchase_Order_ID] [int] IDENTITY(100000, 1) NOT NULL,
@@ -82,7 +82,7 @@ Insert Sample Data For The  Purchase_Order table
 ***************/
 print ''
 Print '***Insert Sample Data For The  Purchase_Order table***' 
- go
+ GO
 INSERT INTO [dbo].[Purchase_Order]
     ([Vendor_ID])
 VALUES
@@ -99,7 +99,7 @@ Create the [dbo].[Packing_Slip] table
 ***************/
 print ''
 Print '***Create the [dbo].[Packing_Slip] table***' 
- go
+ GO
 CREATE TABLE [dbo].[Packing_Slip]
 (
     [Packing_Slip_ID] [int] IDENTITY(100000,1) NOT NULL,
@@ -114,14 +114,14 @@ CREATE TABLE [dbo].[Packing_Slip]
     CONSTRAINT [FK_Packing_Slip_Vendor] FOREIGN KEY ([Vendor_ID])
     	REFERENCES [dbo].[Vendor] ([Vendor_ID])
 )
-go
+GO
 
 /******************
 Insert Sample Data For The  Packing_Slip table
 ***************/
 print ''
 Print '***Insert Sample Data For The  Packing_Slip table***' 
- go
+ GO
 INSERT INTO [dbo].[Packing_Slip]
     ([Purchase_Order_ID], [Recieving_Notes], [Vendor_ID], [Creation_Date])
 VALUES
@@ -130,7 +130,7 @@ VALUES
     (100002, 'Everything was unharmed in shipping', 100002, GETDATE()),
     (100003, 'Something''s wrong i can feel it', 100003, GETDATE()),
     (100004, 'Hello!', 100004, GETDATE())
-go
+GO
 
 
 /******************
@@ -138,7 +138,7 @@ Create the [dbo].[Parts_Inventory] table
 ***************/
 print ''
 Print '***Create the [dbo].[Parts_Inventory] table***' 
- go
+ GO
 
 
 CREATE TABLE [dbo].[Parts_Inventory]
@@ -162,7 +162,7 @@ Insert Sample Data For The  Parts_Inventory table
 ***************/
 print ''
 Print '***Insert Sample Data For The  Parts_Inventory table***' 
- go
+ GO
 
 INSERT INTO [dbo].[Parts_Inventory]
     (
@@ -180,7 +180,7 @@ VALUES
     ( 'Frame E', 'Aluminum mounting frame', 'Dimensions: 30cm x 20cm, Material: Aluminum', 'https://example.com/images/frame-e.jpg');
 GO
 
-go
+GO
 CREATE TABLE [dbo].[Purchase_Order_Line_Item]
 (
     [Purchase_Order_ID] [int],
@@ -196,13 +196,13 @@ CREATE TABLE [dbo].[Purchase_Order_Line_Item]
     CONSTRAINT [FK_Purchase_Order_Line_Item_Purchase_Order_ID_Purchase_Order_Purchase_Order_ID]
     FOREIGN KEY([Purchase_Order_ID]) REFERENCES [dbo].[Purchase_Order]([Purchase_Order_ID])
 );
-go
+GO
 /******************
 Insert Sample Data For The  Purchase_Order_Line_Item table
 ***************/
 print ''
 Print '***Insert Sample Data For The  Purchase_Order_Line_Item table***' 
-go
+GO
 INSERT INTO [dbo].[Purchase_Order_Line_Item]
     ([Purchase_Order_ID], [Parts_Inventory_ID], [Line_Number], [Line_Item_Name], [Line_Item_Qty], [Line_Item_Description])
 VALUES
@@ -211,7 +211,7 @@ VALUES
     (100001, 100000, 100000, 'Steering Wheels', 3, 'Replacement steering wheels'),
     (100001, 100002, 100001, 'V8 Engine Blocks', 1, 'Engine blocks for buses'),
     (100004, 100003, 100000, 'Tires', 4, 'Spare tires');
-go
+GO
 
 
 
@@ -220,7 +220,7 @@ Create the [dbo].[Route] table
 ***************/
 print ''
 Print '***Create the [dbo].[Route] table***' 
-go
+GO
 CREATE TABLE [dbo].[Route]
 (
     [Route_ID] [int] IDENTITY(100000,1),
@@ -232,13 +232,13 @@ CREATE TABLE [dbo].[Route]
     [Is_Active] [bit] NOT NULL DEFAULT(1),
     CONSTRAINT [PK_Route] PRIMARY KEY([Route_ID])
 );
-go
+GO
 /******************
 Insert Sample Data For The  Route table
 ***************/
 print ''
 Print '***Insert Sample Data For The  Route table***' 
-go
+GO
 INSERT INTO [dbo].[Route]
     ([Route_Name], [Route_Start_Time], [Route_Cycle], [Route_End_Time], [Days_Of_Service])
 VALUES
@@ -247,14 +247,14 @@ VALUES
     ('Hiawatha', '06:30:00', 100001, '19:00:00', '0111111'),
     ('Marion', '09:00:00', 100003, '18:30:00', '0010100'),
     ('Center Point', '05:30:00', 100002, '22:00:00', '0111110');
-go
+GO
 
 /******************
 Create the [dbo].[Stop] table
 ***************/
 print ''
 Print '***Create the [dbo].[Stop] table***' 
- go
+ GO
 
 
 CREATE TABLE [dbo].[Stop]
@@ -267,13 +267,13 @@ CREATE TABLE [dbo].[Stop]
     [Is_Active] [bit] DEFAULT 1 NOT NULL,
     CONSTRAINT [pk_StopID] PRIMARY KEY([Stop_ID])
 )
-go
+GO
 /******************
 Insert Sample Data For The  Stop table
 ***************/
 print ''
 Print '***Insert Sample Data For The  Stop table***' 
- go
+ GO
 INSERT INTO [dbo].[Stop]
     ([Street_Address], [Zip_Code], [Latitude], [Longitude])
 VALUES
@@ -282,7 +282,7 @@ VALUES
     ( '63 Starling Court', '97240', 45.5220648, -122.6757228),
     ( '0468 Utah Park', '97204', 39.948572, 116.420192),
     ( '760 Northland Terrace', '52402', 49.369115, 3.338092);
-go
+GO
 
 
 /******************
@@ -290,7 +290,7 @@ Create the [dbo].[Route_Stop] table
 ***************/
 print ''
 Print '***Create the [dbo].[Route_Stop] table***' 
-go
+GO
 CREATE TABLE [dbo].[Route_Stop]
 (
     [Route_ID] [int] NOT NULL,
@@ -304,7 +304,7 @@ CREATE TABLE [dbo].[Route_Stop]
     CONSTRAINT [FK_Route_Stop_Stop_ID_Stop_Stop_ID]
     FOREIGN KEY ([Stop_ID]) REFERENCES [dbo].[Stop]([Stop_ID])
 );
-go
+GO
 /******************
 Insert Sample Data For The  Route_Stop table
 ***************/
@@ -318,7 +318,7 @@ VALUES
     (100000, 100002, 3, 2),
     (100001, 100003, 1, 0),
     (100001, 100004, 2, 1)
-go
+GO
 
 
 /******************
@@ -326,7 +326,7 @@ Create the [dbo].[Vehicle_Type] table
 ***************/
 print ''
 Print '***Create the [dbo].[Vehicle_Type] table***' 
- go
+ GO
 
 
 CREATE TABLE [dbo].[Vehicle_Type]
@@ -343,7 +343,7 @@ Insert Sample Data For The  Vehicle_Type table
 ***************/
 print ''
 Print '***Insert Sample Data For The  Vehicle_Type table***' 
- go
+ GO
 
 INSERT INTO [dbo].[Vehicle_Type]
     ([Vehicle_Type])
@@ -363,7 +363,7 @@ Create the [dbo].[Vehicle] table
 ***************/
 print ''
 Print '***Create the [dbo].[Vehicle] table***' 
- go
+ GO
 
 CREATE TABLE [dbo].[Vehicle]
 (
@@ -395,7 +395,7 @@ Insert Sample Data For The  Vehicle table
 ***************/
 print ''
 Print '***Insert Sample Data For The  Vehicle table***' 
- go
+ GO
 
 INSERT INTO [dbo].[Vehicle]
     ([VIN], [Vehicle_Number], [Vehicle_Mileage], [Vehicle_License_Plate]
@@ -416,7 +416,7 @@ Create the [dbo].[Employee] table
 ***************/
 print ''
 Print '***Create the [dbo].[Employee] table***' 
- go
+ GO
 
 
 CREATE TABLE [dbo].[Employee]
@@ -443,7 +443,7 @@ Insert Sample Data For The  Employee table
 ***************/
 print ''
 Print '***Insert Sample Data For The  Employee table***' 
- go
+ GO
 INSERT INTO [dbo].[Employee]
     ([Given_Name],[Family_Name],[Address],[City],[State],[Country],[Zip],
     [Phone_Number],[Email],[Position]
@@ -497,7 +497,7 @@ Create the [dbo].[Role] table
 ***************/
 print ''
 Print '***Create the [dbo].[Role] table***' 
- go
+ GO
 CREATE TABLE [dbo].[Role]
 (
     [Role_ID] [nvarchar](25) NOT NULL,
@@ -509,14 +509,14 @@ GO
 Insert Sample Data For The  Role table
 ***************/
 print '' Print '***Insert Sample Data For The  Role table***' 
- go
+ GO
  Insert into [dbo].[Role] ([Role_ID]) VALUES 
 	('Admin'),
 	('FleetAdmin'),
 	('Mechanic'),
 	('Maintenance'),
 	('PartsPerson')
- go
+ GO
 
 
 /******************
@@ -524,7 +524,7 @@ Create the [dbo].[Employee_Role] table
 ***************/
 print ''
 Print '***Create the [dbo].[Employee_Role] table***' 
- go
+ GO
 
 CREATE TABLE [dbo].[Employee_Role]
 (
@@ -566,7 +566,7 @@ Create the [dbo].[Driver_License_Class] table
 ***************/
 print ''
 Print '***Create the [dbo].[Driver_License_Class] table***' 
- go
+ GO
 
 
 CREATE TABLE [dbo].[Driver_License_Class]
@@ -597,7 +597,7 @@ Create the [dbo].[Driver] table
 ***************/
 print ''
 Print '***Create the [dbo].[Driver] table***' 
- go
+ GO
 
 
 CREATE TABLE [dbo].[Driver]
@@ -618,7 +618,7 @@ Insert Sample Data For The  Driver table
 ***************/
 print ''
 Print '***Insert Sample Data For The  Driver table***' 
- go
+ GO
 print ''
 print '*** Inserting Sample Data for Driver ***'
 GO
@@ -637,7 +637,7 @@ Create the [dbo].[Schedule] table
 ***************/
 print ''
 Print '***Create the [dbo].[Schedule] table***' 
- go
+ GO
 
 
 CREATE TABLE [dbo].[Schedule]
@@ -661,7 +661,7 @@ Insert Sample Data For The  Schedule table
 ***************/
 print ''
 Print '***Insert Sample Data For The  Schedule table***' 
- go
+ GO
 INSERT INTO [dbo].[Schedule]
     ([Schedule_ID], [Driver_ID],[Week_Days],
     [Start_Time],[End_Time],[Start_Date], [End_Date],[Notes],[Is_Active]
@@ -681,7 +681,7 @@ Create the [dbo].[Route_Assignment] table
 ***************/
 print ''
 Print '***Create the [dbo].[Route_Assignment] table***' 
-go
+GO
 CREATE TABLE [dbo].[Route_Assignment]
 (
     [Assignment_ID] [int] IDENTITY(100000, 1),
@@ -699,14 +699,14 @@ CREATE TABLE [dbo].[Route_Assignment]
     CONSTRAINT [FK_Route_Assignment_VIN_Vehicle_VIN]
     FOREIGN KEY([VIN]) REFERENCES [dbo].[Vehicle]([VIN])
 );
-go
+GO
 
 /******************
 Insert Sample Data For The  Route_Assignment table
 ***************/
 print ''
 Print '***Insert Sample Data For The  Route_Assignment table***' 
-go
+GO
 INSERT INTO [dbo].[Route_Assignment]
     ([Driver_ID], [Route_ID], [VIN], [Date_Assignment_Started], [Date_Assignment_Ended])
 VALUES
@@ -715,7 +715,7 @@ VALUES
     (100002, 100001, 'JM1BK32F781234567', '2024-01-20', NULL),
     (100003, 100002, 'WAUZZZ4G6BN123456', '2022-04-23', '2023-02-19'),
     (100004, 100003, '1C4RJFAG5FC123456', '2023-07-12', '2023-09-06')
-go
+GO
 
 
 /******************
@@ -723,7 +723,7 @@ Create the [dbo].[Safety_Report] table
 ***************/
 print ''
 Print '***Create the [dbo].[Safety_Report] table***' 
- go
+ GO
 
 
 CREATE TABLE [dbo].[Safety_Report]
@@ -751,7 +751,7 @@ Insert Sample Data For The  Safety_Report table
 ***************/
 print ''
 Print '***Insert Sample Data For The  Safety_Report table***' 
- go
+ GO
 
 INSERT INTO [dbo].[Safety_Report]
     ([Employee_ID], [Date], [Time_Of_Event], [Affected_Party], [Description])
@@ -769,7 +769,7 @@ Create the [dbo].[Refuel_Log] table
 ***************/
 print ''
 Print '***Create the [dbo].[Refuel_Log] table***' 
- go
+ GO
 
 
 CREATE TABLE [dbo].[Refuel_Log]
@@ -809,7 +809,7 @@ Insert Sample Data For The  Refuel_Log table
 ***************/
 print ''
 Print '***Insert Sample Data For The  Refuel_Log table***' 
- go
+ GO
 
 INSERT INTO [dbo].[Refuel_Log]
     ([Driver_ID], [VIN], [Date_Time], [Mileage], [Fuel_Quantity], [Fuel_Price_Per_Gal], [Total_Sale], [Notes])
@@ -827,7 +827,7 @@ Create the [dbo].[Service_Type] table
 ***************/
 print ''
 Print '***Create the [dbo].[Service_Type] table***' 
- go
+ GO
 
 
 CREATE TABLE [dbo].[Service_Type]
@@ -845,12 +845,12 @@ Insert Sample Data For The  Service_Type table
 ***************/
 print ''
 Print '***Insert Sample Data For The  Service_Type table***' 
- go
+ GO
 
 
 print ''
 Print '***Create the [dbo].[Service_Type] table***' 
- go
+ GO
 INSERT INTO [dbo].[Service_Type]
     ([Service_Type_ID], [Service_Description])
 VALUES
@@ -884,7 +884,7 @@ Insert Sample Data For The  Model_Lookup table
 ***************/
 print ''
 Print '***Insert Sample Data For The  Model_Lookup table***' 
- go
+ GO
 INSERT INTO [dbo].[Model_Lookup]
     (
 
@@ -907,7 +907,7 @@ Create the [dbo].[Maintenance_Schedule] table
 ***************/
 print ''
 Print '***Create the [dbo].[Maintenance_Schedule] table***' 
- go
+ GO
 
 
 CREATE TABLE [dbo].[Maintenance_Schedule]
@@ -958,7 +958,7 @@ Create the [dbo].[Service_Line_Item] table
 ***************/
 print ''
 Print '***Create the [dbo].[Service_Line_Item] table***' 
- go
+ GO
 
 
 CREATE TABLE [dbo].[Service_Line_Item]
@@ -979,7 +979,7 @@ Insert Sample Data For The  Service_Line_Item table
 ***************/
 print ''
 Print '***Insert Sample Data For The  Service_Line_Item table***' 
- go
+ GO
 INSERT INTO [dbo].[Service_Line_Item]
     ([Service_Line_Item_ID], [Parts_Inventory_ID], [Quantity])
 VALUES
@@ -996,7 +996,7 @@ Create the [dbo].[Service_Order] table
 ***************/
 print ''
 Print '***Create the [dbo].[Service_Order] table***' 
- go
+ GO
 
 
 CREATE TABLE [dbo].[Service_Order]
@@ -1031,7 +1031,7 @@ Insert Sample Data For The  Service_Order table
 ***************/
 print ''
 Print '***Insert Sample Data For The  Service_Order table***' 
- go
+ GO
 INSERT INTO [dbo].[Service_Order]
     ([Service_Order_ID], [Service_Order_Version], [VIN], [Service_Type_ID], [Created_By_Employee_ID], [Date_Started], [Date_Finished])
 VALUES
@@ -1048,7 +1048,7 @@ Create the [dbo].[Service_Line] table
 ***************/
 print ''
 Print '***Create the [dbo].[Service_Line] table***' 
- go
+ GO
 
 
 CREATE TABLE [dbo].[Service_Line]
@@ -1067,21 +1067,21 @@ CREATE TABLE [dbo].[Service_Line]
     CONSTRAINT [fk_Service_Line_Service_Line_Item1] foreign key ([Service_Line_Item_ID]) references [Service_Line_Item]([Service_Line_Item_ID])
 
 )
-go
+GO
 
 /******************
 Insert Sample Data For The  Service_Line table
 ***************/
 print ''
 Print '***Insert Sample Data For The  Service_Line table***' 
- go
+ GO
 
 /******************
 Create the [dbo].[Special_Service_Order] table
 ***************/
 print ''
 Print '***Create the [dbo].[Special_Service_Order] table***' 
- go
+ GO
 
 
 CREATE TABLE [dbo].[Special_Service_Order]
@@ -1104,14 +1104,14 @@ CREATE TABLE [dbo].[Special_Service_Order]
 ,
     CONSTRAINT [fk_Special_Service_Order_Service_order0] foreign key ([Service_order_id],[Service_Order_Version]) references [Service_order]([Service_order_id],[Service_Order_Version])
 )
-go
+GO
 
 /******************
 Insert Sample Data For The  Special_Service_Order table
 ***************/
 print ''
 Print '***Insert Sample Data For The  Special_Service_Order table***' 
- go
+ GO
 
 
 INSERT INTO [dbo].[Special_Service_Order]
@@ -1128,7 +1128,7 @@ Create the [dbo].[Special_Inspection] table
 ***************/
 print ''
 Print '***Create the [dbo].[Special_Inspection] table***' 
- go
+ GO
 
 
 CREATE TABLE [dbo].[Special_Inspection]
@@ -1153,14 +1153,14 @@ CREATE TABLE [dbo].[Special_Inspection]
 ,
     CONSTRAINT [fk_Special_Inspection_Employee1] foreign key ([Employee_id]) references [Employee]([Employee_id])
 )
-go
+GO
 
 /******************
 Insert Sample Data For The  Special_Inspection table
 ***************/
 print ''
 Print '***Insert Sample Data For The  Special_Inspection table***' 
- go
+ GO
 
 INSERT INTO [dbo].[Special_Inspection]
     ([Special_Service_Order_ID], [Inspection_Description],[Date],
@@ -1179,7 +1179,7 @@ Create the [dbo].[Bid] table
 ***************/
 print ''
 Print '***Create the [dbo].[Bid] table***' 
- go
+ GO
 
 
 CREATE TABLE [dbo].[Bid]
@@ -1208,14 +1208,14 @@ CREATE TABLE [dbo].[Bid]
 ,
     CONSTRAINT [fk_Bid_vendor1] foreign key ([vendor_id]) references [vendor]([vendor_id])
 )
-go
+GO
 
 /******************
 Insert Sample Data For The  Bid table
 ***************/
 print ''
 Print '***Insert Sample Data For The  Bid table***' 
- go
+ GO
 
 INSERT INTO [dbo].[Bid]
     ([Special_Service_Order_ID], [vendor_id],[Bid_Description],
@@ -1234,7 +1234,7 @@ Create the [dbo].[Special_Work_Order] table
 ***************/
 print ''
 Print '***Create the [dbo].[Special_Work_Order] table***' 
- go
+ GO
 
 
 CREATE TABLE [dbo].[Special_Work_Order]
@@ -1257,14 +1257,14 @@ CREATE TABLE [dbo].[Special_Work_Order]
 ,
     CONSTRAINT [fk_Special_Work_Order_Bid0] foreign key ([Bid_ID]) references [Bid]([Bid_ID])
 )
-go
+GO
 
 /******************
 Insert Sample Data For The  Special_Work_Order table
 ***************/
 print ''
 Print '***Insert Sample Data For The  Special_Work_Order table***' 
- go
+ GO
 
 INSERT INTO [dbo].[Special_Work_Order]
     ([Bid_ID], [Work_Order_Description],[Drop_Off_Date],
@@ -1281,7 +1281,7 @@ Create the [dbo].[Change_Order] table
 ***************/
 print ''
 Print '***Create the [dbo].[Change_Order] table***' 
- go
+ GO
 CREATE TABLE [dbo].[Change_Order]
 (
     [Change_Order_ID] [int] IDENTITY(100000,1) NOT NULL,
@@ -1298,7 +1298,7 @@ CREATE TABLE [dbo].[Change_Order]
     CONSTRAINT [FK_Change_Order_Employee] FOREIGN KEY ([Employee_ID])
         REFERENCES [dbo].[Employee] ([Employee_ID])
 )
-go
+GO
 
 
 /******************
@@ -1306,7 +1306,7 @@ Insert Sample Data For The  Change_Order table
 ***************/
 print ''
 Print '***Insert Sample Data For The  Change_Order table***' 
- go
+ GO
 INSERT INTO [dbo].[Change_Order]
     ([Vendor_ID], [Change_Order_Date], [Original_PO_Number], [Employee_ID])
 VALUES
@@ -1315,7 +1315,7 @@ VALUES
     (100002, GETDATE(), 100002, 100002),
     (100003, GETDATE(), 100002, 100003),
     (100003, GETDATE(), 100003, 100002);
-go
+GO
 
 
 /******************
@@ -1323,7 +1323,7 @@ Create the [dbo].[Change_Order_Line] table
 ***************/
 print ''
 Print '***Create the [dbo].[Change_Order_Line] table***' 
- go
+ GO
 CREATE TABLE [dbo].[Change_Order_Line]
 (
     [Change_Order_ID] [int] NOT NULL,
@@ -1337,7 +1337,7 @@ CREATE TABLE [dbo].[Change_Order_Line]
     CONSTRAINT [FK_Change_Order_Line_Parts_Inventory] FOREIGN KEY ([Parts_Inventory_ID])
     	REFERENCES [dbo].[Parts_Inventory] ([Parts_Inventory_ID])
 )
-go
+GO
 
 
 /******************
@@ -1345,7 +1345,7 @@ Insert Sample Data For The  Change_Order_Line table
 ***************/
 print ''
 Print '***Insert Sample Data For The  Change_Order_Line table***' 
- go
+ GO
 INSERT INTO [dbo].[Change_Order_Line]
     ([Change_Order_ID], [Parts_Inventory_ID], [Original_Qty], [Updated_Qty])
 VALUES
@@ -1354,7 +1354,7 @@ VALUES
     (100002, 100003, 2, 4),
     (100003, 100002, 2, 3),
     (100004, 100001, 1, 2)
-go
+GO
 
 
 
@@ -1363,7 +1363,7 @@ Create the [dbo].[Packing_Slip_Line_Items] table
 ***************/
 print ''
 Print '***Create the [dbo].[Packing_Slip_Line_Items] table***' 
-go
+GO
 CREATE TABLE [dbo].[Packing_Slip_Line_Items]
 (
     [Packing_Slip_ID] [int] NOT NULL,
@@ -1376,14 +1376,14 @@ CREATE TABLE [dbo].[Packing_Slip_Line_Items]
         REFERENCES [dbo].[Parts_Inventory] ([Parts_Inventory_ID]),
     CONSTRAINT [PK_Packing_Slip_Line_Items] PRIMARY KEY ([Packing_Slip_ID], [Parts_Inventory_ID])
 )
-go
+GO
 
 /******************
 Insert Sample Data For The  Packing_Slip_Line_Items table
 ***************/
 print ''
 Print '***Insert Sample Data For The  Packing_Slip_Line_Items table***' 
- go
+ GO
 INSERT INTO [dbo].[Packing_Slip_Line_Items]
     ([Packing_Slip_ID], [Qty_Recieved], [Parts_Inventory_ID])
 VALUES
@@ -1392,7 +1392,7 @@ VALUES
     (100002, 2, 100002),
     (100003, 2, 100001),
     (100004, 2, 100000)
-go
+GO
 
 
 /******************
@@ -1400,7 +1400,7 @@ Create the [dbo].[Model_Compatibility] table
 ***************/
 print ''
 Print '***Create the [dbo].[Model_Compatibility] table***' 
- go 
+ GO 
 
 
 GO
@@ -1423,7 +1423,7 @@ Insert Sample Data For The  Model_Compatibility table
 ***************/
 print ''
 Print '***Insert Sample Data For The  Model_Compatibility table***' 
- go
+ GO
 
 INSERT INTO [dbo].[Model_Compatibility]
     (
@@ -1443,7 +1443,7 @@ Create the [dbo].[Service_Detail] table
 ***************/
 print ''
 Print '***Create the [dbo].[Service_Detail] table***' 
- go
+ GO
 
 
 CREATE TABLE [dbo].[Service_Detail]
@@ -1472,7 +1472,7 @@ Insert Sample Data For The  Service_Detail table
 ***************/
 print ''
 Print '***Insert Sample Data For The  Service_Detail table***' 
- go
+ GO
 INSERT INTO [dbo].[Service_Detail]
     ([Service_Order_ID],[Service_Order_Version],[Service_Type_ID],[Employee_ID])
 VALUES
@@ -1488,7 +1488,7 @@ Create the [dbo].[Parts_Request] table
 ***************/
 print ''
 Print '***Create the [dbo].[Parts_Request] table***' 
- go
+ GO
 CREATE TABLE [dbo].[Parts_Request]
 (
     [Parts_Request_ID] [int] IDENTITY(100000,1) NOT NULL,
@@ -1502,7 +1502,7 @@ CREATE TABLE [dbo].[Parts_Request]
     CONSTRAINT [FK_Parts_Request_Service_Detail] FOREIGN KEY ([Service_Detail_ID])
     	REFERENCES [dbo].[Service_Detail] ([Service_Detail_ID])
 )  
-go
+GO
 
 
 /******************
@@ -1510,7 +1510,7 @@ Insert Sample Data For The  Parts_Request table
 ***************/
 print ''
 Print '***Insert Sample Data For The  Parts_Request table***' 
- go
+ GO
 INSERT INTO [dbo].[Parts_Request]
     ([Employee_ID], [Service_Detail_ID], [Date_Requested])
 VALUES
@@ -1519,14 +1519,14 @@ VALUES
     (100001, 100002, GETDATE()),
     (100003, 100003, GETDATE()),
     (100003, 100004, GETDATE())
-go
+GO
 
 /******************
 Create the [dbo].[Parts_Request_Line_Items] table
 ***************/
 print ''
 Print '***Create the [dbo].[Parts_Request_Line_Items] table***' 
- go
+ GO
 
 CREATE TABLE [dbo].[Parts_Request_Line_Items]
 (
@@ -1549,7 +1549,7 @@ Insert Sample Data For The  Parts_Request_Line_Items table
 ***************/
 print ''
 Print '***Insert Sample Data For The  Parts_Request_Line_Items table***' 
- go
+ GO
 
 /* Parts Request Line Items Test Record */
 print ''
@@ -1643,7 +1643,7 @@ Create the [dbo].[Client] table
 ***************/
 print ''
 Print '***Create the [dbo].[Client] table***' 
- go
+ GO
 
 
 print ''
@@ -1674,7 +1674,7 @@ Insert Sample Data For The  Client table
 ***************/
 print ''
 Print '***Insert Sample Data For The  Client table***' 
- go
+ GO
 INSERT INTO [dbo].[Client]
     ([Given_Name],[Family_Name],[Middle_Name],[DOB],[Email],[Postal_Code],[City],[Region],[Address],[Text_Number],[Voice_Number],[Is_Active])
 VALUES
@@ -1690,7 +1690,7 @@ Create the [dbo].[Client_Credential] table
 ***************/
 print ''
 Print '***Create the [dbo].[Client_Credential] table***' 
- go
+ GO
 
 
 CREATE TABLE [dbo].[Client_Credential]
@@ -1716,7 +1716,7 @@ Insert Sample Data For The  Client_Credential table
 ***************/
 print ''
 Print '***Insert Sample Data For The  Client_Credential table***' 
- go
+ GO
 INSERT INTO [dbo].[Client_Credential]
     ([License_Number],[Driver_License_Class_ID],[License_Expiration],[Client_ID],[Permission],[Certified],[Certification_Description],[Certification_Date],[Is_Active])
 VALUES
@@ -1731,7 +1731,7 @@ Create the [dbo].[Login] table
 ***************/
 print ''
 Print '***Creating [dbo].[Login] table***' 
- go
+ GO
 CREATE TABLE [dbo].[Login]
 (
 	[Username]				[nvarchar](50)				NOT NULL,
@@ -1766,7 +1766,7 @@ Insert Sample Data For The  Login table
 ***************/
 print ''
 Print '***Insert Sample Data For The  Login table***' 
- go
+ GO
 
 INSERT INTO [dbo].[Login] (
         [Username],
@@ -1787,7 +1787,7 @@ Create the [dbo].[Client_Role] table
 ***************/
 print ''
 Print '***Create the [dbo].[Client_Role] table***' 
-go
+GO
 
 CREATE TABLE [dbo].[Client_Role]
 (
@@ -1802,7 +1802,7 @@ Insert Sample Data For The  Client_Role table
 ***************/
 print ''
 Print '***Insert Sample Data For The  Client_Role table***' 
- go
+ GO
 INSERT INTO [dbo].[Client_Role]
     ([Client_Role_ID],[Role_Description],[Is_Active])
 VALUES
@@ -1818,7 +1818,7 @@ Create the [dbo].[Client_Client_Role] table
 ***************/
 print ''
 Print '***Create the [dbo].[Client_Client_Role] table***' 
- go
+ GO
 
 
 CREATE TABLE [dbo].[Client_Client_Role]
@@ -1839,7 +1839,7 @@ Insert Sample Data For The  Client_Client_Role table
 ***************/
 print ''
 Print '***Insert Sample Data For The  Client_Client_Role table***' 
- go 
+ GO 
 GO
 INSERT INTO [dbo].[Client_Client_Role]
     ([Client_ID],[Client_Role_ID],[Is_Active])
@@ -1856,7 +1856,7 @@ Create the [dbo].[Accommodation] table
 ***************/
 print ''
 Print '***Create the [dbo].[Accommodation] table***' 
- go
+ GO
 
 
 CREATE TABLE [dbo].[Accommodation]
@@ -1874,7 +1874,7 @@ Insert Sample Data For The  Accommodation table
 ***************/
 print ''
 Print '***Insert Sample Data For The  Accommodation table***' 
- go
+ GO
 INSERT INTO [dbo].[Accommodation]
     ([Accommodation_ID], [Accommodation_Description])
 VALUES
@@ -1893,7 +1893,7 @@ Create the [dbo].[Client_Accommodation] table
 ***************/
 print ''
 Print '***Create the [dbo].[Client_Accommodation] table***' 
- go
+ GO
 
 
 CREATE TABLE [dbo].[Client_Accommodation]
@@ -1913,7 +1913,7 @@ Insert Sample Data For The  Client_Accommodation table
 ***************/
 print ''
 Print '***Insert Sample Data For The  Client_Accommodation table***' 
- go
+ GO
 INSERT INTO [dbo].[Client_Accommodation]
     ([Client_ID],[Accommodation_ID],[Is_Active])
 VALUES
@@ -1931,7 +1931,7 @@ Create the [dbo].[Dependent] table
 ***************/
 print ''
 Print '***Creating [dbo].[Dependent] table***' 
- go
+ GO
 CREATE TABLE [dbo].[Dependent]
 (
     [Dependent_ID] [int] IDENTITY(100000, 1) NOT NULL,
@@ -1958,7 +1958,7 @@ Insert Sample Data For The  Dependent table
 ***************/
 print ''
 Print '***Insert Sample Data For The  Dependent table***' 
- go
+ GO
 INSERT INTO [dbo].[Dependent]
     ([Given_Name],[Middle_Name],[Family_Name],[DOB],[Emergency_Contact],[Emergency_Phone])
 VALUES
@@ -1994,14 +1994,14 @@ Insert Sample Data For The  Dependent_Accommodation table
 ***************/
 print ''
 Print '***Insert Sample Data For The  Dependent_Accommodation table***' 
- go
+ GO
 
 /******************
 Create the [dbo].[Client_Dependent_Role] table
 ***************/
 print ''
 Print '***Create the [dbo].[Client_Dependent_Role] table***' 
- go
+ GO
 
 
 CREATE TABLE [dbo].[Client_Dependent_Role]
@@ -2022,21 +2022,21 @@ CREATE TABLE [dbo].[Client_Dependent_Role]
 ,
     CONSTRAINT [fk_Client_Dependent_Role_Dependent1] foreign key ([Dependent_ID]) references [Dependent]([Dependent_ID])
 )
-go
+GO
 
 /******************
 Insert Sample Data For The  Client_Dependent_Role table
 ***************/
 print ''
 Print '***Insert Sample Data For The  Client_Dependent_Role table***' 
- go
+ GO
 
 /******************
 Create the [dbo].[Notification] table
 ***************/
 print ''
 Print '***Create the [dbo].[Notification] table***' 
- go
+ GO
 CREATE TABLE [dbo].[Notification]
 (
     [Notification_ID] [int] IDENTITY(100000, 1) NOT NULL,
@@ -2064,7 +2064,7 @@ Insert Sample Data For The  Notification table
 ***************/
 print ''
 Print '***Insert Sample Data For The  Notification table***' 
- go
+ GO
 INSERT INTO [dbo].[Notification]
     ([Client_ID],[Title],[Notification_Body])
 VALUES
@@ -2084,7 +2084,7 @@ Create the [dbo].[Ticket_Type] table
 ***************/
 print ''
 Print '***Create the [dbo].[Ticket_Type] table***' 
- go
+ GO
 
 
 CREATE TABLE [dbo].[Ticket_Type]
@@ -2094,14 +2094,14 @@ CREATE TABLE [dbo].[Ticket_Type]
     [Is_Active] [bit] DEFAULT 1 NOT NULL,
     CONSTRAINT [pk_Ticket_Type_ID] PRIMARY KEY([Ticket_Type_ID])
 )
-go
+GO
 
 /******************
 Insert Sample Data For The  Ticket_Type table
 ***************/
 print ''
 Print '***Insert Sample Data For The  Ticket_Type table***' 
- go
+ GO
 
 
 INSERT INTO [dbo].[Ticket_Type]
@@ -2112,7 +2112,7 @@ VALUES
     ( 'Type3', 'Sample Ticket Type Description'),
     ( 'Type4', 'Sample Ticket Type Description'),
     ( 'Type5', 'Sample Ticket Type Description')
-go
+GO
 
 
 /******************
@@ -2120,7 +2120,7 @@ Create the [dbo].[Support_Ticket] table
 ***************/
 print ''
 Print '***Create the [dbo].[Support_Ticket] table***' 
- go
+ GO
 
 
 CREATE TABLE [dbo].[Support_Ticket]
@@ -2139,21 +2139,21 @@ CREATE TABLE [dbo].[Support_Ticket]
     CONSTRAINT [fk_Support_Ticket_Client_ID] FOREIGN KEY ([Client_ID])
 		REFERENCES [dbo].[Client] ([Client_ID])
 )
-go
+GO
 
 /******************
 Insert Sample Data For The  Support_Ticket table
 ***************/
 print ''
 Print '***Insert Sample Data For The  Support_Ticket table***' 
- go
+ GO
 
 /******************
 Create the [dbo].[Support_Ticket_Employee_Line] table
 ***************/
 print ''
 Print '***Create the [dbo].[Support_Ticket_Employee_Line] table***' 
- go
+ GO
 
 
 CREATE TABLE [dbo].[Support_Ticket_Employee_Line]
@@ -2168,7 +2168,7 @@ CREATE TABLE [dbo].[Support_Ticket_Employee_Line]
     CONSTRAINT [fk_Support_Ticket_Employee_Line_Employee_ID] FOREIGN KEY ([Employee_ID])
 		REFERENCES [dbo].[Employee] ([Employee_ID])
 )
-go
+GO
 
 
 /******************
@@ -2176,14 +2176,14 @@ Insert Sample Data For The  Support_Ticket_Employee_Line table
 ***************/
 print ''
 Print '***Insert Sample Data For The  Support_Ticket_Employee_Line table***' 
- go
+ GO
 
 /******************
 Create the [dbo].[Charter] table
 ***************/
 print ''
 Print '***Create the [dbo].[Charter] table***' 
- go
+ GO
 
 
 CREATE TABLE [dbo].[Charter]
@@ -2218,21 +2218,21 @@ CREATE TABLE [dbo].[Charter]
 ,
     CONSTRAINT [fk_Charter_Employee1] foreign key ([Employee_ID]) references [Employee]([Employee_ID])
 )
-go
+GO
 
 /******************
 Insert Sample Data For The  Charter table
 ***************/
 print ''
 Print '***Insert Sample Data For The  Charter table***' 
- go
+ GO
 
 /******************
 Create the [dbo].[Charter_Assignment] table
 ***************/
 print ''
 Print '***Create the [dbo].[Charter_Assignment] table***' 
- go
+ GO
 
 
 CREATE TABLE [dbo].[Charter_Assignment]
@@ -2267,21 +2267,21 @@ CREATE TABLE [dbo].[Charter_Assignment]
 ,
     CONSTRAINT [fk_Charter_Assignment_Vehicle_Type3] foreign key ([Vehicle_Type]) references [Vehicle_Type]([Vehicle_Type])
 )
-go
+GO
 
 /******************
 Insert Sample Data For The  Charter_Assignment table
 ***************/
 print ''
 Print '***Insert Sample Data For The  Charter_Assignment table***' 
- go
+ GO
 
 /******************
 Create the [dbo].[Charter_Accommodation] table
 ***************/
 print ''
 Print '***Create the [dbo].[Charter_Accommodation] table***' 
- go
+ GO
 
 
 CREATE TABLE [dbo].[Charter_Accommodation]
@@ -2302,21 +2302,21 @@ CREATE TABLE [dbo].[Charter_Accommodation]
 ,
     CONSTRAINT [fk_Charter_Accommodation_Accommodation1] foreign key ([Accommodation_ID]) references [Accommodation]([Accommodation_ID])
 )
-go
+GO
 
 /******************
 Insert Sample Data For The  Charter_Accommodation table
 ***************/
 print ''
 Print '***Insert Sample Data For The  Charter_Accommodation table***' 
- go
+ GO
 
 /******************
 Create the [dbo].[Charter_Stop] table
 ***************/
 print ''
 Print '***Create the [dbo].[Charter_Stop] table***' 
- go
+ GO
 
 
 CREATE TABLE [dbo].[Charter_Stop]
@@ -2347,21 +2347,21 @@ CREATE TABLE [dbo].[Charter_Stop]
 ,
     CONSTRAINT [fk_Charter_Stop_Charter0] foreign key ([Charter_ID]) references [Charter]([Charter_ID])
 )
-go
+GO
 
 /******************
 Insert Sample Data For The  Charter_Stop table
 ***************/
 print ''
 Print '***Insert Sample Data For The  Charter_Stop table***' 
- go
+ GO
 
 /******************
 Create the [dbo].[Charter_Rider] table
 ***************/
 print ''
 Print '***Create the [dbo].[Charter_Rider] table***' 
- go
+ GO
 
 
 CREATE TABLE [dbo].[Charter_Rider]
@@ -2380,21 +2380,21 @@ CREATE TABLE [dbo].[Charter_Rider]
 ,
     CONSTRAINT [fk_Charter_Rider_Dependent1] foreign key ([Dependent_ID]) references [Dependent]([Dependent_ID])
 )
-go
+GO
 
 /******************
 Insert Sample Data For The  Charter_Rider table
 ***************/
 print ''
 Print '***Insert Sample Data For The  Charter_Rider table***' 
- go
+ GO
 
 /******************
 Create the [dbo].[Vehicle_Checklist] table
 ***************/
 print ''
 Print '***Create the [dbo].[Vehicle_Checklist] table***' 
- go
+ GO
 
 
 CREATE TABLE [dbo].[Vehicle_Checklist]
@@ -2457,7 +2457,7 @@ Insert Sample Data For The  Vehicle_Checklist table
 ***************/
 print ''
 Print '***Insert Sample Data For The  Vehicle_Checklist table***' 
- go
+ GO
 
 SET IDENTITY_INSERT [dbo].[Vehicle_Checklist] ON
 INSERT INTO [dbo].[Vehicle_Checklist]
@@ -2548,7 +2548,7 @@ Create the [dbo].[Service] table
 ***************/
 print ''
 Print '***Create the [dbo].[Service] table***' 
- go
+ GO
 
 
 CREATE TABLE [dbo].[Service]
@@ -2558,14 +2558,14 @@ CREATE TABLE [dbo].[Service]
     [Is_Active] [bit] DEFAULT 1 not null,
     CONSTRAINT [PK_Service] PRIMARY KEY ([Service_ID])
 )
-go
+GO
 
 /******************
 Insert Sample Data For The  Service table
 ***************/
 print ''
 Print '***Insert Sample Data For The  Service table***' 
-go
+GO
 INSERT INTO [dbo].[Service]
     ([Service_ID], [Type])
 VALUES
@@ -2574,7 +2574,7 @@ VALUES
     ('redoing paint', 'fun'),
     ('something leaking', 'wet'),
     ('car totaled', 'expensive')
-go
+GO
 
 
 /******************
@@ -2582,7 +2582,7 @@ Create the [dbo].[Service_Assignment] table
 ***************/
 print ''
 Print '***Create the [dbo].[Service_Assignment] table***' 
- go
+ GO
 CREATE TABLE [dbo].[Service_Assignment]
 (
     [Service_Assignment_ID] [int] IDENTITY(100000,1) NOT NULL,
@@ -2601,14 +2601,14 @@ CREATE TABLE [dbo].[Service_Assignment]
         REFERENCES [Driver]([Employee_ID]),
 )
 
-go
+GO
 
 /******************
 Insert Sample Data For The  Service_Assignment table
 ***************/
 print ''
 Print '***Insert Sample Data For The  Service_Assignment table***' 
- go
+ GO
 INSERT INTO [dbo].[Service_Assignment]
     ([VIN], [Service_ID],
     [Driver_ID], [Start_Datetime], [End_Datetime], [Is_Active]
@@ -2626,7 +2626,7 @@ Create the [dbo].[Ride] table
 ***************/
 print ''
 Print '***Create the [dbo].[Ride] table***' 
-go
+GO
 CREATE TABLE [dbo].[Ride]
 (
     [Ride_ID] [int] IDENTITY(100000, 1),
@@ -2649,14 +2649,14 @@ CREATE TABLE [dbo].[Ride]
     CONSTRAINT [FK_Ride_Service_Assignment_ID_Service_Assignment_Service_Assignment_ID]
     FOREIGN KEY([Service_Assignment_ID]) REFERENCES [dbo].[Service_Assignment]([Service_Assignment_ID])
 );
-go
+GO
 
 /******************
 Insert Sample Data For The  Ride table
 ***************/
 print ''
 Print '***Insert Sample Data For The  Ride table***' 
-go
+GO
 INSERT INTO [dbo].[Ride]
     ([Client_ID], [Service_ID], [Service_Assignment_ID], [Pickup_Location], [Dropoff_Location], [Scheduled_Pickup_Time], [Estimated_Dropoff_Time], [Actual_Pickup_Time], [Actual_Dropoff_Time], [Requested])
 VALUES
@@ -2665,7 +2665,7 @@ VALUES
     (100002, 'Replacing tires', NULL, '123 Fake Street SW', 'Alliant Energy Powerhouse', '2024-02-01 10:15:00', '2024-02-01 10:45:00', '2024-02-01 10:14:12', NULL, 0),
     (100003, 'Replacing tires', 100001, '456 Sample Road', '789 Test Lane', '2024-01-27 14:45:00', NULL, '2024-01-27 14:46:37', '2024-01-27 15:02:28', 1),
     (100004, 'Replacing tires', 100000, '543 Development Drive', '901 Production Place', NULL, NULL, NULL, NULL, 1)
-go
+GO
 
 
 /******************
@@ -2673,7 +2673,7 @@ Create the [dbo].[Source] table
 ***************/
 print ''
 Print '***Create the [dbo].[Source] table***' 
- go
+ GO
 
 
 CREATE TABLE [dbo].[Source]
@@ -2702,14 +2702,14 @@ CREATE TABLE [dbo].[Source]
 ,
     CONSTRAINT [fk_Source_Parts_Inventory1] foreign key ([Parts_inventory_id]) references [Parts_Inventory]([Parts_Inventory_ID])
 )
-go
+GO
 
 /******************
 Insert Sample Data For The  Source table
 ***************/
 print ''
 Print '***Insert Sample Data For The  Source table***' 
- go
+ GO
 
 
 
@@ -2722,7 +2722,7 @@ Create the [dbo].[Vehicle_Unavailable] table
 ***************/
 print ''
 Print '***Create the [dbo].[Vehicle_Unavailable] table***' 
- go
+ GO
 
 
 CREATE TABLE [dbo].[Vehicle_Unavailable]
@@ -2742,14 +2742,14 @@ CREATE TABLE [dbo].[Vehicle_Unavailable]
     ([VIN])
 );
 GO
-go
+GO
 
 /******************
 Insert Sample Data For The  Vehicle_Unavailable table
 ***************/
 print ''
 Print '***Insert Sample Data For The  Vehicle_Unavailable table***' 
- go
+ GO
 
 INSERT INTO [dbo].[Vehicle_Unavailable]
     ([VIN], [Start_Datetime], [End_Datetime], [Reason])
@@ -2799,392 +2799,4 @@ VALUES
     (100002, 'JM1BK32F781234567', '2024-03-01', NULL, 'Assignment started on Mar 1', 1),
     (100003, 'WAUZZZ4G6BN123456', '2024-04-01', '2024-04-15', 'Assignment from Apr 1 to Apr 15', 1),
     (100004, '1C4RJFAG5FC123456', '2024-05-01', NULL, 'Assignment started on May 1', 1)
-	go
-	
-	
-	
-print '' print '*** SP to Select All Roles ***'
-go
--- Initial Creator: James Williams
--- Creation Date: 2024-02-01
--- Last Modified: James Williams
--- Modification Description: Initial Creation
--- Stored Procedure Description: get all active employee roles
-CREATE PROCEDURE [dbo].[sp_get_all_active_role]
-AS 
-	BEGIN
-		SELECT [Role_ID]
-		FROM [Role]
-		WHERE [Is_Active] = 1
-	END
-go
-
-/******************
-Create sp_select_all_client Stored Procedure
-***************/
-print '' print '*** creating sp_select_all_client ***'
-GO
-CREATE PROCEDURE [dbo].[sp_select_all_client]
-AS 
-	BEGIN
-		SELECT	[Client_ID],
-				[Given_Name],
-				[Family_Name],
-				[Middle_Name],
-				[DOB],
-				[Email],
-				[City],
-				[Region],
-				[Address],
-				[Text_Number],
-				[Voice_Number],
-				[Postal_Code],
-				[Is_Active]
-		FROM	[Client]
-	END
-
-print '' print '*** SP to enter new Employee record and return its identity int ***'
-GO
--- Initial Creator: James Williams
--- Creation Date: 2024-02-01
--- Last Modified: James Williams
--- Modification Description: Initial Creation
--- Stored Procedure Description: Insert employee record, return Employee_ID
-CREATE PROCEDURE [dbo].[sp_insert_employee] 
-(
-    @p_Given_Name 		nvarchar(50),
-    @p_Family_Name 		nvarchar(50),
-    @p_Address 			nvarchar(50),
-    @p_Address2 			nvarchar(50) = NULL,
-    @p_City 				nvarchar(20),
-    @p_State 				nvarchar(2),
-    @p_Country 			nvarchar(3),
-    @p_Zip 				nvarchar(9),
-    @p_Phone_Number 		nvarchar(20),
-    @p_Email 				nvarchar(50),
-    @p_Position 			nvarchar(20)
-)
-AS
-BEGIN
-    DECLARE @p_Employee_ID int
-
-    INSERT INTO [dbo].[Employee] (
-        [Given_Name],
-        [Family_Name],
-        [Address],
-        [Address2],
-        [City],
-        [State],
-        [Country],
-        [Zip],
-        [Phone_Number],
-        [Email],
-        [Position]
-    )
-    VALUES (
-        @p_Given_Name,
-        @p_Family_Name,
-        @p_Address,
-        @p_Address2,
-        @p_City,
-        @p_State,
-        @p_Country,
-        @p_Zip,
-        @p_Phone_Number,
-        @p_Email,
-        @p_Position
-    );
-
-    SET @p_Employee_ID = SCOPE_IDENTITY();
-	
-	SELECT @p_Employee_ID AS 'Employee_ID';
-END
-go
-
-print '' print '*** SP Insert Employee Role ***'
-go
--- Initial Creator: James Williams
--- Creation Date: 2024-02-01
--- Last Modified: James Williams
--- Modification Description: Initial Creation
--- Stored Procedure Description: Insert employee_role record
-CREATE PROCEDURE [dbo].[sp_insert_employee_role]
-(
-	@p_Employee_ID			int,
-	@p_Role_ID				nvarchar(25)
-)
-as
-BEGIN
-	INSERT INTO [dbo].[Employee_Role]
-	([Employee_ID],[Role_ID])
-	VALUES
-	(@p_Employee_ID, @p_Role_ID)
-END
-go
-
-print '' print '*** SP Select All Employees ***'
-go
--- Initial Creator: James Williams
--- Creation Date: 2024-02-01
--- Last Modified: James Williams
--- Modification Description: Initial Creation
--- Stored Procedure Description: Select all active Employee records
-CREATE PROCEDURE [dbo].[sp_select_employees]
-AS
-BEGIN
-	SELECT 
-		[Employee_ID],
-        [Given_Name],
-        [Family_Name],
-        [Address],
-        [Address2],
-        [City],
-        [State],
-        [Country],
-        [Zip],
-        [Phone_Number],
-        [Email],
-        [Position]
-	
-		FROM [dbo].[Employee]
-		WHERE [Is_Active] = 1
-END
-go
-
-
-
-/******************
-Create the update_part stored procedure
-***************/
-print '' Print '***Create the update_part stored procedure***' 
-GO
-CREATE PROCEDURE [dbo].[sp_update_part]
-(
-    @part_id                [int],
-
-    @new_Part_Name          [nvarchar](30),
-    @new_Part_Qty           [int],
-    @new_Item_Description   [nvarchar](100),
-    @new_Item_Specifications    [nvarchar](MAX),
-    @new_Part_Photo_URL     [nvarchar](255),
-    @new_ordered_qty        [int],
-    @new_stock_lvl          [int],
-
-    @old_Part_Name          [nvarchar](30),
-    @old_Part_Qty           [int],
-    @old_Item_Description   [nvarchar](100),
-    @old_Item_Specifications    [nvarchar](MAX),
-    @old_Part_Photo_URL     [nvarchar](255),
-    @old_ordered_qty        [int],
-    @old_stock_lvl          [int]
-
-)
-AS
-    BEGIN 
-        UPDATE      [Parts_Inventory]
-        SET         [Part_Name] = @new_Part_Name,
-                    [Part_Quantity] = @new_Part_Qty,
-                    [Item_Description] = @new_Item_Description,
-                    [Item_Specifications] = @new_Item_Specifications,
-                    [Part_Photo_URL] = @new_Part_Photo_URL,
-                    [Ordered_Qty] = @new_ordered_qty,
-                    [Stock_Level] = @new_stock_lvl
-        WHERE       @part_id = [Parts_Inventory_ID]
-            AND     @old_Part_Name = [Part_Name]
-            AND     @old_Part_Qty = [Part_Quantity]
-            AND     @old_Item_Description = [Item_Description]
-            AND     @old_Item_Specifications = [Item_Specifications]
-            AND     @old_Part_Photo_URL = [Part_Photo_URL]
-            AND     @old_ordered_qty = [Ordered_Qty]
-            AND     @old_stock_lvl = [Stock_Level]
-        SELECT      @@ROWCOUNT
-    END
-GO
-
-
-print '' Print '***Create the retreive Employee List script for the Employee table***' 
- go 
- CREATE PROCEDURE [dbo].[sp_select_all_employees]
-AS
-BEGIN
-    SELECT
-        [Employee_ID],
-        [Given_Name],
-        [Family_Name],
-        [Address],
-        [Address2],
-        [City],
-        [State],
-        [Country],
-        [Zip],
-        [Phone_Number],
-        [Email],
-        [Position],
-        [Is_Active]
-    FROM
-        Employee;
-END;
-GO
--- Checked by James Williams
-
-
-
--- Initial Creator: James Williams
--- Creation Date: 2024-02-06
--- Last Modified: James Williams
--- Modification Description: Initial Creation
--- Stored Procedure Description: Select employee role(s) by Employee_ID
-print '' print'***SP to get employee_roles by employee_id ***'
-go
-CREATE PROCEDURE [dbo].[sp_get_roles_by_employee_id]
-(
-	@p_Employee_ID				[INT]
-)
-as
-BEGIN
-	SELECT [Role_ID]
-	FROM [dbo].[Employee_Role]
-	WHERE @p_Employee_ID = Employee_ID AND 
-		Is_Active = 1
-END
-go
-
-
-print ''
-print '*** create sp_lookup_model_lookup_id_from_make_model_year ***'
-GO
-
-/*************************
-For Vehicle Lookup List 
-***************/
--- Initial Creator: Everett DeVaux
--- Creation Date: 2024-02-08
--- Last Modified: Everett DeVaux
--- Modification Description: Initial Creation
--- Stored Procedure Description: Select all vehicles/vehicle details for the vehicle lookup list.
-print '' print '*** creating sp_select_all_vehicles_for_vehicle_lookup_list ***'
-GO
-CREATE PROCEDURE [dbo].[sp_select_all_vehicles_for_vehicle_lookup_list]
-AS
-    BEGIN
-        SELECT 
-            [Vehicle].[Vehicle_Number],
-            [Model_Lookup].[Vehicle_Make],
-            [Model_Lookup].[Vehicle_Model],
-            [Model_Lookup].[Max_Passengers],
-            [Vehicle].[Vehicle_Mileage],
-            [Vehicle].[Description]
-        FROM  [dbo].[Vehicle]
-        INNER JOIN [dbo].[Model_Lookup] ON [Vehicle].[VIN] = [Model_Lookup].[VIN]
-    END
-GO
-print '' print '*** creating sp_authenticate_client_for_security_questions ***'
-GO
-CREATE PROCEDURE [dbo].[sp_authenticate_client_for_security_questions] (
-  @Username [nvarchar](50),
-  @Password_Hash [nvarchar](100)
-)
-AS
-BEGIN
-  SELECT [Security_Question_1], [Security_Question_2], [Security_Question_3]
-  FROM [dbo].[Login]
-  WHERE
-    [Active] = 1
-    AND [Client_ID] IS NOT NULL
-    AND [Username] = @Username
-    AND [Password_Hash] = @Password_Hash;
-END;
-GO
-
-print '' print '*** creating sp_authenticate_client_with_security_responses ***'
-GO
-CREATE PROCEDURE [dbo].[sp_authenticate_client_with_security_responses] (
-  @Username [nvarchar](50),
-  @Password_Hash [nvarchar](100),
-  @Security_Response_1 [nvarchar](100) = NULL,
-  @Security_Response_2 [nvarchar](100) = NULL,
-  @Security_Response_3 [nvarchar](100) = NULL
-)
-AS
-BEGIN
-  SELECT
-    cr.[Client_Role_ID],
-    cr.[Role_Description],
-    c.[Client_ID],
-    c.[Given_Name],
-    c.[Family_Name],
-    c.[Address],
-    c.[City],
-    c.[Voice_Number],
-    c.[Email]
-  FROM [dbo].[Client] c
-  LEFT JOIN [dbo].[Client_Client_Role] ccr ON c.[Client_ID] = ccr.[Client_ID]
-  JOIN [dbo].[Client_Role] cr ON ccr.[Client_Role_ID] = cr.[Client_Role_ID]
-  JOIN [dbo].[Login] l ON c.[Client_ID] = l.[Client_ID]
-  WHERE
-    l.[Active] = 1
-    AND c.[Is_Active] = 1
-    AND l.[Username] = @Username
-    AND l.[Password_Hash] = @Password_Hash
-    AND (l.[Security_Response_1] IS NULL OR l.[Security_Response_1] = @Security_Response_1)
-    AND (l.[Security_Response_2] IS NULL OR l.[Security_Response_2] = @Security_Response_2)
-    AND (l.[Security_Response_3] IS NULL OR l.[Security_Response_3] = @Security_Response_3);
-END;
-GO
-
-print '' print '*** creating sp_authenticate_employee_for_security_questions ***'
-GO
-CREATE PROCEDURE [dbo].[sp_authenticate_employee_for_security_questions] (
-  @Username [nvarchar](50),
-  @Password_Hash [nvarchar](100)
-)
-AS
-BEGIN
-  SELECT [Security_Question_1], [Security_Question_2], [Security_Question_3]
-  FROM [dbo].[Login]
-  WHERE
-    [Active] = 1
-    AND [Employee_ID] IS NOT NULL
-    AND [Username] = @Username
-    AND [Password_Hash] = @Password_Hash;
-END;
-GO
-
-print '' print '*** creating sp_authenticate_employee_with_security_responses ***'
-GO
-CREATE PROCEDURE [dbo].[sp_authenticate_employee_with_security_responses] (
-  @Username [nvarchar](50),
-  @Password_Hash [nvarchar](100),
-  @Security_Response_1 [nvarchar](100) = NULL,
-  @Security_Response_2 [nvarchar](100) = NULL,
-  @Security_Response_3 [nvarchar](100) = NULL
-)
-AS
-BEGIN
-  SELECT
-    er.[Role_ID],
-    e.[Employee_ID],
-    e.[Given_Name],
-    e.[Family_Name],
-    e.[Address],
-    e.[Address2],
-    e.[City],
-    e.[State],
-    e.[Country],
-    e.[Zip],
-    e.[Phone_Number],
-    e.[Email],
-    e.[Position]
-  FROM [dbo].[Employee] e
-  LEFT JOIN [dbo].[Employee_Role] er ON e.[Employee_ID] = er.[Employee_ID]
-  JOIN [dbo].[Login] l ON e.[Employee_ID] = l.[Employee_ID]
-  WHERE
-    l.[Active] = 1
-    AND e.[Is_Active] = 1
-    AND l.[Username] = @Username
-    AND l.[Password_Hash] = @Password_Hash
-    AND (l.[Security_Response_1] IS NULL OR l.[Security_Response_1] = @Security_Response_1)
-    AND (l.[Security_Response_2] IS NULL OR l.[Security_Response_2] = @Security_Response_2)
-    AND (l.[Security_Response_3] IS NULL OR l.[Security_Response_3] = @Security_Response_3);
-END;
-GO
+	GO

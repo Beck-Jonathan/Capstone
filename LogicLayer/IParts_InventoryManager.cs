@@ -25,7 +25,7 @@ namespace LogicLayer
         /// Jonathan Beck
         /// Created: 2024/01/31
         /// 
-        /// Retreives Part_Inventory by Part_InventoryID
+        /// Retrieves Part_Inventory by Part_InventoryID
         /// <throws> Argument Exce[tion if item not found</throws>
         /// </summary>
         ///
@@ -52,7 +52,7 @@ namespace LogicLayer
         /// Jonathan Beck
         /// Created: 2024/01/31
         /// 
-        /// Retreives all Part_Inventory records
+        /// Retrieves all Part_Inventory records
         /// </summary>
         ///
         /// <remarks>

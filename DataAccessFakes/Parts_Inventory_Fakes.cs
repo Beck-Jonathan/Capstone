@@ -95,7 +95,7 @@ namespace DataAccessFakes
         /// Jonathan Beck
         /// Created: 2024/01/31
         /// 
-        /// Retreive Part_Inventory by primary Key. Throws argument exception if the Part_Inventory can not be found.
+        /// Retrieve Part_Inventory by primary Key. Throws argument exception if the Part_Inventory can not be found.
         /// </summary>
         ///
         /// <remarks>

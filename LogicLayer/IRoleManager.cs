@@ -26,7 +26,7 @@ namespace LogicLayer
     public interface IRoleManager
     {
         /// <summary>
-        ///     Method to retreive all roles from database.
+        ///     Method to retrieve all roles from database.
         /// </summary>
         /// <returns>
         ///    <see cref="IEnumerable{Role}">IEnumerable{Role}</see>: List of employee roles
