@@ -10,13 +10,23 @@ using System.Threading.Tasks;
 namespace LogicLayer
 {
     /// <summary>
-    /// AUTHOR: Chris Baenziger
+    /// AUTHOR: Chris Baenziger, Everett DeVaux
     /// CREATED: 2024-02-01
     ///     Manager for working with vehicle data.
     /// </summary>
+    /// 
+    /// <remarks>
+    /// UPDATER: Everett DeVaux
+    /// <br />
+    /// UPDATED: 2024-02-13
+    /// <br />
+    /// 
+    ///     Added Vehicle Lookup List
+    /// </remarks>
 
     public class VehicleManager : IVehicleManager
     {
+        IVehicleAccessor _vehicleLookupListAccessor = null;
         IVehicleAccessor _vehicleAccessor = null;
         private List<string> _vehicleTypes = null;
         private List<string> _vehicleMakes = null;
@@ -26,12 +36,15 @@ namespace LogicLayer
         public VehicleManager()
         {
             _vehicleAccessor = new VehicleAccessor();
+            _vehicleLookupListAccessor = new VehicleAccessor();
+
         }
 
         // test constructor
         public VehicleManager(IVehicleAccessor vehicleAccessor)
         {
             _vehicleAccessor = vehicleAccessor;
+            _vehicleLookupListAccessor = vehicleAccessor;
         }
 
         public bool AddVehicle(Vehicle vehicle)
@@ -143,6 +156,43 @@ namespace LogicLayer
             }
 
             return _vehicleTypes;
+        }
+
+        /// <summary>
+        ///     Retrieves vehicle list from the VM
+        /// </summary>
+        /// <returns>
+        ///    <see cref="List{VehicleLookupList_VM}">VehicleLookupList_VM</see> List of VehicleLookupList_VM objects
+        /// </returns>
+        /// <remarks>
+        ///    Exceptions:
+        /// <br />
+        ///    <see cref="Exception">Exception</see>: Thrown when error encountered
+        /// <br /><br />
+        ///    CONTRIBUTOR: Everett DeVaux
+        /// <br />
+        ///    CREATED: 2024-02-10
+        /// <br />
+        /// <br />
+        ///    UPDATER: [Updater's Name]
+        /// <br />
+        ///    UPDATED: yyyy-MM-dd
+        /// <br />
+        ///     Initial Creation
+        /// </remarks>
+        public List<Vehicle> VehicleLookupList()
+        {
+            List<Vehicle> vehicleLookupList = new List<Vehicle>();
+            try
+            {
+                vehicleLookupList = _vehicleLookupListAccessor.SelectVehicleForLookupList();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            return vehicleLookupList;
         }
     }
 }

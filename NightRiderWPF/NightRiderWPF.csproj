@@ -55,6 +55,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="DeveloperView\VehicleLookupListPage.xaml.cs">
+      <DependentUpon>VehicleLookupListPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Resources\Statics.cs" />
     <Page Include="AddUpdateDeleteVehicle.xaml">
       <SubType>Designer</SubType>
@@ -112,6 +115,10 @@
     <Page Include="DeveloperView\AdminCreateNewEmployee.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DeveloperView\VehicleLookupListPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="InventoryAudit.xaml">
       <SubType>Designer</SubType>

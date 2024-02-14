@@ -7,20 +7,34 @@ using DataObjects;
 namespace LogicLayerTests
 {
     /// <summary>
-    /// AUTHOR: Chris Baenziger
+    /// AUTHOR: Chris Baenziger, Everett DeVaux
     /// CREATED: 2024-02-01
     ///     Tests for working with vehicle data.
     /// </summary>
+    /// 
+    /// <remarks>
+    /// UPDATER: Everett DeVaux
+    /// <br />
+    /// UPDATED: 
+    /// <br />
+    /// 
+    ///     Initial creation
+    ///     Added Vehicle Lookup 
+    /// </remarks>
 
     [TestClass]
     public class VehicleManagerTests
     {
         private VehicleManager _vehicleManager = null;
+        private VehicleManager _vehicleLookupMgr = null;
+
 
         [TestInitialize]
         public void TestSetup()
         {
             _vehicleManager = new VehicleManager(new VehicleAccessorFakes());
+            _vehicleLookupMgr = new VehicleManager(new VehicleAccessorFake());
+
         }
 
         [TestMethod]
@@ -99,6 +113,36 @@ namespace LogicLayerTests
             acutalResolt = _vehicleManager.GetVehicleModels().Count;
 
             Assert.AreEqual(exectedResult, acutalResolt);
+        }
+
+        [TestMethod]
+        public void TestSelectAllVehiclesForVehicleLookupListCountPasses()
+        {
+            //arrange
+            int expected = 2;
+            int actual = 0;
+
+
+            //act
+            actual = _vehicleLookupMgr.VehicleLookupList().Count;
+
+            //assert
+            Assert.AreEqual(actual, expected);
+        }
+
+        [TestMethod]
+        public void TestSelectAllVehiclesForVehicleLookupListCountFails()
+        {
+            //arrange
+            int expected = 50;
+            int actual = 0;
+
+
+            //act
+            actual = _vehicleLookupMgr.VehicleLookupList().Count;
+
+            //assert
+            Assert.AreNotEqual(actual, expected);
         }
 
     }

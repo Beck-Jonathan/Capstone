@@ -12,6 +12,15 @@ namespace LogicLayer
     /// CREATED: 2024-02-01
     ///     Logic manager interface for working with vehicle data.
     /// </summary>
+    /// 
+    /// UPDATER: Everett DeVaux
+    /// <br />
+    /// UPDATED: 2024-02-13
+    /// <br />
+    /// 
+    ///     Initial creation
+    ///     Added Vehicle Lookup List
+    /// </remarks>
 
     public interface IVehicleManager
     {
@@ -19,5 +28,6 @@ namespace LogicLayer
         List<string> GetVehicleTypes();
         List<string> GetVehicleMakes();
         List<string> GetVehicleModels();
+        List<Vehicle> VehicleLookupList();
     }
 }
