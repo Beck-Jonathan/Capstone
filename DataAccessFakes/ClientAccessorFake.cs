@@ -45,15 +45,15 @@ namespace DataAccessFakes
             return _fakeClientData.Where(client => !client.IsActive);
         }
 
-        public int UpdateClient(Client client)
+        public int UpdateClient(Client_VM newClient)
         {
             var list = _fakeClientData.ToList();
 
-            int removed = list.RemoveAll(c => client.ClientID == client.ClientID);
+            int removed = list.RemoveAll(c => c.ClientID == newClient.ClientID);
 
             if (removed == 1)
             {
-                list.Add((Client_VM)client);
+                list.Add(newClient);
 
                 _fakeClientData = list;
             }

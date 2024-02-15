@@ -27,6 +27,7 @@ namespace DataObjects
         public int ClientID { get; set; }
         public string GivenName { get; set; }
         public string FamilyName { get; set; }
+        public string MiddleName { get; set; }
         public DateTime DOB { get; set; }
         public string Email { get; set; }
         public string PostalCode { get; set; }

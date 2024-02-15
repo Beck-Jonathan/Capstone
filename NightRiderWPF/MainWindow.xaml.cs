@@ -25,6 +25,7 @@ namespace NightRiderWPF
     {
         public MainWindow()
         {
+
             InitializeComponent();
         }
 
@@ -37,7 +38,7 @@ namespace NightRiderWPF
                     case "SamplePage":
                         PageViewer.Navigate(new SamplePage());
                         break;
-                        // Your cases here
+                    // Your cases here
                     case "AdminViewClientList":
                         PageViewer.Navigate(new AdminViewClientList());
                         break;
@@ -58,6 +59,9 @@ namespace NightRiderWPF
                         break;
                     case "ViewWorkOrderPage":
                         PageViewer.Navigate(new ViewWorkOrderPage());
+                        break;
+                    case "ClientPersonalPage":
+                        PageViewer.Navigate(new ClientPersonalPage(Authentication.AuthenticatedClient));
                         break;
                 }
             }

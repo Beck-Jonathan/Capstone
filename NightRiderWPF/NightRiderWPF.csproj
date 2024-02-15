@@ -55,6 +55,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ClientPersonalPage.xaml.cs">
+      <DependentUpon>ClientPersonalPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="DeveloperView\VehicleLookupListPage.xaml.cs">
       <DependentUpon>VehicleLookupListPage.xaml</DependentUpon>
     </Compile>
@@ -69,6 +72,10 @@
     <Compile Include="DeveloperView\PartsInventoryPage.xaml.cs">
       <DependentUpon>PartsInventoryPage.xaml</DependentUpon>
     </Compile>
+    <Page Include="ClientPersonalPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="DeveloperView\AddUpdateDeleteParts_Inventory.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -121,15 +128,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="DeveloperView\VehicleLookupListPage.xaml">
-	  <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Page Include="EmployeeProfilePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-	</Page>
+    </Page>
     <Page Include="DeveloperView\ViewWorkOrderPage.xaml">
-
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -153,7 +159,7 @@
     </Compile>
     <Compile Include="EmployeeProfilePage.xaml.cs">
       <DependentUpon>EmployeeProfilePage.xaml</DependentUpon>
-	</Compile>
+    </Compile>
     <Compile Include="DeveloperView\ViewWorkOrderPage.xaml.cs">
       <DependentUpon>ViewWorkOrderPage.xaml</DependentUpon>
     </Compile>
