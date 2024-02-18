@@ -3,6 +3,7 @@ using DataAccessLayer;
 using DataObjects;
 using LogicLayer.Utilities;
 using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,7 +16,7 @@ namespace LogicLayer
     /// </summary>
    public interface ILoginManager
     {
-
+        Employee_VM AuthenticateEmployee(string username, string password);
         string[] AuthenticateClientForSecurityQuestions(string username, string password);
         Client_VM AuthenticateClientWithSecurityResponses(
             string username,
@@ -39,6 +40,13 @@ namespace LogicLayer
     /// <br />
     ///     Manages and performs operations on login objects
     /// </summary>
+    /// <remarks>
+    /// UPDATER: Jared Hutton
+    /// <br />
+    /// UPDATED: 2024-02-16
+    /// <br />
+    ///  Add AuthenticateEmployee method
+    /// </remarks>
     public class LoginManager : ILoginManager
     {
         private ILoginAccessor _loginAccessor;
@@ -95,6 +103,43 @@ namespace LogicLayer
         {
             _passwordHasher = passwordHasher;
             _loginAccessor = loginAccessor;
+        }
+
+        /// <summary>
+        ///     Authenticates given username and password and retrieves the employee data
+        /// </summary>
+        /// <param name="username">
+        ///    The username of the user attempting to login
+        /// </param>
+        /// <param name="password">
+        ///    The password of the user attempting to login
+        /// </param>
+        /// <returns>
+        ///    <see cref="Employee_VM">Employee_VM</see>: The authenticated employee
+        /// </returns>
+        /// <remarks>
+        ///    Parameters:
+        /// <br />
+        ///    <see cref="string">string</see> username: The username given by the user
+        /// <br />
+        ///    <see cref="string">string</see> password: The password given by the user
+        /// <br /><br />
+        ///    CONTRIBUTOR: Jared Hutton
+        /// <br />
+        ///    CREATED: 2024-02-17
+        /// </remarks>
+        public Employee_VM AuthenticateEmployee(string username, string password)
+        {
+            string passwordHash = _passwordHasher.HashPassword(password);
+
+            var authenticatedEmployee = _loginAccessor.AuthenticateEmployee(username, passwordHash);
+
+            if (authenticatedEmployee == null)
+            {
+                throw new ArgumentException("Could not authenticate employee");
+            }
+
+            return authenticatedEmployee;
         }
 
         /// <summary>

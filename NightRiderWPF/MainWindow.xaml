@@ -33,6 +33,13 @@
                         <ColumnDefinition Width="1*"></ColumnDefinition>
                         <ColumnDefinition Width="2*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
+                    <Label
+                        x:Name="lbl_userAuthenticatedConfirmation"
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Top"
+                        Visibility="Hidden" />
                     <Label Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" 
                            x:Name="lblUsername" Content="Username:" />
                     <TextBox Grid.Row="0" Grid.Column="1" HorizontalAlignment="Stretch" 
@@ -41,7 +48,7 @@
                            x:Name="lblPassword" Content="Password:" />
                     <PasswordBox Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" 
                                  VerticalAlignment="Center" x:Name="pwdPassword" />
-                    <Button Grid.Row="2" Grid.Column="0" Content="Log In" x:Name="btnLogin" />
+                    <Button Grid.Row="2" Grid.Column="0" Content="Log In" x:Name="btnLogin" Click="btnLogin_Click" />
                     <Button Grid.Row="2" Grid.Column="1" Content="Don't have an account?" x:Name="btnCreateAccount" />
                 </Grid>
             </Grid>

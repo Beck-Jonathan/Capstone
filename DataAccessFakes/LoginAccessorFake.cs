@@ -15,7 +15,14 @@ namespace DataAccessFakes
     /// <br />
     ///     Provides access to test data stored in memory representing the client table
     /// </summary>
-    public class LoginAccessorFake : ILoginAccessor
+    /// <remarks>
+    /// UPDATER: Jared Hutton
+    /// <br />
+    /// UPDATED: 2024-02-16
+    /// <br />
+    ///  Add AuthenticateEmployee method
+    /// </remarks>
+   public class LoginAccessorFake : ILoginAccessor
     {
         IEnumerable<Login_VM> _fakeLoginData;
 
@@ -29,6 +36,38 @@ namespace DataAccessFakes
         public LoginAccessorFake(IEnumerable<Login_VM> fakeLoginData)
         {
             _fakeLoginData = fakeLoginData;
+        }
+
+        /// <summary>
+        ///     Authenticates given username and password hash and retrieves the authenticated employee data
+        /// </summary>
+        /// <param name="username">
+        ///    The username of the user attempting to login
+        /// </param>
+        /// <param name="passwordHash">
+        ///    The password hash of the user attempting to login
+        /// </param>
+        /// <returns>
+        ///    <see cref="Employee_VM">Employee_VM</see>: The authenticated employee
+        /// </returns>
+        /// <remarks>
+        ///    Parameters:
+        /// <br />
+        ///    <see cref="string">string</see> username: The username given by the user
+        /// <br />
+        ///    <see cref="string">string</see> password: The password hash generated on the password given by the user
+        /// <br /><br />
+        ///    CONTRIBUTOR: Jared Hutton
+        /// <br />
+        ///    CREATED: 2024-02-16
+        /// </remarks>
+       public Employee_VM AuthenticateEmployee(string username, string passwordHash)
+        {
+            return
+                _fakeLoginData
+                .Where(login => login.Username == username && login.PasswordHash == passwordHash)
+                .FirstOrDefault()
+                .Employee;
         }
 
         /// <summary>
