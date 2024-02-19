@@ -25,15 +25,38 @@ namespace DataAccessInterfaces
         /// Jonathan Beck
         /// Created: 2024/01/31
         /// 
-        /// Retreives Part_Inventory by Part_InventoryID
+        /// Retrieves Part_Inventory by Part_InventoryID
         /// </summary>
         ///
         /// <remarks>
         /// Updater Name
         /// Updated: yyyy/mm/dd 
         Parts_Inventory selectParts_InventoryByPrimaryKey(int Parts_InventoryID);
+        /// <summary>
+        /// Jonathan Beck
+        /// Created: 2024/01/31
+        /// 
+        /// Retrieves all parts_inventory records
+        /// </summary>
+        ///
+        /// <remarks>
+        /// Updater Name
+        /// Updated: yyyy/mm/dd 
         List<Parts_Inventory> selectAllParts_Inventory();
+        /// <summary>
+        /// Max Fare
+        /// Created: 2024/02/04
+        /// 
+        /// updates the Part record with Parts_Inventory_ID equal to the ID of oldPart,
+        /// changing it's values to that of newPart
+        /// </summary>
+        ///
+        /// <remarks>
+        /// Updater Name
+        /// Updated: yyyy/mm/dd 
+        int UpdateParts_Inventory(Parts_Inventory oldPart, Parts_Inventory newPart);
 
+        // Reviewed By: John Beck
     }
 
 }

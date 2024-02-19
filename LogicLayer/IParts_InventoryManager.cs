@@ -25,26 +25,44 @@ namespace LogicLayer
         /// Jonathan Beck
         /// Created: 2024/01/31
         /// 
-        /// Retreives Part_Inventory by Part_InventoryID
+        /// Retrieves Part_Inventory by Part_InventoryID
+        /// <throws> Argument Exce[tion if item not found</throws>
+        /// </summary>
+        ///
+        /// <remarks>
+        /// Updater Name: Max Fare
+        /// Updated: yyyy/mm/dd 
+
+        Parts_Inventory GetParts_InventoryByID(int Parts_InventoryID);
+        
+
+        /// <summary>
+        /// Max Fare
+        /// Created: 2024/01/31
+        /// 
+        /// changes the details of a part
         /// </summary>
         ///
         /// <remarks>
         /// Updater Name
         /// Updated: yyyy/mm/dd 
-        Parts_Inventory getParts_InventoryByPrimaryKey(int Parts_InventoryID);
+        int EditParts_Inventory(Parts_Inventory oldPart, Parts_Inventory newPart);
+
         /// <summary>
         /// Jonathan Beck
         /// Created: 2024/01/31
         /// 
-        /// Retreives all Part_Inventory records
+        /// Retrieves all Part_Inventory records
         /// </summary>
         ///
         /// <remarks>
         /// Updater Name
         /// Updated: yyyy/mm/dd 
 
-        List<Parts_Inventory> getAllParts_Inventory();
+        List<Parts_Inventory> GetActiveParts_Inventory();
 
+
+        // Reviewed By: John Beck
     }
 
 }

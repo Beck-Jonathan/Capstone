@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using LogicLayer.AppData;
 
 namespace NightRiderWPF
 {
@@ -24,6 +25,7 @@ namespace NightRiderWPF
     {
         public MainWindow()
         {
+
             InitializeComponent();
         }
 
@@ -36,11 +38,33 @@ namespace NightRiderWPF
                     case "SamplePage":
                         PageViewer.Navigate(new SamplePage());
                         break;
-                    case "PartsInventoryPage":
+                    // Your cases here
+                    case "AdminViewClientList":
+                        PageViewer.Navigate(new AdminViewClientList());
+                        break;
+                    case "AdminCreateEmployeePage":
+                        PageViewer.Navigate(new AdminCreateNewEmployee());
+                        break;
+                    case "PartsPersonViewParts":
                         PageViewer.Navigate(new PartsInventoryPage());
                         break;
                     case "AddDependentPage":
                         PageViewer.Navigate(new AddDependent());
+                        break;
+                    case "AdminEmployeeListPage":
+                        PageViewer.Navigate(new AdminEmployeeListPage());
+                        break;
+                    case "VehicleLookupListPage":
+                        PageViewer.Navigate(new VehicleLookupListPage());
+                        break;
+                    case "EmployeeProfilePage":
+                        PageViewer.Navigate(new EmployeeProfilePage(Authentication.AuthenticatedEmployee));
+                        break;
+                    case "ViewWorkOrderPage":
+                        PageViewer.Navigate(new ViewWorkOrderPage());
+                        break;
+                    case "ClientPersonalPage":
+                        PageViewer.Navigate(new ClientPersonalPage(Authentication.AuthenticatedClient));
                         break;
                 }
             }

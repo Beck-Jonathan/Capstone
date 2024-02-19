@@ -60,14 +60,91 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="AddUpdateDeleteParts_Invnetory.xaml">
+    <Compile Include="ClientPersonalPage.xaml.cs">
+      <DependentUpon>ClientPersonalPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DeveloperView\VehicleLookupListPage.xaml.cs">
+      <DependentUpon>VehicleLookupListPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Statics.cs" />
+    <Page Include="AddUpdateDeleteVehicle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="PartsInventoryPage.xaml">
+    <Compile Include="DeveloperView\AddUpdateDeleteParts_Inventory.xaml.cs">
+      <DependentUpon>AddUpdateDeleteParts_Inventory.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DeveloperView\PartsInventoryPage.xaml.cs">
+      <DependentUpon>PartsInventoryPage.xaml</DependentUpon>
+    </Compile>
+    <Page Include="ClientPersonalPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DeveloperView\AddUpdateDeleteParts_Inventory.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DeveloperView\PartsInventoryPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Compile Include="AdminEmployeeListPage.xaml.cs">
+      <DependentUpon>AdminEmployeeListPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ConsumerMain.xaml.cs">
+      <DependentUpon>ConsumerMain.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DeveloperView\AdminViewEmployee.xaml.cs">
+      <DependentUpon>AdminViewEmployee.xaml</DependentUpon>
+    </Compile>
+    <Page Include="AdminEmployeeListPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ConsumerMain.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DeveloperView\AdminViewEmployee.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Compile Include="AdminViewClientDetail.xaml.cs">
+      <DependentUpon>AdminViewClientDetail.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AdminViewClientList.xaml.cs">
+      <DependentUpon>AdminViewClientList.xaml</DependentUpon>
+    </Compile>
+    <Page Include="AdminViewClientDetail.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="DeveloperView\SamplePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="LoginWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DeveloperView\AdminCreateNewEmployee.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DeveloperView\VehicleLookupListPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="EmployeeProfilePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DeveloperView\ViewWorkOrderPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="InventoryAudit.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -80,21 +157,36 @@
     </Compile>
     <Compile Include="AddUpdateDeleteParts_Invnetory.xaml.cs">
       <DependentUpon>AddUpdateDeleteParts_Invnetory.xaml</DependentUpon>
+    <Compile Include="AddUpdateDeleteVehicle.xaml.cs">
+      <DependentUpon>AddUpdateDeleteVehicle.xaml</DependentUpon>
     </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="PartsInventoryPage.xaml.cs">
-      <DependentUpon>PartsInventoryPage.xaml</DependentUpon>
+    <Compile Include="DeveloperView\AdminCreateNewEmployee.xaml.cs">
+      <DependentUpon>AdminCreateNewEmployee.xaml</DependentUpon>
     </Compile>
-    <Compile Include="DeveloperView\SamplePage.xaml.cs">
-      <DependentUpon>SamplePage.xaml</DependentUpon>
+    <Compile Include="EmployeeProfilePage.xaml.cs">
+      <DependentUpon>EmployeeProfilePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DeveloperView\ViewWorkOrderPage.xaml.cs">
+      <DependentUpon>ViewWorkOrderPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="InventoryAudit.xaml.cs">
+      <DependentUpon>InventoryAudit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="LoginWindow.xaml.cs">
+      <DependentUpon>LoginWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="AdminViewClientList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -139,6 +231,10 @@
       <Project>{6164dffe-01a5-4076-86b0-98506883dbf2}</Project>
       <Name>LogicLayer</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\NightRider-01.png" />
+    <Resource Include="Resources\Images\NightRider-02.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

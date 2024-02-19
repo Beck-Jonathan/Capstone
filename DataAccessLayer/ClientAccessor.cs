@@ -1,0 +1,247 @@
+﻿using DataAccessInterfaces;
+using DataObjects;
+using System;
+using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.Data;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Net;
+
+namespace DataAccessLayer
+{
+    /// <inheritdoc/>
+    public class ClientAccessor : IClientAccessor
+    {
+        public int InsertClient(Client_VM client)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<Client_VM> SelectAllClients()
+        {
+            List<Client_VM> clients = new List<Client_VM>();
+            var conn = DBConnectionProvider.GetConnection();
+            var cmdText = "sp_select_all_client";
+            var cmd = new SqlCommand(cmdText, conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            try
+            {
+                conn.Open();
+                var reader = cmd.ExecuteReader();
+
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        clients.Add(new Client_VM()
+                        {
+                            ClientID = reader.GetInt32(0),
+                            GivenName = reader.GetString(1),
+                            FamilyName = reader.GetString(2),
+                            // Middle_Name should be GetString(3)
+                            DOB = reader.GetDateTime(4),
+                            Email = reader.GetString(5),
+                            City = reader.GetString(6),
+                            Region = reader.GetString(7),
+                            Address = reader.GetString(8),
+                            TextNumber = reader.GetString(9),
+                            VoiceNumber = reader.GetString(10),
+                            PostalCode = reader.GetString(11),
+                            IsActive = reader.GetBoolean(12)
+                        });
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally { conn.Close(); }
+
+            return clients;
+        }
+
+        /// <summary>
+        ///     A method that searches for a Client by their ID in the database
+        ///     and returns the Client_VM object for that Client.
+        /// </summary>
+        /// <param name="id">
+        ///    The ID of the Client to be searched for
+        /// </param>
+        /// <returns>
+        ///    <see cref="Client_VM">Client_VM</see>: The Client_VM object for the Client with the given ID.
+        /// </returns>
+        /// <remarks>
+        ///    Exceptions:
+        /// <br />
+        ///    <see cref="ApplicationException">ApplicationException</see>: Thrown when a Client isn't found.
+        /// <br /><br />
+        ///    CONTRIBUTOR: Jared Roberts
+        /// <br />
+        ///    CREATED: 2024-02-11
+        /// <br /><br />
+        ///     Initial creation
+        /// </remarks>
+        public Client_VM SelectClientById(int id)
+        {
+            Client_VM clientVM = new Client_VM();
+
+            var conn = DBConnectionProvider.GetConnection();
+            var cmdText = @"sp_select_client_id";
+            var cmd = new SqlCommand(cmdText, conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            cmd.Parameters.AddWithValue("@ClientID", id);
+
+            try
+            {
+                conn.Open();
+                var reader = cmd.ExecuteReader();
+
+                if (reader.HasRows)
+                {
+                    if (reader.Read())
+                    {
+                        clientVM.ClientID = reader.GetInt32(0);
+                        clientVM.GivenName = reader.GetString(1);
+                        clientVM.FamilyName = reader.GetString(2);
+                        clientVM.MiddleName = reader.IsDBNull(3) ? null : reader.GetString(3);
+                        clientVM.DOB = reader.GetDateTime(4);
+                        clientVM.Email = reader.GetString(5);
+                        clientVM.PostalCode = reader.GetString(6);
+                        clientVM.City = reader.GetString(7);
+                        clientVM.Region = reader.GetString(8);
+                        clientVM.Address = reader.GetString(9);
+                        clientVM.TextNumber = reader.GetString(10);
+                        clientVM.VoiceNumber = reader.GetString(11);
+
+                    }
+                }
+                else
+                {
+                    throw new ApplicationException("Client not found.");
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            return clientVM;
+        }
+
+        public IEnumerable<Client_VM> SelectClients()
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<Client_VM> SelectInactiveClients()
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        ///     A method that updates the field of a Client and
+        ///     returns the number of rows affected.
+        /// </summary>
+        /// <param name="newClient">
+        ///    a Client_VM object
+        /// </param>
+        /// <returns>
+        ///    <see cref="int">int</see>: The number of rows affected
+        /// </returns>
+        /// <remarks>
+        ///    Exceptions:
+        /// <br />
+        ///    <see cref="ArgumentException">ArgumentException</see>: Thrown when incorrect fields are given for the user.
+        /// <br /><br />
+        ///    CONTRIBUTOR: Jared Roberts
+        /// <br />
+        ///    CREATED: 2024-02-11
+        /// <br /><br />
+        ///     Initial creation
+        /// </remarks>
+        public int UpdateClient(Client_VM newClient)
+        {
+            int rows = 0;
+
+            var conn = DBConnectionProvider.GetConnection();
+
+            var commandText = "sp_update_client";
+
+            var cmd = new SqlCommand(commandText, conn);
+
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            cmd.Parameters.AddWithValue(@"Client_ID", newClient.ClientID);
+            cmd.Parameters.AddWithValue(@"OldGivenName", newClient.GivenName);
+            cmd.Parameters.AddWithValue(@"OldFamilyName", newClient.FamilyName);
+            cmd.Parameters.AddWithValue(@"OldMiddleName", newClient.MiddleName);
+            cmd.Parameters.AddWithValue(@"OldDOB", newClient.DOB);
+            cmd.Parameters.AddWithValue(@"OldEmail", newClient.Email);
+            cmd.Parameters.AddWithValue(@"OldPostalCode", newClient.PostalCode);
+            cmd.Parameters.AddWithValue(@"OldCity", newClient.City);
+            cmd.Parameters.AddWithValue(@"OldRegion", newClient.Region);
+            cmd.Parameters.AddWithValue(@"OldAddress", newClient.Address);
+            cmd.Parameters.AddWithValue(@"OldTextNumber", newClient.TextNumber);
+            cmd.Parameters.AddWithValue(@"OldVoiceNumber", newClient.VoiceNumber);
+            cmd.Parameters.AddWithValue(@"OldActive", newClient.IsActive);
+            cmd.Parameters.AddWithValue(@"NewGivenName", newClient.GivenName);
+            cmd.Parameters.AddWithValue(@"NewFamilyName", newClient.FamilyName);
+            cmd.Parameters.AddWithValue(@"NewMiddleName", newClient.MiddleName);
+            cmd.Parameters.AddWithValue(@"NewDOB", newClient.DOB);
+            cmd.Parameters.AddWithValue(@"NewEmail", newClient.Email);
+            cmd.Parameters.AddWithValue(@"NewPostalCode", newClient.PostalCode);
+            cmd.Parameters.AddWithValue(@"NewCity", newClient.City);
+            cmd.Parameters.AddWithValue(@"NewRegion", newClient.Region);
+            cmd.Parameters.AddWithValue(@"NewAddress", newClient.Address);
+            cmd.Parameters.AddWithValue(@"NewTextNumber", newClient.TextNumber);
+            cmd.Parameters.AddWithValue(@"NewVoiceNumber", newClient.VoiceNumber);
+            cmd.Parameters.AddWithValue(@"NewActive", newClient.IsActive);
+
+
+
+            try
+            {
+                conn.Open();
+
+                rows = cmd.ExecuteNonQuery();
+
+                if (rows == 0)
+                {
+                    throw new ArgumentException("User was not updated");
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            return rows;
+        }
+
+        public int UpdateClientByIdAsActive(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int UpdateClientByIdAsInactive(int id)
+        {
+            throw new NotImplementedException();
+        }
+    }
+}

@@ -6,8 +6,8 @@
 /// </summary>
 ///
 /// <remarks>
-/// Updater Name
-/// Updated: yyyy/mm/dd
+/// Jonsthan Beck
+/// Updated: 2024/02/06
 /// </remarks>
 
 using DataAccessInterfaces;
@@ -30,12 +30,14 @@ namespace DataAccessFakes
         /// </summary>
         ///
         /// <remarks>
-        /// Updater Name
-        /// Updated: yyyy/mm/dd 
-        
+        /// Jonsthan Beck
+        /// Updated: 2024/02/06
+        /// </remarks>
+
         private List<Parts_Inventory> fakeparts = new List<Parts_Inventory>();
-        public Parts_Inventory_Fakes() { 
-        Parts_Inventory part1 = new Parts_Inventory();
+        public Parts_Inventory_Fakes()
+        {
+            Parts_Inventory part1 = new Parts_Inventory();
             part1.Parts_Inventory_ID = 1;
             part1.Part_Quantity = 1;
             part1.Part_Photo_URL = "www.google.com";
@@ -83,7 +85,7 @@ namespace DataAccessFakes
         /// Updated: yyyy/mm/dd 
         /// example: Fixed a problem when user inputs bad data
         /// </remarks>
-        
+
         public List<Parts_Inventory> selectAllParts_Inventory()
         {
             return fakeparts;
@@ -93,22 +95,25 @@ namespace DataAccessFakes
         /// Jonathan Beck
         /// Created: 2024/01/31
         /// 
-        /// Retreive Part_Inventory by primary Key. Throws argument exception if the Part_Inventory can not be found.
+        /// Retrieve Part_Inventory by primary Key. Throws argument exception if the Part_Inventory can not be found.
         /// </summary>
         ///
         /// <remarks>
         /// Updater Name
-        /// Updated: yyyy/mm/dd 
-        /// example: Fixed a problem when user inputs bad data
+        /// <remarks>
+        /// Update Name
+        /// Updated: 2024/--/--
+        /// 
         /// </remarks>
         /// <param name="Parts_InventoryID"></param>
         /// <throws Argument Exception >   </throws>
         public Parts_Inventory selectParts_InventoryByPrimaryKey(int Parts_InventoryID)
         {
             Parts_Inventory result = new Parts_Inventory();
-            foreach ( Parts_Inventory part in fakeparts )
+            foreach (Parts_Inventory part in fakeparts)
             {
-                if (part.Parts_Inventory_ID == Parts_InventoryID) {
+                if (part.Parts_Inventory_ID == Parts_InventoryID)
+                {
                     result.Parts_Inventory_ID = part.Parts_Inventory_ID;
                     result.Part_Quantity = part.Part_Quantity;
                     result.Part_Photo_URL = part.Part_Photo_URL;
@@ -127,5 +132,31 @@ namespace DataAccessFakes
 
             return result;
         }
+
+        public int UpdateParts_Inventory(Parts_Inventory oldPart, Parts_Inventory newPart)
+        {
+            int result = 0;
+            if (oldPart != null && newPart != null)
+            {
+                foreach(Parts_Inventory part in fakeparts)
+                {
+                    if(part.Parts_Inventory_ID ==  oldPart.Parts_Inventory_ID)
+                    {
+                        part.Part_Quantity = newPart.Part_Quantity;
+                        part.Part_Photo_URL = newPart.Part_Photo_URL;
+                        part.Part_Name = newPart.Part_Name;
+                        part.Ordered_Qty = newPart.Ordered_Qty;
+                        part.Item_Description = newPart.Item_Description;
+                        part.Item_Specifications = newPart.Item_Specifications;
+                        part.Stock_Level = newPart.Stock_Level;
+                        part.Is_Active = newPart.Is_Active;
+                        result = 1;
+                    }
+                }
+            }
+            return result;
+        }
+
+        // Reviewed By: John Beck
     }
 }

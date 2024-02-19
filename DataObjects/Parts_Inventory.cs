@@ -17,7 +17,7 @@ using System.Threading.Tasks;
 
 namespace DataObjects
 {
-    
+
     public class Parts_Inventory
     {
         public int Parts_Inventory_ID { set; get; }
@@ -29,6 +29,8 @@ namespace DataObjects
         public int Ordered_Qty { set; get; }
         public int Stock_Level { set; get; }
         public bool Is_Active { set; get; }
+
+        // Reviewed By: John Beck
 
     }
 }
