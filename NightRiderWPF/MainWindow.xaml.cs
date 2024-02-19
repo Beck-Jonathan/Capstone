@@ -48,6 +48,9 @@ namespace NightRiderWPF
                     case "PartsPersonViewParts":
                         PageViewer.Navigate(new PartsInventoryPage());
                         break;
+                    case "AddDependentPage":
+                        PageViewer.Navigate(new AddDependent());
+                        break;
                     case "AdminEmployeeListPage":
                         PageViewer.Navigate(new AdminEmployeeListPage());
                         break;
