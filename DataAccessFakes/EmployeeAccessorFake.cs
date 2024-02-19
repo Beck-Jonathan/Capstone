@@ -24,6 +24,7 @@ namespace DataAccessFakes
     /// <br />
     /// initial creation
     /// </remarks>
+
     public class EmployeeAccessorFake : IEmployeeAccessor
     {
         private IEnumerable<Employee_VM> fakeEmployee = new List<Employee_VM>();
@@ -346,6 +347,61 @@ namespace DataAccessFakes
             return fakeEmployee.FirstOrDefault(e => e.Employee_ID == id);
         }
         // reviewed by james
+
+        /// <summary>
+        ///   Update _fakeemployee record
+        /// </summary>
+        /// <param>
+        ///    Employee_VM updatedEmployee
+        /// </param>
+        /// <param>
+        ///     Employee_VM originalEmployee
+        /// </param>
+        /// <returns>
+        ///     <see cref="int"/>: returns number of "rows" affected by update
+        /// </returns>
+        /// <remarks>
+        ///    Parameters: Employee_VM updatedEmployee, Employee_VM originalEmployee
+        /// <br />
+        /// <br /><br />
+        ///    Exceptions:ArgumentException
+        /// <br />
+        /// <br /><br />
+        ///    CONTRIBUTOR: James Williams
+        /// <br />
+        ///    CREATED: 2024-02-17
+        /// <br /><br />
+        public int UpdateEmployee(Employee_VM updatedEmployee, Employee_VM originalEmployee)
+        {
+            int rows = 0;
+            if(updatedEmployee.Employee_ID == originalEmployee.Employee_ID)
+            {
+                foreach(var employee in _fakeEmployees)
+                {
+                    if(employee.Employee_ID == updatedEmployee.Employee_ID)
+                    {
+                        employee.Given_Name = updatedEmployee.Given_Name;
+                        employee.Family_Name = updatedEmployee.Family_Name;
+                        employee.Address = updatedEmployee.Address;
+                        employee.Address2 = updatedEmployee.Address2;
+                        employee.City = updatedEmployee.City;
+                        employee.State = updatedEmployee.State;
+                        employee.Country = updatedEmployee.Country;
+                        employee.Zip = updatedEmployee.Zip;
+                        employee.Phone_Number = updatedEmployee.Phone_Number;
+                        employee.Email = updatedEmployee.Email;
+                        employee.Position = updatedEmployee.Position;
+                    }
+                }
+                rows++;
+            }
+            else
+            {
+                throw new ArgumentException("Employee_ID of new record does not match");
+            }
+            return rows;
+        }
+        
     }
 }
 // Checked by Nathan Toothaker

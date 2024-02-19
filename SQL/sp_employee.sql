@@ -10,6 +10,7 @@ BEGIN
         [Employee_ID],
         [Given_Name],
         [Family_Name],
+		[DOB],
         [Address],
         [Address2],
         [City],
@@ -36,6 +37,7 @@ BEGIN
     SELECT 
         [Given_Name],
         [Family_Name],
+		[DOB],
         [Address],
         [Address2],
         [City],
@@ -63,6 +65,7 @@ CREATE PROCEDURE [dbo].[sp_insert_employee]
 (
     @p_Given_Name 		nvarchar(50),
     @p_Family_Name 		nvarchar(50),
+	@p_DOB				datetime,
     @p_Address 			nvarchar(50),
     @p_Address2 			nvarchar(50) = NULL,
     @p_City 				nvarchar(20),
@@ -80,6 +83,7 @@ BEGIN
     INSERT INTO [dbo].[Employee] (
         [Given_Name],
         [Family_Name],
+		[DOB],
         [Address],
         [Address2],
         [City],
@@ -93,6 +97,7 @@ BEGIN
     VALUES (
         @p_Given_Name,
         @p_Family_Name,
+		@p_DOB,
         @p_Address,
         @p_Address2,
         @p_City,
@@ -124,6 +129,7 @@ BEGIN
 		[Employee_ID],
         [Given_Name],
         [Family_Name],
+		[DOB],
         [Address],
         [Address2],
         [City],
@@ -177,4 +183,66 @@ BEGIN
     AND (l.[Security_Response_2] IS NULL OR l.[Security_Response_2] = @Security_Response_2)
     AND (l.[Security_Response_3] IS NULL OR l.[Security_Response_3] = @Security_Response_3);
 END;
+GO
+
+--Author: James Williams
+--Update Employee record
+print'' print'*** Creating sp_update_employee ***'
+GO
+CREATE PROCEDURE [dbo].[sp_update_employee]
+(
+	@p_Employee_ID			[int],
+	@p_New_Given_Name		[nvarchar](50),
+	@p_New_Family_Name		[nvarchar](50),
+	@p_New_DOB				[datetime],
+	@p_New_Address			[nvarchar](50),
+	@p_New_Address2			[nvarchar](50),
+	@p_New_City				[nvarchar](20),
+	@p_New_State			[nvarchar](2),
+	@p_New_Country			[nvarchar](3),
+	@p_New_Zip				[nvarchar](9),
+	@p_New_Phone_Number		[nvarchar](20),
+	@p_New_Email			[nvarchar](50),
+	@p_New_Position			[nvarchar](20),
+	
+	@p_Old_Given_Name		[nvarchar](50),
+	@p_Old_Family_Name		[nvarchar](50),
+	@p_Old_Address			[nvarchar](50),
+	@p_Old_City				[nvarchar](20),
+	@p_Old_State			[nvarchar](2),
+	@p_Old_Country			[nvarchar](3),
+	@p_Old_Zip				[nvarchar](9),
+	@p_Old_Phone_Number		[nvarchar](20),
+	@p_Old_Email			[nvarchar](50),
+	@p_Old_Position			[nvarchar](20)
+)
+AS
+BEGIN
+	UPDATE [dbo].[Employee]
+	SET
+	[Given_Name] = @p_New_Given_Name,
+	[Family_Name] = @p_New_Family_Name,		
+	[DOB] = @p_New_DOB,				
+	[Address] = @p_New_Address,			
+	[Address2] = @p_New_Address2,			
+	[City] = @p_New_City,				
+	[State] = @p_New_State,			
+	[Country] =@p_New_Country,			
+	[Zip] = @p_New_Zip,				
+	[Phone_Number] = @p_New_Phone_Number,		
+	[Email] = @p_New_Email,			
+	[Position] = @p_New_Position
+	WHERE
+	[Employee_ID] = @p_Employee_ID AND
+	[Given_Name] = @p_Old_Given_Name AND
+	[Family_Name] = @p_Old_Family_Name AND				
+	[Address] = @p_Old_Address AND						
+	[City] = @p_Old_City AND				
+	[State] = @p_Old_State AND			
+	[Country] =@p_Old_Country AND			
+	[Zip] = @p_Old_Zip AND				
+	[Phone_Number] = @p_Old_Phone_Number AND		
+	[Email] = @p_Old_Email AND			
+	[Position] = @p_Old_Position
+END
 GO

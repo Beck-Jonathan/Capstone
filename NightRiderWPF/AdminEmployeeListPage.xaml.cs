@@ -77,7 +77,7 @@ namespace NightRiderWPF
             try
             {
                 datEmployee_List.ItemsSource = employeeManager.GetEmployees();
-                var columnsToRemove = new[] { "Employee_Roles", "Address2" };
+                var columnsToRemove = new[] { "Employee_Roles", "Address2", "DOB" };
                 foreach (var columnName in columnsToRemove)
                 {
                     var columnToRemove = datEmployee_List.Columns.FirstOrDefault(c => c.Header.ToString() == columnName);
