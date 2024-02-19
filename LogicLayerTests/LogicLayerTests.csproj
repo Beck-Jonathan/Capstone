@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="Parts_Inventory_Tests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="DependentManagerTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
