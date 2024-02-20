@@ -1,4 +1,5 @@
-    DROP DATABASE IF EXISTS Night_Rider;
+
+DROP DATABASE IF EXISTS Night_Rider;
 GO
 CREATE DATABASE Night_Rider;
 GO
@@ -359,11 +360,47 @@ VALUES
 GO
 
 /******************
+Create the [dbo].[Model_Lookup] table
+***************/
+CREATE TABLE [dbo].[Model_Lookup]
+(
+    [Model_Lookup_ID] [int] IDENTITY(100000, 1) NOT NULL,
+    [Max_Passengers] [int] NOT NULL,
+    [Vehicle_Make] [nvarchar] (255) NOT NULL,
+    [Vehicle_Model] [nvarchar] (255) NOT NULL,
+    [Vehicle_Year] [nvarchar] (255) NOT NULL,
+    [Active] [bit] NOT NULL DEFAULT 1,
+    CONSTRAINT [PK_Model_Lookup_ID] PRIMARY KEY([Model_Lookup_ID])
+)
+GO
+
+/******************
+Insert Sample Data For The  Model_Lookup table
+***************/
+print ''
+Print '***Insert Sample Data For The  Model_Lookup table***' 
+ go
+INSERT INTO [dbo].[Model_Lookup]
+    (
+    [Max_Passengers],
+    [Vehicle_Make],
+    [Vehicle_Model],
+    [Vehicle_Year]
+    )
+VALUES
+    (5, 'Toyota', 'Camry', '2023'),
+    (7, 'Honda', 'Accord', '2022'),
+    (4, 'Ford', 'Escape', '2021'),
+    (2, 'Chevrolet', 'Spark', '2020'),
+    (8, 'Nissan', 'Altima', '2019');
+GO
+
+/******************
 Create the [dbo].[Vehicle] table
 ***************/
 print ''
 Print '***Create the [dbo].[Vehicle] table***' 
- GO
+ go
 
 CREATE TABLE [dbo].[Vehicle]
 (
@@ -371,9 +408,9 @@ CREATE TABLE [dbo].[Vehicle]
     [Vehicle_Number] [nvarchar](10) NOT NULL,
     [Vehicle_Mileage] [int] NOT NULL,
     [Vehicle_License_Plate] [nvarchar](10) NOT NULL,
+    [Model_Lookup_ID] [int] NOT NULL,
     [Vehicle_Type] [nvarchar](50) NOT NULL,
     [Date_Entered] [date] NOT NULL,
-    [Max_Passengers] [int] NOT NULL,
     [Description] [nvarchar](256) NOT NULL,
     [Rental] [bit] NOT NULL DEFAULT 0,
     [Is_Active] [bit] NOT NULL DEFAULT 1,
@@ -384,32 +421,29 @@ CREATE TABLE [dbo].[Vehicle]
     CONSTRAINT [AK_Vehicle_Number] UNIQUE ([Vehicle_Number]),
     CONSTRAINT [FK_Vehicle_Vehicle_Type] FOREIGN KEY ([Vehicle_Type]) 
         REFERENCES [Vehicle_Type]([Vehicle_Type]),
-
-
+    CONSTRAINT [FK_Vehicle_Model_Lookup] FOREIGN KEY ([Model_Lookup_ID])
+        REFERENCES [dbo].[Model_Lookup]([Model_Lookup_ID])
 )
 GO
-
 
 /******************
 Insert Sample Data For The  Vehicle table
 ***************/
 print ''
 Print '***Insert Sample Data For The  Vehicle table***' 
- GO
+ go
 
 INSERT INTO [dbo].[Vehicle]
-    ([VIN], [Vehicle_Number], [Vehicle_Mileage], [Vehicle_License_Plate]
-    , [Vehicle_Type], [Date_Entered], [Max_Passengers], [Description], [Rental], [Is_Active])
+    ([VIN], [Vehicle_Number], [Vehicle_Mileage], [Vehicle_License_Plate],
+    [Model_Lookup_ID], [Vehicle_Type], [Date_Entered], [Description], [Rental], [Is_Active]
+    )
 VALUES
-    ('1HGCM82633A123456', 'VH123', 50000, 'ABC123', 'City Bus', '2024-01-15', 32, 'Description', 0, 1),
-    ('5XYZH4AG4JH123456', 'VH456', 60000, 'XYZ789', 'School Bus', '2024-02-15', 43, 'Description', 1, 1),
-    ('JM1BK32F781234567', 'VH789', 75000, 'MJK456', 'Van', '2024-03-15', 3, 'Description', 0, 3),
-    ('WAUZZZ4G6BN123456', 'VH101', 40000, 'WAU789', 'Truck', '2024-04-15', 3, 'Description', 1, 4),
-    ('1C4RJFAG5FC123456', 'VH202', 55000, 'JFA567', 'City Bus', '2024-05-15', 23, 'Description', 1, 1); 
+    ('1HGCM82633A123456', 'VH123', 50000, 'ABC123', 100000, 'City Bus', '2024-01-15', 'Description', 0, 1),
+    ('5XYZH4AG4JH123456', 'VH456', 60000, 'XYZ789', 100001, 'School Bus', '2024-02-15', 'Description', 1, 1),
+    ('JM1BK32F781234567', 'VH789', 75000, 'MJK456', 100002, 'Van', '2024-03-15', 'Description', 0, 3),
+    ('WAUZZZ4G6BN123456', 'VH101', 40000, 'WAU789', 100003, 'Truck', '2024-04-15', 'Description', 1, 4),
+    ('1C4RJFAG5FC123456', 'VH202', 55000, 'JFA567', 100004, 'City Bus', '2024-05-15', 'Description', 1, 1); 
 GO
-
-
-
 
 /******************
 Create the [dbo].[Employee] table
@@ -508,14 +542,17 @@ GO
 /******************
 Insert Sample Data For The  Role table
 ***************/
-print '' Print '***Insert Sample Data For The  Role table***' 
+print ''
+Print '***Insert Sample Data For The  Role table***' 
  GO
- Insert into [dbo].[Role] ([Role_ID]) VALUES 
-	('Admin'),
-	('FleetAdmin'),
-	('Mechanic'),
-	('Maintenance'),
-	('PartsPerson')
+Insert into [dbo].[Role]
+    ([Role_ID])
+VALUES
+    ('Admin'),
+    ('FleetAdmin'),
+    ('Mechanic'),
+    ('Maintenance'),
+    ('PartsPerson')
  GO
 
 
@@ -541,21 +578,22 @@ GO
 
 
 /* Insert Sample Data For The  Employee_Role table */
-print '' print '*** inserting Employee_roles records ***'
+print ''
+print '*** inserting Employee_roles records ***'
 GO
-INSERT INTO [dbo].[Employee_Role] 
-		([Employee_ID], [Role_ID])
-	VALUES
-	(100000, 'Admin'),
-	(100001, 'FleetAdmin'),
-	(100002, 'Mechanic'),
-	(100003, 'Maintenance'),
-	(100004, 'PartsPerson'),
-	(100005, 'Mechanic'),
-	(100006, 'Maintenance'),
-	(100007, 'PartsPerson'),
-	(100008, 'Mechanic'),
-	(100009, 'Maintenance')
+INSERT INTO [dbo].[Employee_Role]
+    ([Employee_ID], [Role_ID])
+VALUES
+    (100000, 'Admin'),
+    (100001, 'FleetAdmin'),
+    (100002, 'Mechanic'),
+    (100003, 'Maintenance'),
+    (100004, 'PartsPerson'),
+    (100005, 'Mechanic'),
+    (100006, 'Maintenance'),
+    (100007, 'PartsPerson'),
+    (100008, 'Mechanic'),
+    (100009, 'Maintenance')
 	
 
 GO
@@ -861,46 +899,6 @@ VALUES
     ('ST005', 'Troubleshooting')
 GO
 
-/******************
-Create the [dbo].[Model_Lookup] table
-***************/
-CREATE TABLE [dbo].[Model_Lookup]
-(
-    [Model_Lookup_ID] [int] IDENTITY(100000, 1) NOT NULL,
-    [VIN] [nvarchar] (17) NOT NULL,
-    [Max_Passengers] [int] NOT NULL,
-    [Vehicle_Make] [nvarchar] (255) NOT NULL,
-    [Vehicle_Model] [nvarchar] (255) NOT NULL,
-    [Vehicle_Year] [nvarchar] (255) NOT NULL,
-    [Active] [bit] NOT NULL DEFAULT 1,
-    CONSTRAINT [FK_Model_Lookup_VIN] FOREIGN KEY([VIN])
-        REFERENCES [dbo].[Vehicle]([VIN]),
-    CONSTRAINT [PK_Model_Lookup_ID] PRIMARY KEY([Model_Lookup_ID])
-)
-GO
-
-/******************
-Insert Sample Data For The  Model_Lookup table
-***************/
-print ''
-Print '***Insert Sample Data For The  Model_Lookup table***' 
- GO
-INSERT INTO [dbo].[Model_Lookup]
-    (
-
-    [VIN],
-    [Max_Passengers],
-    [Vehicle_Make],
-    [Vehicle_Model],
-    [Vehicle_Year]
-    )
-VALUES
-    ('1HGCM82633A123456', 5, 'Toyota', 'Camry', '2023'),
-    ('5XYZH4AG4JH123456', 7, 'Honda', 'Accord', '2022'),
-    ('JM1BK32F781234567', 4, 'Ford', 'Escape', '2021'),
-    ('WAUZZZ4G6BN123456', 2, 'Chevrolet', 'Spark', '2020'),
-    ('1C4RJFAG5FC123456', 8, 'Nissan', 'Altima', '2019');
-GO
 
 /******************
 Create the [dbo].[Maintenance_Schedule] table
@@ -1734,9 +1732,9 @@ Print '***Creating [dbo].[Login] table***'
  GO
 CREATE TABLE [dbo].[Login]
 (
-	[Username]				[nvarchar](50)				NOT NULL,
-  -- default password: newpassword
-	[Password_Hash]			[nvarchar](100)				NOT NULL DEFAULT 
+    [Username] [nvarchar](50) NOT NULL,
+    -- default password: newpassword
+    [Password_Hash] [nvarchar](100) NOT NULL DEFAULT 
 		'9c9064c59f1ffa2e174ee754d2979be80dd30db552ec03e7e327e9b1a4bd594e',
     [Client_ID] [int] NULL,
     [Employee_ID] [int] NULL,
@@ -1768,18 +1766,19 @@ print ''
 Print '***Insert Sample Data For The  Login table***' 
  GO
 
-INSERT INTO [dbo].[Login] (
-        [Username],
-        [Client_ID],
-        [Employee_ID],
-        [Security_Question_1], [Security_Response_1],
-        [Security_Question_2], [Security_Response_2],
-        [Security_Question_3], [Security_Response_3])
-    VALUES
-        ('JoeSmith1994', NULL, 100000, 'what is your favorite animal?','lion', NULL, NULL, NULL, NULL),
-        ('Jacmar125', 100001, NULL, 'what is your favorite animal?', 'Ocelot', 'what is your favorite food?', 'Ramen', NULL, NULL),
-        ('Lebold2202', NULL, 100003, 'what is your favorite animal?', 'Foxes', 'what is your favorite food?', 'Spaghetti','what was your first dogs name?','Lola'),
-        ('PatNew999', NULL, 100003, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[Login]
+    (
+    [Username],
+    [Client_ID],
+    [Employee_ID],
+    [Security_Question_1], [Security_Response_1],
+    [Security_Question_2], [Security_Response_2],
+    [Security_Question_3], [Security_Response_3])
+VALUES
+    ('JoeSmith1994', NULL, 100000, 'what is your favorite animal?', 'lion', NULL, NULL, NULL, NULL),
+    ('Jacmar125', 100001, NULL, 'what is your favorite animal?', 'Ocelot', 'what is your favorite food?', 'Ramen', NULL, NULL),
+    ('Lebold2202', NULL, 100003, 'what is your favorite animal?', 'Foxes', 'what is your favorite food?', 'Spaghetti', 'what was your first dogs name?', 'Lola'),
+    ('PatNew999', NULL, 100003, NULL, NULL, NULL, NULL, NULL, NULL)
 GO
 
 /******************

@@ -27,7 +27,8 @@ namespace DataAccessFakes
 
     public class VehicleAccessorFakes : IVehicleAccessor
     {
-        List<Vehicle> fakeVehicles = new List<Vehicle>();    
+        List<Vehicle> fakeVehicles = new List<Vehicle>();
+        List<int> fakeModelLookup = new List<int>();
         List<string> fakeVehicleTypes = new List<string>();
         List<string> fakeVehicleMakes = new List<string>();
         List<string> fakeVehicleModels = new List<string>();
@@ -35,17 +36,22 @@ namespace DataAccessFakes
 
         public VehicleAccessorFakes() 
         {
-            fakeVehicles.Add(new Vehicle()
+            Vehicle vehicle = new Vehicle()
             {
                 VIN = "testaddvin1234567",
                 VehicleNumber = "Test-01",
                 VehicleMileage = 1000,
+                ModelLookupID = 100001,
                 VehicleLicensePlate = "Test01",
                 VehicleMake = "Mercedes",
                 VehicleModel = "Sprinter",
                 VehicleYear = 2024,
-                MaxPassengers = 3
-            });
+                MaxPassengers = 3,
+                VehicleType = "Van",
+                VehicleDescription = "Van",
+                Rental = false,
+                DateEntered = DateTime.Now,
+            };
 
             _fakeVehicleLookupList.Add(new Vehicle()
             {
@@ -64,6 +70,9 @@ namespace DataAccessFakes
                 VehicleMileage = 25350,
                 VehicleDescription = "This car is crazy to drive.",
             });
+
+            fakeVehicles.Add(vehicle);
+            fakeModelLookup.Add(vehicle.ModelLookupID);
 
             fakeVehicleTypes.Add("");
             fakeVehicleTypes.Add("");
@@ -87,6 +96,36 @@ namespace DataAccessFakes
             return 1;
         }
 
+        public int AddModelLookup(Vehicle vehicle)
+        {
+            foreach (var v in fakeModelLookup)
+            {
+                if (v.Equals(vehicle.ModelLookupID))
+                {
+                    throw new ArgumentException();
+                }
+            }
+            return 100000;
+        }
+
+        public Vehicle SelectVehicleByVehicleNumber(string vehicleNumber)
+        {
+            Vehicle found = null;
+            foreach (var v in fakeVehicles)
+            {
+                if (v.VehicleNumber.Equals(vehicleNumber))
+                {
+                    found = v;
+                    break;
+                }
+            }
+            if (found == null)
+            {
+                throw new ArgumentException("Vehicle not found.");
+            }
+            return found;
+        }
+
         public List<string> SelectVehicleMakes()
         {
             return fakeVehicleMakes;
@@ -102,27 +141,61 @@ namespace DataAccessFakes
             return fakeVehicleTypes;
         }
 
-        /// <summary>
-        ///     Returns all fake vehicle lookup list records
-        /// </summary>
-        /// <returns>
-        ///    <see cref="List{Vehicle}">Vehicle</see> List of Vehicle objects
-        /// </returns>
-        /// <remarks>
-        ///    CONTRIBUTOR: Everett DeVaux
-        /// <br />
-        ///    CREATED: 2024-02-10
-        /// <br />
-        /// <br />
-        ///    UPDATER: [Updater's Name]
-        /// <br />
-        ///    UPDATED: yyyy-MM-dd
-        /// <br />
-        ///     Initial Creation
-        /// </remarks>
+       
         public List<Vehicle> SelectVehicleForLookupList()
         {
+            /// <summary>
+            ///     Returns all fake vehicle lookup list records
+            /// </summary>
+            /// <returns>
+            ///    <see cref="List{Vehicle}">Vehicle</see> List of Vehicle objects
+            /// </returns>
+            /// <remarks>
+            ///    CONTRIBUTOR: Everett DeVaux
+            /// <br />
+            ///    CREATED: 2024-02-10
+            /// <br />
+            /// <br />
+            ///    UPDATER: [Updater's Name]
+            /// <br />
+            ///    UPDATED: yyyy-MM-dd
+            /// <br />
+            ///     Initial Creation
+            /// </remarks>
             return _fakeVehicleLookupList;
+        }
+
+        public int UpdateVehicle(Vehicle oldVehicle, Vehicle newVehicle)
+        {
+            int result = 0;
+
+            for (int i = 0; i < fakeVehicles.Count; i++)
+            {
+                if (fakeVehicles[i].VIN.Equals(oldVehicle.VIN))
+                {
+                    fakeVehicles[i] = newVehicle;
+                    result++;
+                }
+            }
+
+            if (result != 1)
+            {
+                throw new ArgumentException("Unable to update vehicle.");
+            }
+
+            return result;
+        }
+
+        public int SelectModelLookupID(Vehicle vehicle)
+        {
+            if (vehicle.ModelLookupID == fakeVehicles[0].ModelLookupID)
+            {
+                return fakeVehicles[0].ModelLookupID;
+            }
+            else
+            {
+                throw new ArgumentException();
+            }
         }
     }
 }

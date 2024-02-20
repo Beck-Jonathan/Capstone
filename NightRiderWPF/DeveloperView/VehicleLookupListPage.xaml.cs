@@ -27,20 +27,19 @@ namespace NightRiderWPF.DeveloperView
     /// </summary>
     /// 
     /// <remarks>
-    /// UPDATER: updater_name
-    /// <br />
-    /// UPDATED: yyyy-MM-dd
-    /// <br />
-    /// 
     ///     Initial Creation
-    ///     
     ///     Genereated the function from the back end to the front end
+    
+    /// UPDATER: Chris Baenziger
+    /// UPDATED: 2024-02-17
+    ///     
     /// </remarks>
     public partial class VehicleLookupListPage : Page
     {
 
         List<Vehicle> _vehicleLookupList = null;
         IVehicleManager _vehicleLookupListMgr = null;
+        
 
         public VehicleLookupListPage()
         {
@@ -51,7 +50,7 @@ namespace NightRiderWPF.DeveloperView
             catch (Exception ex)
             {
                 MessageBox.Show("Error " + ex.Message + " occurred");
-                throw ex;
+                // throw ex; catch should not throw exception on the presentation layer. Chris Baenziger 2024-02-17
             }
 
 
@@ -59,12 +58,12 @@ namespace NightRiderWPF.DeveloperView
 
         private void viewVehicleBtn_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Not Implemented");
+            DisplayVehicle();
         }
 
         private void addVehicleBtn_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Not Implemented");
+            NavigationService.Navigate(new AddUpdateDeleteVehicle());
         }
 
         private void addRentalBtn_Click(object sender, RoutedEventArgs e)
@@ -96,7 +95,12 @@ namespace NightRiderWPF.DeveloperView
         /// </remarks>
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
+            RefreshListContents();
 
+        }
+
+        private void RefreshListContents()
+        {
             try
             {
                 _vehicleLookupListMgr = new VehicleManager();
@@ -106,8 +110,8 @@ namespace NightRiderWPF.DeveloperView
             }
             catch (Exception)
             {
-
-                throw;
+                MessageBox.Show("Unable to load the vehicle list", "Load Error", MessageBoxButton.OK, MessageBoxImage.Error); // Chris Baenziger 2024-02-17
+                // throw; catch should not throw exception on the presentation layer. Chris Baenziger 2024-02-17
             }
             List<dynamic> dataObjects = new List<dynamic>();
             foreach (Vehicle VehicleLookupList in _vehicleLookupList)
@@ -129,7 +133,7 @@ namespace NightRiderWPF.DeveloperView
                     PropertySix = VehicleDescription,
                 };
                 dataObjects.Add(vehicleListDynamic);
-                
+
             }
 
             //vehicleLookupDataGrid.Items.Insert(0, dataObjects.ToArray());
@@ -142,16 +146,37 @@ namespace NightRiderWPF.DeveloperView
             vehicleLookupDataGrid.Columns[3].Header = "Seat Count";
             vehicleLookupDataGrid.Columns[4].Header = "Mileage";
             vehicleLookupDataGrid.Columns[5].Header = "Description";
-
-
-
         }
-        //Checked by James Williams
 
         private void vehicleLookupDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
+            DisplayVehicle();
+        }
 
-
+        private void DisplayVehicle()
+        {
+            Vehicle vehicle = null;
+            if (vehicleLookupDataGrid.SelectedItem != null)
+            {
+                var selectedVehicle = vehicleLookupDataGrid.SelectedItem;
+                var nameOfProperty = "PropertyOne";
+                var propertyInfo = selectedVehicle.GetType().GetProperty(nameOfProperty);
+                string vehicleNumber = propertyInfo.GetValue(selectedVehicle, null).ToString();
+                try
+                {
+                    vehicle = _vehicleLookupListMgr.GetVehicleByVehicleNumber(vehicleNumber);
+                }
+                catch (Exception oex)
+                {
+                    MessageBox.Show("Error displaying vehicle.\n"
+                        + oex.InnerException.Message, "Error",
+                        MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                if (vehicle != null)
+                {
+                    NavigationService.Navigate(new AddUpdateDeleteVehicle(vehicle));
+                }
+            }
         }
     }
 }

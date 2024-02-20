@@ -29,5 +29,9 @@ namespace LogicLayer
         List<string> GetVehicleMakes();
         List<string> GetVehicleModels();
         List<Vehicle> VehicleLookupList();
+        Vehicle GetVehicleByVehicleNumber(string vehicleNumber);
+        bool EditVehicle(Vehicle oldVehicle, Vehicle newVehicle);
+        bool AddModelLookup(Vehicle vehicle);
+        Vehicle GetModelLookupID(Vehicle vehicle);
     }
 }

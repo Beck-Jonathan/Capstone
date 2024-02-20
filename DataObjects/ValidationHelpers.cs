@@ -51,6 +51,7 @@ namespace DataObjects
             ///    CONTRIBUTOR: Chris Baenziger
             ///    CREATED: 2024-02-06
             /// </remarks>
+            vin.Replace(" ", "");
             return vin.Length == 17;
         }
 

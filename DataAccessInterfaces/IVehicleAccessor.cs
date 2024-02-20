@@ -29,7 +29,10 @@ namespace DataAccessInterfaces
         List<string> SelectVehicleTypes();
         List<string> SelectVehicleMakes();
         List<string> SelectVehicleModels();
-
         List<Vehicle> SelectVehicleForLookupList();
+        int AddModelLookup(Vehicle vehicle);
+        Vehicle SelectVehicleByVehicleNumber(string vehicleNumber);
+        int UpdateVehicle(Vehicle oldVehicle, Vehicle newVehicle);
+        int SelectModelLookupID(Vehicle vehicle);
     }
 }
