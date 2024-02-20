@@ -3,7 +3,7 @@ GO
 print ''
 print '*** Create the sp_add_vehicle stored procedure ***'
 GO
-
+-- AUTHOR: Chris Baenziger
 CREATE PROCEDURE [dbo].[sp_add_vehicle]
     (
     @VIN                    [nvarchar](17),
@@ -60,7 +60,7 @@ GO
 print ''
 print '*** Create the sp_select_vehicle_by_vehicle_number ***'
 GO
-
+-- AUTHOR: Chris Baenziger
 CREATE PROCEDURE [dbo].[sp_select_vehicle_by_vehicle_number]
     (
     @Vehicle_Number [nvarchar](10)
@@ -79,7 +79,7 @@ GO
 print ''
 print '*** Create sp_update_vehicle ***'
 GO
-
+-- AUTHOR: Chris Baenziger
 CREATE PROCEDURE [dbo].[sp_update_vehicle]
     (
     @VIN                    [nvarchar](17),

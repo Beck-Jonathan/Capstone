@@ -31,7 +31,7 @@ GO
 print''
 print '*** Create the sp_add_model_lookup ***'
 GO
-
+-- AUTHOR: Chris Baenziger
 CREATE PROCEDURE [dbo].[sp_add_model_lookup]
     (
     @Max_Passengers         [int],
@@ -53,7 +53,7 @@ GO
 print ''
 print '*** create sp_lookup_model_lookup_id_from_make_model_year ***'
 GO
-
+-- AUTHOR: Chris Baenziger
 CREATE PROCEDURE [dbo].[sp_lookup_model_lookup_id_from_make_model_year]
     (
     @Max_passengers [int],
