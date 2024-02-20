@@ -93,6 +93,30 @@ namespace LogicLayer
         Employee_VM GetEmployee(int id);
         // Checked by Jared R.
 
+        /// <summary>
+        ///   Updates employee record
+        /// </summary>
+        /// <param>
+        ///    Employee_VM updatedEmployee
+        /// </param>
+        /// <param>
+        ///     Employee_VM originalEmployee
+        /// </param>
+        /// <returns>
+        ///     <see cref="int"/>: returns number of employee records affected.
+        /// </returns>
+        /// <remarks>
+        ///    Parameters: updatedEmployee, originalEmployee
+        /// <br />
+        /// <br /><br />
+        ///    Exceptions:None
+        /// <br />
+        /// <br /><br />
+        ///    CONTRIBUTOR: James Williams
+        /// <br />
+        ///    CREATED: 2024-02-17
+        /// <br />
+        int EditEmployee(Employee_VM updatedEmployee, Employee_VM originalEmployee);
     }
 }
 // Checked by Nathan Toothaker

@@ -213,6 +213,37 @@ namespace LogicLayerTests
             Assert.AreEqual(correctEmployeeId, correctEmployee.Employee_ID, "Employee IDs should match");
         }
         // checked by Jared R.
+
+        [TestMethod]
+        public void TestUpdateEmployeeReturnsCorrectRows()
+        {
+            int expected = 1;
+            int actual = 0;
+            int employeeID = 100000;
+            Employee_VM originalEmployee = _employeeManager.GetEmployee(employeeID);
+            Employee_VM updatedEmployee = _employeeManager.GetEmployee(employeeID);
+            updatedEmployee.Family_Name = "Jack";
+
+            actual = _employeeManager.EditEmployee(updatedEmployee, originalEmployee);
+
+            Assert.AreEqual(expected, actual);
+
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void TestUpdateEmployeeThrowsArgumentException()
+        {
+          
+            int actual = 0;
+            int employeeID1 = 100000;
+            int employeeID2 = 100001;
+            Employee_VM originalEmployee = _employeeManager.GetEmployee(employeeID1);
+            Employee_VM updatedEmployee = _employeeManager.GetEmployee(employeeID2);
+            updatedEmployee.Family_Name = "Jack";
+
+            actual = _employeeManager.EditEmployee(updatedEmployee, originalEmployee);
+        }
     }
 }
 // Checked by Nathan Toothaker

@@ -41,6 +41,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DependentManager.cs" />
+    <Compile Include="IDependentManager.cs" />
     <Compile Include="IServiceOrderManager.cs" />
     <Compile Include="AppData\Authentication.cs" />
     <Compile Include="LoginManager.cs" />

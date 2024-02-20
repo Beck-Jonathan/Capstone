@@ -455,22 +455,22 @@ Print '***Create the [dbo].[Employee] table***'
  go
 
 
-CREATE TABLE [dbo].[Employee]
-(
-    [Employee_ID] [int] IDENTITY(100000, 1) NOT NULL,
-    [Given_Name] [nvarchar](50) NOT NULL,
-    [Family_Name] [nvarchar](50) NOT NULL,
-    [Address] [nvarchar](50) NOT NULL,
-    [Address2] [nvarchar](50) NULL,
-    [City] [nvarchar](20) NOT NULL,
-    [State] [nvarchar](2) NOT NULL,
-    [Country] [nvarchar](3) NOT NULL,
-    [Zip] [nvarchar](9) NOT NULL,
-    [Phone_Number] [nvarchar](20) NOT NULL,
-    [Email] [nvarchar](50) NOT NULL,
-    [Position] [nvarchar](20) NOT NULL,
-    [Is_Active] [bit] NOT NULL DEFAULT 1,
-    CONSTRAINT [pk_Employee] PRIMARY KEY([Employee_ID])
+CREATE TABLE [dbo].[Employee] (
+	[Employee_ID]	[int] IDENTITY(100000, 1) NOT NULL,
+	[Given_Name] 	[nvarchar](50) 	NOT NULL,
+	[Family_Name]	[nvarchar](50) 	NOT NULL,
+	[DOB]			[datetime]		NOT NULL,
+	[Address]		[nvarchar](50) 	NOT NULL,
+	[Address2]		[nvarchar](50) 	NULL,
+	[City]			[nvarchar](20) 	NOT NULL,
+	[State]			[nvarchar](2) 	NOT NULL,
+	[Country]		[nvarchar](3) 	NOT NULL,
+	[Zip]			[nvarchar](9) 	NOT NULL,
+	[Phone_Number]	[nvarchar](20) 	NOT NULL,
+	[Email]			[nvarchar](50) 	NOT NULL,
+	[Position]		[nvarchar](20) 	NOT NULL,
+	[Is_Active]		[bit]			NOT NULL DEFAULT 1,
+	CONSTRAINT [pk_Employee] PRIMARY KEY([Employee_ID])
 )
 GO
 
@@ -481,52 +481,51 @@ print ''
 Print '***Insert Sample Data For The  Employee table***' 
  go
 INSERT INTO [dbo].[Employee]
-    ([Given_Name],[Family_Name],[Address],[City],[State],[Country],[Zip],
+    ([Given_Name],[Family_Name],[DOB],[Address],[City],[State],[Country],[Zip],
     [Phone_Number],[Email],[Position]
     )
 VALUES(
-        'John', 'Smith',
+        'John', 'Smith', '2006-11-01',
         '132 Nowhere Ave', 'Nottingham', '', 'GBR',
         '', '11575011049', 'John@company.com', 'Mechanic'),
     (
-        'Dylan', 'Linkelvetch',
+        'Dylan', 'Linkelvetch', '1953-02-07',
         '158 Real Pl', 'Iowa City', 'IA', 'USA',
         '52245', '3191231234', 'Dylan@company.com', 'Driver'),
     (
-        'Gunter', 'Schneider',
+        'Gunter', 'Schneider', '1988-04-01',
         '240 Root St', 'Berlin', '', 'DEU',
         '', '1231231234', 'Gunter@company.com', 'Fleet Admin'),
     (
-        'Marissa', 'Graham',
+        'Marissa', 'Graham', '2001-02-08',
         '512 Nix ln ', 'Juno', 'AK', 'USA',
         '99801', '9879871234', 'Marissa@company.com', 'Maintenance'),
     (
-        'Auri', 'Koskinen',
+        'Auri', 'Koskinen', '1982-11-01',
         '007 Secret St', 'Helsinki', '', 'FIN',
         '', '0095542367', 'Auri@company.com', 'Mechanic'),
     (
-        'Linda', 'Flynn',
+        'Linda', 'Flynn', '1968-10-31',
         '879 Perry Ave', 'Danville', 'CT', 'USA',
         '06080', '3194105910', 'Linda@company.com', 'PositionName'),
     (
-        'Francis', 'Polesmith',
+        'Francis', 'Polesmith', '1984-01-04',
         '51 Joust Ln', 'Pierre', 'SD', 'USA',
         '57501', '4191023103', 'Francis@company.com', 'PositionName'),
     (
-        'Theseus', 'Slayer',
+        'Theseus', 'Slayer', '1985-03-31',
         '151 Antimino Pl', 'Athens', '', 'GRC',
         '', '5710150113', 'Theseus@company.com', 'PositionName'),
     (
-        'Trisha', 'Hallows',
+        'Trisha', 'Hallows', '1988-06-06',
         '132 Nowhere Ave', 'Baton Rouge', 'LA', 'USA',
         '70801', '22575011049', 'Trisha@company.com', 'PositionName'),
     (
-        'Justin', 'Time',
+        'Justin', 'Time', '2002-12-25',
         '510 Clock Circle', 'Hill Valley', 'CA', 'USA',
         '91905', '5961924091', 'Justin@company.com', 'PositionName'
 	)
 GO
-
 
 /******************
 Create the [dbo].[Role] table
@@ -1905,16 +1904,17 @@ Print '***Creating [dbo].[Dependent] table***'
  go
 CREATE TABLE [dbo].[Dependent]
 (
-    [Dependent_ID] [int] IDENTITY(100000, 1) NOT NULL,
-    [Given_Name] [nvarchar](50) NOT NULL,
-    [Family_Name] [nvarchar](50) NOT NULL,
-    [Middle_Name] [nvarchar](100) NULL,
-    [DOB] [DATE] NOT NULL,
-    [Gender] [nvarchar](20) NULL,
-    [Emergency_Contact] [nvarchar](100) NOT NULL,
-    [Emergency_Phone] [nvarchar](11) NOT NULL,
-    [Is_Active] [bit] NOT NULL DEFAULT 1,
-    CONSTRAINT 		[pk_Dependent_ID] PRIMARY KEY ([Dependent_ID])
+	[Dependent_ID]		[int]	IDENTITY(100000, 1)		NOT NULL,
+	[Given_Name]		[nvarchar](50)					NOT NULL,
+	[Family_Name]		[nvarchar](50)					NOT NULL,
+	[Middle_Name]		[nvarchar](100)					NULL,
+	[DOB]				[DATE]							NOT NULL,
+	[Gender]			[nvarchar](20)					NULL,
+	[Emergency_Contact]	[nvarchar](100)					NOT NULL,
+    [Contact_Relationship]	[nvarchar](100)				NOT NULL,
+	[Emergency_Phone]	[nvarchar](11)					NOT NULL,
+	[Is_Active]			[bit]							NOT NULL	DEFAULT 1,
+	CONSTRAINT 		[pk_Dependent_ID] PRIMARY KEY ([Dependent_ID])
 )
 GO
 print ''
@@ -1927,15 +1927,16 @@ GO
 /******************
 Insert Sample Data For The  Dependent table
 ***************/
-print ''
-Print '***Insert Sample Data For The  Dependent table***' 
- go
-INSERT INTO [dbo].[Dependent]
-    ([Given_Name],[Middle_Name],[Family_Name],[DOB],[Emergency_Contact],[Emergency_Phone])
-VALUES
-    ('Anita', null, 'Feuer', '12-12-1996', 'Thomas Feuer', '5552231049'),
-    ('Flint', 'N', 'Steele', '12-12-2002', 'Cole D. Steele', '5554259994')
-GO
+
+print '' Print '***Insert Sample Data For The  Dependent table***' 
+ go 
+ INSERT INTO [dbo].[Dependent]
+        ([Given_Name],[Middle_Name],[Family_Name],[DOB],[Emergency_Contact],[Contact_Relationship],
+            [Emergency_Phone])
+    VALUES
+        ('Anita',null,'Feuer','12-12-1996','Thomas Feuer', 'Parent', '5552231049'),
+        ('Flint','N','Steele','12-12-2002','Cole D. Steele','State Custodian','5554259994')
+GO 
 
 /******************
 Create the [dbo].[Dependent_Accommodation] table
@@ -1967,6 +1968,7 @@ print ''
 Print '***Insert Sample Data For The  Dependent_Accommodation table***' 
  go
 
+
 /******************
 Create the [dbo].[Client_Dependent_Role] table
 ***************/
@@ -1974,32 +1976,22 @@ print ''
 Print '***Create the [dbo].[Client_Dependent_Role] table***' 
  go
 
-
-CREATE TABLE [dbo].[Client_Dependent_Role]
-(
-
-
-    [Client_ID] [int] not null	
-,
-    [Dependent_ID] [int] not null	
-,
-    [Relationship] [nvarchar](100) not null	
-,
-    [Is_Active] [bit] not null	
-,
-    CONSTRAINT [PK_Client_Dependent_Role] PRIMARY KEY ([Client_ID] , [Dependent_ID])
-,
-    CONSTRAINT [fk_Client_Dependent_Role_Client0] foreign key ([Client_ID]) references [Client]([Client_ID])
-,
-    CONSTRAINT [fk_Client_Dependent_Role_Dependent1] foreign key ([Dependent_ID]) references [Dependent]([Dependent_ID])
+CREATE TABLE [dbo].[Client_Dependent_Role](
+[Client_ID]	[int]	not null	
+,[Dependent_ID]	[int]	not null	
+,[Relationship]	[nvarchar](100)	not null	
+,[Is_Active]	[bit]	not null	
+,CONSTRAINT [PK_Client_Dependent_Role] PRIMARY KEY ([Client_ID] , [Dependent_ID])
+,CONSTRAINT [fk_Client_Dependent_Role_Client0] foreign key ([Client_ID]) references [Client]([Client_ID])
+,CONSTRAINT [fk_Client_Dependent_Role_Dependent1] foreign key ([Dependent_ID]) references [Dependent]([Dependent_ID])
 )
 go
 
 /******************
 Insert Sample Data For The  Client_Dependent_Role table
 ***************/
-print ''
-Print '***Insert Sample Data For The  Client_Dependent_Role table***' 
+
+print '' Print '***Insert Sample Data For The  Client_Dependent_Role table***' 
  go
 
 /******************
@@ -2772,3 +2764,170 @@ VALUES
     (100004, '1C4RJFAG5FC123456', '2024-05-01', NULL, 'Assignment started on May 1', 1)
 	go
 
+/******************
+Create Stored Procedures for the Dependent table
+***************/
+print '' print '*** Creating sp_insert_dependent ***'
+GO
+CREATE PROCEDURE [dbo].[sp_insert_dependent]
+(
+    @Given_Name			[nvarchar](50),
+    @Family_Name        [nvarchar](50),
+    @Middle_Name        [nvarchar](100),
+    @DOB                [DATE],
+    @Gender             [nvarchar](20),
+    @Emergency_Contact  [nvarchar](100),
+    @Contact_Relationship [nvarchar](100),
+    @Emergency_Phone    [nvarchar](11)
+
+)
+AS
+    BEGIN
+        INSERT INTO [dbo].[Dependent]
+            ([Given_Name], [Family_Name], [Middle_Name], [DOB], [Gender],
+                [Emergency_Contact], [Contact_Relationship], [Emergency_Phone])
+        VALUES
+            (@Given_Name, @Family_Name, @Middle_Name, @DOB, @Gender,
+                @Emergency_Contact, @Contact_Relationship, @Emergency_Phone)
+        SELECT SCOPE_IDENTITY() AS 'Dependent_ID'
+    END
+GO
+
+print '' print '*** Creating sp_select_dependent_by_id ***'
+GO
+CREATE PROCEDURE [dbo].[sp_select_dependent_by_id]
+(
+    @Dependent_ID [int]
+)
+AS
+    BEGIN
+        SELECT [Dependent_ID], [Dependent].[Given_Name], [Dependent].[Family_Name], [Dependent].[Middle_Name],
+                    [Dependent].[DOB], [Dependent].[Gender], [Dependent].[Emergency_Contact],
+                    [Dependent].[Contact_Relationship], [Dependent].[Emergency_Phone],
+                    [Client_Dependent_Role].[Relationship]
+        FROM [dbo].[Dependent]
+        LEFT JOIN [dbo].[Client_Dependent_Role] ON [dbo].[Dependent].[Dependent_ID] = [dbo].[Client_Dependent_Role].[Dependent_ID]
+            AND [dbo].[Client_Dependent_Role].[Is_Active] = 1
+        WHERE [Dependent].[Dependent_ID] = @Dependent_ID
+            AND [Dependent].[Is_Active] = 1
+    END
+GO
+
+print '' print '*** Creating sp_select_dependents_by_clientID ***'
+GO
+CREATE PROCEDURE [dbo].[sp_select_dependents_by_clientID]
+(
+    @Client_ID [int]
+)
+AS
+    BEGIN
+        SELECT [Dependent_ID], [Dependent].[Given_Name], [Dependent].[Family_Name], [Dependent].[Middle_Name],
+                    [Dependent].[DOB], [Dependent].[Gender], [Dependent].[Emergency_Contact],
+                    [Dependent].[Contact_Relationship], [Dependent].[Emergency_Phone], [Client_Dependent_Role].[Relationship]
+        FROM [dbo].[Client_DependentRole] INNER JOIN [dbo].[Dependent]
+            ON [dbo].[Client_Dependent_Role].[Dependent_ID] = [dbo].[Dependent].[Dependent_ID]
+        WHERE [Client_Dependent_Role].[Client_ID] = @Client_ID
+            AND [Dependent].[Is_Active] = 1
+            AND [Client_Dependent_Role].[Is_Active] = 1
+    END
+GO
+
+print '' print '*** Creating sp_update_dependent ***'
+GO
+CREATE PROCEDURE [dbo].[sp_update_dependent]
+(
+    @Dependent_ID       [int],
+    @Old_Given_Name     [nvarchar](50),
+    @Old_Family_Name    [nvarchar](50),
+    @Old_Middle_Name    [nvarchar](100),
+    @Old_DOB            [DATE],
+    @Old_Gender         [nvarchar](20),
+    @Old_Emergency_Contact [nvarchar](100),
+    @Old_Contact_Relationship [nvarchar](100),
+    @Old_Emergency_Phone [nvarchar](11),
+    @Old_Client_Relationship [nvarchar](100),
+    @New_Given_Name     [nvarchar](50),
+    @New_Family_Name    [nvarchar](50),
+    @New_Middle_Name    [nvarchar](100),
+    @New_DOB            [DATE],
+    @New_Gender         [nvarchar](20),
+    @New_Emergency_Contact [nvarchar](100),
+    @New_Contact_Relationship [nvarchar](100),
+    @New_Emergency_Phone [nvarchar](11),
+    @New_Client_Relationship [nvarchar](100)
+)
+AS
+    BEGIN
+        BEGIN TRANSACTION;
+            UPDATE [dbo].[Dependent]
+                SET [Given_Name] = @New_Given_Name,
+                    [Family_Name] = @New_Family_Name,
+                    [Middle_Name] = @New_Middle_Name,
+                    [DOB] = @New_DOB,
+                    [Gender] = @New_Gender,
+                    [Emergency_Contact] = @New_Emergency_Contact,
+                    [Contact_Relationship] = @New_Contact_Relationship,
+                    [Emergency_Phone] = @New_Emergency_Phone,
+                WHERE [Dependent_ID] = @Dependent_ID
+                    AND [Given_Name] = @Old_Given_Name
+                    AND [Family_Name] = @Old_Family_Name
+                    AND [Middle_Name] = @Old_Middle_Name
+                    AND [DOB] = @Old_DOB
+                    AND [Gender] = @Old_Gender
+                    AND [Emergency_Contact] = @Old_Emergency_Contact
+                    AND [Contact_Relationship] = @Old_Contact_Relationship
+                    AND [Emergency_Phone] = @Old_Emergency_Phone;
+
+            UPDATE [dbo].[Client_Dependent_Role]
+                SET [Relationship] = @New_Client_Relationship
+                WHERE [Dependent_ID] = @Dependent_ID
+                    AND [Relationship] = @Old_Client_Relationship;
+        COMMIT TRANSACTION;
+    END
+GO
+
+
+        
+
+
+/******************
+Create Stored Procedures for the Client_Dependent_Role table
+***************/
+print '' print '*** Creating sp_insert_client_dependent_role ***'
+GO
+CREATE PROCEDURE [dbo].[sp_insert_client_dependent_role]
+(
+    @Client_ID       [int],
+    @Dependent_ID    [int],
+    @Relationship    [nvarchar](100)
+)
+AS
+    BEGIN
+        INSERT INTO [dbo].[Client_Dependent_Role]
+            ([Client_ID], [Dependent_ID], [Relationship])
+        VALUES
+            (@Client_ID, @Dependent_ID, @Relationship)
+        SELECT SCOPE_IDENTITY() AS 'Client_Dependent_Role_ID'
+    END
+GO
+
+/******************
+Create Stored Procedures for the Dependent_Accommodation table
+***************/
+
+print '' print '*** Creating sp_insert_dependent_accommodation ***'
+GO
+CREATE PROCEDURE [dbo].[sp_insert_dependent_accommodation]
+(
+    @Dependent_ID        [int],
+    @Accommodation_ID    [nvarchar](100)
+)
+AS
+    BEGIN
+        INSERT INTO [dbo].[Dependent_Accommodation]
+            ([Dependent_ID], [Accommodation_ID])
+        VALUES
+            (@Dependent_ID, @Accommodation_ID)
+        SELECT SCOPE_IDENTITY() AS 'Dependent_Accommodation_ID'
+    END
+GO

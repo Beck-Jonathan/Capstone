@@ -252,6 +252,25 @@ namespace LogicLayer
             return result;
         }
         // checked by Jared R.
+
+        public int EditEmployee(Employee_VM updatedEmployee, Employee_VM originalEmployee)
+        {
+            int rows = 0;
+            try
+            {
+                rows = _employeeAccessor.UpdateEmployee(updatedEmployee, originalEmployee);
+                if (rows == 0) 
+                {
+                    throw new ApplicationException("Error updating employee");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return rows;
+        }
+        
     }
 }
 // Checked by Nathan Toothaker

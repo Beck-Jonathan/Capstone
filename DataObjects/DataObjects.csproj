@@ -41,6 +41,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Accommodation.cs" />
+    <Compile Include="Dependent.cs" />
     <Compile Include="Client.cs" />
     <Compile Include="ClientRole.cs" />
     <Compile Include="Login.cs" />

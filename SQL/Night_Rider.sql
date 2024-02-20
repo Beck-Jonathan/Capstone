@@ -458,6 +458,7 @@ CREATE TABLE [dbo].[Employee]
     [Employee_ID] [int] IDENTITY(100000, 1) NOT NULL,
     [Given_Name] [nvarchar](50) NOT NULL,
     [Family_Name] [nvarchar](50) NOT NULL,
+	[DOB]			[datetime]		NOT NULL,
     [Address] [nvarchar](50) NOT NULL,
     [Address2] [nvarchar](50) NULL,
     [City] [nvarchar](20) NOT NULL,
@@ -477,54 +478,53 @@ Insert Sample Data For The  Employee table
 ***************/
 print ''
 Print '***Insert Sample Data For The  Employee table***' 
- GO
+ go
 INSERT INTO [dbo].[Employee]
-    ([Given_Name],[Family_Name],[Address],[City],[State],[Country],[Zip],
+    ([Given_Name],[Family_Name],[DOB],[Address],[City],[State],[Country],[Zip],
     [Phone_Number],[Email],[Position]
     )
 VALUES(
-        'John', 'Smith',
+        'John', 'Smith', '2006-11-01',
         '132 Nowhere Ave', 'Nottingham', '', 'GBR',
         '', '11575011049', 'John@company.com', 'Mechanic'),
     (
-        'Dylan', 'Linkelvetch',
+        'Dylan', 'Linkelvetch', '1953-02-07',
         '158 Real Pl', 'Iowa City', 'IA', 'USA',
         '52245', '3191231234', 'Dylan@company.com', 'Driver'),
     (
-        'Gunter', 'Schneider',
+        'Gunter', 'Schneider', '1988-04-01',
         '240 Root St', 'Berlin', '', 'DEU',
         '', '1231231234', 'Gunter@company.com', 'Fleet Admin'),
     (
-        'Marissa', 'Graham',
+        'Marissa', 'Graham', '2001-02-08',
         '512 Nix ln ', 'Juno', 'AK', 'USA',
         '99801', '9879871234', 'Marissa@company.com', 'Maintenance'),
     (
-        'Auri', 'Koskinen',
+        'Auri', 'Koskinen', '2023-11-01',
         '007 Secret St', 'Helsinki', '', 'FIN',
         '', '0095542367', 'Auri@company.com', 'Mechanic'),
     (
-        'Linda', 'Flynn',
+        'Linda', 'Flynn', '1968-10-31',
         '879 Perry Ave', 'Danville', 'CT', 'USA',
         '06080', '3194105910', 'Linda@company.com', 'PositionName'),
     (
-        'Francis', 'Polesmith',
+        'Francis', 'Polesmith', '1984-01-04',
         '51 Joust Ln', 'Pierre', 'SD', 'USA',
         '57501', '4191023103', 'Francis@company.com', 'PositionName'),
     (
-        'Theseus', 'Slayer',
+        'Theseus', 'Slayer', '1985-03-31',
         '151 Antimino Pl', 'Athens', '', 'GRC',
         '', '5710150113', 'Theseus@company.com', 'PositionName'),
     (
-        'Trisha', 'Hallows',
+        'Trisha', 'Hallows', '1988-06-06',
         '132 Nowhere Ave', 'Baton Rouge', 'LA', 'USA',
         '70801', '22575011049', 'Trisha@company.com', 'PositionName'),
     (
-        'Justin', 'Time',
+        'Justin', 'Time', '2002-12-25',
         '510 Clock Circle', 'Hill Valley', 'CA', 'USA',
         '91905', '5961924091', 'Justin@company.com', 'PositionName'
 	)
 GO
-
 
 /******************
 Create the [dbo].[Role] table
