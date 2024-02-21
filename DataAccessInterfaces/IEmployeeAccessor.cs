@@ -96,6 +96,31 @@ namespace DataAccessInterfaces
         /// </remarks>
         Employee_VM GetEmployee(int id);
         // checked by Jared R.
+
+
+        /// <summary>
+        ///   Update employee record
+        /// </summary>
+        /// <param>
+        ///    Employee_VM updatedEmployee
+        /// </param>
+        /// <param>
+        ///    Employee_VM originalEmployee
+        /// </param>
+        /// <returns>
+        ///     <see cref="int"/>: returns rows affected
+        /// </returns>
+        /// <remarks>
+        ///    Parameters: updatedEmployee, originalEmployee
+        /// <br />
+        /// <br /><br />
+        ///    Exceptions:ApplicationException
+        /// <br />
+        /// <br /><br />
+        ///    CONTRIBUTOR: James Williams
+        /// <br />
+        ///    CREATED: 2024-02-15
+        int UpdateEmployee(Employee_VM updatedEmployee, Employee_VM originalEmployee);
     }
 }
 // Checked by Nathan Toothaker

@@ -18,6 +18,7 @@ namespace DataObjects
         public int Employee_ID { get; set; }
         public string Given_Name { get; set; }
         public string Family_Name { get; set; }
+        public DateTime DOB { get; set; }
         public string Address { get; set; }
         public string Address2 { get; set; }
         public string City { get; set; }

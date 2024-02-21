@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="ClientAccessor.cs" />
     <Compile Include="DBConnectionProvider.cs" />
+    <Compile Include="DependentAccessor.cs" />
     <Compile Include="Helpers\SqlDataReaderHelpers.cs" />
     <Compile Include="LoginAccessor.cs" />
     <Compile Include="Parts_InventoryAccessor.cs" />

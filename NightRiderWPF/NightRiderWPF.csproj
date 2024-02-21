@@ -55,6 +55,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="AddDependent.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Compile Include="ClientPersonalPage.xaml.cs">
       <DependentUpon>ClientPersonalPage.xaml</DependentUpon>
     </Compile>
@@ -147,6 +151,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Compile Include="AddDependent.xaml.cs">
+      <DependentUpon>AddDependent.xaml</DependentUpon>
+    </Compile>
     <Compile Include="AddUpdateDeleteVehicle.xaml.cs">
       <DependentUpon>AddUpdateDeleteVehicle.xaml</DependentUpon>
     </Compile>
