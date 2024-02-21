@@ -35,7 +35,7 @@ namespace NightRiderWPF.Inventory
     ///     (no other details necessary).
     ///     A new remark should be added for each update.
     /// </remarks>
-    public partial class InventoryAudit : Window
+    public partial class InventoryAudit : Page
     {
         private Parts_InventoryManager _parts_inventoryManager;
         public  Parts_Inventory _part;
@@ -96,14 +96,28 @@ namespace NightRiderWPF.Inventory
             //imgInvPart.Source =
         }
 
-        private void BtnHome_Click(object sender, RoutedEventArgs e)
-        {
-            
-        }
-
+        /// <summary>
+        /// AUTHOR: Max Fare
+        /// DATE: 2024-01-20
+        /// Leaves the window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        /// <remarks>
+        /// UPDATED BY: Max Fare
+        /// DATE: 2024-02-20
+        /// window changed to a page, functionality formatted for being a page
+        /// </remarks>
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            if (this.NavigationService.CanGoBack)
+            {
+                this.NavigationService.GoBack();
+            }
+            else
+            {
+                MessageBox.Show("No page to go back to");
+            }
         }
         /// <summary>
         /// CONTRIBUTOR: Max Fare
@@ -160,6 +174,14 @@ namespace NightRiderWPF.Inventory
                     {
                         MessageBox.Show("Audit Successful");
                         txtboxActualQoH.Text = "";
+                        if (this.NavigationService.CanGoBack)
+                        {
+                            this.NavigationService.GoBack();
+                        }
+                        else
+                        {
+                            MessageBox.Show("No page to go back to");
+                        }
                     }
                     else
                     {
