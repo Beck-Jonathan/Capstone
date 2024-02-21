@@ -23,6 +23,19 @@ namespace LogicLayer
     {
         int AddDependent(Dependent dependent);
 
+        /// <summary>
+        /// Author: Jacob Rohr
+        /// CREATED: 2024-02-13
+        /// 
+        ///     Method to call accessor in order to retrieve dependents from database
+        ///     
+        ///     
+        /// <returns> Returns: <see cref="IEnumerable{DependentVM}"> IEnumerable Of Dependent VM </see></returns>
+        ///    
+        /// 
+        /// </summary>
+        IEnumerable<DependentVM> GetDependentList();
+
 
     }
 }

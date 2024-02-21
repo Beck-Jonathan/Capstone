@@ -13,6 +13,7 @@ using DataAccessInterfaces;
 using DataObjects;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -64,6 +65,63 @@ namespace DataAccessLayer
             }
             return entryID;
 
+        }
+
+        public IEnumerable<DependentVM> ListAllDependents()
+        {
+            List<DependentVM> dependentList = new List<DependentVM>();
+
+            var conn = DBConnectionProvider.GetConnection();
+
+            var cmdText = "sp_select_all_dependents";
+
+            var cmd = new SqlCommand(cmdText, conn);
+
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            try
+            {
+
+                conn.Open();
+                var reader = cmd.ExecuteReader();
+
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        dependentList.Add(new DependentVM()
+                        {
+                            DependentID = reader.GetInt32(0),
+                            GivenName = reader.GetString(1),
+                            FamilyName = reader.GetString(2),
+                            MiddleName = reader.GetString(3),
+                            DOB = reader.GetDateTime(4),
+                            Gender = reader.GetString(5),
+                            EmergencyContact = reader.GetString(6),
+                            ContactRelationship = reader.GetString(7),
+                            EmergencyPhone = reader.GetString(8),
+                            IsActive = reader.GetBoolean(9),
+
+                        });
+                    }
+
+                }
+                else
+                {
+                    throw new ApplicationException("No Dependents Found");
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            return dependentList;
         }
     }
 }

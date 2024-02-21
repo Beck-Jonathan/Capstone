@@ -65,6 +65,9 @@
     <Compile Include="DeveloperView\VehicleLookupListPage.xaml.cs">
       <DependentUpon>VehicleLookupListPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="GuardianViewDependentList.xaml.cs">
+      <DependentUpon>GuardianViewDependentList.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Resources\Statics.cs" />
     <Page Include="AddUpdateDeleteVehicle.xaml">
       <SubType>Designer</SubType>
@@ -122,6 +125,10 @@
     <Page Include="DeveloperView\SamplePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GuardianViewDependentList.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="LoginWindow.xaml">
       <SubType>Designer</SubType>

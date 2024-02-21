@@ -66,6 +66,9 @@ namespace NightRiderWPF
                     case "ClientPersonalPage":
                         PageViewer.Navigate(new ClientPersonalPage(Authentication.AuthenticatedClient));
                         break;
+                    case "GuardianViewDependentList":
+                        PageViewer.Navigate(new GuardianViewDependentList());
+                        break;
                 }
             }
         }

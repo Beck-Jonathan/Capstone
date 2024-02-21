@@ -63,6 +63,7 @@
                 <ListBoxItem Content="Employee Profile" x:Name="EmployeeProfilePage"  Margin="0" />
                 <ListBoxItem Content="View Work Order" x:Name="ViewWorkOrderPage"  Margin="0" />
                 <ListBoxItem Content="Client Information" x:Name="ClientPersonalPage" Margin="0" />
+                <ListBoxItem Content="Dependent List" x:Name="GuardianViewDependentList" Margin="0" />
                 <!-- copy the above and replace relevant values. -->
             </ListBox>
             <Border Grid.Column="1" BorderBrush="Black" BorderThickness="2px">

@@ -21,6 +21,17 @@ namespace DataAccessInterfaces
     public interface IDependentAccessor
     {
         int InsertDependent(Dependent dependent);
+
+        /// <summary>
+        /// CONTRIBUTOR: Jacob Rohr
+        /// CREATED: 2024-02-13
+        /// 
+        ///     A Method to retrieve a complete list of all dependents
+        ///     
+        /// <returns> Returns: <see cref = "IEnumerable{DependentVM}" > IEnumerable Of Dependent VM</see></returns>
+        ///     
+        /// </summary>
+        IEnumerable<DependentVM> ListAllDependents();
     }
 
 
