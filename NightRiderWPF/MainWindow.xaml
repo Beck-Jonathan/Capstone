@@ -47,7 +47,7 @@
                         VerticalAlignment="Top"
                         Width="100"
                         Content="Log Out"
-                        Visibility="Hidden" />
+                        Visibility="Hidden" Click="btn_logout_Click" />
                     <Label Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" 
                            x:Name="lblUsername" Content="Username:" />
                     <TextBox Grid.Row="0" Grid.Column="1" HorizontalAlignment="Stretch" 
