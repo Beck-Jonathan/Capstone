@@ -82,6 +82,9 @@ namespace NightRiderWPF
                     case "GuardianViewDependentList":
                         PageViewer.Navigate(new GuardianViewDependentList());
                         break;
+                    case "AdminHome":
+                        PageViewer.Navigate(new AdminHome());
+                        break;
                 }
             }
         }
