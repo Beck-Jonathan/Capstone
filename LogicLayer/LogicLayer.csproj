@@ -41,16 +41,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DependentManager.cs" />
-    <Compile Include="IDependentManager.cs" />
-    <Compile Include="IServiceOrderManager.cs" />
+    <Compile Include="Client\DependentManager.cs" />
+    <Compile Include="Client\IDependentManager.cs" />
+    <Compile Include="ServiceOrder\IServiceOrderManager.cs" />
     <Compile Include="AppData\Authentication.cs" />
-    <Compile Include="LoginManager.cs" />
-    <Compile Include="night_riderDataSet.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>night_riderDataSet.xsd</DependentUpon>
-    </Compile>
+    <Compile Include="Login\LoginManager.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
@@ -58,18 +53,18 @@
     </Compile>
     <Compile Include="Utilities\IPasswordHasher.cs" />
     <Compile Include="Utilities\PasswordHasher.cs" />
-    <Compile Include="IVehicleManager.cs" />
-    <Compile Include="ServiceOrderManager.cs" />
-    <Compile Include="VehicleManager.cs" />
-    <Compile Include="ClientManager.cs" />
-    <Compile Include="IClientManager.cs" />
-    <Compile Include="IParts_InventoryManager.cs" />
-    <Compile Include="Parts_InventoryManager.cs" />
-    <Compile Include="EmployeeManager.cs" />
-    <Compile Include="IEmployeeManager.cs" />
-    <Compile Include="IRoleManager.cs" />
+    <Compile Include="Vehicle\IVehicleManager.cs" />
+    <Compile Include="ServiceOrder\ServiceOrderManager.cs" />
+    <Compile Include="Vehicle\VehicleManager.cs" />
+    <Compile Include="Client\ClientManager.cs" />
+    <Compile Include="Client\IClientManager.cs" />
+    <Compile Include="Inventory\IParts_InventoryManager.cs" />
+    <Compile Include="Inventory\Parts_InventoryManager.cs" />
+    <Compile Include="Employee\EmployeeManager.cs" />
+    <Compile Include="Employee\IEmployeeManager.cs" />
+    <Compile Include="Role\IRoleManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RoleManager.cs" />
+    <Compile Include="Role\RoleManager.cs" />
     <Compile Include="Utilities\FormValidationHelper.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -92,17 +87,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="night_riderDataSet.xsc">
-      <DependentUpon>night_riderDataSet.xsd</DependentUpon>
-    </None>
-    <None Include="night_riderDataSet.xsd">
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>night_riderDataSet.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="night_riderDataSet.xss">
-      <DependentUpon>night_riderDataSet.xsd</DependentUpon>
-    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
