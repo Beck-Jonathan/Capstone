@@ -104,8 +104,10 @@ namespace NightRiderWPF
                 btnLogin.Visibility = Visibility.Hidden;
                 btnCreateAccount.Visibility = Visibility.Hidden;
 
-                lbl_userAuthenticatedConfirmation.Visibility = Visibility.Visible;
                 lbl_userAuthenticatedConfirmation.Content = BuildUserAuthenticatedConfirmationContent();
+                lbl_userAuthenticatedConfirmation.Visibility = Visibility.Visible;
+
+                btn_logout.Visibility = Visibility.Visible;
             }
             catch (ArgumentException)
             {
