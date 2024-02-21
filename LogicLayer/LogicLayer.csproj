@@ -46,6 +46,16 @@
     <Compile Include="IServiceOrderManager.cs" />
     <Compile Include="AppData\Authentication.cs" />
     <Compile Include="LoginManager.cs" />
+    <Compile Include="night_riderDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>night_riderDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
     <Compile Include="Utilities\IPasswordHasher.cs" />
     <Compile Include="Utilities\PasswordHasher.cs" />
     <Compile Include="IVehicleManager.cs" />
@@ -80,6 +90,23 @@
       <Name>DataObjects</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="night_riderDataSet.xsc">
+      <DependentUpon>night_riderDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="night_riderDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>night_riderDataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="night_riderDataSet.xss">
+      <DependentUpon>night_riderDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -15,6 +15,12 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using LogicLayer.AppData;
+using NightRiderWPF.Clients;
+using NightRiderWPF.Vehicles;
+using NightRiderWPF.WorkOrders;
+using NightRiderWPF.Employees;
+using NightRiderWPF.Inventory;
+using NightRiderWPF.Login;
 
 namespace NightRiderWPF
 {
