@@ -15,6 +15,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using LogicLayer.AppData;
+using DataObjects;
+using LogicLayer;
+using LogicLayer.Utilities;
 
 namespace NightRiderWPF
 {
@@ -23,9 +26,12 @@ namespace NightRiderWPF
     /// </summary>
     public partial class MainWindow : Window
     {
+        private ILoginManager _loginManager;
+        private IPasswordHasher _passwordHasher;
         public MainWindow()
         {
-
+            _passwordHasher = new PasswordHasher();
+            _loginManager = new LoginManager(_passwordHasher);
             InitializeComponent();
         }
 
@@ -65,6 +71,61 @@ namespace NightRiderWPF
                         break;
                 }
             }
+        }
+
+        /// <summary>
+        ///     updates UI during log out
+        /// </summary>
+        /// <remarks>
+        ///    CONTRIBUTOR: Jared Hutton, Parker Svoboda
+        /// <br />
+        ///    CREATED: 2024-02-17
+        /// </remarks>
+        private void UpdateUIforLogout()
+        {
+            btnLogin.IsDefault = true;
+
+            txtUsername.Text = "";
+            pwdPassword.Password = "";
+            txtUsername.Visibility = Visibility.Visible;
+            pwdPassword.Visibility = Visibility.Visible;
+            lblUsername.Visibility = Visibility.Visible;
+            lblPassword.Visibility = Visibility.Visible;
+            btnLogin.Visibility = Visibility.Visible;
+            btnCreateAccount.Visibility = Visibility.Visible;
+
+            lbl_userAuthenticatedConfirmation.Visibility = Visibility.Hidden;
+            btn_logout.Visibility = Visibility.Hidden;
+        }
+
+        /// <summary>
+        ///     Builds the user authenticated label content
+        /// </summary>
+        /// <remarks>
+        ///    CONTRIBUTOR: Jared Hutton
+        /// <br />
+        ///    CREATED: 2024-02-17
+        /// </remarks>
+        private string BuildUserAuthenticatedConfirmationContent()
+        {
+            return $"Welcome, {Authentication.AuthenticatedEmployee.Given_Name}.";
+        }
+
+        /// <summary>
+        ///     Handles click events for the logout button;
+        ///     logout user and purges the active session for security
+        /// </summary>
+        /// <remarks>
+        ///    CONTRIBUTOR: Jared Hutton, Parker Svoboda
+        /// <br />
+        ///    CREATED: 2024-02-20
+        /// </remarks>
+        private void btn_logout_Click(object sender, RoutedEventArgs e)
+        {
+            Authentication.AuthenticatedEmployee = null; // for security purposes
+            Authentication.AuthenticatedClient = null; // more security
+            UpdateUIforLogout();
+            return;
         }
     }
 }
