@@ -26,6 +26,7 @@ namespace DataAccessFakes
     public class ServiceOrderAccessorFakes : IServiceOrderAccessor
     {
         private List<ServiceOrder_VM> _fakeServiceOrders = new List<ServiceOrder_VM>();
+        private List<ServiceOrder> _updatedServiceOrders = new List<ServiceOrder>();
 
         public ServiceOrderAccessorFakes()
         {
@@ -70,6 +71,62 @@ namespace DataAccessFakes
         public List<ServiceOrder_VM> GetAllServiceOrders()
         {
             return _fakeServiceOrders;
+        }
+
+        /// <summary>
+        /// Updates a fake service order with the provided details.
+        /// </summary>
+        /// <param name="serviceOrder">The service order object containing the updated details.</param>
+        /// <returns>
+        ///     Returns an integer indicating the outcome of the update operation:
+        /// </returns>
+        /// <remarks>
+        ///     If the provided <paramref name="serviceOrder"/> is null, an <see cref="ArgumentNullException"/> is thrown.
+        ///     The method searches for the fake service order based on the provided Service_Order_ID.
+        ///     If found, it updates the fake service order with the new values.
+        /// </remarks>
+        /// <exception cref="ArgumentNullException">Thrown when the <paramref name="serviceOrder"/> is null.</exception>
+        /// <contributor>
+        ///     Steven Sanchez
+        /// </contributor>
+        /// <created>2024-02-18</created>
+        /// <updated>yyyy-MM-dd</updated>
+        /// <update>
+        /// <summary>
+        /// Update comments go here.
+        /// </summary>
+        /// <remarks>
+        /// Explain what you changed in this method.
+        /// A new remark should be added for each update to this method.
+        /// </remarks>
+        /// </update>
+
+        public int UpdateServiceOrder(ServiceOrder serviceOrder)
+        {
+            if (serviceOrder == null)
+            {
+                throw new ArgumentNullException(nameof(serviceOrder), "Service order cannot be null.");
+            }
+
+            // Find the corresponding fake service order and update it
+            var fakeServiceOrder = _fakeServiceOrders.Find(so => so.Service_Order_ID == serviceOrder.Service_Order_ID);
+            if (fakeServiceOrder != null)
+            {
+                // Update the fake service order with the new values
+                fakeServiceOrder.VIN = serviceOrder.VIN;
+                fakeServiceOrder.Critical_Issue = serviceOrder.Critical_Issue;
+                fakeServiceOrder.Service_Type_ID = serviceOrder.Service_Type_ID;
+                fakeServiceOrder.Service_Description = serviceOrder.Service_Description;
+
+                // Keep track of the updated service order
+                _updatedServiceOrders.Add(serviceOrder);
+
+                // Return 1 to indicate success (assuming the update was successful)
+                return 1;
+            }
+
+            // Return 0 to indicate failure (service order not found)
+            return 0;
         }
     }
 }

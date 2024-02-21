@@ -160,6 +160,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="WorkOrders\UpdateWorkOrderPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="WorkOrders\ViewWorkOrderPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -187,6 +191,9 @@
     </Compile>
     <Compile Include="Employees\EmployeeProfilePage.xaml.cs">
       <DependentUpon>EmployeeProfilePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WorkOrders\UpdateWorkOrderPage.xaml.cs">
+      <DependentUpon>UpdateWorkOrderPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="WorkOrders\ViewWorkOrderPage.xaml.cs">
       <DependentUpon>ViewWorkOrderPage.xaml</DependentUpon>
