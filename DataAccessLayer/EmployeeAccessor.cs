@@ -14,7 +14,7 @@ namespace DataAccessInterfaces
     public class EmployeeAccessor : IEmployeeAccessor
     {
         /// <inheritdoc/>
-        
+
 
 
         /// <summary>
@@ -80,6 +80,7 @@ namespace DataAccessInterfaces
 
             cmd.Parameters.Add("@p_Given_Name", SqlDbType.NVarChar, 50);
             cmd.Parameters.Add("@p_Family_Name", SqlDbType.NVarChar, 50);
+            cmd.Parameters.Add("@p_DOB", SqlDbType.DateTime, 50);
             cmd.Parameters.Add("@p_Address", SqlDbType.NVarChar, 50);
             cmd.Parameters.Add("@p_Address2", SqlDbType.NVarChar, 50);
             cmd.Parameters.Add("@p_City", SqlDbType.NVarChar, 20);
@@ -93,6 +94,7 @@ namespace DataAccessInterfaces
 
             cmd.Parameters["@p_Given_Name"].Value = newEmployee.Given_Name;
             cmd.Parameters["@p_Family_Name"].Value = newEmployee.Family_Name;
+            cmd.Parameters["@p_DOB"].Value = newEmployee.DOB;
             cmd.Parameters["@p_Address"].Value = newEmployee.Address;
             cmd.Parameters["@p_Address2"].Value = newEmployee.Address2;
             cmd.Parameters["@p_City"].Value = newEmployee.City;
@@ -166,20 +168,22 @@ namespace DataAccessInterfaces
 
                 while (reader.Read())
                 {
+                   
                     Employee_VM employee_VM = new Employee_VM()
                     {
                         Employee_ID = reader.GetInt32(0),
                         Given_Name = reader.GetString(1),
                         Family_Name = reader.GetString(2),
-                        Address = reader.GetString(3),
-                        Address2 = reader.IsDBNull(4) ? null : reader.GetString(4),
-                        City = reader.GetString(5),
-                        State = reader.GetString(6),
-                        Country = reader.GetString(7),
-                        Zip = reader.GetString(8),
-                        Phone_Number = reader.GetString(9),
-                        Email = reader.GetString(10),
-                        Position = reader.GetString(11)
+                        DOB = reader.GetDateTime(3),
+                        Address = reader.GetString(4),
+                        Address2 = reader.IsDBNull(5) ? null : reader.GetString(4),
+                        City = reader.GetString(6),
+                        State = reader.GetString(7),
+                        Country = reader.GetString(8),
+                        Zip = reader.GetString(9),
+                        Phone_Number = reader.GetString(10),
+                        Email = reader.GetString(11),
+                        Position = reader.GetString(12)
                     };
                     employees.Add(employee_VM);
                 }
@@ -288,12 +292,10 @@ namespace DataAccessInterfaces
         /// <br />
         ///    CREATED: 2024-02-03
         /// <br /><br />
-        ///    UPDATER: updater_name
+        ///    UPDATER: James Williams
+        /// <br /> 2024-02-16
         /// <br />
-        ///    UPDATED: yyyy-MM-dd
-        /// <br />
-        ///     Update comments go here. Explain what you changed in this method.
-        ///     A new remark should be added for each update to this method.
+        ///     Updated how to handle returning Address2. If it wasn't null, it was setting the value from Address1 instead of Address2
         /// </remarks>
         public IEnumerable<Employee_VM> GetEmployees()
         {
@@ -320,16 +322,17 @@ namespace DataAccessInterfaces
                         Employee.Employee_ID = reader.GetInt32(0);
                         Employee.Given_Name = reader.GetString(1);
                         Employee.Family_Name = reader.GetString(2);
-                        Employee.Address = reader.GetString(3);
-                        Employee.Address2 = reader.IsDBNull(4) ? null : reader.GetString(4);
-                        Employee.City = reader.GetString(5);
-                        Employee.State = reader.GetString(6);
-                        Employee.Country = reader.GetString(7);
-                        Employee.Zip = reader.GetString(8);
-                        Employee.Phone_Number = reader.GetString(9);
-                        Employee.Email = reader.GetString(10);
-                        Employee.Position = reader.GetString(11);
-                        Employee.Is_Active = reader.GetBoolean(12);
+                        Employee.DOB = reader.GetDateTime(3).Date;
+                        Employee.Address = reader.GetString(4);
+                        Employee.Address2 = reader.IsDBNull(5) ? null : reader.GetString(5);
+                        Employee.City = reader.GetString(6);
+                        Employee.State = reader.GetString(7);
+                        Employee.Country = reader.GetString(8);
+                        Employee.Zip = reader.GetString(9);
+                        Employee.Phone_Number = reader.GetString(10);
+                        Employee.Email = reader.GetString(11);
+                        Employee.Position = reader.GetString(12);
+                        Employee.Is_Active = reader.GetBoolean(13);
 
 
                         employeeList.Add(Employee);
@@ -380,7 +383,7 @@ namespace DataAccessInterfaces
                 }
                 roles = roleList;
             }
-            
+
             catch (Exception ex)
             {
                 throw new ApplicationException("Error retrieving roles", ex);
@@ -446,16 +449,17 @@ namespace DataAccessInterfaces
                         var Employee = new Employee_VM();
                         Employee.Given_Name = reader.GetString(1);
                         Employee.Family_Name = reader.GetString(2);
-                        Employee.Address = reader.GetString(3);
-                        Employee.Address2 = reader.IsDBNull(4) ? null : reader.GetString(4);
-                        Employee.City = reader.GetString(5);
-                        Employee.State = reader.GetString(6);
-                        Employee.Country = reader.GetString(7);
-                        Employee.Zip = reader.GetString(8);
-                        Employee.Phone_Number = reader.GetString(9);
-                        Employee.Email = reader.GetString(10);
-                        Employee.Position = reader.GetString(11);
-                        Employee.Is_Active = reader.GetBoolean(12);
+                        Employee.DOB = reader.GetDateTime(3).Date;
+                        Employee.Address = reader.GetString(4);
+                        Employee.Address2 = reader.IsDBNull(5) ? null : reader.GetString(4);
+                        Employee.City = reader.GetString(6);
+                        Employee.State = reader.GetString(7);
+                        Employee.Country = reader.GetString(8);
+                        Employee.Zip = reader.GetString(9);
+                        Employee.Phone_Number = reader.GetString(10);
+                        Employee.Email = reader.GetString(11);
+                        Employee.Position = reader.GetString(12);
+                        Employee.Is_Active = reader.GetBoolean(13);
                     }
             }
             catch (Exception ex)
@@ -470,6 +474,85 @@ namespace DataAccessInterfaces
 
         }
         // checked by Jared R.
+
+        /// <summary>
+        ///   Update employee record in database
+        /// </summary>
+        /// <param>
+        ///    Employee_VM updatedEmployee
+        /// </param>
+        /// <param>
+        ///     Employee_VM originalEmployee
+        /// </param>
+        /// <returns>
+        ///     <see cref="int"/>: Number of rows affected.
+        /// </returns>
+        /// <remarks>
+        ///    Parameters: updatedEmployee, originalEmployee
+        /// <br />
+        /// <br /><br />
+        ///    Exceptions:ApplicationException
+        /// <br />
+        /// <br /><br />
+        ///    CONTRIBUTOR: James Williams
+        /// <br />
+        ///    CREATED: 2024-02-17
+        /// <br />
+        public int UpdateEmployee(Employee_VM updatedEmployee, Employee_VM originalEmployee)
+        {
+            int rowsAffected = 0;
+
+            using (var conn = DBConnectionProvider.GetConnection())
+            {
+                var cmdText = "sp_update_employee";
+                using (var cmd = new SqlCommand(cmdText, conn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+
+                    cmd.Parameters.Add("@p_Employee_ID", SqlDbType.Int).Value = originalEmployee.Employee_ID;
+                    cmd.Parameters.Add("@p_New_Given_Name", SqlDbType.NVarChar, 50).Value = updatedEmployee.Given_Name;
+                    cmd.Parameters.Add("@p_New_Family_Name", SqlDbType.NVarChar, 50).Value = updatedEmployee.Family_Name;
+                    cmd.Parameters.Add("@p_New_DOB", SqlDbType.DateTime).Value = updatedEmployee.DOB;
+                    cmd.Parameters.Add("@p_New_Address", SqlDbType.NVarChar, 50).Value = updatedEmployee.Address;
+                    cmd.Parameters.Add("@p_New_Address2", SqlDbType.NVarChar, 50).Value = updatedEmployee.Address2 ?? (object)DBNull.Value;
+                    cmd.Parameters.Add("@p_New_City", SqlDbType.NVarChar, 20).Value = updatedEmployee.City;
+                    cmd.Parameters.Add("@p_New_State", SqlDbType.NVarChar, 2).Value = updatedEmployee.State;
+                    cmd.Parameters.Add("@p_New_Country", SqlDbType.NVarChar, 3).Value = updatedEmployee.Country;
+                    cmd.Parameters.Add("@p_New_Zip", SqlDbType.NVarChar, 9).Value = updatedEmployee.Zip;
+                    cmd.Parameters.Add("@p_New_Phone_Number", SqlDbType.NVarChar, 20).Value = updatedEmployee.Phone_Number;
+                    cmd.Parameters.Add("@p_New_Email", SqlDbType.NVarChar, 50).Value = updatedEmployee.Email;
+                    cmd.Parameters.Add("@p_New_Position", SqlDbType.NVarChar, 20).Value = updatedEmployee.Position;
+
+                    cmd.Parameters.Add("@p_Old_Given_Name", SqlDbType.NVarChar, 50).Value = originalEmployee.Given_Name;
+                    cmd.Parameters.Add("@p_Old_Family_Name", SqlDbType.NVarChar, 50).Value = originalEmployee.Family_Name;
+                    cmd.Parameters.Add("@p_Old_Address", SqlDbType.NVarChar, 50).Value = originalEmployee.Address;
+                    cmd.Parameters.Add("@p_Old_City", SqlDbType.NVarChar, 20).Value = originalEmployee.City;
+                    cmd.Parameters.Add("@p_Old_State", SqlDbType.NVarChar, 2).Value = originalEmployee.State;
+                    cmd.Parameters.Add("@p_Old_Country", SqlDbType.NVarChar, 3).Value = originalEmployee.Country;
+                    cmd.Parameters.Add("@p_Old_Zip", SqlDbType.NVarChar, 9).Value = originalEmployee.Zip;
+                    cmd.Parameters.Add("@p_Old_Phone_Number", SqlDbType.NVarChar, 20).Value = originalEmployee.Phone_Number;
+                    cmd.Parameters.Add("@p_Old_Email", SqlDbType.NVarChar, 50).Value = originalEmployee.Email;
+                    cmd.Parameters.Add("@p_Old_Position", SqlDbType.NVarChar, 20).Value = originalEmployee.Position;
+
+
+                    try
+                    {
+                        conn.Open();
+                    
+                        rowsAffected = cmd.ExecuteNonQuery();
+                    }
+                    catch (Exception ex)
+                    {
+                        throw new ApplicationException("Error updating Employee", ex);
+                    }
+                }
+            }
+
+            return rowsAffected;
+        }
+
+   
     }
 }
 // Checked by Nathan Toothaker

@@ -17,6 +17,7 @@ namespace DataObjects
         public string VIN {  get; set; }
         public string VehicleNumber { get; set; }
         public int VehicleMileage {  get; set; }
+        public int ModelLookupID { get; set; }
         public string VehicleLicensePlate { get; set; }
         public string VehicleType { get; set; }
         public int MaxPassengers { get; set; }

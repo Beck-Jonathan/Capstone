@@ -1,4 +1,40 @@
 USE Night_Rider;
+
+GO
+print '' print '*** creating sp_authenticate_employee ***'
+GO
+-- AUTHOR: Jared Hutton
+CREATE PROCEDURE [dbo].[sp_authenticate_employee] (
+  @Username [nvarchar](50),
+  @Password_Hash [nvarchar](100)
+)
+AS
+BEGIN
+  SELECT
+    er.[Role_ID],
+    e.[Employee_ID],
+    e.[Given_Name],
+    e.[Family_Name],
+    e.[Address],
+    e.[Address2],
+    e.[City],
+    e.[State],
+    e.[Country],
+    e.[Zip],
+    e.[Phone_Number],
+    e.[Email],
+    e.[Position]
+  FROM [dbo].[Employee] e
+  LEFT JOIN [dbo].[Employee_Role] er ON e.[Employee_ID] = er.[Employee_ID]
+  JOIN [dbo].[Login] l ON e.[Employee_ID] = l.[Employee_ID]
+  WHERE
+    l.[Active] = 1
+    AND e.[Is_Active] = 1
+    AND l.[Username] = @Username
+    AND l.[Password_Hash] = @Password_Hash
+END;
+GO
+
 GO
 print '' print '*** creating sp_authenticate_client_for_security_questions ***'
 GO
