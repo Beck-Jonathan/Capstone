@@ -45,5 +45,10 @@ namespace NightRiderWPF
         {
             this.NavigationService.GoBack();
         }
+
+        private void btnEditDetail_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Not implemented yet");
+        }
     }
 }
