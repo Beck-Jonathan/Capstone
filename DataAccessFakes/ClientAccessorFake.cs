@@ -35,6 +35,11 @@ namespace DataAccessFakes
             return _fakeClientData.Single(client => client.ClientID == id);
         }
 
+        public Client_VM SelectClientByEmail(string email)
+        {
+            return _fakeClientData.Single(client => client.Email == email);
+        }
+
         public IEnumerable<Client_VM> SelectClients()
         {
             return _fakeClientData.Where(client => client.IsActive);

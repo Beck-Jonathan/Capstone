@@ -79,6 +79,9 @@ namespace NightRiderWPF
                     case "ClientPersonalPage":
                         PageViewer.Navigate(new ClientPersonalPage(Authentication.AuthenticatedClient));
                         break;
+                    case "ClientLookupPage":
+                        PageViewer.Navigate(new ClientLookupPage());
+                        break;
                 }
             }
         }

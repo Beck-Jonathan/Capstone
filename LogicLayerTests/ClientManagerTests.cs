@@ -24,6 +24,14 @@ namespace LogicLayerTests
     /// <br />
     ///    Added TestGetClientByIDReturnsCorrectClient and TestEditClientWorksCorrectly
     /// </remarks>
+    /// <remarks>
+    /// UPDATER: Jacob Wendt
+    /// <br />
+    /// UPDATED: 2024-02-20
+    /// <br />
+    ///    Added TestGetClientByEmailReturnsCorrectClient
+    ///    Added TestGetClientByEmailThrowsExceptionWhenGivenBadData
+    /// </remarks>
     [TestClass]
     public class ClientManagerTests
     {
@@ -164,6 +172,79 @@ namespace LogicLayerTests
 
             // If pass means updated successfully
             Assert.AreEqual(expectedResult, actualResult);
+        }
+        [TestMethod]
+        public void TestGetClientByEmailReturnsCorrectClient()
+        {
+            IEnumerable<Client_VM> testClientData = new List<Client_VM>()
+            {
+                new Client_VM()
+                {
+                    ClientID = 158789,
+                    GivenName = "Joseph",
+                    FamilyName = "Joestar",
+                    Email = "jstar@gmail.com"
+                },
+
+                new Client_VM()
+                {
+                    ClientID = 128749,
+                    GivenName = "Wrong",
+                    FamilyName = "Name",
+                    Email = "wname@gmail.com"
+                }
+            };
+
+            ClientAccessorFake clientAccessorFake = new ClientAccessorFake(testClientData);
+            _clientManager = new ClientManager(clientAccessorFake);
+
+            // Arrange
+            string expectedGivenName = "Joseph";
+            string expectedFamilyName = "Joestar";
+
+            // Act
+            Client client = _clientManager.GetClientByEmail("jstar@gmail.com");
+
+            // Assert
+            Assert.AreEqual(expectedGivenName, client.GivenName);
+            Assert.AreEqual(expectedFamilyName, client.FamilyName);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ApplicationException))]
+        public void TestGetClientByEmailThrowsExceptionWhenGivenBadData()
+        {
+            IEnumerable<Client_VM> testClientData = new List<Client_VM>()
+            {
+                new Client_VM()
+                {
+                    ClientID = 158789,
+                    GivenName = "Joseph",
+                    FamilyName = "Joestar",
+                    Email = "jstar@gmail.com"
+                },
+
+                new Client_VM()
+                {
+                    ClientID = 128749,
+                    GivenName = "Wrong",
+                    FamilyName = "Name",
+                    Email = "wname@gmail.com"
+                }
+            };
+
+            ClientAccessorFake clientAccessorFake = new ClientAccessorFake(testClientData);
+            _clientManager = new ClientManager(clientAccessorFake);
+
+            // Arrange
+            // string expectedGivenName = "Joseph";
+            // string expectedFamilyName = "Joestar";
+
+            // Act
+            Client client = _clientManager.GetClientByEmail("jtar@gmail.com");
+
+            // Assert
+            // Assert.ThrowsException<ArgumentException>(() => _clientManager.GetClientByEmail("jtar@gmail.com"));
         }
     }
 }
