@@ -14,6 +14,27 @@ namespace DataAccessInterfaces
     public interface ILoginAccessor
     {
         /// <summary>
+        ///     Authenticates given username and password hash and retrieves the authenticated employee data
+        /// </summary>
+        /// <param name="username">
+        ///    The username of the user attempting to login
+        /// </param>
+        /// <param name="passwordHash">
+        ///    The password hash of the user attempting to login
+        /// </param>
+        /// <returns>
+        ///    <see cref="Employee_VM">Employee_VM</see>: The authenticated employee
+        /// </returns>
+        /// <remarks>
+        ///    Parameters:
+        /// <br />
+        ///    <see cref="string">string</see> username: The username given by the user
+        /// <br />
+        ///    <see cref="string">string</see> passwordHash: The password hash generated on the password given by the user
+        /// </remarks>
+        Employee_VM AuthenticateEmployee(string username, string passwordHash);
+
+        /// <summary>
         ///     Authenticates given username and password hash and retrieves related security questions if authenticated to a client
         /// </summary>
         /// <param name="username">
@@ -23,14 +44,14 @@ namespace DataAccessInterfaces
         ///    The password hash of the user attempting to login
         /// </param>
         /// <returns>
-        ///    <see cref="string[]">string[]</see>: The security questions
+        ///    <see cref="Employee_VM">string[]</see>: The authenticated employee
         /// </returns>
         /// <remarks>
         ///    Parameters:
         /// <br />
         ///    <see cref="string">string</see> username: The username given by the user
         /// <br />
-        ///    <see cref="string">string</see> password: The password hash generated on the password given by the user
+        ///    <see cref="string">string</see> passwordHash: The password hash generated on the password given by the user
         /// </remarks>
         string[] AuthenticateClientForSecurityQuestions(string username, string passwordHash);
 

@@ -18,6 +18,13 @@ namespace LogicLayerTests
     /// <br />
     ///     Class for testing LoginManager functionality
     /// </summary>
+    /// <remarks>
+    /// UPDATER: Jared Hutton
+    /// <br />
+    /// UPDATED: 2024-02-16
+    /// <br />
+    ///  Add AuthenticateEmployee method
+    /// </remarks>
     [TestClass]
     public class LoginManager_Tests
     {
@@ -25,7 +32,7 @@ namespace LogicLayerTests
         private IPasswordHasher _passwordHasher;
 
         /// <summary>
-        ///     Initialize the required test data
+        ///     Initialize the required test objects
         /// </summary>
         /// <remarks>
         ///    CONTRIBUTOR: Jared Hutton
@@ -36,6 +43,78 @@ namespace LogicLayerTests
         public void TestInitialize()
         {
             _passwordHasher = new PasswordHasher();
+        }
+
+        [TestMethod]
+        public void AuthenticateEmployee_ReturnsCorrectEmployee()
+        {
+            // Arrange
+            string username = "jackrussel49";
+            string password = "galaxy";
+
+            int expectedEmployeeId = 100082;
+
+            List<Login_VM> testLoginData = new List<Login_VM>
+            {
+                new Login_VM
+                {
+                    Username = username,
+                    PasswordHash = "eba4ae33f54ae0f96bed25bfc13abd887ae157380330cd3fd3f0a4d054ce3a3f",
+                    EmployeeID = expectedEmployeeId,
+                    Employee = new Employee_VM
+                    {
+                        Employee_ID = expectedEmployeeId
+                    }
+                }, new Login_VM
+                {
+                    Username = "incorrect",
+                    PasswordHash = "invalidpasswordhash",
+                    EmployeeID = 100000,
+                    Employee = new Employee_VM
+                    {
+                        Employee_ID = 100000
+                    }
+                }
+            };
+
+            _loginManager = new LoginManager(_passwordHasher, new LoginAccessorFake(testLoginData));
+
+            // Action
+            Employee_VM retrievedEmployee = _loginManager.AuthenticateEmployee(username, password);
+
+            // Assert
+            Assert.AreEqual(expectedEmployeeId, retrievedEmployee.Employee_ID);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void AuthenticateEmployee_FailsOnInvalidLogin()
+        {
+            // Arrange
+            string username = "jackrussel49";
+            string password = "galaxy";
+
+            int expectedEmployeeId = 100082;
+
+            List<Login_VM> testLoginData = new List<Login_VM>
+            {
+                new Login_VM
+                {
+                    Username = username,
+                    PasswordHash = "eba4ae33f54ae0f96bed25bfc13abd887ae157380330cd3fd3f0a4d054ce3a3f",
+                    EmployeeID = expectedEmployeeId
+                }, new Login_VM
+                {
+                    Username = "incorrect",
+                    PasswordHash = "invalidpasswordhash",
+                    EmployeeID = 100000
+                }
+            };
+
+            _loginManager = new LoginManager(_passwordHasher, new LoginAccessorFake(testLoginData));
+
+            // Act
+            _loginManager.AuthenticateEmployee(username, password);
         }
 
         /// <summary>
