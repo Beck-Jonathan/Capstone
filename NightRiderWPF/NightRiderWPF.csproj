@@ -66,6 +66,9 @@
     <Compile Include="AdminHome.xaml.cs">
       <DependentUpon>AdminHome.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Clients\ClientLookupPage.xaml.cs">
+      <DependentUpon>ClientLookupPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Clients\ToBeReworked\ClientPersonalPage.xaml.cs">
       <DependentUpon>ClientPersonalPage.xaml</DependentUpon>
     </Compile>
@@ -76,6 +79,10 @@
       <DependentUpon>GuardianViewDependentList.xaml</DependentUpon>
     </Compile>
     <Compile Include="Resources\Statics.cs" />
+    <Page Include="Clients\ClientLookupPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Vehicles\AddUpdateDeleteVehicle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

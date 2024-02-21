@@ -543,15 +543,16 @@ GO
 /******************
 Insert Sample Data For The  Role table
 ***************/
-print '' Print '***Insert Sample Data For The  Role table***' 
- go
+print ''
+Print '***Insert Sample Data For The  Role table***' 
+ GO
  Insert into [dbo].[Role] ([Role_ID]) VALUES 
 	('Admin'),
 	('FleetAdmin'),
 	('Mechanic'),
 	('Maintenance'),
 	('PartsPerson')
- go
+ GO
 
 
 /******************
@@ -575,25 +576,27 @@ CREATE TABLE [dbo].[Employee_Role]
 GO
 
 
-/* Insert Sample Data For The  Employee_Role table */
-print '' print '*** inserting Employee_roles records ***'
+/******************
+Insert Sample Data For The  Employee_Role table
+***************/
+ print ''
+print '*** inserting Employee_roles records ***'
 GO
-INSERT INTO [dbo].[Employee_Role] 
-		([Employee_ID], [Role_ID])
-	VALUES
-	(100000, 'Admin'),
-	(100001, 'FleetAdmin'),
-	(100002, 'Mechanic'),
-	(100003, 'Maintenance'),
-	(100004, 'PartsPerson'),
-	(100005, 'Mechanic'),
-	(100006, 'Maintenance'),
-	(100007, 'PartsPerson'),
-	(100008, 'Mechanic'),
-	(100009, 'Maintenance')
-	
+INSERT INTO [dbo].[Employee_Role]
+    ([Employee_ID], [Role_ID])
+VALUES
+    (100000, 'Admin'),
+    (100001, 'FleetAdmin'),
+    (100002, 'Mechanic'),
+    (100003, 'Maintenance'),
+    (100004, 'PartsPerson'),
+    (100005, 'Mechanic'),
+    (100006, 'Maintenance'),
+    (100007, 'PartsPerson'),
+    (100008, 'Mechanic'),
+    (100009, 'Maintenance')
+GO
 
-GO
 
 /******************
 Create the [dbo].[Driver_License_Class] table

@@ -44,6 +44,27 @@ namespace LogicLayer
         /// </remarks>
         IEnumerable<Client> GetAllClients();
         IEnumerable<Client> GetClients();
+        /// <summary>
+        ///    A method that returns a Client_VM record containing a matching email field
+        /// </summary>
+        /// <param name="email">
+        ///    An email string
+        /// </param>
+        /// <returns>
+        ///    <see cref="Client_VM">Client_VM</see>
+        /// </returns>
+        /// <remarks>
+        ///    Exceptions:
+        /// <br />
+        ///    <see cref="ArgumentException">ArgumentException</see>: Thrown when incorrect fields are given for the user.
+        /// <br /><br />
+        ///    CONTRIBUTOR: Jacob Wendt
+        /// <br />
+        ///    CREATED: 2024-02-19
+        /// <br /><br />
+        ///     Initial creation
+        /// </remarks>
+        Client_VM GetClientByEmail(string email);
         IEnumerable<Client> GetInactiveClients();
         int EditClient(Client_VM newClient);
         void DeactivateClient(int id);

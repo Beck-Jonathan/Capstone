@@ -43,6 +43,27 @@ namespace DataAccessInterfaces
         /// </remarks>
         IEnumerable<Client_VM> SelectAllClients();
         IEnumerable<Client_VM> SelectClients();
+        /// <summary>
+        ///    A method that returns a Client_VM record containing a matching email field
+        /// </summary>
+        /// <param name="email">
+        ///    An email string
+        /// </param>
+        /// <returns>
+        ///    <see cref="Client_VM">Client_VM</see>
+        /// </returns>
+        /// <remarks>
+        ///    Exceptions:
+        /// <br />
+        ///    <see cref="ArgumentException">ArgumentException</see>: Thrown when incorrect fields are given for the user.
+        /// <br /><br />
+        ///    CONTRIBUTOR: Jacob Wendt
+        /// <br />
+        ///    CREATED: 2024-02-19
+        /// <br /><br />
+        ///     Initial creation
+        /// </remarks>
+        Client_VM SelectClientByEmail(string email);
         IEnumerable<Client_VM> SelectInactiveClients();
 
         /// <summary>
