@@ -15,7 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace NightRiderWPF
+namespace NightRiderWPF.Clients
 {
     /// <summary>
     /// Interaction logic for GuardianViewDependentList.xaml

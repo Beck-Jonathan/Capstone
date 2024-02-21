@@ -65,7 +65,7 @@
     <Compile Include="Vehicles\VehicleLookupListPage.xaml.cs">
       <DependentUpon>VehicleLookupListPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GuardianViewDependentList.xaml.cs">
+    <Compile Include="Clients\GuardianViewDependentList.xaml.cs">
       <DependentUpon>GuardianViewDependentList.xaml</DependentUpon>
     </Compile>
     <Compile Include="Resources\Statics.cs" />
@@ -126,7 +126,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="GuardianViewDependentList.xaml">
+    <Page Include="Clients\GuardianViewDependentList.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
