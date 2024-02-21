@@ -49,5 +49,32 @@ namespace LogicLayer
             }
         }
 
+        /// <summary>
+        /// Author: Jacob Rohr
+        /// CREATED: 2024-02-13
+        /// 
+        ///     Method to call accessor in order to retrieve dependents from database
+        ///     
+        ///     <returns> Returns: <see cref="IEnumerable{DependentVM}"> IEnumerable Of Dependent VM </see></returns>
+        ///    
+        /// 
+        /// </summary>
+
+        public IEnumerable<DependentVM> GetDependentList()
+        {
+            IEnumerable<DependentVM> dependentList = null;
+            try
+            {
+                dependentList = _dependentAccessor.ListAllDependents();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+
+            return dependentList;
+        }
+
     }
 }

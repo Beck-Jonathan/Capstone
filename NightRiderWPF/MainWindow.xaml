@@ -47,7 +47,7 @@
                         VerticalAlignment="Top"
                         Width="100"
                         Content="Log Out"
-                        Visibility="Hidden" />
+                        Visibility="Hidden" Click="btn_logout_Click" />
                     <Label Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" 
                            x:Name="lblUsername" Content="Username:" />
                     <TextBox Grid.Row="0" Grid.Column="1" HorizontalAlignment="Stretch" 
@@ -79,6 +79,7 @@
                 <ListBoxItem Content="View Work Order" x:Name="ViewWorkOrderPage"  Margin="0" />
                 <ListBoxItem Content="Client Information" x:Name="ClientPersonalPage" Margin="0" />
                 <ListBoxItem Content="Client Lookup" x:Name="ClientLookupPage" Margin="0" />
+                <ListBoxItem Content="Dependent List" x:Name="GuardianViewDependentList" Margin="0" />
                 <!-- copy the above and replace relevant values. -->
             </ListBox>
             <Border Grid.Column="1" BorderBrush="Black" BorderThickness="2px">

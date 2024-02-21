@@ -105,3 +105,26 @@ AS
         COMMIT TRANSACTION;
     END
 GO
+
+
+DROP PROCEDURE IF EXISTS sp_select_all_dependents
+print '' print '*** creating sp_select_all_dependents***'
+GO
+CREATE PROCEDURE [dbo].[sp_select_all_dependents]
+AS
+BEGIN
+		SELECT
+		[Dependent_ID],	
+		[Given_Name],			
+		[Family_Name],			
+		[Middle_Name],			
+		[DOB],		
+		[Gender],		
+		[Emergency_Contact],		
+		[Contact_Relationship], 	
+		[Emergency_Phone],		
+		[Is_Active]			
+		FROM [Dependent] 
+		WHERE [is_active] = 1
+	END
+GO
