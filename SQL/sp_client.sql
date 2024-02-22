@@ -185,3 +185,18 @@ BEGIN
 	SELECT @p_ClientID AS 'Client_ID';
 END
 GO
+
+print '' print '*** creating sp_select_client_by_email ***'
+GO
+-- AUTHOR: Jacob Wendt
+CREATE PROCEDURE [dbo].[sp_select_client_by_email]
+(
+	@Email			[nvarchar](255)
+)
+AS
+	BEGIN
+		SELECT 	[Client_ID],[Given_Name],[Family_Name],[Middle_Name],[DOB],[Email],[Postal_Code],[City],[Region],[Address],[Text_Number],[Voice_Number],[Is_Active]
+		FROM 	[Client] 		
+		WHERE	@Email = [Email]
+	END
+GO

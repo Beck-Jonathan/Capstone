@@ -10,7 +10,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace LogicLayerTests
 {
     /// <summary>
-    /// AUTHOR: Jared Roberts, Isabella Rosenbahm
+    /// AUTHOR: Jared Roberts, Isabella Rosenbohm
     /// <br />
     /// CREATED: 2024-02-11
     /// <br />
@@ -24,12 +24,20 @@ namespace LogicLayerTests
     /// <br />
     ///    Added TestGetClientByIDReturnsCorrectClient and TestEditClientWorksCorrectly
     /// <br /> <br />
+    /// UPDATER: Jacob Wendt
+    /// <br />
+    /// UPDATED: 2024-02-20
+    /// <br />
+    ///    Added TestGetClientByEmailReturnsCorrectClient
+    ///    Added TestGetClientByEmailThrowsExceptionWhenGivenBadData
+    /// <br /> <br />
     /// UPDATER: Isabella Rosenbohm
     /// <br />
     /// UPDATED: 2024-02-21
     /// <br />
     ///    Added TestAddClientReturnsTrue and TestAddClientReturnsErrorWithDuplicateData
-    ///    Changed TestGetClientByIDReturnsCorrectClient as it was not correctly set up
+    ///    Rewrote TestGetClientByIDReturnsCorrectClient, TestGetClientByEmailReturnsCorrectClient,
+    ///    and TestGetClientByEmailThrowsExceptionWhenGivenBadData as they were not correctly written
     /// </remarks>
     [TestClass]
     public class ClientManagerTests
@@ -94,26 +102,6 @@ namespace LogicLayerTests
         [TestMethod]
         public void TestGetClientByIDReturnsCorrectClient()
         {
-            //IEnumerable<Client_VM> testClientData = new List<Client_VM>()
-            //{
-            //    new Client_VM()
-            //    {
-            //        ClientID = 100006,
-            //        GivenName = "Joseph",
-            //        FamilyName = "Joestar"
-            //    },
-
-            //    new Client_VM()
-            //    {
-            //        ClientID = 123456,
-            //        GivenName = "Wrong",
-            //        FamilyName = "Name"
-            //    }
-            //};
-
-            //ClientAccessorFake clientAccessorFake = new ClientAccessorFake(testClientData);
-            //_clientManager = new ClientManager(clientAccessorFake);
-
             // Arrange
             string expectedGivenName = "Joe";
             string expectedFamilyName = "Dirt";
@@ -172,7 +160,7 @@ namespace LogicLayerTests
             // If pass means updated successfully
             Assert.AreEqual(expectedResult, actualResult);
         }
-
+        
         [TestMethod]
         public void TestAddClientReturnsTrue()
         {
@@ -225,5 +213,32 @@ namespace LogicLayerTests
 
             Assert.AreEqual(expectedResult, actualResult);
         }
+
+        [TestMethod]
+        public void TestGetClientByEmailReturnsCorrectClient()
+        {
+            string email = "foobar@gmail.com";
+            int expectedID = 1;
+            int actualID = 0;
+
+            actualID = _clientManager.GetClientByEmail(email).ClientID;
+
+            Assert.AreEqual(expectedID, actualID);
+
+        }
+
+
+        [TestMethod]
+        [ExpectedException(typeof(ApplicationException))]
+        public void TestGetClientByEmailThrowsExceptionWhenGivenBadData()
+        {
+            string email = "abc@test.com";
+            int acutalID = 0;
+
+            acutalID = _clientManager.GetClientByEmail(email).ClientID; 
+
+            // no assertion needed; should catch exception
+        }
     }
+    
 }

@@ -20,6 +20,7 @@ namespace DataAccessFakes
     /// UPDATED: 2024-02-21
     /// <br />
     ///    Changed how the InsertClient method works so that duplicate data could properly be tested.
+    ///    Changed how the SelectClientByEmail method works so that it could properly catch exceptions for tests
     ///    Added missing comment documentation
     /// </remarks>
 
@@ -54,6 +55,22 @@ namespace DataAccessFakes
         public Client_VM SelectClientById(int id)
         {
             return _fakeClientData.Single(client => client.ClientID == id);
+        }
+
+        public Client_VM SelectClientByEmail(string email)
+        {
+            Client_VM client;
+
+            try
+            {
+                client = _fakeClientData.Single(c => c.Email == email);
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException();
+            }
+
+            return client;
         }
 
         public IEnumerable<Client_VM> SelectClients()

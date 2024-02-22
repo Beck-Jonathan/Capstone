@@ -187,6 +187,79 @@ namespace DataAccessLayer
             return clientVM;
         }
 
+        /// <summary>
+        ///    A method that returns a Client_VM record containing a matching email field
+        /// </summary>
+        /// <param name="email">
+        ///    An email string
+        /// </param>
+        /// <returns>
+        ///    <see cref="Client_VM">Client_VM</see>
+        /// </returns>
+        /// <remarks>
+        ///    Exceptions:
+        /// <br />
+        ///    <see cref="ArgumentException">ArgumentException</see>: Thrown when incorrect fields are given for the user.
+        /// <br /><br />
+        ///    CONTRIBUTOR: Jacob Wendt
+        /// <br />
+        ///    CREATED: 2024-02-19
+        /// <br /><br />
+        ///     Initial creation
+        /// </remarks>
+        public Client_VM SelectClientByEmail(string email)
+        {
+            Client_VM clientVM = new Client_VM();
+
+            var conn = DBConnectionProvider.GetConnection();
+            var cmdText = @"sp_select_client_by_email";
+            var cmd = new SqlCommand(cmdText, conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            cmd.Parameters.AddWithValue("@Email", email);
+
+            try
+            {
+                conn.Open();
+                var reader = cmd.ExecuteReader();
+
+                if (reader.HasRows)
+                {
+                    if (reader.Read())
+                    {
+                        clientVM.ClientID = reader.GetInt32(0);
+                        clientVM.GivenName = reader.GetString(1);
+                        clientVM.FamilyName = reader.GetString(2);
+                        clientVM.MiddleName = reader.IsDBNull(3) ? null : reader.GetString(3);
+                        clientVM.DOB = reader.GetDateTime(4);
+                        clientVM.Email = reader.GetString(5);
+                        clientVM.PostalCode = reader.GetString(6);
+                        clientVM.City = reader.GetString(7);
+                        clientVM.Region = reader.GetString(8);
+                        clientVM.Address = reader.GetString(9);
+                        clientVM.TextNumber = reader.GetString(10);
+                        clientVM.VoiceNumber = reader.GetString(11);
+
+                    }
+                }
+                else
+                {
+                    throw new ApplicationException("Client not found.");
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            return clientVM;
+        }
+
         public IEnumerable<Client_VM> SelectClients()
         {
             throw new NotImplementedException();

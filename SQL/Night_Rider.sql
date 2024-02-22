@@ -545,7 +545,15 @@ Insert Sample Data For The  Role table
 ***************/
 print ''
 Print '***Insert Sample Data For The  Role table***' 
- go
+ GO
+ Insert into [dbo].[Role] ([Role_ID]) VALUES 
+	('Admin'),
+	('FleetAdmin'),
+	('Mechanic'),
+	('Maintenance'),
+	('PartsPerson')
+ GO
+
 
 /******************
 Create the [dbo].[Employee_Role] table
@@ -571,9 +579,24 @@ GO
 /******************
 Insert Sample Data For The  Employee_Role table
 ***************/
-print ''
-Print '***Insert Sample Data For The  Employee_Role table***' 
- go
+ print ''
+print '*** inserting Employee_roles records ***'
+GO
+INSERT INTO [dbo].[Employee_Role]
+    ([Employee_ID], [Role_ID])
+VALUES
+    (100000, 'Admin'),
+    (100001, 'FleetAdmin'),
+    (100002, 'Mechanic'),
+    (100003, 'Maintenance'),
+    (100004, 'PartsPerson'),
+    (100005, 'Mechanic'),
+    (100006, 'Maintenance'),
+    (100007, 'PartsPerson'),
+    (100008, 'Mechanic'),
+    (100009, 'Maintenance')
+GO
+
 
 /******************
 Create the [dbo].[Driver_License_Class] table
@@ -1853,7 +1876,8 @@ VALUES
     ('Raised Roof', 'A raised roof to allow more space in the case of a wheelchair'),
     ('Dropped Floor', 'A dropped floor to allow more space in the case of a wheelchair'),
     ('Transfer Seats', 'Used to lift a person into and out of their vehicle.'),
-    ('Swivel Seats', 'Lets a regular seat swivel towards the door for easy access')
+    ('Swivel Seats', 'Lets a regular seat swivel towards the door for easy access'),
+	('None', 'No accommodation required')
     
 GO
 
@@ -1873,7 +1897,7 @@ CREATE TABLE [dbo].[Client_Accommodation]
     [Is_Active] [bit] NOT NULL DEFAULT 1,
     CONSTRAINT [fk_Client_Accommodation_Client_ID] FOREIGN KEY([Client_ID])
         REFERENCES [dbo].[Client] ([Client_ID]),
-    CONSTRAINT [fk_Client_Accomodation_Accommodation_ID] FOREIGN KEY([Accommodation_ID])
+    CONSTRAINT [fk_Client_Accommodation_Accommodation_ID] FOREIGN KEY([Accommodation_ID])
         REFERENCES [dbo].[Accommodation] ([Accommodation_ID]),
     CONSTRAINT [pk_Client_Accommodation] PRIMARY KEY ([Client_ID],[Accommodation_ID])
 )
@@ -1904,17 +1928,17 @@ Print '***Creating [dbo].[Dependent] table***'
  go
 CREATE TABLE [dbo].[Dependent]
 (
-	[Dependent_ID]		[int]	IDENTITY(100000, 1)		NOT NULL,
-	[Given_Name]		[nvarchar](50)					NOT NULL,
-	[Family_Name]		[nvarchar](50)					NOT NULL,
-	[Middle_Name]		[nvarchar](100)					NULL,
-	[DOB]				[DATE]							NOT NULL,
-	[Gender]			[nvarchar](20)					NULL,
-	[Emergency_Contact]	[nvarchar](100)					NOT NULL,
-    [Contact_Relationship]	[nvarchar](100)				NOT NULL,
-	[Emergency_Phone]	[nvarchar](11)					NOT NULL,
-	[Is_Active]			[bit]							NOT NULL	DEFAULT 1,
-	CONSTRAINT 		[pk_Dependent_ID] PRIMARY KEY ([Dependent_ID])
+    [Dependent_ID] [int] IDENTITY(100000, 1) NOT NULL,
+    [Given_Name] [nvarchar](50) NOT NULL,
+    [Family_Name] [nvarchar](50) NOT NULL,
+    [Middle_Name] [nvarchar](100) NULL,
+    [DOB] [DATE] NOT NULL,
+    [Gender] [nvarchar](20) NULL,
+    [Emergency_Contact] [nvarchar](100) NOT NULL,
+	[Contact_Relationship] 	[nvarchar](100) 				NOT NULL,
+    [Emergency_Phone] [nvarchar](11) NOT NULL,
+    [Is_Active] [bit] NOT NULL DEFAULT 1,
+    CONSTRAINT 		[pk_Dependent_ID] PRIMARY KEY ([Dependent_ID])
 )
 GO
 print ''
@@ -1927,46 +1951,57 @@ GO
 /******************
 Insert Sample Data For The  Dependent table
 ***************/
-
 print '' Print '***Insert Sample Data For The  Dependent table***' 
  go 
  INSERT INTO [dbo].[Dependent]
-        ([Given_Name],[Middle_Name],[Family_Name],[DOB],[Emergency_Contact],[Contact_Relationship],
-            [Emergency_Phone])
+        ([Given_Name],[Middle_Name],[Family_Name],[DOB],[Gender],[Emergency_Contact],[Contact_Relationship],[Emergency_Phone])
     VALUES
-        ('Anita',null,'Feuer','12-12-1996','Thomas Feuer', 'Parent', '5552231049'),
-        ('Flint','N','Steele','12-12-2002','Cole D. Steele','State Custodian','5554259994')
+        ('Anita','ko','Feuer','12-12-1996','Female','Thomas Feuer', 'test1', '5552231049'),
+        ('Flint','N','Steele','12-12-2002','Male','Cole D. Steele','test1','5554259994'),
+		('Jarlson','lo','Flouf','12-12-1996','Male','Thomas Feuer','test1','5552231222'),
+        ('Tanner','Ant','Minecraft','12-12-2002','Male','Mother','test1','5554259333'),
+		('Christa','Lank','Crank','12-12-1996','Male','Thomas Feuer','test1','5552231444'),
+        ('Lincoln','The','Logs','12-12-2002','Male','Pick ingups tix','test1','5554259555'),
+		('FatherHeim','l','MotherHerm','12-12-1996','Female','Cousinxeim','test1','5552231666'),
+        ('TinkerBell','H','Pixie','12-12-2002','Female','Pixar Studios','test1','5554259777')
 GO 
 
 /******************
 Create the [dbo].[Dependent_Accommodation] table
 ***************/
-print ''
-Print '***Create the [dbo].[Dependent_Accommodation] table***' 
+print '' Print '***Create the [dbo].[Dependent_Accommodation] table***' 
 GO
-CREATE TABLE [dbo].[Dependent_Accommodation]
-(
-    [Dependent_ID] [int] NOT NULL,
-    [Accommodation_ID] [nvarchar](100) NOT NULL,
-    [Is_Active] [bit] NOT NULL DEFAULT 1,
+CREATE TABLE [dbo].[Dependent_Accommodation] (
+    [Dependent_ID]            [int]                        NOT NULL,
+    [Accommodation_ID]        [nvarchar](100)                NOT NULL,                            
+    [Is_Active]                [bit]                        NOT NULL    DEFAULT 1,
     CONSTRAINT        [fk_Dependent_ID]
         FOREIGN KEY ([Dependent_ID])  REFERENCES [dbo].[Dependent]([Dependent_ID]),
     CONSTRAINT        [fk_Accommodation_ID]
-        FOREIGN KEY ([Accommodation_ID])  REFERENCES [dbo].[Accommodation]([Accommodation_ID])
+        FOREIGN KEY ([Accommodation_ID])  REFERENCES [dbo].[Accommodation]([Accommodation_ID]),
+	CONSTRAINT [cpk_DependentAccommodation] PRIMARY KEY ([Dependent_ID], [Accommodation_ID])
 )
 GO
-print ''
-Print '***Creating Index for [dbo].[Dependent] table***' 
-GO
-CREATE INDEX [idx_Dependent_ID_And_Accommodation_ID]
-    ON [dbo].[Dependent_Accommodation] ([Dependent_ID],[Accommodation_ID])
-GO
+
 /******************
 Insert Sample Data For The  Dependent_Accommodation table
 ***************/
-print ''
-Print '***Insert Sample Data For The  Dependent_Accommodation table***' 
- go
+print '' Print '***Insert Sample Data For The  Dependent_Accommodation table***' 
+GO
+ 
+ INSERT INTO [dbo].[Dependent_Accommodation]
+        ([Dependent_ID], [Accommodation_ID], [is_active])
+    VALUES
+        (100000, 'Wheelchair Lift', 1),
+		(100001, 'Raised Roof', 1),
+		(100002, 'None', 1),
+		(100003, 'Raised Roof', 1),
+		(100003, 'Dropped Floor', 1),
+		(100004, 'None', 1),
+		(100005, 'Transfer Seats', 1),
+		(100006, 'Swivel Seats', 1),
+		(100007, 'Swivel Seats', 1)
+GO 
 
 
 /******************

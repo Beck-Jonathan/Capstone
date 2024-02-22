@@ -177,13 +177,10 @@ namespace NightRiderWPF.Inventory
                 Parts_Inventory passed = returnPart(value);
                 if (passed != null)
                 {
-                    //Link to Max's window
+                    //Link to Max's InventoryAudit Page
+                    this.NavigationService.Navigate(new InventoryAudit(passed));
 
-                    InventoryAudit win2 = new InventoryAudit(passed);
-                    bool AuditResult =(bool)win2.ShowDialog();
-                    if (AuditResult) {
-                        NavigationService.Refresh();
-                    }
+
                 }
                 else
                 {
