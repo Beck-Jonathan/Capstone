@@ -15,11 +15,44 @@ namespace DataAccessInterfaces
     /// 
     ///     Methods for the database access for clients.
     /// </summary>
-    /// 
+    /// <remarks>
+    /// UPDATER: Isabella Rosenbohm
+    /// <br />
+    ///    UPDATED: 2024-02-20
+    /// <br />
+    ///     Implemented InsertClient method
+    /// </remarks>
 
     public interface IClientAccessor
     {
-        int InsertClient(Client_VM client);
+        /// <summary>
+        ///     Inserts new client record into the Client table.
+        /// </summary>
+        /// <param name="newClient">
+        ///    Client_VM object that contains the data of the new client to be added to the database
+        /// </param>
+        /// <returns>
+        ///    <see cref="int">int</see>: Client_ID of newly inserted record; otherwise, <see cref="void">execption</see>.
+        /// </returns>
+        /// <remarks>
+        /// Parameters:
+        /// <br />
+        ///    <see cref="Client_VM">Client_VM</see> a: Client object
+        /// <br /><br />
+        ///    Exceptions:
+        /// <br />
+        ///    <see cref="ArgumentException">ArgumentException</see>: Throws when error entering record
+        /// <br />
+        ///    <see cref="ApplicationException">ArgumentException</see>: Throws when error entering record
+        /// <br/><br/>
+        /// CONTRIBUTOR: Isabella Rosenbohm <br/>
+        /// CREATED: 2024-02-20
+        /// <br/><br/>
+        /// UPDATER:  <br/>
+        /// UPDATED:  <br/>
+        ///     update comment
+        /// </remarks>
+        int InsertClient(Client_VM newClient);
 
 
         Client_VM SelectClientById(int id);
@@ -37,9 +70,6 @@ namespace DataAccessInterfaces
         /// UPDATER: Isabella Rosenbohm <br/>
         /// UPDATED: 2024-02-13 <br/>
         ///     Changed the order of params in clients.Add() section as it was incorrect before
-        /// UPDATER: Jared Roberts
-        /// UPDATED: 2024-02-11
-        ///     Changed the argument type for the UpdateClient method from int to Client_VM
         /// </remarks>
         IEnumerable<Client_VM> SelectAllClients();
         IEnumerable<Client_VM> SelectClients();
@@ -60,11 +90,12 @@ namespace DataAccessInterfaces
         /// <br />
         ///    <see cref="ArgumentException">ArgumentException</see>: Thrown when incorrect fields are given for the user.
         /// <br /><br />
-        ///    CONTRIBUTOR: Jared Roberts
-        /// <br />
-        ///    CREATED: 2024-02-11
-        /// <br /><br />
-        ///     Initial creation
+        /// CONTRIBUTOR: Jared Roberts
+        /// CREATED: 2024-02-11
+        /// /// <br/><br/>
+        /// UPDATER: Jared Roberts <br/>
+        /// UPDATED: 2024-02-11 <br/>
+        ///     Changed the argument type for the UpdateClient method from int to Client_VM
         /// </remarks>
         int UpdateClient(Client_VM newClient);
         int UpdateClientByIdAsInactive(int id);

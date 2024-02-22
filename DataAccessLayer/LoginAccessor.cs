@@ -17,8 +17,113 @@ namespace DataAccessLayer
     /// <br />
     ///     Provides CRUD operations on the data source for login data
     /// </summary>
-    public class LoginAccessor : ILoginAccessor
+    /// <remarks>
+    /// UPDATER: Jared Hutton
+    /// <br />
+    /// UPDATED: 2024-02-16
+    /// <br />
+    ///  Add AuthenticateEmployee method
+    /// </remarks>
+   public class LoginAccessor : ILoginAccessor
     {
+        /// <summary>
+        ///     Authenticates given username and password hash and retrieves the authenticated employee data
+        /// </summary>
+        /// <param name="username">
+        ///    The username of the user attempting to login
+        /// </param>
+        /// <param name="passwordHash">
+        ///    The password hash of the user attempting to login
+        /// </param>
+        /// <returns>
+        ///    <see cref="Employee_VM">Employee_VM</see>: The authenticated employee
+        /// </returns>
+        /// <remarks>
+        ///    Parameters:
+        /// <br />
+        ///    <see cref="string">string</see> username: The username given by the user
+        /// <br />
+        ///    <see cref="string">string</see> passwordHash: The password hash generated on the password given by the user
+        /// <br /><br />
+        ///    CONTRIBUTOR: Jared Hutton
+        /// <br />
+        ///    CREATED: 2024-02-16
+        /// </remarks>
+        public Employee_VM AuthenticateEmployee(string username, string passwordHash)
+        {
+            Employee_VM employee = null;
+            List<Role_VM> roles = new List<Role_VM>();
+
+            var conn = DBConnectionProvider.GetConnection();
+
+            var cmdText = "sp_authenticate_employee";
+
+            var cmd = new SqlCommand(cmdText, conn);
+
+            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+
+            cmd.Parameters.Add("@Username", System.Data.SqlDbType.NVarChar);
+            cmd.Parameters.Add("@Password_Hash", System.Data.SqlDbType.NVarChar);
+
+            cmd.Parameters["@Username"].Value = username;
+            cmd.Parameters["@Password_Hash"].Value = passwordHash;
+
+            try
+            {
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                if (reader.HasRows)
+                {
+                    reader.Read();
+
+                    if (!reader.IsDBNull(0))
+                    {
+                        roles.Add(new Role_VM
+                        {
+                            RoleID = reader.GetString(0)
+                        });
+                    }
+
+                    employee = new Employee_VM
+                    {
+                        Employee_ID = reader.GetInt32(1),
+                        Given_Name = reader.GetString(2),
+                        Family_Name = reader.GetString(3),
+                        Address = reader.GetString(4),
+                        Address2 = reader.GetStringNullable(5),
+                        City = reader.GetString(6),
+                        State = reader.GetString(7),
+                        Country = reader.GetString(8),
+                        Zip = reader.GetString(9),
+                        Phone_Number = reader.GetString(10),
+                        Email = reader.GetString(11),
+                        Position = reader.GetString(12)
+                    };
+
+                    while (reader.Read())
+                    {
+                        roles.Add(new Role_VM
+                        {
+                            RoleID = reader.GetString(0)
+                        });
+                    }
+
+                    employee.Roles = roles;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            return employee;
+        }
+
         /// <summary>
         ///     Authenticates given username and password hash and retrieves related security questions if authenticated to a client
         /// </summary>
@@ -29,7 +134,7 @@ namespace DataAccessLayer
         ///    The password hash of the user attempting to login
         /// </param>
         /// <returns>
-        ///    <see cref="string[]">string[]</see>: The security questions
+        ///    <see cref="Employee_VM">Employee_VM</see>: The authenticated employee
         /// </returns>
         /// <remarks>
         ///    Parameters:

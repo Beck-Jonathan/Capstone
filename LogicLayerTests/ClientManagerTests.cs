@@ -23,6 +23,13 @@ namespace LogicLayerTests
     /// UPDATED: 2024-02-11
     /// <br />
     ///    Added TestGetClientByIDReturnsCorrectClient and TestEditClientWorksCorrectly
+    /// <br /> <br />
+    /// UPDATER: Isabella Rosenbohm
+    /// <br />
+    /// UPDATED: 2024-02-21
+    /// <br />
+    ///    Added TestAddClientReturnsTrue and TestAddClientReturnsErrorWithDuplicateData
+    ///    Changed TestGetClientByIDReturnsCorrectClient as it was not correctly set up
     /// </remarks>
     [TestClass]
     public class ClientManagerTests
@@ -87,32 +94,32 @@ namespace LogicLayerTests
         [TestMethod]
         public void TestGetClientByIDReturnsCorrectClient()
         {
-            IEnumerable<Client_VM> testClientData = new List<Client_VM>()
-            {
-                new Client_VM()
-                {
-                    ClientID = 100006,
-                    GivenName = "Joseph",
-                    FamilyName = "Joestar"
-                },
+            //IEnumerable<Client_VM> testClientData = new List<Client_VM>()
+            //{
+            //    new Client_VM()
+            //    {
+            //        ClientID = 100006,
+            //        GivenName = "Joseph",
+            //        FamilyName = "Joestar"
+            //    },
 
-                new Client_VM()
-                {
-                    ClientID = 123456,
-                    GivenName = "Wrong",
-                    FamilyName = "Name"
-                }
-            };
+            //    new Client_VM()
+            //    {
+            //        ClientID = 123456,
+            //        GivenName = "Wrong",
+            //        FamilyName = "Name"
+            //    }
+            //};
 
-            ClientAccessorFake clientAccessorFake = new ClientAccessorFake(testClientData);
-            _clientManager = new ClientManager(clientAccessorFake);
+            //ClientAccessorFake clientAccessorFake = new ClientAccessorFake(testClientData);
+            //_clientManager = new ClientManager(clientAccessorFake);
 
             // Arrange
-            string expectedGivenName = "Joseph";
-            string expectedFamilyName = "Joestar";
+            string expectedGivenName = "Joe";
+            string expectedFamilyName = "Dirt";
 
             // Act
-            Client client = _clientManager.GetClientById(100006);
+            Client client = _clientManager.GetClientById(2);
 
             // Assert
             Assert.AreEqual(expectedGivenName, client.GivenName);
@@ -163,6 +170,59 @@ namespace LogicLayerTests
             actualResult = _clientManager.EditClient(newClient);
 
             // If pass means updated successfully
+            Assert.AreEqual(expectedResult, actualResult);
+        }
+
+        [TestMethod]
+        public void TestAddClientReturnsTrue()
+        {
+            bool expectedResult = true;
+            bool actualResult = false;
+
+            actualResult = _clientManager.AddClient(
+            new Client_VM
+            {
+                GivenName = "Ichiro",
+                FamilyName = "Yamada",
+                DOB = DateTime.Parse("1998-6-26"),
+                Email = "iyamada@gmail.com",
+                PostalCode = "88888",
+                City = "Ikebukuro",
+                Region = "JP-13",
+                Address = "888 Tokyo Street",
+                TextNumber = "543-777-7777",
+                VoiceNumber = "543-555-5555",
+                IsActive = true,
+                Username = "iyamada26"
+            });
+
+            Assert.AreEqual(expectedResult, actualResult);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void TestAddClientReturnsErrorWithDuplicateData()
+        {
+            bool expectedResult = true;
+            bool actualResult = false;
+
+            actualResult = _clientManager.AddClient(
+                new Client_VM
+                {
+                    GivenName = "Foo",
+                    FamilyName = "Bar",
+                    DOB = DateTime.Parse("1905-1-2"),
+                    Email = "foobar@gmail.com",
+                    PostalCode = "12345",
+                    City = "Fake City",
+                    Region = "US-NV",
+                    Address = "123 Fake Street",
+                    TextNumber = "123-123-1234",
+                    VoiceNumber = "321-321-4321",
+                    IsActive = true,
+                    Username = "foobar123"
+                });
+
             Assert.AreEqual(expectedResult, actualResult);
         }
     }

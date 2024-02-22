@@ -128,3 +128,60 @@ AS
 		RETURN	@@ROWCOUNT
 	END
 GO
+
+print '' print '*** creating sp_insert_client ***'
+GO
+-- AUTHOR: Isabella Rosenbohm
+CREATE PROCEDURE [dbo].[sp_insert_client]
+(
+	@p_GivenName		[nvarchar] (50),
+	@p_FamilyName		[nvarchar] (50),
+	@p_MiddleName		[nvarchar] (50),
+	@p_DOB				[date],
+	@p_Email			[nvarchar] (255),
+	@p_PostalCode		[nvarchar] (9),
+	@p_City				[nvarchar] (50),
+	@p_Region			[nvarchar] (50),
+	@p_Address			[nvarchar] (100),
+	@p_TextNumber		[nvarchar] (12),
+	@p_VoiceNumber		[nvarchar] (12),
+	@p_Active			[bit]
+)
+AS
+BEGIN
+    DECLARE @p_ClientID int
+
+    INSERT INTO [dbo].[Client] (
+        [Given_Name],
+        [Family_Name],
+		[Middle_Name],
+        [DOB],
+        [Email],
+        [Postal_Code],
+        [City],
+        [Region],
+        [Address],
+        [Text_Number],
+        [Voice_Number],
+        [Is_Active]
+    )
+    VALUES (
+        @p_GivenName,
+		@p_FamilyName,
+		@p_MiddleName,
+		@p_DOB,
+		@p_Email,
+		@p_PostalCode,
+		@p_City,
+		@p_Region,
+		@p_Address,
+		@p_TextNumber,
+		@p_VoiceNumber,
+		@p_Active
+    );
+
+    SET @p_ClientID = SCOPE_IDENTITY();
+	
+	SELECT @p_ClientID AS 'Client_ID';
+END
+GO
