@@ -36,12 +36,12 @@ namespace NightRiderWPF.WorkOrders
     ///     
     ///     Added the function from the back end to the front end
     /// </remarks>
-    public partial class ViewWorkOrderPage : Page
+    public partial class ViewWorkOrderList : Page
     {
         IServiceOrderManager _serviceOrderManager = null;
         List<ServiceOrder_VM> _serviceOrders = null;
 
-        public ViewWorkOrderPage()
+        public ViewWorkOrderList()
         {
             try
             {
@@ -279,7 +279,7 @@ namespace NightRiderWPF.WorkOrders
 
 
                 // Open the UpdateWorkOrderPage and pass the selected work order object
-                UpdateWorkOrderPage updatePage = new UpdateWorkOrderPage(selectedWorkOrder);
+                UpdateWorkOrder updatePage = new UpdateWorkOrder(selectedWorkOrder);
                 NavigationService.Navigate(updatePage);
             }
             catch (Exception ex)

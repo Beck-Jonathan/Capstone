@@ -20,7 +20,7 @@ namespace NightRiderWPF.WorkOrders
     /// <summary>
     /// Interaction logic for UpdateWorkOrderPage.xaml
     /// </summary>
-    public partial class UpdateWorkOrderPage : Page
+    public partial class UpdateWorkOrder : Page
     {
         /// <summary>
         /// AUTHOR: Steven Sanchez
@@ -44,7 +44,7 @@ namespace NightRiderWPF.WorkOrders
         private int serviceOrderID;
 
 
-        public UpdateWorkOrderPage(ServiceOrder selectedWorkOrder)
+        public UpdateWorkOrder(ServiceOrder selectedWorkOrder)
         {
             InitializeComponent();
             SelectedWorkOrder = selectedWorkOrder;
