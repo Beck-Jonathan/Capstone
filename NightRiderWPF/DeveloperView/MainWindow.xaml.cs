@@ -25,7 +25,7 @@ using LogicLayer;
 using LogicLayer.Utilities;
 using DataObjects;
 
-namespace NightRiderWPF
+namespace NightRiderWPF.DeveloperView
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -74,7 +74,7 @@ namespace NightRiderWPF
                         PageViewer.Navigate(new EmployeeProfilePage(Authentication.AuthenticatedEmployee));
                         break;
                     case "ViewWorkOrderPage":
-                        PageViewer.Navigate(new ViewWorkOrderPage());
+                        PageViewer.Navigate(new ViewWorkOrderList());
                         break;
                     case "ClientPersonalPage":
                         PageViewer.Navigate(new ClientPersonalPage(Authentication.AuthenticatedClient));
@@ -111,7 +111,7 @@ namespace NightRiderWPF
             lblUsername.Visibility = Visibility.Visible;
             lblPassword.Visibility = Visibility.Visible;
             btnLogin.Visibility = Visibility.Visible;
-            btnCreateAccount.Visibility = Visibility.Visible;
+            btnForgotPassword.Visibility = Visibility.Visible;
 
             lbl_userAuthenticatedConfirmation.Visibility = Visibility.Hidden;
             btn_logout.Visibility = Visibility.Hidden;
@@ -153,7 +153,7 @@ namespace NightRiderWPF
                 lblPassword.Visibility = Visibility.Hidden;
                 pwdPassword.Visibility = Visibility.Hidden;
                 btnLogin.Visibility = Visibility.Hidden;
-                btnCreateAccount.Visibility = Visibility.Hidden;
+                btnForgotPassword.Visibility = Visibility.Hidden;
 
                 lbl_userAuthenticatedConfirmation.Content = BuildUserAuthenticatedConfirmationContent();
                 lbl_userAuthenticatedConfirmation.Visibility = Visibility.Visible;
@@ -186,6 +186,16 @@ namespace NightRiderWPF
             Authentication.AuthenticatedClient = null; // more security
             UpdateUIforLogout();
             return;
+        }
+
+        private void btnForgotPassword_Click(object sender, RoutedEventArgs e)
+        {
+            var resetPassword = new EmployeeAuthenticator().ShowDialog();
+
+            if (resetPassword == true)
+            {
+                MessageBox.Show("Password Reset Successfully.", "Success", MessageBoxButton.OK);
+            }
         }
     }
 }
