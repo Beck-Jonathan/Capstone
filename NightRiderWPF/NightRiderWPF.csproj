@@ -63,6 +63,9 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Compile Include="Clients\AdminAddClient.xaml.cs">
+      <DependentUpon>AdminAddClient.xaml</DependentUpon>
+    </Compile>
     <Compile Include="AdminHome.xaml.cs">
       <DependentUpon>AdminHome.xaml</DependentUpon>
     </Compile>
@@ -100,6 +103,10 @@
     <Compile Include="Inventory\PartsInventoryPage.xaml.cs">
       <DependentUpon>PartsInventoryPage.xaml</DependentUpon>
     </Compile>
+    <Page Include="Clients\AdminAddClient.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Clients\ToBeReworked\ClientPersonalPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

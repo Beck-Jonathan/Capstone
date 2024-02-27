@@ -101,5 +101,11 @@ namespace NightRiderWPF
             AdminViewClientDetail adminViewClientDetail = new AdminViewClientDetail(_selectedClient);
             this.NavigationService.Navigate(adminViewClientDetail);
         }
+
+        private void btnAddItem_Click(object sender, RoutedEventArgs e)
+        {
+            AdminAddClient adminAddClient = new AdminAddClient();
+            this.NavigationService.Navigate(adminAddClient);
+        }
     }
 }

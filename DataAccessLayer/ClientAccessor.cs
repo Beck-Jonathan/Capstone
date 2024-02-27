@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Net;
+using System.IO.Ports;
 
 namespace DataAccessLayer
 {
@@ -16,7 +17,54 @@ namespace DataAccessLayer
     {
         public int InsertClient(Client_VM client)
         {
-            throw new NotImplementedException();
+            int rows = 0;
+
+            var conn = DBConnectionProvider.GetConnection();
+            var cmdText = "sp_insert_client";
+            var cmd = new SqlCommand(cmdText, conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            cmd.Parameters.Add("@p_GivenName", SqlDbType.NVarChar, 50);
+            cmd.Parameters.Add("@p_FamilyName", SqlDbType.NVarChar, 50);
+            cmd.Parameters.Add("@p_MiddleName", SqlDbType.NVarChar, 50);
+            cmd.Parameters.Add("@p_DOB", SqlDbType.Date);
+            cmd.Parameters.Add("@p_Email", SqlDbType.NVarChar, 255);
+            cmd.Parameters.Add("@p_PostalCode", SqlDbType.NVarChar, 9);
+            cmd.Parameters.Add("@p_City", SqlDbType.NVarChar, 50);
+            cmd.Parameters.Add("@p_Region", SqlDbType.NVarChar, 50);
+            cmd.Parameters.Add("@p_Address", SqlDbType.NVarChar, 100);
+            cmd.Parameters.Add("@p_TextNumber", SqlDbType.NVarChar, 12);
+            cmd.Parameters.Add("@p_VoiceNumber", SqlDbType.NVarChar, 12);
+            cmd.Parameters.Add("@p_Active", SqlDbType.Bit);
+
+            cmd.Parameters["@p_GivenName"].Value = client.GivenName;
+            cmd.Parameters["@p_FamilyName"].Value = client.FamilyName;
+            cmd.Parameters["@p_MiddleName"].Value = client.MiddleName;
+            cmd.Parameters["@p_DOB"].Value = client.DOB;
+            cmd.Parameters["@p_Email"].Value = client.Email;
+            cmd.Parameters["@p_PostalCode"].Value = client.PostalCode;
+            cmd.Parameters["@p_City"].Value = client.City;
+            cmd.Parameters["@p_Region"].Value = client.Region;
+            cmd.Parameters["@p_Address"].Value = client.Address;
+            cmd.Parameters["@p_TextNumber"].Value = client.TextNumber;
+            cmd.Parameters["@p_VoiceNumber"].Value = client.VoiceNumber;
+            cmd.Parameters["@p_Active"].Value = client.IsActive;
+
+            try
+            {
+                conn.Open();
+                rows = cmd.ExecuteNonQuery();
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return rows;
         }
 
         public IEnumerable<Client_VM> SelectAllClients()

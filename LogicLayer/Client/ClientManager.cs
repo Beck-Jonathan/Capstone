@@ -30,9 +30,20 @@ namespace LogicLayer
             throw new NotImplementedException();
         }
 
-        public int AddClient(Client client)
+        public bool AddClient(Client_VM client)
         {
-            throw new NotImplementedException();
+            bool result = false;
+
+            try
+            {
+                result = (1 == _clientAccessor.InsertClient(client));
+            }
+            catch (Exception ex)
+            {
+                throw new ArgumentException("Error adding client.", ex);
+            }
+
+            return result;
         }
 
         public void DeactivateClient(int id)

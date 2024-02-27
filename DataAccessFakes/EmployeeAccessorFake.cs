@@ -115,7 +115,7 @@ namespace DataAccessFakes
                     Phone_Number = "1234567890",
                     Email = "jake@company.com",
                     Position = "Driver",
-                    Is_Active = true
+                    Is_Active = false
                 }
             };
         }
@@ -189,7 +189,7 @@ namespace DataAccessFakes
         /// <br />
         ///    Initial Creation 
         /// </remarks>
-        public List<Employee_VM> GetAllEmployees()
+        public List<Employee_VM> GetEmployees()
         {
             return _fakeEmployees;
         }
@@ -289,7 +289,7 @@ namespace DataAccessFakes
         ///     Update comments go here. Explain what you changed in this method.
         ///     A new remark should be added for each update to this method.
         /// </remarks>
-        public IEnumerable<Employee_VM> GetEmployees()
+        public IEnumerable<Employee_VM> GetAllEmployees()
         {
             return fakeEmployee;
         }
@@ -401,7 +401,78 @@ namespace DataAccessFakes
             }
             return rows;
         }
-        
+        /// <summary>
+        ///   Deactivate employee record by employee id
+        /// </summary>
+        /// <param>
+        ///    int employeeID
+        /// </param>
+        /// <returns>
+        ///     <see cref="int"/>: returns rows affected
+        /// </returns>
+        /// <remarks>
+        ///    Parameters: employeeID
+        /// <br />
+        /// <br /><br />
+        ///    Exceptions:ApplicationException
+        /// <br />
+        /// <br /><br />
+        ///    CONTRIBUTOR: James Williams
+        /// <br />
+        ///    CREATED: 2024-02-22
+        public int DeactivateEmployeeByID(int employeeID)
+        {
+            int rows = 0;
+            foreach(var employee in fakeEmployee)
+            {
+                if(employee.Employee_ID == employeeID)
+                {
+                    employee.Is_Active = false;
+                    rows++;
+                }
+            }
+            if(rows == 0)
+            {
+                throw new ArgumentException("No employee with that id found");
+            }
+            return rows;
+        }
+        /// <summary>
+        ///   Activate employee record by employee id
+        /// </summary>
+        /// <param>
+        ///    int employeeID
+        /// </param>
+        /// <returns>
+        ///     <see cref="int"/>: returns rows affected
+        /// </returns>
+        /// <remarks>
+        ///    Parameters: employeeID
+        /// <br />
+        /// <br /><br />
+        ///    Exceptions:ApplicationException
+        /// <br />
+        /// <br /><br />
+        ///    CONTRIBUTOR: James Williams
+        /// <br />
+        ///    CREATED: 2024-02-22
+        public int ActivateEmployeeByID(int employeeID)
+        {
+            int rows = 0;
+            foreach (var employee in fakeEmployee)
+            {
+                if (employee.Employee_ID == employeeID)
+                {
+                    employee.Is_Active = true;
+                    rows++;
+                }
+            }
+            if (rows == 0)
+            {
+                throw new ArgumentException("No employee with that id found");
+            }
+            return rows;
+        }
     }
 }
 // Checked by Nathan Toothaker
