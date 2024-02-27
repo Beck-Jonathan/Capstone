@@ -57,7 +57,6 @@ namespace NightRiderWPF
         private void btnSubmit_Click(object sender, RoutedEventArgs e)
         {
             string firstName = txtFirstName.Text;
-            string middleName = txtMiddleName.Text;
             string lastName = txtLastName.Text;
             string email = txtEmail.Text;
             string city = txtCity.Text;
@@ -65,25 +64,41 @@ namespace NightRiderWPF
             string textNumber = txtTextNumber.Text;
             string address = txtStreet.Text;
             string postal = txtPostal.Text;
-           
+
+            // sets middle name value to empty string if nothing was entered
+            string middleName = txtMiddleName.Text;
+            if (string.IsNullOrEmpty(middleName))
+            {
+                middleName = "";
+            }
+
             string dobText = dateDOB.Text;
             DateTime date = DateTime.Parse(dobText);
 
-
             // Input validation checks
+            if (!ValidationHelpers.IsValidGivenName(firstName))
+            {
+                MessageBox.Show("Please enter a valid first name.");
+                return;
+            }
+            if (!ValidationHelpers.IsValidFamilyName(lastName))
+            {
+                MessageBox.Show("Please enter a valid last name.");
+                return;
+            }
             if (!FormValidationHelper.IsValidEmail(email))
             {
-                MessageBox.Show("Please enter a valid email");
+                MessageBox.Show("Please enter a valid email.");
                 return;
             }
             if (!FormValidationHelper.IsValidPhoneNumber(voiceNumber))
             {
-                MessageBox.Show("Please enter a valid telephone number");
+                MessageBox.Show("Please enter a valid telephone number.");
                 return;
             }
             if (!FormValidationHelper.IsValidPhoneNumber(textNumber))
             {
-                MessageBox.Show("Please enter a valid telephone number");
+                MessageBox.Show("Please enter a valid telephone number.");
                 return;
             }
             if (!FormValidationHelper.IsValidZipCode(postal))
@@ -91,10 +106,10 @@ namespace NightRiderWPF
                 MessageBox.Show("Please enter a valid postal code.");
                 return;
             }
+            
 
             //Checks required form inputs to ensure they are not empty or null
             if (string.IsNullOrWhiteSpace(firstName) ||
-                string.IsNullOrWhiteSpace(middleName) ||
                 string.IsNullOrWhiteSpace(lastName) ||
                 string.IsNullOrWhiteSpace(city) ||
                 string.IsNullOrWhiteSpace(dobText) ||
@@ -121,7 +136,8 @@ namespace NightRiderWPF
                 Address = address,
                 TextNumber = textNumber,
                 VoiceNumber = voiceNumber,
-                Region = "" // empty string for now
+                Region = "", // empty string for now
+                IsActive = true // client is active upon creation
             };
 
             //Inserts new client database record
