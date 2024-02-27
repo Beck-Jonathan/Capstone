@@ -532,27 +532,27 @@ Create the [dbo].[Role] table
 ***************/
 print ''
 Print '***Create the [dbo].[Role] table***' 
- go
+GO
 CREATE TABLE [dbo].[Role]
 (
-    [Role_ID] [nvarchar](25) NOT NULL,
-    [Is_Active] [bit] NOT NULL DEFAULT 1,
+    [Role_ID] 			[nvarchar](25) NOT NULL,
+	[Role_Description] 	[nvarchar](255) NOT NULL DEFAULT '',
+    [Is_Active] 		[bit] NOT NULL DEFAULT 1,
     CONSTRAINT 		[pk_Role_ID] PRIMARY KEY ([Role_ID])
 )
 GO
 /******************
 Insert Sample Data For The  Role table
 ***************/
-print ''
-Print '***Insert Sample Data For The  Role table***' 
- GO
- Insert into [dbo].[Role] ([Role_ID]) VALUES 
-	('Admin'),
-	('FleetAdmin'),
-	('Mechanic'),
-	('Maintenance'),
-	('PartsPerson')
- GO
+print '' Print '***Insert Sample Data For The  Role table***' 
+GO
+ Insert into [dbo].[Role] ([Role_ID], [Role_Description]) VALUES 
+	('Admin', 'Manages entire application, typically aids in system setup.'),
+	('FleetAdmin', 'Manages the fleet'),
+	('Mechanic', 'Fixes the vehicles'),
+	('Maintenance', 'Routine maintenance work that doesnt require mechanic'),
+	('PartsPerson', 'An invetory specialist, that is the go to for any parts for vehicles')
+GO
 
 
 /******************

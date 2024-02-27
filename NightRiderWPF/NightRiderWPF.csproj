@@ -72,6 +72,9 @@
     <Compile Include="Clients\ToBeReworked\ClientPersonalPage.xaml.cs">
       <DependentUpon>ClientPersonalPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="RoleViews\CreateRole.xaml.cs">
+      <DependentUpon>CreateRole.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Vehicles\VehicleLookupListPage.xaml.cs">
       <DependentUpon>VehicleLookupListPage.xaml</DependentUpon>
     </Compile>
@@ -80,6 +83,10 @@
     </Compile>
     <Compile Include="Resources\Statics.cs" />
     <Page Include="Clients\ClientLookupPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="RoleViews\CreateRole.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

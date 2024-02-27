@@ -81,6 +81,7 @@
                 <ListBoxItem Content="Client Lookup" x:Name="ClientLookupPage" Margin="0" />
                 <ListBoxItem Content="Dependent List" x:Name="GuardianViewDependentList" Margin="0" />
                 <ListBoxItem Content="Admin Home" x:Name="AdminHome" Margin="0" />
+                <ListBoxItem Content="Create Role" x:Name="CreateRole" Margin="0" />
                 <!-- copy the above and replace relevant values. -->
             </ListBox>
             <Border Grid.Column="1" BorderBrush="Black" BorderThickness="2px">
