@@ -99,7 +99,7 @@ namespace LogicLayer
         }
 
         /// <summary>
-        ///     Retrieves all Employee records from the database
+        ///     Retrieves all Employee records from the database that are active
         /// </summary>
         /// <returns>
         ///    List of Employee_VM objects
@@ -115,17 +115,17 @@ namespace LogicLayer
         /// <br /><br />
         ///    UPDATER: updater_name
         /// <br />
-        ///    UPDATED: yyyy-MM-dd
+        ///    UPDATED: 2024-02-22
         /// <br />
-        ///     Initial Creation
+        ///     Updated method name and call to accessor to better represent that this method only returns active employee records
         /// </remarks>
-        public List<Employee_VM> GetAllEmployees()
+        public List<Employee_VM> GetEmployees()
         {
             List<Employee_VM> employees = null;
 
             try
             {
-                employees = _employeeAccessor.GetAllEmployees();
+                employees = _employeeAccessor.GetEmployees();
              
             }
             catch (Exception ex)
@@ -137,7 +137,7 @@ namespace LogicLayer
         }
 
         /// <summary>
-        ///     gets all employee records
+        ///     gets all employee records, active and inactive
         /// </summary>
         /// <param>
         ///    None
@@ -160,19 +160,18 @@ namespace LogicLayer
         /// <br /><br />
         ///    UPDATER: updater_name
         /// <br />
-        ///    UPDATED: yyyy-MM-dd
+        ///    UPDATED: 2024-02-22
         /// <br />
-        ///     Update comments go here. Explain what you changed in this method.
-        ///     A new remark should be added for each update to this method.
+        ///    Changed method name and method call to accessor to better represent that it gets all employee records, active or inactive
         /// </remarks>
-        public IEnumerable<Employee_VM> GetEmployees()
+        public IEnumerable<Employee_VM> GetAllEmployees()
         {
 
 
             IEnumerable<Employee_VM> result = null;
             try
             {
-                result = _employeeAccessor.GetEmployees();
+                result = _employeeAccessor.GetAllEmployees();
                 if (result.Count() == 0)
                 {
                     throw new ArgumentException("No Employees found in the database.");
@@ -270,7 +269,42 @@ namespace LogicLayer
             }
             return rows;
         }
-        
+
+        public int DeactivateEmployeeByID(int employeeID)
+        {
+            int rows = 0;
+            try
+            {
+                rows = _employeeAccessor.DeactivateEmployeeByID(employeeID);
+                if(rows == 0)
+                {
+                    throw new ArgumentException("No records updated at this time");
+                }
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+            return rows;
+        }
+
+        public int ReactivateEmployeeByID(int employeeID)
+        {
+            int rows = 0;
+            try
+            {
+                rows = _employeeAccessor.ActivateEmployeeByID(employeeID);
+                if (rows == 0)
+                {
+                    throw new ArgumentException("No records updated at this time");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return rows;
+        }
     }
 }
 // Checked by Nathan Toothaker

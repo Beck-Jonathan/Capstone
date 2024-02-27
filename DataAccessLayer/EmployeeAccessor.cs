@@ -35,39 +35,7 @@ namespace DataAccessInterfaces
         /// </remarks>
         /// 
 
-
-
-        /// <summary>
-        ///     Inserts new employee record into the Employee table.
-        /// </summary>
-        /// <param name="newEmployee">
-        ///    Employee_VM object that contains the data of the new employee to be added to the database
-        /// </param>
-        /// <returns>
-        ///    <see cref="bool">true</see> Employee_ID of newly inserted record; otherwise, <see cref="void">execption</see>.
-        /// </returns>
-        /// <remarks>
-        ///    Parameters:
-        /// <br />
-        ///    <see cref="Employee_VM">Employee_VM</see> a: Employee object
-        /// <br /><br />
-        ///    Exceptions:
-        /// <br />
-        ///    <see cref="ArgumentException">ArgumentException</see>: Throws when error entering record
-        /// <br /><br />
-        ///         /// <br />
-        ///    <see cref="ApplicationException">ArgumentException</see>: Throws when error entering record
-        /// <br /><br />
-        ///    CONTRIBUTOR: James Williams
-        /// <br />
-        ///    CREATED: 2024-02-01
-        /// <br /><br />
-        ///    UPDATER: updater_name
-        /// <br />
-        ///    UPDATED: yyyy-MM-dd
-        /// <br />
-        ///     Initial creation
-        /// </remarks>
+        /// <inheritdoc/>
         public int InsertEmployee(Employee_VM newEmployee)
         {
             int newID = 0;
@@ -126,33 +94,8 @@ namespace DataAccessInterfaces
             return newID;
         }
 
-
-        /// <summary>
-        ///     Retrieves all employee records from database
-        /// </summary>
-
-        /// <returns>
-        ///    <see cref="List<Employee_VM></Employee_VM>">true</see> List of Employee_VM objects otherwise, <see cref="Exception">execption</see>.
-        /// </returns>
-        /// <remarks>
-        ///    Exceptions:
-        /// <br />
-        ///    <see cref="ArgumentException">ArgumentException</see>: No records returned
-        ///    CONTRIBUTOR: James Williams
-        /// <br />
-        ///    CREATED: 2024-02-01
-        /// <br /><br />
-        ///    UPDATER: updater_name
-        /// <br />
-        ///    UPDATED: 2024-02-01
-        /// <br />
-        ///     Initial creation
-        /// </remarks>
-
-
-
-
-        public List<Employee_VM> GetAllEmployees()
+        /// <inheritdoc/>
+        public List<Employee_VM> GetEmployees()
         {
             List<Employee_VM> employees = new List<Employee_VM>();
 
@@ -176,7 +119,7 @@ namespace DataAccessInterfaces
                         Family_Name = reader.GetString(2),
                         DOB = reader.GetDateTime(3),
                         Address = reader.GetString(4),
-                        Address2 = reader.IsDBNull(5) ? null : reader.GetString(4),
+                        Address2 = reader.IsDBNull(5) ? null : reader.GetString(5),
                         City = reader.GetString(6),
                         State = reader.GetString(7),
                         Country = reader.GetString(8),
@@ -204,41 +147,7 @@ namespace DataAccessInterfaces
             return employees;
         }
 
-        /// <summary>
-        ///     Inserts new employee role record into database
-        /// </summary>
-        /// <param name="employeeID">
-        ///    The ID of the employee you would like to insert a role for
-        /// </param>
-        /// <param name="role">
-        ///     The role you would like to associate with the employee
-        /// </param>
-        /// <returns>
-        ///    <see cref="int"> Number of rows inserted </see>
-        /// </returns>
-        /// <remarks>
-        ///    Parameters:
-        /// <br />
-        ///    <see cref="int">employeeID</see> a: ID of employee to insert roles on
-        /// <br />
-        /// <br />
-        ///    <see cref="string">role</see> a: role to be inserted
-        /// <br />
-        ///    Exceptions:
-        ///   <br />
-        ///   <br />
-        ///    <see cref="ApplicationException">ArgumentException</see>: Throws when no roles inserted
-        /// <br /><br />
-        ///    CONTRIBUTOR: James Williams
-        /// <br />
-        ///    CREATED: 2024-02-01
-        /// <br /><br />
-        ///    UPDATER: updater_name
-        /// <br />
-        ///    UPDATED: 2024-02-01
-        /// <br />
-        ///     Initial creation
-        /// </remarks>
+        /// <inheritdoc/>
         public int InsertEmployeeRoles(int employeeID, string role)
         {
             int rows = 0;
@@ -272,7 +181,7 @@ namespace DataAccessInterfaces
         }
 
         /// <summary>
-        ///     gets all employees from the Employee Table
+        ///     gets all employees from the Employee Table, active and inactive
         /// </summary>
         /// <param>
         ///    None
@@ -293,11 +202,11 @@ namespace DataAccessInterfaces
         ///    CREATED: 2024-02-03
         /// <br /><br />
         ///    UPDATER: James Williams
-        /// <br /> 2024-02-16
+        /// <br /> 2024-02-22
         /// <br />
-        ///     Updated how to handle returning Address2. If it wasn't null, it was setting the value from Address1 instead of Address2
+        ///     Updated naming to better represent that method returns all employee records, active or inactive
         /// </remarks>
-        public IEnumerable<Employee_VM> GetEmployees()
+        public IEnumerable<Employee_VM> GetAllEmployees()
         {
             List<Employee_VM> employeeList = new List<Employee_VM>();
             // start with a connection object
@@ -349,6 +258,7 @@ namespace DataAccessInterfaces
             return employeeList;
         }
 
+        /// <inheritdoc/>
         public IEnumerable<Role> GetRolesByEmployeeID(int employee_ID)
         {
             IEnumerable<Role> roles = null;
@@ -425,6 +335,8 @@ namespace DataAccessInterfaces
         ///     Update comments go here. Explain what you changed in this method.
         ///     A new remark should be added for each update to this method.
         /// </remarks>
+   
+        /// <inheritdoc/>
         public Employee_VM GetEmployee(int id)
         {
             Employee_VM employee = new Employee_VM();
@@ -475,29 +387,7 @@ namespace DataAccessInterfaces
         }
         // checked by Jared R.
 
-        /// <summary>
-        ///   Update employee record in database
-        /// </summary>
-        /// <param>
-        ///    Employee_VM updatedEmployee
-        /// </param>
-        /// <param>
-        ///     Employee_VM originalEmployee
-        /// </param>
-        /// <returns>
-        ///     <see cref="int"/>: Number of rows affected.
-        /// </returns>
-        /// <remarks>
-        ///    Parameters: updatedEmployee, originalEmployee
-        /// <br />
-        /// <br /><br />
-        ///    Exceptions:ApplicationException
-        /// <br />
-        /// <br /><br />
-        ///    CONTRIBUTOR: James Williams
-        /// <br />
-        ///    CREATED: 2024-02-17
-        /// <br />
+        /// <inheritdoc/>
         public int UpdateEmployee(Employee_VM updatedEmployee, Employee_VM originalEmployee)
         {
             int rowsAffected = 0;
@@ -552,7 +442,55 @@ namespace DataAccessInterfaces
             return rowsAffected;
         }
 
-   
+        public int DeactivateEmployeeByID(int employeeID)
+        {
+            int rows = 0;
+            var conn = DBConnectionProvider.GetConnection();
+            var cmdText = "sp_deactivate_employee";
+            var cmd = new SqlCommand(cmdText, conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            cmd.Parameters.Add("@p_Employee_ID", SqlDbType.Int).Value = employeeID;
+            try
+            {
+                conn.Open();
+                rows = cmd.ExecuteNonQuery();
+                if(rows == 0)
+                {
+                    throw new ArgumentException("Employee not found");
+                }
+            }
+            catch(Exception ex)
+            {
+                throw new ApplicationException("Error updating employee");
+            }
+            return rows;
+        }
+
+        public int ActivateEmployeeByID(int employeeID)
+        {
+            int rows = 0;
+            var conn = DBConnectionProvider.GetConnection();
+            var cmdText = "sp_activate_employee";
+            var cmd = new SqlCommand(cmdText, conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            cmd.Parameters.Add("@p_Employee_ID", SqlDbType.Int).Value = employeeID;
+            try
+            {
+                conn.Open();
+                rows = cmd.ExecuteNonQuery();
+                if (rows == 0)
+                {
+                    throw new ArgumentException("Employee not found");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("Error updating employee");
+            }
+            return rows;
+        }
     }
 }
 // Checked by Nathan Toothaker

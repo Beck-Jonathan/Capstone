@@ -40,7 +40,7 @@ namespace LogicLayerTests
         public void TestGetAllEmployeesCountPasses()
         {
             int expectedCount = 2;
-            int actualCount = _employeeManager.GetAllEmployees().Count;
+            int actualCount = _employeeManager.GetEmployees().Count;
 
             Assert.AreEqual(expectedCount, actualCount);
         }
@@ -49,7 +49,7 @@ namespace LogicLayerTests
         public void TestGetAllEmployeesCountFails()
         {
             int wrongCount = 4;
-            int actualCount = _employeeManager.GetAllEmployees().Count;
+            int actualCount = _employeeManager.GetEmployees().Count;
 
             Assert.AreNotEqual(wrongCount, actualCount);
         }
@@ -79,7 +79,7 @@ namespace LogicLayerTests
             };
             _employeeManager.AddEmployee(newEmployee);
             int expectedCount = 3;
-            List<Employee_VM> allEmployees = _employeeManager.GetAllEmployees();
+            List<Employee_VM> allEmployees = _employeeManager.GetEmployees();
             int actualCount = allEmployees.Count;
 
             Assert.AreEqual(expectedCount, actualCount);
@@ -243,6 +243,41 @@ namespace LogicLayerTests
             updatedEmployee.Family_Name = "Jack";
 
             actual = _employeeManager.EditEmployee(updatedEmployee, originalEmployee);
+        }
+
+        [TestMethod]
+        public void TestDeactivateEmployeeReturnsCorrectNumberOfRows()
+        {
+            int employeeID = 100000;
+            int rows = 0;
+            int expected = 1;
+            rows = _employeeManager.DeactivateEmployeeByID(employeeID);
+            Assert.AreEqual(expected, rows);
+        }
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void TestDeactivateEmployeeThrowsArgumentException()
+        {
+            int employeeID = 100008;
+            int rows = _employeeManager.DeactivateEmployeeByID(employeeID);
+        }
+
+        [TestMethod]
+        public void TestReactivateEmployeeReturnsCorrectNumberOfRows()
+        {
+            int employeeID = 100002;
+            int rows = 0;
+            int expected = 1;
+            rows = _employeeManager.ReactivateEmployeeByID(employeeID);
+            Assert.AreEqual(expected, rows);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void TestReactivateEmployeeThrowsArgumentException()
+        {
+            int employeeID = 100008;
+            int rows = _employeeManager.ReactivateEmployeeByID(employeeID);
         }
     }
 }
