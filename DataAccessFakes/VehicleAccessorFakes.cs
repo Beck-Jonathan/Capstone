@@ -24,6 +24,11 @@ namespace DataAccessFakes
     ///     (no other details necessary).
     ///     A new remark should be added for each update.
     /// </remarks>
+    /// <remarks>
+    /// UPDATER: Chris Baenizger
+    /// UPDATED: 2024-02-23
+    /// Added fakes for deactivate vehicle.
+    /// </remarks>
 
     public class VehicleAccessorFakes : IVehicleAccessor
     {
@@ -50,7 +55,7 @@ namespace DataAccessFakes
                 VehicleType = "Van",
                 VehicleDescription = "Van",
                 Rental = false,
-                DateEntered = DateTime.Now,
+                DateEntered = DateTime.Now
             };
 
             _fakeVehicleLookupList.Add(new Vehicle()
@@ -141,27 +146,26 @@ namespace DataAccessFakes
             return fakeVehicleTypes;
         }
 
-       
+        /// <summary>
+        ///     Returns all fake vehicle lookup list records
+        /// </summary>
+        /// <returns>
+        ///    <see cref="List{Vehicle}">Vehicle</see> List of Vehicle objects
+        /// </returns>
+        /// <remarks>
+        ///    CONTRIBUTOR: Everett DeVaux
+        /// <br />
+        ///    CREATED: 2024-02-10
+        /// <br />
+        /// <br />
+        ///    UPDATER: [Updater's Name]
+        /// <br />
+        ///    UPDATED: yyyy-MM-dd
+        /// <br />
+        ///     Initial Creation
+        /// </remarks>
         public List<Vehicle> SelectVehicleForLookupList()
         {
-            /// <summary>
-            ///     Returns all fake vehicle lookup list records
-            /// </summary>
-            /// <returns>
-            ///    <see cref="List{Vehicle}">Vehicle</see> List of Vehicle objects
-            /// </returns>
-            /// <remarks>
-            ///    CONTRIBUTOR: Everett DeVaux
-            /// <br />
-            ///    CREATED: 2024-02-10
-            /// <br />
-            /// <br />
-            ///    UPDATER: [Updater's Name]
-            /// <br />
-            ///    UPDATED: yyyy-MM-dd
-            /// <br />
-            ///     Initial Creation
-            /// </remarks>
             return _fakeVehicleLookupList;
         }
 
@@ -196,6 +200,20 @@ namespace DataAccessFakes
             {
                 throw new ArgumentException();
             }
+        }
+
+        public int DeactivateVehicle(Vehicle vehicle)
+        {
+            int result = 0;
+            if(vehicle.VIN == fakeVehicles[0].VIN)
+            {
+                return ++result;
+            }
+            else
+            {
+                throw new ArgumentException();
+            }
+            
         }
     }
 }

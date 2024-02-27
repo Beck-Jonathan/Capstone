@@ -22,9 +22,16 @@ namespace NightRiderWPF.Vehicles
     /// CREATED: 2024-02-01
     ///     Display page for vehicle add, update, and detail information.
     /// </summary>
+    /// <remarks>
     /// Updated by Chris Baenziger
     ///     2024-02-10
     ///     Added features for display and update vehicle
+    ///     </remarks>
+    ///     <remarks>
+    /// UPDATER: Chris Baenizger
+    /// UPDATED: 2024-02-23
+    /// Added implementation for deactivate vehicle.
+    /// </remarks>
 
     public partial class AddUpdateDeleteVehicle : Page
     {
@@ -72,6 +79,7 @@ namespace NightRiderWPF.Vehicles
                     btnSubmit.Visibility = Visibility.Hidden;
                     btnAddUpdate.IsEnabled = true;
                     btnAddUpdate.Content = "Add Vehicle"; // "Add Vehicle", "Update Vehicle", "Cancel"
+                    btnDeactivate.Visibility = Visibility.Hidden;
 
                     UpdateText();
 
@@ -95,6 +103,7 @@ namespace NightRiderWPF.Vehicles
                     btnSubmit.Visibility = Visibility.Hidden;
                     btnAddUpdate.IsEnabled = true;
                     btnAddUpdate.Content = "Update Vehicle"; // "Add Vehicle", "Update Vehicle", "Cancel"
+                    btnDeactivate.Visibility = Visibility.Hidden;
 
                     UpdateText();
 
@@ -118,6 +127,8 @@ namespace NightRiderWPF.Vehicles
                     btnSubmit.Visibility = Visibility.Visible;
                     btnAddUpdate.IsEnabled = true;
                     btnAddUpdate.Content = "Cancel"; // "Add Vehicle", "Update Vehicle", "Cancel"
+                    btnDeactivate.Visibility = Visibility.Visible;
+
                     break;
 
                 case "add": // adds the vehicle to the db, submit button is enabled, add/update button is cancel.
@@ -138,6 +149,8 @@ namespace NightRiderWPF.Vehicles
                     btnSubmit.Visibility = Visibility.Visible;
                     btnAddUpdate.IsEnabled = true;
                     btnAddUpdate.Content = "Cancel"; // "Add Vehicle", "Update Vehicle", "Cancel"
+                    btnDeactivate.Visibility = Visibility.Hidden;
+
                     break;
             }
         }
@@ -458,7 +471,6 @@ namespace NightRiderWPF.Vehicles
                 {
                     if (_pageType.Equals("add") && _vehicle != null)
                     {
-
                         _pageType = "display";
                         UpdateDisplay();
                     }
@@ -469,6 +481,32 @@ namespace NightRiderWPF.Vehicles
                             NavigationService.GoBack();
                         }
                     }
+                }
+            }
+        }
+
+        private void btnDeactivate_Click(object sender, RoutedEventArgs e)
+        {
+            var result = MessageBox.Show("Are you sure you want to deactivate the vehicle?", "Deactivate Vehicle", MessageBoxButton.YesNo, MessageBoxImage.Exclamation);
+
+            // returns from add page to display page if vehicle isn't blank
+            if (result == MessageBoxResult.Yes)
+            {
+                try
+                {
+                    var deactivated = _vehicleManager.DeactivateVehicle(_vehicle);
+                    if (deactivated)
+                    {
+                        MessageBox.Show("Vehicle was deactivated.", "Deactivated", MessageBoxButton.OK, MessageBoxImage.Information);
+                        if (NavigationService.CanGoBack)
+                        {
+                            NavigationService.GoBack();
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Unable to deactivate the vehicle.", "Deactivate Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
         }

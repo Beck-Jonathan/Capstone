@@ -71,6 +71,7 @@ namespace NightRiderWPF.WorkOrders
                 bool criticalIssue = serviceOrder.Critical_Issue;
                 string serviceType_ID = serviceOrder.Service_Type_ID;
                 string serviceDescription = serviceOrder.Service_Description;
+                int serviceOrderID = serviceOrder.Service_Order_ID;
                 Button updateButton = new Button();
                 updateButton.Height = 30;
                 updateButton.Width = 80;
@@ -86,7 +87,8 @@ namespace NightRiderWPF.WorkOrders
                     PropertyTwo = serviceType_ID,
                     PropertyThree = serviceDescription,
                     PropertyFour = updateButton,
-                    PropertyFive = completeButton
+                    PropertyFive = completeButton,
+                    PropertySix = serviceOrderID
                 };
                 dataObjects.Add(myDynamic);
             }
@@ -143,6 +145,7 @@ namespace NightRiderWPF.WorkOrders
                         PropertyThree = serviceDescription,
                         PropertyFour = updateButton,
                         PropertyFive = completeButton
+
                     };
                     dataObjects.Add(myDynamic);
                 }
@@ -232,10 +235,58 @@ namespace NightRiderWPF.WorkOrders
             }
         }
 
+        /// <summary>
+        ///  Handles the click event of the Update button in the view work order page.
+        ///  Opens the UpdateWorkOrderPage when the button is clicked
+        /// </summary>
+        /// <returns>
+        ///   selected data from the datagrid and allows an employee to update a service order  
+        /// </returns>
+        /// <remarks>
+        ///    Exceptions:
+        /// <br />
+        ///    <see cref="Exception">Exception</see>: Thrown when error encountered
+        /// <br /><br />
+        ///    CONTRIBUTOR: Steven Sanchez
+        /// <br />
+        ///    CREATED: 2024-02-18
+        /// <br />
+        /// <br />
+        ///    UPDATER: [Updater's Name]
+        /// <br />
+        ///    UPDATED: yyyy-MM-dd
+        /// <br />
+        ///     Initial Creation
+        /// </remarks>
         private void mntcViewWorkOrderUpdateBtn_Click(object sender, RoutedEventArgs e)
         {
-            // Action for update work order
-            MessageBox.Show("This button's 'mntcViewWorkOrderUpdateBtn_Click()' method is not implemented");
+            try
+            {
+                dynamic selectedRow = mntcViewWorkOrderPendingDg.SelectedItem;
+
+                // Extract the necessary properties from the selected row
+                bool criticalIssue = selectedRow.PropertyOne;
+                string serviceType_ID = selectedRow.PropertyTwo;
+                string serviceDescription = selectedRow.PropertyThree;
+                int serviceOrderID = selectedRow.PropertySix;
+                ServiceOrder selectedWorkOrder = new ServiceOrder
+                {
+                    Service_Order_ID = serviceOrderID,
+                    Critical_Issue = criticalIssue,
+                    Service_Type_ID = serviceType_ID,
+                    Service_Description = serviceDescription
+                };
+
+
+                // Open the UpdateWorkOrderPage and pass the selected work order object
+                UpdateWorkOrderPage updatePage = new UpdateWorkOrderPage(selectedWorkOrder);
+                NavigationService.Navigate(updatePage);
+            }
+            catch (Exception ex)
+            {
+                // Handle or log the exception
+                MessageBox.Show($"An error occurred: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void mntcViewWorkOrderCompleteBtn_Click(object sender, RoutedEventArgs e)
