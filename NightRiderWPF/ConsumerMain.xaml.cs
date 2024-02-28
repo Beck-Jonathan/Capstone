@@ -23,6 +23,8 @@ using System.Windows.Shapes;
 using LogicLayer.AppData;
 using LogicLayer.Utilities;
 using LogicLayer;
+using DataObjects;
+using NightRiderWPF.Login;
 
 namespace NightRiderWPF
 {
@@ -137,6 +139,13 @@ namespace NightRiderWPF
         /// <br />
         ///    Split several lines into a separate method, UpdateUiForLogin()
         /// </remarks>
+        /// <remarks>
+        ///    CONTRIBUTOR: Nathan Toothaker
+        /// <br />
+        ///    UPDATED: 2024-02-27
+        /// <br />
+        ///    Added a navigate to a default page that just welcomes the logged in user more clearly.
+        /// </remarks>
         private void btnLogin_Click(object sender, RoutedEventArgs e)
         {
             string username = txtUsername.Text;
@@ -212,6 +221,14 @@ namespace NightRiderWPF
                         // btnMySchedule.Visibility= Visibility.Visible;
                     default: break;
                 }
+            }
+            bool isAdmin = Authentication.AuthenticatedEmployee.Roles.Where(r => String.Equals(r.RoleID, "Admin")).Count() >= 1;
+            if (isAdmin)
+            {
+                PageViewer.Navigate(new AdminHome());
+            } else
+            {
+                PageViewer.Navigate(new EmployeeLoginPage());
             }
 
             btn_logout.Visibility = Visibility.Visible;

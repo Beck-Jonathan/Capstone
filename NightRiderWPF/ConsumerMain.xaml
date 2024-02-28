@@ -55,7 +55,6 @@
                         x:Name="btn_logout"
                         Grid.Row="2"
                         Grid.Column="0"
-                        VerticalAlignment="Top"
                         Background="{x:Static resources:Statics.SecondaryColor}" Foreground="{x:Static resources:Statics.ButtonText}"
                         Content="Log Out"
                         Visibility="Hidden" Click="btn_logout_Click" />
