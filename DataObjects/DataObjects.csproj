@@ -48,12 +48,15 @@
     <Compile Include="Login.cs" />
     <Compile Include="Parts_Inventory.cs" />
     <Compile Include="Employee.cs" />
+    <Compile Include="POLineItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Purchase_Order.cs" />
     <Compile Include="ServiceOrder.cs" />
     <Compile Include="ValidationHelpers.cs" />
     <Compile Include="Vehicle.cs" />
     <Compile Include="VehicleType.cs" />
     <Compile Include="Role.cs" />
+    <Compile Include="Vendor.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

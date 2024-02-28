@@ -1,0 +1,75 @@
+﻿<Page x:Class="NightRiderWPF.PurchaseOrders.Parts_Person_View_Purchase_Orders"
+           xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:NightRiderWPF.DeveloperView"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="SamplePage" Loaded="Page_Loaded">
+    <Grid Background="#99999999">
+        <Grid.RowDefinitions>
+            <!-- Create Grid Rows as needed, but try to keep rows consistent between related pages -->
+            <RowDefinition Height="40px"></RowDefinition>
+            <RowDefinition Height="40px"></RowDefinition>
+            <RowDefinition Height="40px"></RowDefinition>
+            <RowDefinition Height="20px"></RowDefinition>
+            <RowDefinition Height="40px"></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="20px"></RowDefinition>
+            <RowDefinition Height="40px"></RowDefinition>
+            <RowDefinition Height="10px"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+
+            <ColumnDefinition Width="10px"></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition Width="10px"></ColumnDefinition>
+
+        </Grid.ColumnDefinitions>
+        <!-- remove or replace borders as you create your own display, this is just to make columns visible in sample -->
+        <Border Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="11" Grid.RowSpan="3" BorderBrush="Black" BorderThickness="5px" ></Border>
+
+
+
+        <!-- Bad example of how you would want to make a smaller box within the page. -->
+
+        <Label Name ="lblHeader" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Content="Purchase Orders"></Label>
+        <Label Name="lblCount" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="6" Content="There are _ Number of Purchase Orders"></Label>
+        <Label Name="lblStartDate" Grid.Row="2" Grid.Column="2" Content="Start Date"></Label>
+        <DatePicker Name="dpkStartDate" Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="2" SelectedDateChanged="dpkStartDate_SelectedDateChanged"  ></DatePicker>
+        <Label Name="lblEndDate" Grid.Row="2" Grid.Column="5" Content="End Date"></Label>
+        <DatePicker Name="dpkEndDate" Grid.Row="2" Grid.Column="6" Grid.ColumnSpan="2" SelectedDateChanged="dpkStartDate_SelectedDateChanged" ></DatePicker>
+        <Label Name="lblFilter" Grid.Row="2" Grid.Column="8" Content="Filter"></Label>
+        <ComboBox Name="cbxFilter"  Grid.Row="2" Grid.Column="9" Grid.ColumnSpan="2" Margin="0px,5px" SelectionChanged="cbxFilter_SelectionChanged"></ComboBox>
+
+        <DataGrid Name="datPurchaseOrders" Margin="4px,4px,4px,4px" IsReadOnly="True" SelectionMode="Single" FontSize="18px" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="11" Grid.RowSpan="3">
+            <DataGrid.Columns>
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Click="btnViewOrder_Click">Details</Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button Name="btnViewOrder" Content="View Order" Grid.Column="4" Grid.Row="8" Click="btnViewOrder_Click"></Button>
+        <Button Name="btnBack" Content="Back" Grid.Column="2" Grid.Row="8" Click="btnBack_Click"></Button>
+        <Button Name="btnEdit" Content="Edit" Grid.Column="6" Grid.Row="8"></Button>
+
+
+    </Grid>
+
+</Page>

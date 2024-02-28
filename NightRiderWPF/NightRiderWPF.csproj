@@ -75,6 +75,12 @@
     <Compile Include="Clients\ToBeReworked\ClientPersonalPage.xaml.cs">
       <DependentUpon>ClientPersonalPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="PurchaseOrders\Parts_Person_View_Current_PO_Details.xaml.cs">
+      <DependentUpon>Parts_Person_View_Current_PO_Details.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PurchaseOrders\Parts_Person_View_Purchase_Orders.xaml.cs">
+      <DependentUpon>Parts_Person_View_Purchase_Orders.xaml</DependentUpon>
+    </Compile>
     <Compile Include="RoleViews\CreateRole.xaml.cs">
       <DependentUpon>CreateRole.xaml</DependentUpon>
     </Compile>
@@ -86,6 +92,14 @@
     </Compile>
     <Compile Include="Resources\Statics.cs" />
     <Page Include="Clients\ClientLookupPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PurchaseOrders\Parts_Person_View_Current_PO_Details.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PurchaseOrders\Parts_Person_View_Purchase_Orders.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

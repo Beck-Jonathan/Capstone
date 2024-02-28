@@ -48,7 +48,9 @@
     <Compile Include="LoginAccessor.cs" />
     <Compile Include="Parts_InventoryAccessor.cs" />
     <Compile Include="EmployeeAccessor.cs" />
+    <Compile Include="POLineItemsAccessor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Purchase_OrderAccessor.cs" />
     <Compile Include="ServiceOrderAccessor.cs" />
     <Compile Include="VehicleAccessor.cs" />
     <Compile Include="RoleAccessor.cs" />
