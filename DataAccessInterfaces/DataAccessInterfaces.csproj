@@ -42,7 +42,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IDependentAccessor.cs" />
-    <Compile Include="IScheduleBlock.cs" />
     <Compile Include="IServiceOrderAccessor.cs" />
     <Compile Include="ILoginAccessor.cs" />
     <Compile Include="IVehicleAccessor.cs" />
