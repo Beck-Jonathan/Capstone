@@ -1764,15 +1764,14 @@ Print '***Insert Sample Data For The  Login table***'
  go
 
 INSERT INTO [dbo].[Login]
-    ([Username], [Client_ID],
+    ([Username], [Employee_ID],
     [Security_Question_1],[Security_Response_1],
     [Security_Question_2],[Security_Response_2],
     [Security_Question_3],[Security_Response_3])
 VALUES
     ('JoeSmith1994', 100000, 'what is your favorite animal?', 'lion', null, null, null, null),
     ('Jacmar125', 100001, 'what is your favorite animal?', 'Ocelot', 'what is your favorite food?', 'Ramen', null, null),
-    ('Lebold2202', 100002, 'what is your favorite animal?', 'Foxes', 'what is your favorite food?', 'Spaghetti', 'what was your first dogs name?', 'Lola'),
-    ('XxToiletDestroyer42069xX', 100003, null, null, null, null, null, null)
+    ('Lebold2202', 100002, 'what is your favorite animal?', 'Foxes', 'what is your favorite food?', 'Spaghetti', 'what was your first dogs name?', 'Lola');
 GO
 
 /******************
@@ -2796,5 +2795,23 @@ VALUES
     (100001, '5XYZH4AG4JH123456', '2024-02-01', '2024-02-15', 'Assignment from Feb 1 to Feb 15', 1),
     (100002, 'JM1BK32F781234567', '2024-03-01', NULL, 'Assignment started on Mar 1', 1),
     (100003, 'WAUZZZ4G6BN123456', '2024-04-01', '2024-04-15', 'Assignment from Apr 1 to Apr 15', 1),
-    (100004, '1C4RJFAG5FC123456', '2024-05-01', NULL, 'Assignment started on May 1', 1)
-	go
+    (100004, '1C4RJFAG5FC123456', '2024-05-01', NULL, 'Assignment started on May 1', 1);
+go
+
+/******************
+Create the Password_Reset table
+***************/
+
+print ''
+print '*** Creating Password_Reset Table***'
+CREATE TABLE [dbo].[Password_Reset] (
+    [Password_Reset_ID] [int] IDENTITY(100000,1) NOT NULL,
+    [Username] [nvarchar](50) NOT NULL,
+    [Request_Datetime] [datetime] NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    [Verification_Code] [char](6) NOT NULL,
+    [Is_Active] [bit] NOT NULL DEFAULT 1,
+    CONSTRAINT [PK_Password_Reset] PRIMARY KEY ([Password_Reset_ID]),
+    CONSTRAINT [FK_Password_Reset_Username_Login_Username]  FOREIGN KEY ([Username]) 
+        REFERENCES [Login]([Username])
+);
+GO

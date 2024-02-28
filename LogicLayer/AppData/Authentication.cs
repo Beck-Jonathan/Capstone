@@ -19,6 +19,15 @@ namespace LogicLayer.AppData
         /// <summary>
         /// AUTHOR: Jared Hutton
         /// <br />
+        /// CREATED: 2024-02-24
+        /// <br />
+        ///     The number of seconds that can pass before a password reset expires
+        /// </summary>
+        public static long SecondsBeforePasswordResetExpiry { get; set; } = 3600;
+
+        /// <summary>
+        /// AUTHOR: Jared Hutton
+        /// <br />
         /// CREATED: 2024-02-01
         /// <br />
         ///     The currently authenticated user if that user is a client

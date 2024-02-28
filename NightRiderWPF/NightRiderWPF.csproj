@@ -72,6 +72,13 @@
     <Compile Include="Clients\ToBeReworked\ClientPersonalPage.xaml.cs">
       <DependentUpon>ClientPersonalPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\Navigation.cs" />
+    <Compile Include="PasswordReset\ChangePasswordPage.xaml.cs">
+      <DependentUpon>ChangePasswordPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PasswordReset\RequestAndVerifyPasswordResetCodePage.xaml.cs">
+      <DependentUpon>RequestAndVerifyPasswordResetCodePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Vehicles\VehicleLookupListPage.xaml.cs">
       <DependentUpon>VehicleLookupListPage.xaml</DependentUpon>
     </Compile>
@@ -80,6 +87,14 @@
     </Compile>
     <Compile Include="Resources\Statics.cs" />
     <Page Include="Clients\ClientLookupPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PasswordReset\ChangePasswordPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PasswordReset\RequestAndVerifyPasswordResetCodePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
