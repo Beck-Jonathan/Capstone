@@ -72,10 +72,12 @@
         <Label x:Name = "lblParts_InventoryPartDeliverytime" Grid.Column = "1" Grid.Row = "10" Content = "Part Delivery Time" />
         <TextBox x:Name = "tbxParts_InventoryPartDeliverytime" Grid.Column = "2" Grid.Row = "10" />
 
-        <Button x:Name="btnBck" Grid.Column="8" Grid.Row="7" Content="Back" Height="40px" Click="btnBck_Click" />
+        <Button x:Name="btnBck" Grid.Column="8" Grid.Row="5" Content="Back" Height="40px" Click="btnBck_Click" />
 
         <Button x:Name="btnUpdateParts_Inventory" Grid.Column="8" Grid.Row="9" Content="Edit " Height="40px" />
-        <Button x:Name="btnAddParts_Inventory" Grid.Column="8" Grid.Row="11" Content="Order" Height="40px" />
+        <Button x:Name="btnAddParts_Inventory" Grid.Column="8" Grid.Row="7" Content="Order" Height="40px" />
+        
+        <Button x:Name="btnRemoveParts_Inventory" Grid.Column="8" Grid.Row="11" Content="Remove" Height="40px" Click="btnRemoveParts_Inventory_Click" />
 
     </Grid>
 </Page>

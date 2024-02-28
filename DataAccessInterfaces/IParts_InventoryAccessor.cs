@@ -45,6 +45,17 @@ namespace DataAccessInterfaces
         List<Parts_Inventory> selectAllParts_Inventory();
         /// <summary>
         /// Max Fare
+        /// Created: 2024/02/25
+        /// 
+        /// Retrieves active parts_inventory records
+        /// </summary>
+        ///
+        /// <remarks>
+        /// Updater Name
+        /// Updated: yyyy/mm/dd 
+        List<Parts_Inventory> selectParts_Inventory();
+        /// <summary>
+        /// Max Fare
         /// Created: 2024/02/04
         /// 
         /// updates the Part record with Parts_Inventory_ID equal to the ID of oldPart,
@@ -55,6 +66,15 @@ namespace DataAccessInterfaces
         /// Updater Name
         /// Updated: yyyy/mm/dd 
         int UpdateParts_Inventory(Parts_Inventory oldPart, Parts_Inventory newPart);
+
+        /// <summary>
+        /// Max Fare
+        /// Created: 2024-02-23
+        /// Deactivates the given part
+        /// </summary>
+        /// <param name="part">The part to be deactivated</param>
+        /// <remarks></remarks>
+        int DeactivateParts_Inventory(Parts_Inventory part);
 
         // Reviewed By: John Beck
     }

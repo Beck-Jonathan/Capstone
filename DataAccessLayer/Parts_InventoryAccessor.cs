@@ -76,7 +76,7 @@ namespace DataAccessLayer
                     }
                     else
                     {
-                        throw new ArgumentException("Parts_Inventory not found");
+                        throw new ArgumentException("Oops");
                     }
             }
             catch (Exception ex)
@@ -96,6 +96,57 @@ namespace DataAccessLayer
             var conn = DBConnectionProvider.GetConnection();
             // set the command text
             var commandText = "sp_select_all_part";
+            // create the command object
+            var cmd = new SqlCommand(commandText, conn);
+            // set the command type
+            cmd.CommandType = CommandType.StoredProcedure;
+            // There are no parameters to set or add
+            try
+            {
+                //open the connection 
+                conn.Open();  //execute the command and capture result
+                var reader = cmd.ExecuteReader();
+                //process the results
+                if (reader.HasRows)
+                    while (reader.Read())
+                    {
+                        var _Parts_Inventory = new Parts_Inventory();
+                        _Parts_Inventory.Parts_Inventory_ID = reader.GetInt32(0);
+                        _Parts_Inventory.Part_Name = reader.GetString(1);
+                        _Parts_Inventory.Part_Quantity = reader.GetInt32(2);
+                        _Parts_Inventory.Item_Description = reader.GetString(3);
+                        _Parts_Inventory.Item_Specifications = reader.GetString(4);
+                        _Parts_Inventory.Part_Photo_URL = reader.GetString(5);
+                        _Parts_Inventory.Ordered_Qty = reader.GetInt32(6);
+                        _Parts_Inventory.Stock_Level = reader.GetInt32(7);
+                        _Parts_Inventory.Is_Active = reader.GetBoolean(8);
+                        output.Add(_Parts_Inventory);
+                    }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return output;
+        }
+
+        /// <summary>
+        /// Max Fare
+        /// Created: 2024-02-25
+        /// Selects all active inventory parts
+        /// </summary>
+        /// <returns>All active parts</returns>
+        public List<Parts_Inventory> selectParts_Inventory()
+        {
+            List<Parts_Inventory> output = new List<Parts_Inventory>();
+            // start with a connection object
+            var conn = DBConnectionProvider.GetConnection();
+            // set the command text
+            var commandText = "sp_select_parts";
             // create the command object
             var cmd = new SqlCommand(commandText, conn);
             // set the command type
@@ -194,6 +245,55 @@ namespace DataAccessLayer
             catch (Exception ex)
             {
                 throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return rows;
+        }
+
+        /// <summary>
+        /// Max Fare
+        /// Created: 2024-02-23
+        /// Deactivates the given part by changing the Is_Active field to false
+        /// </summary>
+        /// <param name="part"></param>
+        /// <returns>the number of rows affected</returns>
+        /// <exception cref="ArgumentException">If no change is made</exception>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        public int DeactivateParts_Inventory(Parts_Inventory part)
+        {
+            int rows = 0;
+            // start with a connection object 
+            //needs sql connection provider
+            var conn = DBConnectionProvider.GetConnection();
+
+            // set the command text
+            var commandText = "sp_deactivate_part";
+            // create the command object
+            var cmd = new SqlCommand(commandText, conn);
+            // set the command type
+            cmd.CommandType = CommandType.StoredProcedure;
+            // we need to add parameters to the command
+            cmd.Parameters.Add("@part_id", SqlDbType.Int);
+            // give the parameter a value
+            cmd.Parameters["@part_id"].Value = part.Parts_Inventory_ID;
+            try
+            {
+                conn.Open();
+                rows = Convert.ToInt32(cmd.ExecuteScalar());
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally
+            {
+                conn.Close();
             }
             return rows;
         }
