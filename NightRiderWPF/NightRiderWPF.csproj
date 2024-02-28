@@ -82,6 +82,12 @@
     <Compile Include="PasswordReset\RequestAndVerifyPasswordResetCodePage.xaml.cs">
       <DependentUpon>RequestAndVerifyPasswordResetCodePage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="PurchaseOrders\Parts_Person_View_Current_PO_Details.xaml.cs">
+      <DependentUpon>Parts_Person_View_Current_PO_Details.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PurchaseOrders\Parts_Person_View_Purchase_Orders.xaml.cs">
+      <DependentUpon>Parts_Person_View_Purchase_Orders.xaml</DependentUpon>
+    </Compile>
     <Compile Include="RoleViews\CreateRole.xaml.cs">
       <DependentUpon>CreateRole.xaml</DependentUpon>
     </Compile>
@@ -101,6 +107,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="PasswordReset\RequestAndVerifyPasswordResetCodePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PurchaseOrders\Parts_Person_View_Current_PO_Details.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PurchaseOrders\Parts_Person_View_Purchase_Orders.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

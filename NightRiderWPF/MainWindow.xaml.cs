@@ -25,6 +25,7 @@ using LogicLayer;
 using LogicLayer.Utilities;
 using DataObjects;
 using NightRiderWPF.PasswordReset;
+using NightRiderWPF.PurchaseOrders;
 
 namespace NightRiderWPF
 {
@@ -93,6 +94,9 @@ namespace NightRiderWPF
                         break;
                     case "CreateRole":
                         PageViewer.Navigate(new RoleViews.CreateRole());
+                        break;
+                    case "ViewPurchaseOrders":
+                        PageViewer.Navigate(new Parts_Person_View_Purchase_Orders());
                         break;
                 }
             }

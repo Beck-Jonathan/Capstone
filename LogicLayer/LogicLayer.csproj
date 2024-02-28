@@ -44,6 +44,10 @@
     <Compile Include="Client\DependentManager.cs" />
     <Compile Include="Client\IDependentManager.cs" />
     <Compile Include="PasswordReset\PasswordResetManager.cs" />
+    <Compile Include="PurchaseOrder\IPOLineItemsManager.cs" />
+    <Compile Include="PurchaseOrder\IPurchase_OrderManager.cs" />
+    <Compile Include="PurchaseOrder\POLineItemsManager.cs" />
+    <Compile Include="PurchaseOrder\PurchaseOrderManager.cs" />
     <Compile Include="ServiceOrder\IServiceOrderManager.cs" />
     <Compile Include="AppData\Authentication.cs" />
     <Compile Include="Login\LoginManager.cs" />
@@ -93,5 +97,6 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
