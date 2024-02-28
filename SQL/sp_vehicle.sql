@@ -36,6 +36,9 @@ For Vehicle Lookup List
 -- Editor: Chris Baenziger
 -- Edit Date: 2024-02-17
 -- Modification: added additional fields
+-- Editor: Chris Baenziger
+-- Edit Date: 2024-02-22
+-- Modification: added Is_Active to selection
 print ''
 print '*** creating sp_select_all_vehicles_for_vehicle_lookup_list ***'
 GO
@@ -54,6 +57,7 @@ BEGIN
         [Vehicle].[Rental]
     FROM [dbo].[Vehicle]
         INNER JOIN [dbo].[Model_Lookup] ON [Vehicle].[Model_Lookup_ID] = [Model_Lookup].[Model_Lookup_ID]
+    WHERE [Vehicle].[Is_Active] = 1
 END
 GO
 
@@ -147,5 +151,37 @@ BEGIN
         AND @OldRental = [Rental]
     COMMIT TRANSACTION
     RETURN @@ROWCOUNT
+END
+GO
+
+print ''
+print '*** Create sp_deactivate_vehicle ***'
+GO
+-- Author: Chris Baenziger
+CREATE PROCEDURE [dbo].[sp_deactivate_vehicle]
+    (
+    @VIN                    [nvarchar](17),
+    @Vehicle_Number         [nvarchar](10),
+    @Vehicle_Mileage        [int],
+    @Vehicle_License_plate  [nvarchar](10),
+    @Model_Lookup_ID        [int],
+    @Vehicle_Type           [nvarchar](50),
+    @Description            [nvarchar](256),
+    @Date_Entered           [date],
+    @Rental                 [bit]
+)
+AS
+BEGIN
+    UPDATE [Vehicle]
+    SET [Is_Active] = 0
+    WHERE @VIN = [VIN]
+        AND @Vehicle_Number = [Vehicle_Number]
+        AND @Vehicle_Mileage = [Vehicle_Mileage]
+        AND @Model_Lookup_ID = [Vehicle].[Model_Lookup_ID]
+        AND @Vehicle_License_Plate = [Vehicle_License_Plate]
+        AND @Vehicle_Type = [Vehicle_Type]
+        AND @Description = [Description]
+        AND @Date_Entered = [Date_Entered]
+        AND @Rental = [Rental]
 END
 GO

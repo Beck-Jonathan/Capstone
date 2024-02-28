@@ -21,11 +21,11 @@ namespace DataAccessFakes
     /// </summary>
     /// 
     /// <remarks>
-    /// UPDATER: James Williams
+    /// UPDATER: Jacob rohr
     /// <br />
-    /// UPDATED: 2024-02-04
+    /// UPDATED: 2024-02-25
     /// <br />
-    /// initial creation
+    /// Added Create Role
     /// </remarks>
     /// 
 
@@ -42,6 +42,30 @@ namespace DataAccessFakes
             // purposeful duplicate entry to check that GetAllRoles() only returns unique Role_ID elements
             _roles.Add(new Role() { RoleID = "Fleet Manager", IsActive = true });
 
+        }
+
+        public int CreateRole(Role role)
+        {
+            
+            int rolePresent = 0;
+            if (role != null)
+            {
+                for (int i = 0; i < _roles.Count(); i++)
+                {
+                    if (_roles[i].RoleID == role.RoleID)
+                    {
+                        throw new ApplicationException("Duplicate Role ID");
+                    }
+                }
+                rolePresent = 1;
+            }
+            else
+            {
+                throw new ArgumentNullException("Role cannot be null");
+            }
+            return rolePresent;
+          
+            
         }
 
         /// <summary>

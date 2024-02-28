@@ -68,6 +68,16 @@ namespace NightRiderWPF.Employees
             txtPhone.Text = _selected_employee.Phone_Number;
             txtPosition.Text = _selected_employee.Position;
             lstRolesView.Items.Clear();
+            btnEmployeeActivation.Visibility = Visibility.Hidden;
+            if (_selected_employee.Is_Active)
+            {
+                btnEmployeeActivation.Content = "Deactivate Employee";
+            } 
+            else
+            {
+                btnEmployeeActivation.Content = "Activate Employee";
+            }
+           
             foreach(var role in _roles)
             {
                 lstRolesView.Items.Add(role.RoleID.ToString());
@@ -111,6 +121,7 @@ namespace NightRiderWPF.Employees
             dateDOB.Visibility = Visibility.Visible;
             dateDOB.Text = txtDOB.Text;
             txtDOB.Visibility = Visibility.Hidden;
+            btnEmployeeActivation.Visibility = Visibility.Visible;
             if (cboState.SelectedItem != null)
             {
                 _selected_employee.State = cboState.SelectedItem.ToString();
@@ -181,6 +192,7 @@ namespace NightRiderWPF.Employees
                 try
                 {
                     rows = _employeeManager.EditEmployee(_updated_employee, _selected_employee);
+
                 }
                 catch (Exception ex)
                 {
@@ -208,6 +220,7 @@ namespace NightRiderWPF.Employees
                     txtDOB.Visibility = Visibility.Visible;
                     btnUpdateEmployeeSubmit.Visibility = Visibility.Hidden;
                     btnUpdateEmployee.Visibility = Visibility.Visible;
+                    btnEmployeeActivation.Visibility = Visibility.Hidden;
                     _selected_employee = _updated_employee;
                 }
             }
@@ -232,7 +245,52 @@ namespace NightRiderWPF.Employees
             }
         }
 
-      
+        //Created By: James Williams
+        //Creation Date: 2024-02-23
+        //Description: Employee activation controller
+        private void btnEmployeeActivation_Click(object sender, RoutedEventArgs e)
+        {
+            string employeeStatus = _selected_employee.Is_Active ? "deactivate" : "reactivate";
+            var result = MessageBox.Show("Are you sure you want to " + employeeStatus + " this employee's record?", "Confirm Update", MessageBoxButton.OKCancel, MessageBoxImage.Question);
+            if (result == MessageBoxResult.OK)
+            {
+                try
+                {
+                    //Control to change if employee record is active
+                    if (btnEmployeeActivation.Content.ToString() == "Activate Employee")
+                    {
+
+                        int rows = _employeeManager.ReactivateEmployeeByID(_selected_employee.Employee_ID);
+                        if(rows == 0)
+                        {
+                            MessageBox.Show("Error reactivating employee");
+                        }
+                        else
+                        {
+                            MessageBox.Show("Employee reactivated successfully");
+                            this.NavigationService.GoBack();
+                        }
+                    }
+                    else
+                    {
+                        int rows = _employeeManager.DeactivateEmployeeByID(_selected_employee.Employee_ID);
+                        if (rows == 0)
+                        {
+                            MessageBox.Show("Error deactivating employee");
+                        }
+                        else
+                        {
+                            MessageBox.Show("Employee deactivated successfully");
+                            this.NavigationService.GoBack();
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error updating employee record\n\n" + ex.InnerException.Message);
+                }
+            }
+        }
     }
 
 }

@@ -13,6 +13,36 @@ namespace DataAccessInterfaces
     /// <inheritdoc/> 
     public class RoleAccessor : IRoleAccessor
     {
+        public int CreateRole(Role role)
+        {
+            int entryID = 0;
+
+            var conn = DBConnectionProvider.GetConnection();
+            var cmdText = "sp_insert_role";
+            var cmd = new SqlCommand(cmdText, conn);
+            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+
+            cmd.Parameters.Add("@RoleID", System.Data.SqlDbType.NVarChar, 25);
+            cmd.Parameters.Add("@RoleDescription", System.Data.SqlDbType.NVarChar, 255);
+
+            cmd.Parameters["@RoleID"].Value = role.RoleID;
+            cmd.Parameters["@RoleDescription"].Value = role.RoleDescription;
+            try
+            {
+                conn.Open();
+                entryID = cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return entryID;
+
+        }
 
         public IEnumerable<Role> GetAllRoles()
         {

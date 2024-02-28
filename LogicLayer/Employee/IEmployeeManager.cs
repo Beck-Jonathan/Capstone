@@ -10,7 +10,7 @@ namespace LogicLayer
 
     public interface IEmployeeManager
     {
-        List<Employee_VM> GetAllEmployees();
+        List<Employee_VM> GetEmployees();
         bool AddEmployee(Employee_VM newEmployee);
         /// <summary>
         ///   retrieves a list of employees
@@ -39,7 +39,7 @@ namespace LogicLayer
         ///     Update comments go here. Explain what you changed in this method.
         ///     A new remark should be added for each update to this method.
         /// </remarks>
-        IEnumerable<Employee_VM> GetEmployees();
+        IEnumerable<Employee_VM> GetAllEmployees();
 
         /// <summary>
         ///     Method to retrieve all roles of an employee
@@ -117,6 +117,47 @@ namespace LogicLayer
         ///    CREATED: 2024-02-17
         /// <br />
         int EditEmployee(Employee_VM updatedEmployee, Employee_VM originalEmployee);
+
+        /// <summary>
+        ///   Dectivate employee record by employee id
+        /// </summary>
+        /// <param>
+        ///    int employeeID
+        /// </param>
+        /// <returns>
+        ///     <see cref="int"/>: returns rows affected
+        /// </returns>
+        /// <remarks>
+        ///    Parameters: employeeID
+        /// <br />
+        /// <br /><br />
+        ///    Exceptions:ApplicationException
+        /// <br />
+        /// <br /><br />
+        ///    CONTRIBUTOR: James Williams
+        /// <br />
+        ///    CREATED: 2024-02-22
+        int DeactivateEmployeeByID(int employeeID);
+        /// <summary>
+        ///   Activate employee record by employee id
+        /// </summary>
+        /// <param>
+        ///    int employeeID
+        /// </param>
+        /// <returns>
+        ///     <see cref="int"/>: returns rows affected
+        /// </returns>
+        /// <remarks>
+        ///    Parameters: employeeID
+        /// <br />
+        /// <br /><br />
+        ///    Exceptions:ApplicationException
+        /// <br />
+        /// <br /><br />
+        ///    CONTRIBUTOR: James Williams
+        /// <br />
+        ///    CREATED: 2024-02-22
+        int ReactivateEmployeeByID(int employeeID);
     }
 }
 // Checked by Nathan Toothaker
