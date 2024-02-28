@@ -57,7 +57,7 @@ namespace DataAccessFakes
             part2.Item_Description = "Mr. Fred's";
             part2.Item_Specifications = "Loose as can be!";
             part2.Stock_Level = 20;
-            part2.Is_Active = true;
+            part2.Is_Active = false;
             fakeparts.Add(part2);
             Parts_Inventory part3 = new Parts_Inventory();
             part3.Parts_Inventory_ID = 3;
@@ -73,6 +73,33 @@ namespace DataAccessFakes
 
 
         }
+
+        /// <summary>
+        /// Max Fare
+        /// Created: 2024-02-23
+        /// 
+        /// </summary>
+        /// <param name="part"></param>
+        /// <returns></returns>
+        public int DeactivateParts_Inventory(Parts_Inventory part)
+        {
+            int result = 0;
+            for (int i = 0; i < fakeparts.Count; i++)
+            {
+                if (fakeparts[i].Parts_Inventory_ID == part.Parts_Inventory_ID)
+                {
+                    fakeparts[i].Is_Active = false;
+                    result = 1;
+                    break;
+                }
+            }
+            if(result == 0)
+            {
+                throw new ArgumentException("No part found");
+            }
+            return result;
+        }
+
         /// <summary>
         /// Jonathan Beck
         /// Created: 2024/02/01
@@ -89,6 +116,32 @@ namespace DataAccessFakes
         public List<Parts_Inventory> selectAllParts_Inventory()
         {
             return fakeparts;
+        }
+
+        /// <summary>
+        /// Max Fare
+        /// Created: 2024/02/25
+        /// 
+        /// Returns active parts_inventory records
+        /// </summary>
+        ///
+        /// <remarks>
+        /// Updater Name
+        /// Updated: yyyy/mm/dd 
+        /// 
+        /// </remarks>
+
+        public List<Parts_Inventory> selectParts_Inventory()
+        {
+            List<Parts_Inventory> result = new List<Parts_Inventory>();
+            foreach(var p in fakeparts)
+            {
+                if (p.Is_Active)
+                {
+                    result.Add(p);
+                }
+            }
+            return result;
         }
 
         /// <summary>

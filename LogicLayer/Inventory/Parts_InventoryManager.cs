@@ -14,6 +14,7 @@ using DataAccessLayer;
 using DataObjects;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -79,8 +80,7 @@ namespace LogicLayer
         /// </summary>
         ///
         /// <remarks>
-        /// Jonsthan Beck
-        /// Updated: 2024/02/06
+        /// 
         /// </remarks>
 
         public int EditParts_Inventory(Parts_Inventory oldPart, Parts_Inventory newPart)
@@ -115,14 +115,68 @@ namespace LogicLayer
         ///
         /// <remarks>
         /// Updater Name: Max Fare
-        /// Updated: yyyy/mm/dd 
-        public List<Parts_Inventory> GetActiveParts_Inventory()
+        /// Updated: 2024-02-25
+        /// updated name to better indicate usage, and removed unnecesary exception thrown when no parts are found
+        /// </remarks>
+        public List<Parts_Inventory> GetAllParts_Inventory()
         {
             List<Parts_Inventory> result = null;
             try
             {
                 result = _parts_inventoryaccessor.selectAllParts_Inventory();
-                if (result.Count == 0) { throw new ArgumentException("Inventory not found"); }
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// Max Fare
+        /// Created: 2024-02-25
+        /// 
+        /// Retrieves active part inventory records
+        /// <throws> Argument Exception if item not found</throws>
+        /// </summary>
+        ///
+        /// <remarks>
+        /// Updater Name
+        /// Updated: yyyy/mm/dd
+        /// </remarks>
+        public List<Parts_Inventory> GetActiveParts_Inventory()
+        {
+            List<Parts_Inventory> result = null;
+            try
+            {
+                result = _parts_inventoryaccessor.selectParts_Inventory();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// Max Fare
+        /// 2024-02-23
+        /// Removes the given part from the active inventory
+        /// </summary>
+        /// <param name="part">The Part to be removed</param>
+        /// <returns>an integer representing the success of the removal</returns>
+        public int RemoveParts_Inventory(Parts_Inventory part)
+        {
+            int result = 0;
+            try
+            {
+                result = _parts_inventoryaccessor.DeactivateParts_Inventory(part);
+                if (result == 0)
+                {
+                    throw new ArgumentException("No part with ID " + part.Parts_Inventory_ID + " found.");
+                }
             }
             catch (Exception ex)
             {
