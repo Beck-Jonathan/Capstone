@@ -45,17 +45,6 @@ namespace LogicLayerTests
 
         }
 
-        /// <summary>
-        /// Max Fare
-        /// Created: 2024/02/04
-        /// 
-        /// Test that updating a part returns 1 affected row as expected
-        /// </summary>
-        ///
-        /// <remarks>
-        /// Updater Name
-        /// Updated: yyyy/mm/dd
-        /// </remarks>
         [TestMethod]
         public void TestUpdatePartsInventoryReturnsRowsAffected()
         {
@@ -155,16 +144,84 @@ namespace LogicLayerTests
         /// Updated: yyyy/mm/dd
         /// </remarks>
         [TestMethod]
-        public void TestGetActivePartsInventoryReturnsAllActiveInventorty()
+        public void TestGetAllPartsInventoryReturnsAllActiveInventorty()
         {
             //arrange
             int exepcted = 3;
+            int actual = 0;
+            //act
+            actual = _mgr.GetAllParts_Inventory().Count;
+            //assert
+            Assert.AreEqual(exepcted, actual);
+
+
+        }
+
+        /// <summary>
+        /// Max Fare
+        /// Created: 2024-02-26
+        /// 
+        /// Test that grabbing the list of active parts returns the correct number of parts
+        /// </summary>
+        ///
+        /// <remarks>
+        /// Updater Name
+        /// Updated: yyyy/mm/dd
+        /// </remarks>
+        [TestMethod]
+        public void TestGetActivePartsInventoryReturnsAllActiveInventorty()
+        {
+            //arrange
+            int exepcted = 2;
             int actual = 0;
             //act
             actual = _mgr.GetActiveParts_Inventory().Count;
             //assert
             Assert.AreEqual(exepcted, actual);
 
+
+        }
+
+        /// <summary>
+        /// Max Fare
+        /// Created: 2024-02-23
+        /// Changes the Is_Active field of the test part number,
+        /// returning 1 if the field is changed, and 0 otherwise
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        [TestMethod]
+        public void TestRemovePartsInventoryReturnsCorrectData()
+        {
+            //arrange
+            int partid = 1;
+            int expected = 1;
+            int actual = 0;
+            //act
+            actual = _mgr.RemoveParts_Inventory(_mgr.GetParts_InventoryByID(partid));
+            //assert
+            Assert.AreEqual(expected, actual);
+
+        }
+
+        /// <summary>
+        /// Max Fare
+        /// Created: 2023-02-23
+        /// This test fails when attempting to change a part that does not exist.
+        /// </summary>
+        /// <exception cref="ArgumentException"></exception>
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void TestRemovePartsInventoryThrowsIllegalArgumentException()
+        {
+            //arrange
+            Parts_Inventory part = new Parts_Inventory
+            {
+                Parts_Inventory_ID = 100
+            };
+            //act
+            _mgr.RemoveParts_Inventory(part);
 
         }
 

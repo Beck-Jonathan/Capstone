@@ -90,16 +90,18 @@ namespace NightRiderWPF.Inventory
 
 
                 }
+                if (displayParts.Count > 0)
+                {
+                    datParts_Inventory.ItemsSource = displayParts;
+                    datParts_Inventory.Columns[0].DisplayIndex = 5;
 
-                datParts_Inventory.ItemsSource = displayParts;
-                datParts_Inventory.Columns[0].DisplayIndex = 5;
-
-                datParts_Inventory.Columns[1].Header = "Part Name";
-                datParts_Inventory.Columns[2].Header = "Part Number";
-                datParts_Inventory.Columns[3].Header = "On Hand Quantity";
-                datParts_Inventory.Columns[4].Header = "# Ordered";
-                datParts_Inventory.Columns[5].Header = "Stock Level";
-                datParts_Inventory.Columns[0].Header = "Audit";
+                    datParts_Inventory.Columns[1].Header = "Part Name";
+                    datParts_Inventory.Columns[2].Header = "Part Number";
+                    datParts_Inventory.Columns[3].Header = "On Hand Quantity";
+                    datParts_Inventory.Columns[4].Header = "# Ordered";
+                    datParts_Inventory.Columns[5].Header = "Stock Level";
+                    datParts_Inventory.Columns[0].Header = "Audit";
+                }
 
             }
             else { NavigationService.StopLoading();

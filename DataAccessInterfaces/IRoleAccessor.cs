@@ -46,6 +46,25 @@ namespace DataAccessInterfaces
         ///     Initial Creation
         /// </remarks>
         IEnumerable<Role> GetAllRoles();
+
+
+        /// <summary>
+        ///     Method to retrieve all roles in the database
+        /// </summary>
+        /// <returns>
+        ///    <see cref="int">int</see>: number of roles created.
+        /// </returns>
+        /// <remarks>
+        ///    Exceptions:
+        /// <br />
+        ///    <see cref="ApplicationException">ApplicationException</see>: Thrown when no role could not be added.
+        /// <br /><br />
+        ///    CONTRIBUTOR: Jacob Rohr
+        /// <br />
+        ///    CREATED: 2024-02-25
+        /// <br /><br />
+        /// </remarks>
+        int CreateRole(Role role);
        
     }
 }

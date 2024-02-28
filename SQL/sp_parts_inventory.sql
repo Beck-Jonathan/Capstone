@@ -31,9 +31,9 @@ where [Parts_Inventory_ID]=@Parts_Inventory_ID
 Create the retrieve by all script for the Parts_Inventory table
 ***************/
 -- AUTHOR: Jonathan Beck
-print '' print '*** creating sp_select_all_part ***'
+print '' print '*** creating sp_select_all_parts ***'
  GO 
-CREATE PROCEDURE [DBO].[sp_select_all_part]
+CREATE PROCEDURE [DBO].[sp_select_all_parts]
 AS
 begin 
  SELECT 
@@ -48,6 +48,32 @@ begin
 ,[Stock_Level]
 ,[Active]
  FROM Parts_Inventory
+ ;
+ END  
+ GO
+
+  /******************
+Create the retrieve by all script for the Parts_Inventory table
+***************/
+-- AUTHOR: Max Fare
+print '' print '*** creating sp_select_parts ***'
+ GO 
+CREATE PROCEDURE [DBO].[sp_select_parts]
+AS
+begin 
+ SELECT 
+
+[Parts_Inventory_ID]
+,[Part_Name]
+,[Part_Quantity]
+,[Item_Description]
+,[Item_Specifications]
+,[Part_Photo_URL]
+,[Ordered_Qty]
+,[Stock_Level]
+,[Active]
+ FROM Parts_Inventory
+ WHERE [Active] = 1
  ;
  END  
  GO
@@ -97,6 +123,25 @@ AS
             AND     @old_Part_Photo_URL = [Part_Photo_URL]
             AND     @old_ordered_qty = [Ordered_Qty]
             AND     @old_stock_lvl = [Stock_Level]
+        SELECT      @@ROWCOUNT
+    END
+GO
+
+/******************
+Create the update_part stored procedure
+***************/
+-- AUTHOR: Max Fare
+print '' print '*** creating sp_deactivate_part ***'
+GO
+CREATE PROCEDURE [dbo].[sp_deactivate_part]
+(
+    @part_id                [int]
+)
+AS
+    BEGIN
+        UPDATE      [Parts_Inventory]
+        SET         [Active] = 0
+        WHERE       [Parts_Inventory_ID] = @part_id;
         SELECT      @@ROWCOUNT
     END
 GO

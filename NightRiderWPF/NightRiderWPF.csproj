@@ -63,6 +63,9 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Compile Include="Clients\AdminAddClient.xaml.cs">
+      <DependentUpon>AdminAddClient.xaml</DependentUpon>
+    </Compile>
     <Compile Include="AdminHome.xaml.cs">
       <DependentUpon>AdminHome.xaml</DependentUpon>
     </Compile>
@@ -78,6 +81,9 @@
     </Compile>
     <Compile Include="PasswordReset\RequestAndVerifyPasswordResetCodePage.xaml.cs">
       <DependentUpon>RequestAndVerifyPasswordResetCodePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="RoleViews\CreateRole.xaml.cs">
+      <DependentUpon>CreateRole.xaml</DependentUpon>
     </Compile>
     <Compile Include="Vehicles\VehicleLookupListPage.xaml.cs">
       <DependentUpon>VehicleLookupListPage.xaml</DependentUpon>
@@ -98,6 +104,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="RoleViews\CreateRole.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Vehicles\AddUpdateDeleteVehicle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -108,6 +118,10 @@
     <Compile Include="Inventory\PartsInventoryPage.xaml.cs">
       <DependentUpon>PartsInventoryPage.xaml</DependentUpon>
     </Compile>
+    <Page Include="Clients\AdminAddClient.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Clients\ToBeReworked\ClientPersonalPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

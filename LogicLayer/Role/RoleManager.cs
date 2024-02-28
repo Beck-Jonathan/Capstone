@@ -12,7 +12,7 @@ namespace LogicLayer
     public class RoleManager : IRoleManager
     {
         IRoleAccessor _roleAccessor = null;
-
+        RoleManager _roleManager = null;
         //default constructor
         public RoleManager()
         {
@@ -25,7 +25,22 @@ namespace LogicLayer
             _roleAccessor = roleAccessor;
         }
 
-      
+        public int CreateRole(Role role)
+        {
+            int roleCount = 0;
+
+            try
+            {
+
+                roleCount = _roleAccessor.CreateRole(role);
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("Couldn't add role", ex);
+            }
+            return roleCount;
+        }
+
         public IEnumerable<Role> GetAllRoles()
         {
             IEnumerable<Role> roles = null;

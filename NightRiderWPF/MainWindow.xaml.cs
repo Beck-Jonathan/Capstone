@@ -91,6 +91,9 @@ namespace NightRiderWPF
                     case "AdminHome":
                         PageViewer.Navigate(new AdminHome());
                         break;
+                    case "CreateRole":
+                        PageViewer.Navigate(new RoleViews.CreateRole());
+                        break;
                 }
             }
         }

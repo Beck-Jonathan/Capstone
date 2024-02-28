@@ -76,7 +76,7 @@ namespace NightRiderWPF.Employees
             employeeManager = new EmployeeManager();
             try
             {
-                datEmployee_List.ItemsSource = employeeManager.GetEmployees();
+                datEmployee_List.ItemsSource = employeeManager.GetAllEmployees();
                 var columnsToRemove = new[] { "Employee_Roles", "Address2", "DOB" };
                 foreach (var columnName in columnsToRemove)
                 {

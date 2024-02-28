@@ -43,7 +43,12 @@ namespace NightRiderWPF.Clients
 
         private void btnBack_Click(object sender, RoutedEventArgs e)
         {
-            this.NavigationService.GoBack();
+            this.NavigationService.Navigate(new AdminViewClientList());
+        }
+
+        private void btnEditDetail_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Not implemented yet");
         }
     }
 }
