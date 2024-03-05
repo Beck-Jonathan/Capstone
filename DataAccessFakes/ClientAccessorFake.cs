@@ -15,13 +15,15 @@ namespace DataAccessFakes
     ///     Fake data to be used with client manager tests.
     /// </summary>
     /// <remarks>
-    /// UPDATER: Isabella Rosenbohm
-    /// <br />
-    /// UPDATED: 2024-02-21
-    /// <br />
+    /// UPDATER: Isabella Rosenbohm <br />
+    /// UPDATED: 2024-02-21 <br />
     ///    Changed how the InsertClient method works so that duplicate data could properly be tested.
     ///    Changed how the SelectClientByEmail method works so that it could properly catch exceptions for tests
     ///    Added missing comment documentation
+    /// <br/><br/>
+    /// UPDATER: Isabella Rosenbohm <br/>
+    /// UPDATED: 2024-02-27
+    ///     Changed UpdateClient intake param from newClient to client
     /// </remarks>
 
     public class ClientAccessorFake : IClientAccessor
@@ -83,15 +85,15 @@ namespace DataAccessFakes
             return _fakeClientData.Where(client => !client.IsActive);
         }
 
-        public int UpdateClient(Client_VM newClient)
+        public int UpdateClient(Client_VM client)
         {
             var list = _fakeClientData.ToList();
 
-            int removed = list.RemoveAll(c => c.ClientID == newClient.ClientID);
+            int removed = list.RemoveAll(c => c.ClientID == client.ClientID);
 
             if (removed == 1)
             {
-                list.Add(newClient);
+                list.Add(client);
 
                 _fakeClientData = list;
             }

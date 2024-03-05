@@ -56,12 +56,13 @@ namespace NightRiderWPF
                         datListClients.ItemsSource = clientManager.GetAllClients();
                         
                         // This removes columns that don't need to be seen in List View, but will be shown in Detail View 
-                        datListClients.Columns.RemoveAt(13); // voice number
-                        datListClients.Columns.RemoveAt(11); // address
-                        datListClients.Columns.RemoveAt(10); // region
-                        datListClients.Columns.RemoveAt(9); // city
-                        datListClients.Columns.RemoveAt(8); // postal code
-                        datListClients.Columns.RemoveAt(6); // dob
+                        datListClients.Columns.RemoveAt(14); // voice number
+                        datListClients.Columns.RemoveAt(12); // address
+                        datListClients.Columns.RemoveAt(11); // region
+                        datListClients.Columns.RemoveAt(10); // city
+                        datListClients.Columns.RemoveAt(9); // postal code
+                        datListClients.Columns.RemoveAt(7); // dob
+                        datListClients.Columns.RemoveAt(3); // client id
                         datListClients.Columns.RemoveAt(2); // roles
                         datListClients.Columns.RemoveAt(1); // Username
 
@@ -70,8 +71,10 @@ namespace NightRiderWPF
                         // This makes the headers of the columns more readable for the user
                         datListClients.Columns[1].Header = "First Name";
                         datListClients.Columns[2].Header = "Last Name";
-                        datListClients.Columns[4].Header = "Phone Number";
-                        datListClients.Columns[5].Header = "Active";
+                        datListClients.Columns[3].Header = "Middle Name";
+                        datListClients.Columns[4].Header = "Email";
+                        datListClients.Columns[5].Header = "Phone Number";
+                        datListClients.Columns[6].Header = "Active";
 
                         // this enables a vertical scrollbar if there are more rows than will fit within the size of the datalist
                         datListClients.VerticalScrollBarVisibility = ScrollBarVisibility.Auto;
