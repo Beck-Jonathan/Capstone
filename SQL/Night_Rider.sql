@@ -955,7 +955,7 @@ CREATE TABLE [dbo].[Maintenance_Schedule]
     CONSTRAINT [FK_Maintenance_Schedule_Model_Lookup_id] FOREIGN KEY([Model_Lookup_ID])
     	REFERENCES [dbo].[Model_Lookup]([Model_Lookup_ID]),
     CONSTRAINT [FK_Maintenance_Schedule_Service_Type_ID] FOREIGN KEY ([Service_Type_ID])
-        REFERENCES [dbo].[Service_Type]([Service_Type_ID]),
+        REFERENCES [dbo].[Service_Type]([Service_Type_ID]) ON UPDATE CASCADE,
     CONSTRAINT [PK_Maintenance_Schedule_ID] PRIMARY KEY([Maintenance_Schedule_ID])
 )
 GO
@@ -1050,7 +1050,7 @@ CREATE TABLE [dbo].[Service_Order]
     CONSTRAINT [FK_Service_Order_Service_Line_Item] FOREIGN KEY([Service_Line_Item_ID])
         REFERENCES [dbo].[Service_Line_Item] ([Service_Line_Item_ID]),
     CONSTRAINT [FK_Service_Order_Service_Type] FOREIGN KEY([Service_Type_ID])
-        REFERENCES [dbo].[Service_Type] ([Service_Type_ID]),
+        REFERENCES [dbo].[Service_Type] ([Service_Type_ID]) ON UPDATE CASCADE,
     CONSTRAINT [FK_Service_Order_Employee] FOREIGN KEY([Created_By_Employee_ID])
         REFERENCES [dbo].[Employee] ([Employee_ID]),
     CONSTRAINT [FK_Service_Order_Employee_2] FOREIGN KEY([Serviced_By_Employee_ID])
@@ -1490,7 +1490,7 @@ CREATE TABLE [dbo].[Service_Detail]
     CONSTRAINT [FK_Service_Detail_Service_Order] FOREIGN KEY ([Service_Order_ID], [Service_Order_Version])
         REFERENCES [Service_Order]([Service_Order_ID], [Service_Order_Version]),
     CONSTRAINT [FK_Service_Detail_Service_Type] FOREIGN KEY ([Service_Type_ID])
-        REFERENCES [Service_Type]([Service_Type_ID]),
+        REFERENCES [Service_Type]([Service_Type_ID]) ON UPDATE CASCADE,
     CONSTRAINT [FK_Service_Detail_Employee] FOREIGN KEY ([Employee_ID])
         REFERENCES [Employee]([Employee_ID])
 )

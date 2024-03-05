@@ -15,6 +15,10 @@
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+
+
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition></ColumnDefinition>
@@ -23,18 +27,21 @@
         </Grid.ColumnDefinitions>
         <Label x:Name="HighPrioritylbl" Content="High Priority?" HorizontalAlignment="Center" VerticalAlignment="Center" 
         FontSize="20"/>
-        <RadioButton x:Name="Yesrbtn" Content="Yes" Grid.Column="1" VerticalAlignment="Center" FontSize="20" Checked="Yesrbtn_Checked"/>
-        <RadioButton x:Name="Norbtn" Content="No" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20" Checked="Norbtn_Checked"/>
+        <RadioButton x:Name="Yesrbtn" Content="Yes" Grid.Column="1" VerticalAlignment="Center" FontSize="20" />
+        <RadioButton x:Name="Norbtn" Content="No" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20" />
+        <Label x:Name="CurrentServiceTypelbl" Grid.Row="1" Content="Current Service Type" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"/>
+        <TextBox x:Name="CurrentServiceTypetxt" Grid.Row="1"  Grid.Column="1" Height="25" VerticalContentAlignment="Center" IsReadOnly="True"/>
 
-        <Label x:Name="ServiceTypelbl" Grid.Row="1" Content="Service Type" HorizontalAlignment="Center" VerticalAlignment="Center" 
+        <Label x:Name="NewServiceTypelbl" Grid.Row="2" Content="New Service Type" HorizontalAlignment="Center" VerticalAlignment="Center" 
          FontSize="20"/>
-        <TextBox x:Name="ServiceTypetxt" Grid.Row="1" Grid.Column="1" Height="50"/>
+        <TextBox x:Name="NewServiceTypetxt" Grid.Row="2"  Grid.Column="1" Height="25" VerticalContentAlignment="Center"/>
 
-        <Label x:Name="RequestDescriptionlbl" Grid.Row="2" Content="Request Description" HorizontalAlignment="Center" VerticalAlignment="Center" 
+        <Label x:Name="RequestDescriptionlbl" Grid.Row="3" Content="Request Description" HorizontalAlignment="Center" VerticalAlignment="Center" 
          FontSize="20"/>
-        <TextBox x:Name="RequestDescriptiontxt" TextWrapping="Wrap" AcceptsReturn="True" Grid.Row="2" Grid.Column="1"/>
+        <TextBox x:Name="RequestDescriptiontxt" TextWrapping="Wrap" AcceptsReturn="True" Grid.Row="3" Grid.Column="1"/>
 
-        <Button x:Name="Confirmbtn" Grid.Row="3" Grid.Column="1" Height="40" Width="150" Content="Confirm Completion" Click="Confirmbtn_Click"/>
+        <Button x:Name="Confirmbtn" Grid.Row="4" Grid.Column="1" Height="40" Width="150" Content="Confirm Update" Click="Confirmbtn_Click"/>
+        <Button x:Name="Addbtn" Grid.Row="4" Grid.Column="0" Height="40" Width="150" Content="Add Work Order" Click="Addbtn_Click" />
 
     </Grid>
 </Page>

@@ -23,7 +23,8 @@ BEGIN
     e.[Zip],
     e.[Phone_Number],
     e.[Email],
-    e.[Position]
+    e.[Position],
+    l.[Username]
   FROM [dbo].[Employee] e
   LEFT JOIN [dbo].[Employee_Role] er ON e.[Employee_ID] = er.[Employee_ID]
   JOIN [dbo].[Login] l ON e.[Employee_ID] = l.[Employee_ID]
