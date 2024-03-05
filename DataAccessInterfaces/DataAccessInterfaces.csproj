@@ -42,6 +42,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IDependentAccessor.cs" />
+    <Compile Include="IPasswordResetAccessor.cs" />
+    <Compile Include="IPOLineItemsAccessor.cs" />
+    <Compile Include="IPurchase_OrderAccessor.cs" />
     <Compile Include="IServiceOrderAccessor.cs" />
     <Compile Include="ILoginAccessor.cs" />
     <Compile Include="IVehicleAccessor.cs" />

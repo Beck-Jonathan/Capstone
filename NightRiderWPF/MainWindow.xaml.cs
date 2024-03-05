@@ -24,6 +24,8 @@ using NightRiderWPF.Login;
 using LogicLayer;
 using LogicLayer.Utilities;
 using DataObjects;
+using NightRiderWPF.PasswordReset;
+using NightRiderWPF.PurchaseOrders;
 
 namespace NightRiderWPF
 {
@@ -34,10 +36,12 @@ namespace NightRiderWPF
     {
         private ILoginManager _loginManager;
         private IPasswordHasher _passwordHasher;
+        private IVerificationCodeGenerator _verificationCodeGenerator;
 		
         public MainWindow()
         {
             _passwordHasher = new PasswordHasher();
+            _verificationCodeGenerator = new VerificationCodeGenerator();
             _loginManager = new LoginManager(_passwordHasher);
             InitializeComponent();
         }
@@ -87,6 +91,12 @@ namespace NightRiderWPF
                         break;
                     case "AdminHome":
                         PageViewer.Navigate(new AdminHome());
+                        break;
+                    case "CreateRole":
+                        PageViewer.Navigate(new RoleViews.CreateRole());
+                        break;
+                    case "ViewPurchaseOrders":
+                        PageViewer.Navigate(new Parts_Person_View_Purchase_Orders());
                         break;
                 }
             }
@@ -186,6 +196,20 @@ namespace NightRiderWPF
             Authentication.AuthenticatedClient = null; // more security
             UpdateUIforLogout();
             return;
+        }
+
+        /// <summary>
+        ///     Handles click behavior for the "Forgot Password" button
+        ///     open password reset request page
+        /// </summary>
+        /// <remarks>
+        ///    CONTRIBUTOR: Jared Hutton
+        /// <br />
+        ///    CREATED: 2024-02-24
+        /// </remarks>
+        private void btnForgotPassword_Click(object sender, RoutedEventArgs e)
+        {
+            PageViewer.Navigate(new RequestAndVerifyPasswordResetCodePage(_passwordHasher, _verificationCodeGenerator));
         }
     }
 }

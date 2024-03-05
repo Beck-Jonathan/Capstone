@@ -56,10 +56,34 @@ namespace LogicLayer
         /// </summary>
         ///
         /// <remarks>
+        /// Updater: Max Fare
+        /// Updated: 2024-02-25
+        /// changed name to GetAllParts_Inventory() to better reflect the intended usage
+        /// </remarks>
+
+        List<Parts_Inventory> GetAllParts_Inventory();
+
+        /// <summary>
+        /// Max Fare
+        /// Created: 2024-02-25
+        /// 
+        /// Retrieves active Part_Inventory records
+        /// </summary>
+        ///
+        /// <remarks>
         /// Updater Name
         /// Updated: yyyy/mm/dd 
 
         List<Parts_Inventory> GetActiveParts_Inventory();
+
+        /// <summary>
+        /// Max Fare
+        /// Created: 2024-02-23
+        /// Removes a part from the active inventory
+        /// </summary>
+        /// <remarks>
+        /// </remarks>
+        int RemoveParts_Inventory(Parts_Inventory part);
 
 
         // Reviewed By: John Beck

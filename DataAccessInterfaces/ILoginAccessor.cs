@@ -157,5 +157,42 @@ namespace DataAccessInterfaces
             string securityResponse1,
             string securityResponse2,
             string securityResponse3);
+
+        /// <summary>
+        ///     Changes the associated user's password hash
+        /// </summary>
+        /// <param name="username">
+        ///    The username of the user
+        /// </param>
+        /// <param name="passwordHash">
+        ///    The user's new password hash
+        /// </param>
+        /// <returns>
+        ///    <see cref="int">int</see>: The number of rows affected by the operation
+        /// </returns>
+        /// <remarks>
+        ///    Parameters:
+        /// <br />
+        ///    <see cref="string">string</see> username: The username of the user
+        /// <br />
+        ///    <see cref="string">string</see> passwordHash: The user's new password hash
+        /// </remarks>
+        int UpdateLoginPasswordHash(string username, string passwordHash);
+
+        /// <summary>
+        ///     Retrieves the email associated with a user
+        /// </summary>
+        /// <param name="username">
+        ///    The username of the user
+        /// </param>
+        /// <returns>
+        ///    <see cref="string">string</see>: The user's registered email
+        /// </returns>
+        /// <remarks>
+        ///    Parameters:
+        /// <br />
+        ///    <see cref="string">string</see> username: The username of the user
+        /// </remarks>
+        string GetLoginEmailByUsername(string username);
     }
 }
