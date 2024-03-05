@@ -15,13 +15,14 @@ namespace LogicLayer
     /// 
     ///     Provides CRUD operations on the data source for client data.
     /// </summary>
-    /// 
     /// <remarks>
-    /// UPDATER: Isabella Rosenbohm
-    /// <br />
-    ///    UPDATED: 2024-02-20
-    /// <br />
+    /// UPDATER: Isabella Rosenbohm <br />
+    /// UPDATED: 2024-02-20 <br />
     ///     Implemented AddClient method
+    /// <br/><br/>
+    /// UPDATER: Isabella Rosenbohm <br/>
+    /// UPDATED: 2024-02-27 <br/>
+    ///     Changed intake param of EditClient from newClient to client 
     /// </remarks>
 
     public interface IClientManager
@@ -65,8 +66,7 @@ namespace LogicLayer
         /// <br />
         ///   Throws an application exception when it catches an exception from ClientAccessor.
         /// <br /><br />
-        ///    CONTRIBUTOR: Isabella Rosenbohm
-        /// <br />
+        ///    CONTRIBUTOR: Isabella Rosenbohm <br />
         ///    CREATED: 2024-02-05
         /// </remarks>
         IEnumerable<Client> GetAllClients();

@@ -15,44 +15,36 @@ using System.Windows.Shapes;
 using DataObjects;
 using LogicLayer;
 
-namespace NightRiderWPF
+namespace NightRiderWPF.Clients
 {
     /// <summary>
-    /// Interaction logic for AdminAddClient.xaml
+    /// Interaction logic for AdminEditClient.xaml
     /// </summary>
-    public partial class AdminAddClient : Page
+    public partial class AdminEditClient : Page
     {
-        
+        Client_VM _client = null;
         ClientManager _clientManager = null;
         IEnumerable<Client> _clients = null;
 
-        public AdminAddClient()
+
+        public AdminEditClient(Client_VM client)
         {
             InitializeComponent();
+            _client = client;
             _clientManager = new ClientManager();
-            clearInputFields();
+            populateFields();
         }
 
-
-        private void btnBack_Click(object sender, RoutedEventArgs e)
+        private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
-            this.NavigationService.Navigate(new AdminViewClientList());
-        }
-
-        //Clears form input fields
-        private void clearInputFields()
-        {
-            txtFirstName.Text = "";
-            txtMiddleName.Text = "";
-            txtLastName.Text = "";
-            txtCity.Text = "";
-            txtEmail.Text = "";
-            dateDOB.SelectedDate = DateTime.Now;
-            dateDOB.DisplayDateEnd = DateTime.Now;
-            txtVoiceNumber.Text = "";
-            txtTextNumber.Text = "";
-            txtStreet.Text = "";
-            txtPostal.Text = "";
+            var result = MessageBox.Show("Are you sure you want to cancel editing this client? All of your changes will be lost.", "Cancel Editing", MessageBoxButton.YesNo, MessageBoxImage.Exclamation);
+            if (result == MessageBoxResult.Yes)
+            {
+                if (this.NavigationService.CanGoBack)
+                {
+                    this.NavigationService.GoBack();
+                }
+            }
         }
 
         private void btnSubmit_Click(object sender, RoutedEventArgs e)
@@ -68,12 +60,12 @@ namespace NightRiderWPF
                 middleName = "";
             }
             string city = txtCity.Text;
-            if(string.IsNullOrEmpty(city))
+            if (string.IsNullOrEmpty(city))
             {
                 city = "";
             }
             string voiceNumber = txtVoiceNumber.Text;
-            if(string.IsNullOrEmpty(voiceNumber))
+            if (string.IsNullOrEmpty(voiceNumber))
             {
                 voiceNumber = "";
             }
@@ -83,7 +75,7 @@ namespace NightRiderWPF
                 textNumber = "";
             }
             string address = txtStreet.Text;
-            if(string.IsNullOrEmpty(address))
+            if (string.IsNullOrEmpty(address))
             {
                 address = "";
             }
@@ -137,56 +129,108 @@ namespace NightRiderWPF
                 MessageBox.Show("Please enter a valid postal code.");
                 return;
             }
+            if (!FormValidationHelper.IsValidCity(city) && city != null)
+            {
+                MessageBox.Show("Please enter a valid city.");
+                return;
+            }
 
             // validation for fields with unique attribute in database
             _clients = _clientManager.GetAllClients();
-            foreach(var client in _clients)
+            foreach (var client in _clients)
             {
-                if (email == client.Email)
+                if (email == client.Email && email != _client.Email)
                 {
                     MessageBox.Show(email + " is already in use. You cannot create a new client with this email.");
                     txtEmail.Text = "";
-                } 
-                else if(textNumber == client.TextNumber)
+                    return;
+                }
+                else if (textNumber == client.TextNumber && textNumber != _client.TextNumber)
                 {
                     MessageBox.Show(textNumber + " is already in use. You cannot create a new client with this text number.");
                     txtTextNumber.Text = "";
+                    return;
                 }
-                else if(voiceNumber == client.VoiceNumber)
+                else if (voiceNumber == client.VoiceNumber && voiceNumber != _client.VoiceNumber)
                 {
                     MessageBox.Show(voiceNumber + " voice number is already in use. You cannot create a new client with this voice number.");
                     txtVoiceNumber.Text = "";
+                    return;
                 }
             }
 
-            Client_VM newClient = new Client_VM()
-            {
-                GivenName = firstName,
-                MiddleName = middleName,
-                FamilyName = lastName,
-                DOB = date,
-                Email = email,
-                PostalCode = postal,
-                City = city,
-                Address = address,
-                TextNumber = textNumber,
-                VoiceNumber = voiceNumber,
-                Region = "", // empty string for now
-                IsActive = true // client is active upon creation
-            };
-
-            //Inserts new client database record
+            // Tries to update the client record in the database
             try
             {
-                _clientManager.AddClient(newClient);
-                MessageBox.Show("Client added successfully");
-                clearInputFields();
+                _clientManager.EditClient(new Client_VM
+                {
+                    ClientID = _client.ClientID,
+                    GivenName = firstName,
+                    MiddleName = middleName,
+                    FamilyName = lastName,
+                    DOB = date,
+                    Email = email,
+                    PostalCode = postal,
+                    City = city,
+                    Address = address,
+                    TextNumber = textNumber,
+                    VoiceNumber = voiceNumber,
+                    Region = _client.Region,
+                    IsActive = _client.IsActive
+                });
+                MessageBox.Show("Client edited successfully");
+                Client_VM updatedClient = null;
+                updatedClient = _clientManager.GetClientById(_client.ClientID);
+                this.NavigationService.Navigate(new AdminViewClientDetail(updatedClient));
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message,
-                        "Failed to add client.", MessageBoxButton.OK, MessageBoxImage.Error);
+                        "Failed to edit client.", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
+            }
+        }
+
+
+        private void populateFields()
+        {
+            try
+            {
+                txtFirstName.Text = _client.GivenName;
+                if (_client.MiddleName != null)
+                {
+                    txtMiddleName.Text = _client.MiddleName;
+                }
+                txtLastName.Text = _client.FamilyName;
+                if (_client.City != null)
+                {
+                    txtCity.Text = _client.City;
+                }
+                txtEmail.Text = _client.Email;
+                dateDOB.SelectedDate = _client.DOB;
+                dateDOB.DisplayDateEnd = DateTime.Now;
+                if (_client.TextNumber != null)
+                {
+                    txtTextNumber.Text = _client.TextNumber;
+                }
+                if (_client.VoiceNumber != null)
+                {
+                    txtVoiceNumber.Text = _client.VoiceNumber;
+                }
+                if (_client.Address != null)
+                {
+                    txtStreet.Text = _client.Address;
+                }
+                if (_client.PostalCode != null)
+                {
+                    txtPostal.Text = _client.PostalCode;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message,
+                        "Failed to get client data.", MessageBoxButton.OK, MessageBoxImage.Error);
+                this.NavigationService.Navigate(new AdminViewClientDetail(_client));
             }
 
         }

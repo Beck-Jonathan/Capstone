@@ -33,47 +33,47 @@
         </Grid.ColumnDefinitions>
         <Label Content="View Profile" FontSize="25" HorizontalAlignment="Center" FontWeight="Bold" Margin="5" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2"/>
 
-        <Label Grid.Column="1" Grid.Row="1" Content="Given Name:" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0 0 10 0"/>
+        <Label Grid.Column="1" Grid.Row="1" Content="*Given Name:" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0 0 10 0"/>
         <TextBox x:Name="txtGivenName" IsReadOnly="True" TabIndex="1" Grid.Row="1" Grid.Column="2" Margin="5" VerticalAlignment="Center" Padding="5"/>
 
-        <Label Grid.Column="3" Grid.Row="1" Content="Family Name:" VerticalAlignment="Center" FontSize="15" HorizontalAlignment="Right" Margin="0 0 10 0"/>
+        <Label Grid.Column="3" Grid.Row="1" Content="*Family Name:" VerticalAlignment="Center" FontSize="15" HorizontalAlignment="Right" Margin="0 0 10 0"/>
         <TextBox x:Name="txtFamilyName" IsReadOnly="True" TabIndex="2" Grid.Row="1" Grid.Column="4" Margin="5" VerticalAlignment="Center" Padding="5"/>
 
-        <Label Grid.Column="3" Grid.Row="2" Content="DOB:" FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 10 0"/>
+        <Label Grid.Column="3" Grid.Row="2" Content="*DOB:" FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 10 0"/>
         <DatePicker x:Name="dateDOB" TabIndex="4" Visibility="Hidden" Grid.Row="2" Grid.Column="4" SelectedDateFormat="Short" 
                             FirstDayOfWeek="Monday" VerticalAlignment="Center"/>
         <TextBox x:Name="txtDOB" IsReadOnly="True" TabIndex="4" Grid.Row="2" Grid.Column="4" Margin="5" VerticalAlignment="Center" Padding="5"/>
 
-        <Label Grid.Column="1" Grid.Row="2" Content="Email:" FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 10 0"/>
+        <Label Grid.Column="1" Grid.Row="2" Content="*Email:" FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 10 0"/>
         <TextBox x:Name="txtEmail" IsReadOnly="True" TabIndex="3" Grid.Row="2" Grid.Column="2" Margin="5" VerticalAlignment="Center" Padding="5" InputScope="EmailUserName"/>
 
         <Label Grid.Column="3" Grid.Row="4" Content="Zip:" FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 10 0"/>
         <TextBox x:Name="txtZip" IsReadOnly="True" TabIndex="8" Grid.Row="4" Grid.Column="4" Margin="5" VerticalAlignment="Center" Padding="5" InputScope="PostalCode"/>
 
-        <Label Grid.Column="1" Grid.Row="3" Content="Address 1:" FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 10 0"/>
+        <Label Grid.Column="1" Grid.Row="3" Content="*Address 1:" FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 10 0"/>
         <TextBox x:Name="txtAddress1" IsReadOnly="True" TabIndex="5" Grid.Row="3" Grid.Column="2" Margin="5" VerticalAlignment="Center" Padding="5" InputScope="AddressStreet"/>
 
         <Label Grid.Column="3" Grid.Row="3" Content="Address 2:" FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 10 0"/>
         <TextBox x:Name="txtAddress2" IsReadOnly="True" TabIndex="6" Grid.Row="3" Grid.Column="4" Margin="5" VerticalAlignment="Center" Padding="5" InputScope="AddressStreet"/>
 
-        <Label Grid.Column="1" Grid.Row="4" Content="City:" FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 10 0"/>
+        <Label Grid.Column="1" Grid.Row="4" Content="*City:" FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 10 0"/>
         <TextBox x:Name="txtCity" IsReadOnly="True" TabIndex="7" Grid.Row="4" Grid.Column="2" Margin="5" VerticalAlignment="Center" Padding="5" InputScope="AddressCity"/>
 
-        <Label Grid.Column="1" Grid.Row="5" Content="Country:" FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 10 0"/>
-        <TextBox x:Name="txtCountry" IsReadOnly="True" TabIndex="9" Grid.Row="5" Grid.Column="2" Margin="5" VerticalAlignment="Center" Padding="5" InputScope="AddressCountryName" />
+        <Label x:Name="lblCountry" Grid.Column="1" Grid.Row="5" Content="*Country:" FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 10 0"/>
+        <TextBox x:Name="txtCountry" IsReadOnly="True" TabIndex="9" Grid.Row="5" Grid.Column="2" Margin="5" VerticalAlignment="Center" Padding="5" InputScope="AddressCountryName" KeyUp="txtCountry_KeyUp" />
 
-        <Label Grid.Column="3" Grid.Row="5" Content="State:" FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 10 0"/>
+        <Label Visibility="Hidden" x:Name="lblState" Grid.Column="3" Grid.Row="5" Content="State:" FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 10 0"/>
         <ComboBox x:Name="cboState" Visibility="Hidden" TabIndex="10" Grid.Row="5" Grid.Column="4" Margin="5" VerticalAlignment="Center" Padding="5"/>
-        <TextBox x:Name="txtState" IsReadOnly="True" TabIndex="10" Grid.Row="5" Grid.Column="4" Margin="5" VerticalAlignment="Center" Padding="5"/>
-        
-        <Label Grid.Column="3" Grid.Row="6" Content="Phone:" FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 10 0"/>
+        <TextBox Visibility="Hidden"  x:Name="txtState" IsReadOnly="True" TabIndex="10" Grid.Row="5" Grid.Column="4" Margin="5" VerticalAlignment="Center" Padding="5"/>
+
+        <Label Grid.Column="3" Grid.Row="6" Content="*Phone:" FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 10 0"/>
         <TextBox x:Name="txtPhone" IsReadOnly="True" TabIndex="11" Grid.Row="6" Grid.Column="4" Margin="5" VerticalAlignment="Center" Padding="5" InputScope="TelephoneNumber"/>
 
-        <Label Grid.Column="1" Grid.Row="6" Content="Roles:" FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 10 0"/>
+        <Label Grid.Column="1" Grid.Row="6" Content="*Roles:" FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 10 0"/>
         <ListBox x:Name="lstRolesEdit" Visibility="Hidden" Grid.Row="6" Grid.Column="2" Grid.RowSpan="2" Padding="5" Margin="5" SelectionMode="Multiple" />
         <ListBox x:Name="lstRolesView" Grid.Row="6" Grid.Column="2" Grid.RowSpan="2" Padding="5" Margin="5"/>
 
-        <Label Grid.Column="3" Grid.Row="7" Content="Position:" FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Center"  Margin="0 0 10 0"/>
+        <Label Grid.Column="3" Grid.Row="7" Content="*Position:" FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Center"  Margin="0 0 10 0"/>
         <TextBox x:Name="txtPosition" IsReadOnly="True" TabIndex="12" Grid.Row="7" Grid.Column="4" Margin="5" VerticalAlignment="Center" Padding="5" />
         <Button x:Name="btnEmployeeActivation" Grid.Row="8" Grid.Column="2" Content="Deactivate Employee" HorizontalAlignment="Left" Margin="5" Width="150" Click="btnEmployeeActivation_Click"></Button>
 

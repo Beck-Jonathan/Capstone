@@ -69,6 +69,9 @@
     <Compile Include="AdminHome.xaml.cs">
       <DependentUpon>AdminHome.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Clients\AdminEditClient.xaml.cs">
+      <DependentUpon>AdminEditClient.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Clients\ClientLookupPage.xaml.cs">
       <DependentUpon>ClientLookupPage.xaml</DependentUpon>
     </Compile>
@@ -98,6 +101,10 @@
       <DependentUpon>GuardianViewDependentList.xaml</DependentUpon>
     </Compile>
     <Compile Include="Resources\Statics.cs" />
+    <Page Include="Clients\AdminEditClient.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Clients\ClientLookupPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
