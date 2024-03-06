@@ -12,15 +12,36 @@ namespace DataAccessInterfaces
     /// <br />
     /// CREATED: 2024-02-05
     /// <br />
-    /// 
     ///     Methods for the database access for clients.
     /// </summary>
     /// <remarks>
-    /// UPDATER: Isabella Rosenbohm
-    /// <br />
-    ///    UPDATED: 2024-02-20
-    /// <br />
+    /// UPDATER: Isabella Rosenbohm <br/>
+    /// UPDATED: 2024-02-05 <br/>
+    ///     Implemented SelectClientById method
+    /// <br/><br/>
+    /// UPDATER: Jared Roberts <br/>
+    /// UPDATED: 2024-02-11 <br/>
+    ///     Implemented UpdateClient method
+    /// <br/><br/>
+    /// UPDATER: Jared Roberts <br/>
+    /// UPDATED: 2024-02-11 <br/>
+    ///     Changed the argument type for the UpdateClient method from int to Client_VM
+    /// <br/><br/>
+    /// UPDATER: Isabella Rosenbohm <br/>
+    /// UPDATED: 2024-02-13 <br/>
+    ///     Changed the order of params in clients.Add() section of SelectAllClients as it was incorrect before
+    /// <br/><br/>
+    /// UPDATER: Jacob Wendt <br/>
+    /// UPDATED: 2024-02-19
+    ///     Implemented SelectClientByEmail method
+    /// <br/><br/>
+    /// UPDATER: Isabella Rosenbohm <br />
+    /// UPDATED: 2024-02-20 <br />
     ///     Implemented InsertClient method
+    /// <br/><br/>
+    /// UPDATER: Isabella Rosenbohm <br/>
+    /// UPDATED: 2024-02-27 <br/>
+    ///     Rewrote UpdateClient method so it no longer needs Old data params as Client_ID should be sufficient
     /// </remarks>
 
     public interface IClientAccessor
@@ -47,10 +68,6 @@ namespace DataAccessInterfaces
         /// <br/><br/>
         /// CONTRIBUTOR: Isabella Rosenbohm <br/>
         /// CREATED: 2024-02-20
-        /// <br/><br/>
-        /// UPDATER:  <br/>
-        /// UPDATED:  <br/>
-        ///     update comment
         /// </remarks>
         int InsertClient(Client_VM newClient);
 
@@ -90,8 +107,6 @@ namespace DataAccessInterfaces
         ///    CONTRIBUTOR: Jacob Wendt
         /// <br />
         ///    CREATED: 2024-02-19
-        /// <br /><br />
-        ///     Initial creation
         /// </remarks>
         Client_VM SelectClientByEmail(string email);
         IEnumerable<Client_VM> SelectInactiveClients();
@@ -113,10 +128,13 @@ namespace DataAccessInterfaces
         /// <br /><br />
         /// CONTRIBUTOR: Jared Roberts
         /// CREATED: 2024-02-11
-        /// /// <br/><br/>
+        /// <br/><br/>
         /// UPDATER: Jared Roberts <br/>
         /// UPDATED: 2024-02-11 <br/>
         ///     Changed the argument type for the UpdateClient method from int to Client_VM
+        /// UPDATER: Isabella Rosenbohm <br/>
+        /// UPDATED: 2024-02-27 <br/>
+        ///     Rewrote UpdateClient method so it no longer needs Old data params as Client_ID should be sufficient
         /// </remarks>
         int UpdateClient(Client_VM newClient);
         int UpdateClientByIdAsInactive(int id);

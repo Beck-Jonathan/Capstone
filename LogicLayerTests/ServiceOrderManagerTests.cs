@@ -61,10 +61,9 @@ namespace LogicLayerTests
         public void TestUpdateServiceOrderPasses()
         {
             // Arrange
-            ServiceOrderAccessorFakes accessor = new ServiceOrderAccessorFakes();
+
             ServiceOrder serviceOrderToUpdate = new ServiceOrder()
             {
-                VIN = "2GNALDEK9C6340800",
                 Service_Order_ID = 100000,
                 Critical_Issue = true,
                 Service_Type_ID = "Engine Tune-up",
@@ -72,7 +71,7 @@ namespace LogicLayerTests
             };
 
             // Act
-            int rowsAffected = accessor.UpdateServiceOrder(serviceOrderToUpdate);
+            int rowsAffected = _serviceOrderManager.UpdateServiceOrder(serviceOrderToUpdate);
 
             // Assert
             Assert.AreEqual(1, rowsAffected); // Assuming the update was successful
@@ -94,20 +93,29 @@ namespace LogicLayerTests
         ///    CREATED: 2024-02-18
         /// <br />
         /// <br />
-        ///    UPDATER: [Updater's Name]
+        ///    UPDATER: Steven Sanchez
         /// <br />
-        ///    UPDATED: yyyy-MM-dd
+        ///    UPDATED: 2024-02-28
         /// <br />
-        ///     Initial Creation
+        ///     test for invalid service order ID
         /// </remarks>
         [TestMethod]
-        public void TestUpdateServiceOrder_NullServiceOrder()
+        public void TestUpdateNonExistingServiceOrderFails()
         {
             // Arrange
-            ServiceOrderAccessorFakes accessor = new ServiceOrderAccessorFakes();
+            ServiceOrder serviceOrderToUpdate = new ServiceOrder()
+            {
+                Service_Order_ID = 100010,  // Assuming this ID doesn't exist in the database
+                Critical_Issue = true,
+                Service_Type_ID = "Engine Tune-up",
+                Service_Description = "Perform engine tune-up"
+            };
 
-            // Act & Assert
-            Assert.ThrowsException<ArgumentNullException>(() => accessor.UpdateServiceOrder(null));
+            // Act
+            int rowsAffected = _serviceOrderManager.UpdateServiceOrder(serviceOrderToUpdate);
+
+            // Assert
+            Assert.AreEqual(0, rowsAffected); // Assuming the update failed since service order doesn't exist
         }
     }
 }

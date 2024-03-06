@@ -269,7 +269,7 @@ namespace NightRiderWPF.WorkOrders
                 string serviceType_ID = selectedRow.PropertyTwo;
                 string serviceDescription = selectedRow.PropertyThree;
                 int serviceOrderID = selectedRow.PropertySix;
-                ServiceOrder selectedWorkOrder = new ServiceOrder
+                ServiceOrder_VM selectedWorkOrder = new ServiceOrder_VM
                 {
                     Service_Order_ID = serviceOrderID,
                     Critical_Issue = criticalIssue,

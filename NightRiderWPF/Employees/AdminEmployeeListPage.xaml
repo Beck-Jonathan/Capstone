@@ -1,5 +1,4 @@
-﻿<Page 
-    x:Class="NightRiderWPF.Employees.AdminEmployeeListPage"
+﻿<Page x:Class="NightRiderWPF.Employees.AdminEmployeeListPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -10,33 +9,36 @@
 
     <Grid Background="#FFF0F0F0">
         <Grid>
-        <Grid.RowDefinitions>
-            <!-- Create Grid Rows as needed, but try to keep rows consistent between related pages -->
-            <RowDefinition Height="100"></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
-        </Grid.ColumnDefinitions>
-        <!-- remove or replace borders as you create your own display, this is just to make columns visible in sample -->
-        
-        <DataGrid x:Name="datEmployee_List" Grid.Row="1" Grid.Column="0" Grid.RowSpan="1" Grid.ColumnSpan="6" SelectionMode="Single" ToolTip="Double-Click an Employee to view details"
+            <Grid.RowDefinitions>
+                <!-- Create Grid Rows as needed, but try to keep rows consistent between related pages -->
+                <RowDefinition Height="100"></RowDefinition>
+                <RowDefinition Height="135"></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <!-- remove or replace borders as you create your own display, this is just to make columns visible in sample -->
+
+            <DataGrid x:Name="datEmployee_List" Grid.Row="1" Grid.Column="0" Grid.RowSpan="1" Grid.ColumnSpan="6" SelectionMode="Single" ToolTip="Double-Click an Employee to view details"
                         IsReadOnly="True" MouseDoubleClick="datEmployee_List_MouseDoubleClick"></DataGrid>
-        <Label Grid.Column="0" x:Name="searchlbl" Content="Search" 
-               HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="20px" Grid.ColumnSpan="2" Margin="65,0,0,0"></Label>
-        <TextBox Grid.Column="0" Height="20" Width="200" Grid.ColumnSpan="3" HorizontalAlignment="Left" Margin="133,40,0,40" />
-        <Label Grid.Column="2" x:Name="Filterlbl" Content="filter" 
-       HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="20px" Grid.ColumnSpan="2" Margin="65,0,0,0"></Label>
-        <ComboBox Grid.Column="2" Height="20" Width="200" Grid.ColumnSpan="3" HorizontalAlignment="Left" Margin="118,40,0,40" />
-        <Button x:Name="AdminBackbtn" Grid.Row="2"  Content="Back" Height="45" VerticalAlignment="Top" Width="100"/>
-        <Button x:Name="AdminAddbtn" Grid.Row="2" Grid.Column="1"  Content="Add" Height="45" VerticalAlignment="Top" Width="100" Click="AdminAddbtn_Click"/>
+            <Label Grid.Column="0" x:Name="searchlbl" Content="Search" 
+        HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="20px" Grid.ColumnSpan="2" Margin="65,0,0,0"></Label>
+            <TextBox x:Name="searchtxt" Grid.Column="0" Height="20" Width="200" Grid.ColumnSpan="3" HorizontalAlignment="Left" Margin="133,40,0,40" TextChanged="searchtxt_TextChanged" />
+            <Label Grid.Column="2" x:Name="Filterlbl" Content="filter" 
+HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="20px" Grid.ColumnSpan="2" Margin="65,0,0,0"></Label>
+            <ComboBox x:Name="filtercbo" Grid.Column="2" Height="20" Width="200" Grid.ColumnSpan="3" HorizontalAlignment="Left" Margin="118,40,0,40" SelectionChanged="filtercbo_SelectionChanged">
+                <ComboBoxItem>A-Z</ComboBoxItem>
+                <ComboBoxItem>Z-A</ComboBoxItem>
+            </ComboBox>
+            <Button x:Name="AdminBackbtn" Grid.Row="2"  Content="Back" Height="45" VerticalAlignment="Top" Width="100" Click="AdminBackbtn_Click"/>
+            <Button x:Name="AdminAddbtn" Grid.Row="2" Grid.Column="1"  Content="Add" Height="45" VerticalAlignment="Top" Width="100" Click="AdminAddbtn_Click"/>
         </Grid>
 
     </Grid>

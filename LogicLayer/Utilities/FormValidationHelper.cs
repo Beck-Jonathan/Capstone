@@ -17,11 +17,11 @@ namespace DataObjects
     /// </summary>
     /// 
     /// <remarks>
-    /// UPDATER: James Williams 
+    /// UPDATER: Isabella Rosenbohm 
     /// <br />
-    /// UPDATED: 2023-02-02
+    /// UPDATED: 2024-03-05
     /// <br />
-    /// Initial Creation
+    /// Added IsValidCity for checking if a city name is valid.
     /// </remarks>
     public static class FormValidationHelper
     {
@@ -71,6 +71,22 @@ namespace DataObjects
             // Regular expression pattern for validating US ZIP codes
             string zipPattern = @"^\d{5}(-\d{4})?$";
             return Regex.IsMatch(zipCode, zipPattern);
+        }
+
+        /// <summary>
+        ///     Validates a city name using a regular expression pattern.
+        /// </summary>
+        /// <param name="city">
+        ///    The city name to validate.
+        /// </param>
+        /// <returns>
+        ///    <see cref="bool">true</see> if the city is valid; otherwise, <see cref="bool">false</see>.
+        /// </returns>
+        public static bool IsValidCity(string city)
+        {
+            // Regex from https://stackoverflow.com/a/25677072
+            string cityPattern = @"^([a-zA-Z\u0080-\u024F]+(?:. |-| |'))*[a-zA-Z\u0080-\u024F]*$";
+            return Regex.IsMatch(city, cityPattern);
         }
     }
 }

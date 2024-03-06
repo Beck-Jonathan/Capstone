@@ -55,6 +55,13 @@ namespace DataAccessLayer
         /// <br />
         ///    CREATED: 2024-02-16
         /// </remarks>
+        /// /// <br /><br />
+        ///    UPDATER: Steven Sanchez
+        /// <br />
+        ///    UPDATED: 2024-02-27
+        /// <br />
+        ///     added new Login object for username
+        /// </remarks>
         public Employee_VM AuthenticateEmployee(string username, string passwordHash)
         {
             Employee_VM employee = null;
@@ -104,7 +111,11 @@ namespace DataAccessLayer
                         Zip = reader.GetString(9),
                         Phone_Number = reader.GetString(10),
                         Email = reader.GetString(11),
-                        Position = reader.GetString(12)
+                        Position = reader.GetString(12),
+                        Login = new Login()
+                        {
+                            Username = reader.GetString(13),
+                        }
                     };
 
                     while (reader.Read())

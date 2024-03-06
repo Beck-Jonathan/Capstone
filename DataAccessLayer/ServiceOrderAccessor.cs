@@ -133,9 +133,8 @@ namespace DataAccessLayer
 
             // Add parameters
             cmd.Parameters.AddWithValue("@Service_Order_ID", serviceOrder.Service_Order_ID);
-            // cmd.Parameters.AddWithValue("@VIN", serviceOrder.VIN);
             cmd.Parameters.AddWithValue("@Critical_Issue", Convert.ToInt32(serviceOrder.Critical_Issue));
-            cmd.Parameters.AddWithValue("@Service_Type_ID", serviceOrder.Service_Type_ID);
+            cmd.Parameters.AddWithValue("@New_Service_Type_ID", serviceOrder.Service_Type_ID);
             cmd.Parameters.AddWithValue("@Service_Description", serviceOrder.Service_Description);
 
             try
