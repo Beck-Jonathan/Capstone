@@ -58,6 +58,7 @@
     <Compile Include="VehicleAccessor.cs" />
     <Compile Include="RoleAccessor.cs" />
     <Compile Include="VehicleModelAccessor.cs" />
+    <Compile Include="VendorAccessor.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DataAccessInterfaces\DataAccessInterfaces.csproj">

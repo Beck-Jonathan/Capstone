@@ -62,6 +62,7 @@
     <Compile Include="PurchaseOrderTests.cs" />
     <Compile Include="ServiceOrderManagerTests.cs" />
     <Compile Include="VehicleModelManager_Tests.cs" />
+    <Compile Include="VendorManagerTests.cs" />
     <Compile Include="VerificationCodeGenerator_Tests.cs" />
     <Compile Include="VehicleManagerTests.cs" />
     <Compile Include="ClientManagerTests.cs" />
