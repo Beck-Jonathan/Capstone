@@ -20,7 +20,7 @@ namespace NightRiderWPF.WorkOrders
     /// <summary>
     /// Interaction logic for UpdateWorkOrderPage.xaml
     /// </summary>
-    public partial class UpdateWorkOrder : Page
+    public partial class UpdateWorkOrderPage : Page
     {
         /// <summary>
         /// AUTHOR: Steven Sanchez

@@ -136,7 +136,7 @@ namespace NightRiderWPF.PasswordReset
 
                 if (verified)
                 {
-                    Navigation.Navigate(new ChangePasswordPage(_passwordHasher, _username));
+                    NavigationService.Navigate(new ChangePasswordPage(_passwordHasher, _username));
                 }
             }
             catch (Exception)

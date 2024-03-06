@@ -70,7 +70,7 @@ namespace NightRiderWPF.PasswordReset
 
                     MessageBox.Show("Password changed successfully! Please attempt to log in again.");
 
-                    Navigation.Navigate(null);
+                    NavigationService.Navigate(null);
                 }
                 catch (Exception)
                 {

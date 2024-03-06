@@ -86,7 +86,7 @@
     </Compile>
     <Compile Include="RouteStop\RouteList.xaml.cs">
       <DependentUpon>RouteList.xaml</DependentUpon>
-    <Compile Include="Helpers\Navigation.cs" />
+    </Compile>
     <Compile Include="PasswordReset\ChangePasswordPage.xaml.cs">
       <DependentUpon>ChangePasswordPage.xaml</DependentUpon>
     </Compile>
@@ -117,7 +117,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-<<<<<<< HEAD
     <Page Include="Employees\EmployeeAuthenticator.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -127,7 +126,9 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="RouteStop\RouteList.xaml">
-=======
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="PasswordReset\ChangePasswordPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -145,7 +146,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="RoleViews\CreateRole.xaml">
->>>>>>> origin/main
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -331,6 +331,8 @@
     <Resource Include="Resources\Images\NightRider-01.png" />
     <Resource Include="Resources\Images\NightRider-02.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Helpers\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
