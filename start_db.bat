@@ -27,7 +27,7 @@ sqlcmd -S localhost -E -i SQL/sp_inspection_report.sql
 sqlcmd -S localhost -E -i SQL/sp_login.sql
 sqlcmd -S localhost -E -i SQL/sp_maintenance_schedule.sql
 sqlcmd -S localhost -E -i SQL/sp_model_compatibility.sql
-sqlcmd -S localhost -E -i SQL/sp_model_lookup.sql
+sqlcmd -S localhost -E -i SQL/sp_vehicle_model.sql
 sqlcmd -S localhost -E -i SQL/sp_notification.sql
 sqlcmd -S localhost -E -i SQL/sp_packing_slip.sql
 sqlcmd -S localhost -E -i SQL/sp_parts_inventory.sql

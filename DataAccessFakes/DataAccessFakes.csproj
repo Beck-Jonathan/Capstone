@@ -54,6 +54,7 @@
     <Compile Include="ServiceOrderAccessorFakes.cs" />
     <Compile Include="VehicleAccessorFakes.cs" />
     <Compile Include="RoleAccessorFake.cs" />
+    <Compile Include="VehicleModelAccessorFake.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DataAccessInterfaces\DataAccessInterfaces.csproj">

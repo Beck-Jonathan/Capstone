@@ -26,6 +26,7 @@ using LogicLayer.Utilities;
 using DataObjects;
 using NightRiderWPF.PasswordReset;
 using NightRiderWPF.PurchaseOrders;
+using NightRiderWPF.VehicleModels;
 
 namespace NightRiderWPF.DeveloperView
 {
@@ -35,6 +36,8 @@ namespace NightRiderWPF.DeveloperView
     public partial class MainWindow : Window
     {
         private ILoginManager _loginManager;
+        private IVehicleModelManager _vehicleModelManager;
+
         private IPasswordHasher _passwordHasher;
         private IVerificationCodeGenerator _verificationCodeGenerator;
 		
@@ -43,7 +46,13 @@ namespace NightRiderWPF.DeveloperView
             _passwordHasher = new PasswordHasher();
             _verificationCodeGenerator = new VerificationCodeGenerator();
             _loginManager = new LoginManager(_passwordHasher);
+            _vehicleModelManager = new VehicleModelManager();
             InitializeComponent();
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            ShowNavItemsBasedOnRoles();
         }
 
         private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -70,6 +79,9 @@ namespace NightRiderWPF.DeveloperView
                         break;
                     case "AdminEmployeeListPage":
                         PageViewer.Navigate(new AdminEmployeeListPage());
+                        break;
+                    case "lstbxit_vehicleModels":
+                        PageViewer.Navigate(new VehicleModelsListPage(_vehicleModelManager));
                         break;
                     case "VehicleLookupListPage":
                         PageViewer.Navigate(new VehicleLookupListPage());
@@ -125,6 +137,8 @@ namespace NightRiderWPF.DeveloperView
 
             lbl_userAuthenticatedConfirmation.Visibility = Visibility.Hidden;
             btn_logout.Visibility = Visibility.Hidden;
+
+            ShowNavItemsBasedOnRoles();
         }
 
         /// <summary>
@@ -169,6 +183,8 @@ namespace NightRiderWPF.DeveloperView
                 lbl_userAuthenticatedConfirmation.Visibility = Visibility.Visible;
 
                 btn_logout.Visibility = Visibility.Visible;
+
+                ShowNavItemsBasedOnRoles();
             }
             catch (ArgumentException)
             {
@@ -211,6 +227,26 @@ namespace NightRiderWPF.DeveloperView
         private void btnForgotPassword_Click(object sender, RoutedEventArgs e)
         {
             PageViewer.Navigate(new RequestAndVerifyPasswordResetCodePage(_passwordHasher, _verificationCodeGenerator));
+        }
+
+        /// <summary>
+        ///     Shows/hides navigation menu items based on the currently authenticated user's roles
+        /// </summary>
+        /// <remarks>
+        ///    CONTRIBUTOR: Jared Hutton
+        /// <br />
+        ///    CREATED: 2024-03-02
+        /// </remarks>
+        private void ShowNavItemsBasedOnRoles()
+        {
+            if (Authentication.AuthenticatedEmployee != null)
+            {
+                lstbxit_vehicleModels.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                lstbxit_vehicleModels.Visibility = Visibility.Collapsed;
+            }
         }
     }
 }

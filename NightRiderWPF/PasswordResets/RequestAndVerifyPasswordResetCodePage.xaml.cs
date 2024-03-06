@@ -1,7 +1,6 @@
 ﻿using LogicLayer;
 using LogicLayer.AppData;
 using LogicLayer.Utilities;
-using NightRiderWPF.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;

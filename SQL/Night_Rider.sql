@@ -368,11 +368,9 @@ Print '***Create the [dbo].[Vehicle_Type] table***'
 
 CREATE TABLE [dbo].[Vehicle_Type]
 (
-    [Vehicle_Type] [nvarchar](50) not null /*a type of vehicle, like bus or van*/,
+    [Vehicle_Type_ID] [nvarchar](50) not null /*a type of vehicle, like bus or van*/,
     [Is_Active] [bit] DEFAULT 1 not null
-
-        CONSTRAINT [pk_vehicleType] PRIMARY KEY([Vehicle_Type]),
-    CONSTRAINT [ak_vehicleType] UNIQUE([Vehicle_Type])
+    CONSTRAINT [pk_vehicleType] PRIMARY KEY([Vehicle_Type_ID])
 );
 GO
 /******************
@@ -383,7 +381,7 @@ Print '***Insert Sample Data For The  Vehicle_Type table***'
  go
 
 INSERT INTO [dbo].[Vehicle_Type]
-    ([Vehicle_Type])
+    ([Vehicle_Type_ID])
 VALUES
     ('City Bus'),
     ('School Bus'),
@@ -396,39 +394,42 @@ VALUES
 GO
 
 /******************
-Create the [dbo].[Model_Lookup] table
+Create the [dbo].[Vehicle_Model] table
 ***************/
-CREATE TABLE [dbo].[Model_Lookup]
+CREATE TABLE [dbo].[Vehicle_Model]
 (
-    [Model_Lookup_ID] [int] IDENTITY(100000, 1) NOT NULL,
+    [Vehicle_Model_ID] [int] IDENTITY(100000, 1) NOT NULL,
+    [Vehicle_Type_ID] [nvarchar] (50) NULL,
     [Max_Passengers] [int] NOT NULL,
-    [Vehicle_Make] [nvarchar] (255) NOT NULL,
-    [Vehicle_Model] [nvarchar] (255) NOT NULL,
-    [Vehicle_Year] [nvarchar] (255) NOT NULL,
-    [Active] [bit] NOT NULL DEFAULT 1,
-    CONSTRAINT [PK_Model_Lookup_ID] PRIMARY KEY([Model_Lookup_ID])
+    [Make] [nvarchar] (255) NOT NULL,
+    [Name] [nvarchar] (255) NOT NULL,
+    [Year] [int] NOT NULL,
+    [Is_Active] [bit] NOT NULL DEFAULT 1,
+    CONSTRAINT [PK_Vehicle_Model_ID] PRIMARY KEY([Vehicle_Model_ID]),
+    CONSTRAINT [FK_Vehicle_Model_Vehicle_Type_ID_Vehicle_Type_Vehicle_Type_ID]
+      FOREIGN KEY([Vehicle_Type_ID]) REFERENCES [Vehicle_Type]([Vehicle_Type_ID])
 )
 GO
 
 /******************
-Insert Sample Data For The  Model_Lookup table
+Insert Sample Data For The  Vehicle_Model table
 ***************/
 print ''
-Print '***Insert Sample Data For The  Model_Lookup table***' 
+Print '***Insert Sample Data For The  Vehicle_Model table***' 
  go
-INSERT INTO [dbo].[Model_Lookup]
+INSERT INTO [dbo].[Vehicle_Model]
     (
     [Max_Passengers],
-    [Vehicle_Make],
-    [Vehicle_Model],
-    [Vehicle_Year]
+    [Make],
+    [Name],
+    [Year]
     )
 VALUES
-    (5, 'Toyota', 'Camry', '2023'),
-    (7, 'Honda', 'Accord', '2022'),
-    (4, 'Ford', 'Escape', '2021'),
-    (2, 'Chevrolet', 'Spark', '2020'),
-    (8, 'Nissan', 'Altima', '2019');
+    (5, 'Toyota', 'Camry', 2023),
+    (7, 'Honda', 'Accord', 2022),
+    (4, 'Ford', 'Escape', 2021),
+    (2, 'Chevrolet', 'Spark', 2020),
+    (8, 'Nissan', 'Altima', 2019);
 GO
 
 /******************
@@ -444,8 +445,8 @@ CREATE TABLE [dbo].[Vehicle]
     [Vehicle_Number] [nvarchar](10) NOT NULL,
     [Vehicle_Mileage] [int] NOT NULL,
     [Vehicle_License_Plate] [nvarchar](10) NOT NULL,
-    [Model_Lookup_ID] [int] NOT NULL,
-    [Vehicle_Type] [nvarchar](50) NOT NULL,
+    [Vehicle_Model_ID] [int] NOT NULL,
+    [Vehicle_Type_ID] [nvarchar](50) NOT NULL,
     [Date_Entered] [date] NOT NULL,
     [Description] [nvarchar](256) NOT NULL,
     [Rental] [bit] NOT NULL DEFAULT 0,
@@ -455,10 +456,10 @@ CREATE TABLE [dbo].[Vehicle]
     -- Used ak_... for ones that are 
     --unique like Jims example for dotnet2
     CONSTRAINT [AK_Vehicle_Number] UNIQUE ([Vehicle_Number]),
-    CONSTRAINT [FK_Vehicle_Vehicle_Type] FOREIGN KEY ([Vehicle_Type]) 
-        REFERENCES [Vehicle_Type]([Vehicle_Type]),
-    CONSTRAINT [FK_Vehicle_Model_Lookup] FOREIGN KEY ([Model_Lookup_ID])
-        REFERENCES [dbo].[Model_Lookup]([Model_Lookup_ID])
+    CONSTRAINT [FK_Vehicle_Vehicle_Type] FOREIGN KEY ([Vehicle_Type_ID]) 
+        REFERENCES [Vehicle_Type]([Vehicle_Type_ID]),
+    CONSTRAINT [FK_Vehicle_Vehicle_Model] FOREIGN KEY ([Vehicle_Model_ID])
+        REFERENCES [dbo].[Vehicle_Model]([Vehicle_Model_ID])
 )
 GO
 
@@ -471,7 +472,7 @@ Print '***Insert Sample Data For The  Vehicle table***'
 
 INSERT INTO [dbo].[Vehicle]
     ([VIN], [Vehicle_Number], [Vehicle_Mileage], [Vehicle_License_Plate],
-    [Model_Lookup_ID], [Vehicle_Type], [Date_Entered], [Description], [Rental], [Is_Active]
+    [Vehicle_Model_ID], [Vehicle_Type_ID], [Date_Entered], [Description], [Rental], [Is_Active]
     )
 VALUES
     ('1HGCM82633A123456', 'VH123', 50000, 'ABC123', 100000, 'City Bus', '2024-01-15', 'Description', 0, 1),
@@ -946,14 +947,14 @@ Print '***Create the [dbo].[Maintenance_Schedule] table***'
 CREATE TABLE [dbo].[Maintenance_Schedule]
 (
     [Maintenance_Schedule_ID] [int] NOT NULL,
-    [Model_Lookup_ID] [int] NOT NULL,
+    [Vehicle_Model_ID] [int] NOT NULL,
     [Service_Type_ID] [nvarchar] (256) NOT NULL,
     [Frequency_In_Months] [int] NOT NULL,
     [Frequency_In_Miles] [int]                     ,
     [Is_Completed] [bit] NOT NULL,
     [Active] [bit] NOT NULL,
-    CONSTRAINT [FK_Maintenance_Schedule_Model_Lookup_id] FOREIGN KEY([Model_Lookup_ID])
-    	REFERENCES [dbo].[Model_Lookup]([Model_Lookup_ID]),
+    CONSTRAINT [FK_Maintenance_Schedule_Vehicle_Model_id] FOREIGN KEY([Vehicle_Model_ID])
+    	REFERENCES [dbo].[Vehicle_Model]([Vehicle_Model_ID]),
     CONSTRAINT [FK_Maintenance_Schedule_Service_Type_ID] FOREIGN KEY ([Service_Type_ID])
         REFERENCES [dbo].[Service_Type]([Service_Type_ID]) ON UPDATE CASCADE,
     CONSTRAINT [PK_Maintenance_Schedule_ID] PRIMARY KEY([Maintenance_Schedule_ID])
@@ -969,7 +970,7 @@ GO
 INSERT INTO [dbo].[Maintenance_Schedule]
     (
     [Maintenance_Schedule_ID],
-    [Model_Lookup_ID],
+    [Vehicle_Model_ID],
     [Service_Type_ID],
     [Frequency_In_Months],
     [Frequency_In_Miles],
@@ -1439,15 +1440,15 @@ Print '***Create the [dbo].[Model_Compatibility] table***'
 GO
 CREATE TABLE [dbo].[Model_Compatibility]
 (
-    [Model_Lookup_ID] [int] NOT NULL,
+    [Vehicle_Model_ID] [int] NOT NULL,
     [Parts_Inventory_ID] [int] NOT NULL,
     [Active] [bit] NOT NULL DEFAULT 1,
 
-    CONSTRAINT [FK_Model_Compatibility_Model_Lookup_ID] FOREIGN KEY([Model_Lookup_ID])
-        REFERENCES [dbo].[Model_Lookup]([Model_Lookup_ID]),
+    CONSTRAINT [FK_Model_Compatibility_Vehicle_Model_ID] FOREIGN KEY([Vehicle_Model_ID])
+        REFERENCES [dbo].[Vehicle_Model]([Vehicle_Model_ID]),
     CONSTRAINT [FK_Model_Compatibility_Parts_Inventory_ID] FOREIGN KEY([Parts_Inventory_ID])
         REFERENCES [dbo].[Parts_Inventory]([Parts_Inventory_ID]),
-    CONSTRAINT [CPK_Model_Compatibility] PRIMARY KEY([Model_Lookup_ID], [Parts_Inventory_ID])
+    CONSTRAINT [CPK_Model_Compatibility] PRIMARY KEY([Vehicle_Model_ID], [Parts_Inventory_ID])
 )
 GO
 
@@ -1460,7 +1461,7 @@ Print '***Insert Sample Data For The  Model_Compatibility table***'
 
 INSERT INTO [dbo].[Model_Compatibility]
     (
-    [Model_Lookup_ID],
+    [Vehicle_Model_ID],
     [Parts_Inventory_ID]
     )
 VALUES
@@ -2281,7 +2282,7 @@ CREATE TABLE [dbo].[Charter_Assignment]
 ,
     [VIN] [nvarchar](17) not null unique	
 ,
-    [Vehicle_Type] [nvarchar](50) not null	
+    [Vehicle_Type_ID] [nvarchar](50) not null	
 ,
     [Date_Issued] [datetime] not null	
 ,
@@ -2299,7 +2300,7 @@ CREATE TABLE [dbo].[Charter_Assignment]
 ,
     CONSTRAINT [fk_Charter_Assignment_Vehicle2] foreign key ([VIN]) references [Vehicle]([VIN])
 ,
-    CONSTRAINT [fk_Charter_Assignment_Vehicle_Type3] foreign key ([Vehicle_Type]) references [Vehicle_Type]([Vehicle_Type])
+    CONSTRAINT [fk_Charter_Assignment_Vehicle_Type3] foreign key ([Vehicle_Type_ID]) references [Vehicle_Type]([Vehicle_Type_ID])
 )
 go
 

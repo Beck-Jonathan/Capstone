@@ -87,10 +87,10 @@
     <Compile Include="RouteStop\RouteList.xaml.cs">
       <DependentUpon>RouteList.xaml</DependentUpon>
     </Compile>
-    <Compile Include="PasswordReset\ChangePasswordPage.xaml.cs">
+    <Compile Include="PasswordResets\ChangePasswordPage.xaml.cs">
       <DependentUpon>ChangePasswordPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="PasswordReset\RequestAndVerifyPasswordResetCodePage.xaml.cs">
+    <Compile Include="PasswordResets\RequestAndVerifyPasswordResetCodePage.xaml.cs">
       <DependentUpon>RequestAndVerifyPasswordResetCodePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="PurchaseOrders\Parts_Person_View_Current_PO_Details.xaml.cs">
@@ -101,6 +101,9 @@
     </Compile>
     <Compile Include="RoleViews\CreateRole.xaml.cs">
       <DependentUpon>CreateRole.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="VehicleModels\VehicleModelsListPage.xaml.cs">
+      <DependentUpon>VehicleModelsListPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Vehicles\VehicleLookupListPage.xaml.cs">
       <DependentUpon>VehicleLookupListPage.xaml</DependentUpon>
@@ -125,15 +128,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="PasswordResets\ChangePasswordPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="RouteStop\RouteList.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="PasswordReset\ChangePasswordPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="PasswordReset\RequestAndVerifyPasswordResetCodePage.xaml">
+    <Page Include="PasswordResets\RequestAndVerifyPasswordResetCodePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -146,6 +149,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="RoleViews\CreateRole.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="VehicleModels\VehicleModelsListPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

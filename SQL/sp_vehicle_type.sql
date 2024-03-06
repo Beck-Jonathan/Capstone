@@ -7,7 +7,7 @@ GO
 CREATE PROCEDURE [dbo].[sp_select_vehicle_types]
 AS
 BEGIN
-    SELECT [Vehicle_Type]
+    SELECT [Vehicle_Type_ID]
     FROM [Vehicle_Type]
     WHERE [Is_Active] = 1
 END

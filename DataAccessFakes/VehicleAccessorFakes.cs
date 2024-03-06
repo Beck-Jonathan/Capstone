@@ -46,7 +46,7 @@ namespace DataAccessFakes
                 VIN = "testaddvin1234567",
                 VehicleNumber = "Test-01",
                 VehicleMileage = 1000,
-                ModelLookupID = 100001,
+                VehicleModelID = 100001,
                 VehicleLicensePlate = "Test01",
                 VehicleMake = "Mercedes",
                 VehicleModel = "Sprinter",
@@ -77,7 +77,7 @@ namespace DataAccessFakes
             });
 
             fakeVehicles.Add(vehicle);
-            fakeModelLookup.Add(vehicle.ModelLookupID);
+            fakeModelLookup.Add(vehicle.VehicleModelID);
 
             fakeVehicleTypes.Add("");
             fakeVehicleTypes.Add("");
@@ -105,7 +105,7 @@ namespace DataAccessFakes
         {
             foreach (var v in fakeModelLookup)
             {
-                if (v.Equals(vehicle.ModelLookupID))
+                if (v.Equals(vehicle.VehicleModelID))
                 {
                     throw new ArgumentException();
                 }
@@ -192,9 +192,9 @@ namespace DataAccessFakes
 
         public int SelectModelLookupID(Vehicle vehicle)
         {
-            if (vehicle.ModelLookupID == fakeVehicles[0].ModelLookupID)
+            if (vehicle.VehicleModelID == fakeVehicles[0].VehicleModelID)
             {
-                return fakeVehicles[0].ModelLookupID;
+                return fakeVehicles[0].VehicleModelID;
             }
             else
             {

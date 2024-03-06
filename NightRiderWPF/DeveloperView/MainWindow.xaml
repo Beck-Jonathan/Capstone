@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:NightRiderWPF.DeveloperView"
         mc:Ignorable="d"
+        Loaded="Window_Loaded"
         Title="MainWindow" Height="850" Width="1050" ResizeMode="CanMinimize">
     <Grid Background="AliceBlue" Height="800" Width="1000">
         <Grid.RowDefinitions>
@@ -86,6 +87,7 @@
                 <ListBoxItem Content="Admin View Client List" x:Name="AdminViewClientList"  Margin="0" />
                 <ListBoxItem Content="Admin Create Employee" x:Name="AdminCreateEmployeePage"  Margin="0" />
                 <ListBoxItem Content="Parts Person View Parts" x:Name="PartsPersonViewParts"  Margin="0" />
+                <ListBoxItem Content="Vehicle Models" x:Name="lstbxit_vehicleModels"  Margin="0" />
                 <ListBoxItem Content="Vehicle Lookup List" x:Name="VehicleLookupListPage"  Margin="0" />
                 <ListBoxItem Content="Admin View Employees" x:Name="AdminEmployeeListPage"  Margin="0" />
                 <ListBoxItem Content="Employee Profile" x:Name="EmployeeProfilePage"  Margin="0" />

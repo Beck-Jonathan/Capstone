@@ -43,16 +43,34 @@
              VerticalContentAlignment="Center" Padding="10px 00px 0px 0px" FontSize="14"></TextBox>
         <Label x:Name="lblMake" Content="Make" Grid.Row="3" FontSize="20" FontWeight="Bold"
             VerticalContentAlignment="Center" HorizontalContentAlignment="Right"></Label>
-        <ComboBox x:Name="cmbVehicleMake" Grid.Row="3" Grid.Column="1" Margin="5px 5px 30px 5px"
-             VerticalContentAlignment="Center" Padding="10px 00px 0px 0px" FontSize="14"></ComboBox>
+        <ComboBox x:Name="cmbVehicleMake"
+                  Grid.Row="3"
+                  Grid.Column="1"
+                  Margin="5px 5px 30px 5px"
+                  VerticalContentAlignment="Center"
+                  Padding="10px 00px 0px 0px"
+                  FontSize="14"
+                  SelectionChanged="cmbVehicleMake_SelectionChanged" />
         <Label x:Name="lblModel" Content="Model" Grid.Row="4" FontSize="20" FontWeight="Bold"
             VerticalContentAlignment="Center" HorizontalContentAlignment="Right"></Label>
-        <ComboBox x:Name="cmbVehicleModel" Grid.Row="4" Grid.Column="1" Margin="5px 5px 30px 5px"
-             VerticalContentAlignment="Center" Padding="10px 00px 0px 0px" FontSize="14"></ComboBox>
+        <ComboBox x:Name="cmbVehicleModel"
+                  Grid.Row="4" Grid.Column="1"
+                  Margin="5px 5px 30px 5px"
+                  VerticalContentAlignment="Center"
+                  Padding="10px 00px 0px 0px"
+                  FontSize="14"
+                  IsEditable="False"
+                  SelectionChanged="cmbVehicleModel_SelectionChanged" />
         <Label x:Name="lblYear" Content="Year" Grid.Row="5" FontSize="20" FontWeight="Bold"
             VerticalContentAlignment="Center" HorizontalContentAlignment="Right"></Label>
-        <TextBox x:Name="txtVehicleYear" Grid.Row="5" Grid.Column="1" Margin="5px 5px 30px 5px"
-             VerticalContentAlignment="Center" Padding="10px 00px 0px 0px" FontSize="14"></TextBox>
+        <ComboBox x:Name="cmbVehicleYear"
+                  Grid.Row="5"
+                  Grid.Column="1"
+                  Margin="5px 5px 30px 5px"
+                  VerticalContentAlignment="Center"
+                  Padding="10px 00px 0px 0px"
+                  FontSize="14"
+                  IsEditable="False" />
         <Label x:Name="lblMileage" Content="Mileage" Grid.Row="6" FontSize="20" FontWeight="Bold"
             VerticalContentAlignment="Center" HorizontalContentAlignment="Right"></Label>
         <TextBox x:Name="txtVehicleMileage" Grid.Row="6" Grid.Column="1" Margin="5px 5px 30px 5px"

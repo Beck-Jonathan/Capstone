@@ -68,7 +68,7 @@ namespace NightRiderWPF.Vehicles
 
         private void addVehicleBtn_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new AddUpdateDeleteVehicle());
+            NavigationService.Navigate(new AddUpdateDeleteVehicle(new VehicleModelManager()));
         }
 
         private void addRentalBtn_Click(object sender, RoutedEventArgs e)
@@ -179,7 +179,7 @@ namespace NightRiderWPF.Vehicles
                 }
                 if (vehicle != null)
                 {
-                    NavigationService.Navigate(new AddUpdateDeleteVehicle(vehicle));
+                    NavigationService.Navigate(new AddUpdateDeleteVehicle(new VehicleModelManager(), vehicle));
                 }
             }
         }

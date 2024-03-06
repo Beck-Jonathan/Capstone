@@ -27,9 +27,9 @@ namespace DataAccessLayer
             cmd.Parameters.Add("@VIN", SqlDbType.NVarChar, 17);
             cmd.Parameters.Add("@Vehicle_Number", SqlDbType.NVarChar, 10);
             cmd.Parameters.Add("@Vehicle_Mileage", SqlDbType.Int);
-            cmd.Parameters.Add("@Model_Lookup_ID", SqlDbType.Int);
+            cmd.Parameters.Add("@Vehicle_Model_ID", SqlDbType.Int);
             cmd.Parameters.Add("@Vehicle_License_plate", SqlDbType.NVarChar, 10);
-            cmd.Parameters.Add("@Vehicle_Type", SqlDbType.NVarChar, 50);
+            cmd.Parameters.Add("@Vehicle_Type_ID", SqlDbType.NVarChar, 50);
             cmd.Parameters.Add("@Date_Entered", SqlDbType.Date);
             cmd.Parameters.Add("@Description", SqlDbType.NVarChar, 256);
             cmd.Parameters.Add("@Rental", SqlDbType.Bit);
@@ -37,9 +37,9 @@ namespace DataAccessLayer
             cmd.Parameters["@VIN"].Value = vehicle.VIN;
             cmd.Parameters["@Vehicle_Number"].Value = vehicle.VehicleNumber;
             cmd.Parameters["@Vehicle_Mileage"].Value = vehicle.VehicleMileage;
-            cmd.Parameters["@Model_Lookup_ID"].Value = vehicle.ModelLookupID;
+            cmd.Parameters["@Vehicle_Model_ID"].Value = vehicle.VehicleModelID;
             cmd.Parameters["@Vehicle_License_plate"].Value = vehicle.VehicleLicensePlate;
-            cmd.Parameters["@Vehicle_Type"].Value = vehicle.VehicleType;
+            cmd.Parameters["@Vehicle_Type_ID"].Value = vehicle.VehicleType;
             cmd.Parameters["@Date_Entered"].Value = vehicle.DateEntered.Date;
             cmd.Parameters["@Description"].Value = vehicle.VehicleDescription;
             cmd.Parameters["@Rental"].Value = vehicle.Rental;
@@ -77,7 +77,7 @@ namespace DataAccessLayer
             cmd.Parameters.Add("@Vehicle_Year", SqlDbType.Int);
 
             cmd.Parameters["@Vehicle_Make"].Value = vehicle.VehicleMake;
-            cmd.Parameters["@Vehicle_Model"].Value = vehicle.VehicleModel;
+            cmd.Parameters["@Vehicle_Model_ID"].Value = vehicle.VehicleModelID;
             cmd.Parameters["@Max_Passengers"].Value = vehicle.MaxPassengers;
             cmd.Parameters["@Vehicle_Year"].Value = vehicle.VehicleYear;
 
@@ -244,7 +244,7 @@ namespace DataAccessLayer
                         {
                             VehicleMake = reader.GetString(0),
                             VehicleNumber = reader.GetString(1),
-                            VehicleModel = reader.GetString(2),
+                            VehicleModelID = reader.GetInt32(2),
                             MaxPassengers = reader.GetInt32(3),
                             VehicleMileage = reader.GetInt32(4),
                             VehicleDescription = reader.GetString(5),
@@ -293,10 +293,10 @@ namespace DataAccessLayer
 
                     vehicle.VehicleNumber = reader.GetString(0);
                     vehicle.VIN = reader.GetString(1);
-                    vehicle.ModelLookupID = reader.GetInt32(2);
+                    vehicle.VehicleModelID = reader.GetInt32(2);
                     vehicle.VehicleMake = reader.GetString(3);
                     vehicle.VehicleModel = reader.GetString(4);
-                    vehicle.VehicleYear = int.Parse(reader.GetString(5));
+                    vehicle.VehicleYear = reader.GetInt32(5);
                     vehicle.VehicleMileage = reader.GetInt32(6);
                     vehicle.VehicleLicensePlate = reader.GetString(7);
                     vehicle.VehicleDescription = reader.GetString(8);
@@ -338,58 +338,46 @@ namespace DataAccessLayer
             // old data parameters
             cmd.Parameters.Add("@OldVehicle_Number", SqlDbType.NVarChar, 10);
             cmd.Parameters.Add("@OldVehicle_Mileage", SqlDbType.Int);
-            cmd.Parameters.Add("@OldModel_Lookup_ID", SqlDbType.Int);
+            cmd.Parameters.Add("@OldVehicle_Model_ID", SqlDbType.Int);
             cmd.Parameters.Add("@OldVehicle_License_Plate", SqlDbType.NVarChar, 10);
             cmd.Parameters.Add("@OldDescription", SqlDbType.NVarChar, 256);
             cmd.Parameters.Add("@OldDate_Entered", SqlDbType.Date);
-            cmd.Parameters.Add("@OldVehicle_Type", SqlDbType.NVarChar, 50);
+            cmd.Parameters.Add("@OldVehicle_Type_ID", SqlDbType.NVarChar, 50);
             cmd.Parameters.Add("@OldRental", SqlDbType.Bit);
-            cmd.Parameters.Add("@OldVehicle_Year", SqlDbType.Int);
             cmd.Parameters.Add("@OldMax_Passengers", SqlDbType.Int);
-            cmd.Parameters.Add("@OldVehicle_Make", SqlDbType.NVarChar, 255);
-            cmd.Parameters.Add("@OldVehicle_Model", SqlDbType.NVarChar, 255);
             // new data paremeters
             cmd.Parameters.Add("@Vehicle_Number", SqlDbType.NVarChar, 10);
             cmd.Parameters.Add("@Vehicle_Mileage", SqlDbType.Int);
-            cmd.Parameters.Add("@Model_Lookup_ID", SqlDbType.Int);
+            cmd.Parameters.Add("@Vehicle_Model_ID", SqlDbType.Int);
             cmd.Parameters.Add("@Vehicle_License_Plate", SqlDbType.NVarChar, 10);
             cmd.Parameters.Add("@Description", SqlDbType.NVarChar, 256);
             cmd.Parameters.Add("@Date_Entered", SqlDbType.Date);
-            cmd.Parameters.Add("@Vehicle_Type", SqlDbType.NVarChar, 50);
+            cmd.Parameters.Add("@Vehicle_Type_ID", SqlDbType.NVarChar, 50);
             cmd.Parameters.Add("@Rental", SqlDbType.Bit);
-            cmd.Parameters.Add("@Vehicle_Year", SqlDbType.Int);
             cmd.Parameters.Add("@Max_Passengers", SqlDbType.Int);
-            cmd.Parameters.Add("@Vehicle_Make", SqlDbType.NVarChar, 255);
-            cmd.Parameters.Add("@Vehicle_Model", SqlDbType.NVarChar, 255);
 
             // primary key
             cmd.Parameters["@VIN"].Value = oldVehicle.VIN;
             // old data values
             cmd.Parameters["@OldVehicle_Number"].Value = oldVehicle.VehicleNumber;
             cmd.Parameters["@OldVehicle_Mileage"].Value = oldVehicle.VehicleMileage;
-            cmd.Parameters["@OldModel_Lookup_ID"].Value = oldVehicle.ModelLookupID;
+            cmd.Parameters["@OldVehicle_Model_ID"].Value = oldVehicle.VehicleModelID;
             cmd.Parameters["@OldVehicle_License_Plate"].Value = oldVehicle.VehicleLicensePlate;
             cmd.Parameters["@OldDescription"].Value = oldVehicle.VehicleDescription;
             cmd.Parameters["@OldDate_Entered"].Value = oldVehicle.DateEntered.Date;
-            cmd.Parameters["@OldVehicle_Type"].Value = oldVehicle.VehicleType;
+            cmd.Parameters["@OldVehicle_Type_ID"].Value = oldVehicle.VehicleType;
             cmd.Parameters["@OldRental"].Value = oldVehicle.Rental;
-            cmd.Parameters["@OldVehicle_Year"].Value = oldVehicle.VehicleYear;
             cmd.Parameters["@OldMax_Passengers"].Value = oldVehicle.MaxPassengers;
-            cmd.Parameters["@OldVehicle_Make"].Value = oldVehicle.VehicleMake;
-            cmd.Parameters["@OldVehicle_Model"].Value = oldVehicle.VehicleModel;
             // new data values
             cmd.Parameters["@Vehicle_Number"].Value = newVehicle.VehicleNumber;
             cmd.Parameters["@Vehicle_Mileage"].Value = newVehicle.VehicleMileage;
-            cmd.Parameters["@Model_Lookup_ID"].Value = newVehicle.ModelLookupID;
+            cmd.Parameters["@Vehicle_Model_ID"].Value = newVehicle.VehicleModelID;
             cmd.Parameters["@Vehicle_License_Plate"].Value = newVehicle.VehicleLicensePlate;
             cmd.Parameters["@Description"].Value = newVehicle.VehicleDescription;
             cmd.Parameters["@Date_Entered"].Value = newVehicle.DateEntered.Date;
-            cmd.Parameters["@Vehicle_Type"].Value = newVehicle.VehicleType;
+            cmd.Parameters["@Vehicle_Type_ID"].Value = newVehicle.VehicleType;
             cmd.Parameters["@Rental"].Value = newVehicle.Rental;
-            cmd.Parameters["@Vehicle_Year"].Value = newVehicle.VehicleYear;
             cmd.Parameters["@Max_Passengers"].Value = newVehicle.MaxPassengers;
-            cmd.Parameters["@Vehicle_Make"].Value = newVehicle.VehicleMake;
-            cmd.Parameters["@Vehicle_Model"].Value = newVehicle.VehicleModel;
 
             try
             {
@@ -465,9 +453,9 @@ namespace DataAccessLayer
             cmd.Parameters.Add("@VIN", SqlDbType.NVarChar, 17);
             cmd.Parameters.Add("@Vehicle_Number", SqlDbType.NVarChar, 10);
             cmd.Parameters.Add("@Vehicle_Mileage", SqlDbType.Int);
-            cmd.Parameters.Add("@Model_Lookup_ID", SqlDbType.Int);
+            cmd.Parameters.Add("@Vehicle_Model_ID", SqlDbType.Int);
             cmd.Parameters.Add("@Vehicle_License_plate", SqlDbType.NVarChar, 10);
-            cmd.Parameters.Add("@Vehicle_Type", SqlDbType.NVarChar, 50);
+            cmd.Parameters.Add("@Vehicle_Type_ID", SqlDbType.NVarChar, 50);
             cmd.Parameters.Add("@Date_Entered", SqlDbType.Date);
             cmd.Parameters.Add("@Description", SqlDbType.NVarChar, 256);
             cmd.Parameters.Add("@Rental", SqlDbType.Bit);
@@ -475,9 +463,9 @@ namespace DataAccessLayer
             cmd.Parameters["@VIN"].Value = vehicle.VIN;
             cmd.Parameters["@Vehicle_Number"].Value = vehicle.VehicleNumber;
             cmd.Parameters["@Vehicle_Mileage"].Value = vehicle.VehicleMileage;
-            cmd.Parameters["@Model_Lookup_ID"].Value = vehicle.ModelLookupID;
+            cmd.Parameters["@Vehicle_Model_ID"].Value = vehicle.VehicleModelID;
             cmd.Parameters["@Vehicle_License_plate"].Value = vehicle.VehicleLicensePlate;
-            cmd.Parameters["@Vehicle_Type"].Value = vehicle.VehicleType;
+            cmd.Parameters["@Vehicle_Type_ID"].Value = vehicle.VehicleType;
             cmd.Parameters["@Date_Entered"].Value = vehicle.DateEntered.Date;
             cmd.Parameters["@Description"].Value = vehicle.VehicleDescription;
             cmd.Parameters["@Rental"].Value = vehicle.Rental;

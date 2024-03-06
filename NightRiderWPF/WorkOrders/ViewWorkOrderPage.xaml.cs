@@ -279,7 +279,7 @@ namespace NightRiderWPF.WorkOrders
 
 
                 // Open the UpdateWorkOrderPage and pass the selected work order object
-                UpdateWorkOrder updatePage = new UpdateWorkOrder(selectedWorkOrder);
+                UpdateWorkOrderPage updatePage = new UpdateWorkOrderPage(selectedWorkOrder);
                 NavigationService.Navigate(updatePage);
             }
             catch (Exception ex)

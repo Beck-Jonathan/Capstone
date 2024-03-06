@@ -10,8 +10,8 @@ CREATE PROCEDURE [dbo].[sp_add_vehicle]
     @Vehicle_Number         [nvarchar](10),
     @Vehicle_Mileage        [int],
     @Vehicle_License_plate  [nvarchar](10),
-    @Model_Lookup_ID        [int],
-    @Vehicle_Type           [nvarchar](50),
+    @Vehicle_Model_ID        [int],
+    @Vehicle_Type_ID        [nvarchar](50),
     @Description            [nvarchar](256),
     @Date_Entered           [date],
     @Rental                 [bit]
@@ -19,9 +19,9 @@ CREATE PROCEDURE [dbo].[sp_add_vehicle]
 AS
 BEGIN
     INSERT INTO [dbo].[Vehicle]
-        ([VIN],[Vehicle_Number],[Vehicle_Mileage],[Vehicle_License_Plate],[Model_Lookup_ID],[Vehicle_Type], [Description], [Date_Entered], [Rental])
+        ([VIN],[Vehicle_Number],[Vehicle_Mileage],[Vehicle_License_Plate],[Vehicle_Model_ID],[Vehicle_Type_ID], [Description], [Date_Entered], [Rental])
     VALUES
-        (@VIN, @Vehicle_Number, @Vehicle_Mileage, @Vehicle_License_Plate, @Model_Lookup_ID, @Vehicle_Type, @Description, @Date_Entered, @Rental)
+        (@VIN, @Vehicle_Number, @Vehicle_Mileage, @Vehicle_License_Plate, @Vehicle_Model_ID, @Vehicle_Type_ID, @Description, @Date_Entered, @Rental)
 END
 GO
 
@@ -39,6 +39,9 @@ For Vehicle Lookup List
 -- Editor: Chris Baenziger
 -- Edit Date: 2024-02-22
 -- Modification: added Is_Active to selection
+-- Editor: Jared Hutton
+-- Edit Date: 2024-03-02
+-- Modification: change inner join on vehicle model to left outer join
 print ''
 print '*** creating sp_select_all_vehicles_for_vehicle_lookup_list ***'
 GO
@@ -47,16 +50,16 @@ AS
 BEGIN
     SELECT
         [Vehicle].[Vehicle_Number],
-        [Model_Lookup].[Vehicle_Make],
-        [Model_Lookup].[Vehicle_Model],
-        [Model_Lookup].[Max_Passengers],
+        [Vehicle_Model].[Make],
+        [Vehicle_Model].[Vehicle_Model_ID],
+        [Vehicle_Model].[Max_Passengers],
         [Vehicle].[Vehicle_Mileage],
         [Vehicle].[Description],
         [Vehicle].[Vehicle_License_Plate],
-        [Vehicle].[Vehicle_Type],
+        [Vehicle].[Vehicle_Type_ID],
         [Vehicle].[Rental]
     FROM [dbo].[Vehicle]
-        INNER JOIN [dbo].[Model_Lookup] ON [Vehicle].[Model_Lookup_ID] = [Model_Lookup].[Model_Lookup_ID]
+        LEFT JOIN [dbo].[Vehicle_Model] ON [Vehicle].[Vehicle_Model_ID] = [Vehicle_Model].[Vehicle_Model_ID]
     WHERE [Vehicle].[Is_Active] = 1
 END
 GO
@@ -71,10 +74,10 @@ CREATE PROCEDURE [dbo].[sp_select_vehicle_by_vehicle_number]
 )
 AS
 BEGIN
-    SELECT [Vehicle_Number], [VIN], [Vehicle].[Model_Lookup_ID], [Model_Lookup].[Vehicle_Make], [Model_Lookup].[Vehicle_Model], [Model_Lookup].[Vehicle_Year], [Vehicle_Mileage], [Vehicle_License_Plate], [Description], [Date_Entered], [Model_Lookup].[Max_Passengers], [Vehicle_Type], [Rental], [Is_Active]
+    SELECT [Vehicle_Number], [VIN], [Vehicle].[Vehicle_Model_ID], [Vehicle_Model].[Make], [Vehicle_Model].[Name], [Vehicle_Model].[Year], [Vehicle_Mileage], [Vehicle_License_Plate], [Description], [Date_Entered], [Vehicle_Model].[Max_Passengers], [Vehicle].[Vehicle_Type_ID], [Rental], [Vehicle].[Is_Active]
     FROM [Vehicle]
-        JOIN [Model_Lookup]
-        ON [Vehicle].[Model_Lookup_ID] = [Model_Lookup].[Model_Lookup_ID]
+        JOIN [Vehicle_Model]
+        ON [Vehicle].[Vehicle_Model_ID] = [Vehicle_Model].[Vehicle_Model_ID]
     WHERE @Vehicle_Number = [Vehicle].[Vehicle_Number]
 END
 GO
@@ -90,66 +93,44 @@ CREATE PROCEDURE [dbo].[sp_update_vehicle]
 
     @OldVehicle_Number         [nvarchar](10),
     @OldVehicle_Mileage        [int],
-    @OldModel_Lookup_ID        [int],
+    @OldVehicle_Model_ID        [int],
     @OldVehicle_License_Plate  [nvarchar](10),
-    @OldVehicle_Type           [nvarchar](50),
+    @OldVehicle_Type_ID        [nvarchar](50),
     @OldDate_Entered           [date],
     @OldDescription            [nvarchar](256),
     @OldRental                 [bit],
-
     @OldMax_Passengers         [int],
-    @OldVehicle_Year           [int],
-    @OldVehicle_Make           [nvarchar](255),
-    @OldVehicle_Model          [nvarchar](255),
 
     @Vehicle_Number         [nvarchar](10),
     @Vehicle_Mileage        [int],
-    @Model_Lookup_ID        [int],
+    @Vehicle_Model_ID        [int],
     @Vehicle_License_Plate  [nvarchar](10),
-    @Vehicle_Type           [nvarchar](50),
+    @Vehicle_Type_ID        [nvarchar](50),
     @Description            [nvarchar](256),
     @Date_Entered           [date],
     @Rental                 [bit],
-
-    @Max_Passengers         [int],
-    @Vehicle_Year           [int],
-    @Vehicle_Make           [nvarchar](255),
-    @Vehicle_Model          [nvarchar](255)
+    @Max_Passengers         [int]
 )
 AS
 BEGIN
-    BEGIN TRANSACTION
-    UPDATE [Model_Lookup]
-    SET [Max_Passengers] = @Max_Passengers,
-    [Vehicle_Make] = @Vehicle_Make,
-    [Vehicle_Model] = @Vehicle_Model,
-    [Vehicle_Year] = @Vehicle_Year
-
-    WHERE @Model_Lookup_ID = [Model_Lookup].[Model_Lookup_ID]
-        AND @OldMax_Passengers = [Max_Passengers]
-        AND @OldVehicle_Make = [Vehicle_Make]
-        AND @OldVehicle_Model = [Vehicle_Model]
-        AND @OldVehicle_Year = [Vehicle_Year]
-
     UPDATE [Vehicle]
     SET [Vehicle_Number] = @Vehicle_Number,
     [Vehicle_Mileage] = @Vehicle_Mileage,
-    [Vehicle].[Model_Lookup_ID] = @Model_Lookup_ID,
+    [Vehicle].[Vehicle_Model_ID] = @Vehicle_Model_ID,
     [Vehicle_License_Plate] = @Vehicle_License_Plate,
-    [Vehicle_Type] = @Vehicle_Type,
+    [Vehicle_Type_ID] = @Vehicle_Type_ID,
     [Description] = @Description,
     [Date_Entered] = @Date_Entered,
     [Rental] = @Rental
     WHERE @VIN = [VIN]
         AND @OldVehicle_Number = [Vehicle_Number]
         AND @OldVehicle_Mileage = [Vehicle_Mileage]
-        AND @OldModel_Lookup_ID = [Vehicle].[Model_Lookup_ID]
+        AND @OldVehicle_Model_ID = [Vehicle].[Vehicle_Model_ID]
         AND @OldVehicle_License_Plate = [Vehicle_License_Plate]
-        AND @OldVehicle_Type = [Vehicle_Type]
+        AND @OldVehicle_Type_ID = [Vehicle_Type_ID]
         AND @OldDescription = [Description]
         AND @OldDate_Entered = [Date_Entered]
-        AND @OldRental = [Rental]
-    COMMIT TRANSACTION
+        AND @OldRental = [Rental];
     RETURN @@ROWCOUNT
 END
 GO
@@ -164,8 +145,8 @@ CREATE PROCEDURE [dbo].[sp_deactivate_vehicle]
     @Vehicle_Number         [nvarchar](10),
     @Vehicle_Mileage        [int],
     @Vehicle_License_plate  [nvarchar](10),
-    @Model_Lookup_ID        [int],
-    @Vehicle_Type           [nvarchar](50),
+    @Vehicle_Model_ID        [int],
+    @Vehicle_Type_ID        [nvarchar](50),
     @Description            [nvarchar](256),
     @Date_Entered           [date],
     @Rental                 [bit]
@@ -177,9 +158,9 @@ BEGIN
     WHERE @VIN = [VIN]
         AND @Vehicle_Number = [Vehicle_Number]
         AND @Vehicle_Mileage = [Vehicle_Mileage]
-        AND @Model_Lookup_ID = [Vehicle].[Model_Lookup_ID]
+        AND @Vehicle_Model_ID = [Vehicle].[Vehicle_Model_ID]
         AND @Vehicle_License_Plate = [Vehicle_License_Plate]
-        AND @Vehicle_Type = [Vehicle_Type]
+        AND @Vehicle_Type_ID = [Vehicle_Type_ID]
         AND @Description = [Description]
         AND @Date_Entered = [Date_Entered]
         AND @Rental = [Rental]

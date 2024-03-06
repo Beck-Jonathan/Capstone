@@ -61,6 +61,7 @@
     <Compile Include="HelperObjects\Time.cs" />
     <Compile Include="ValidationHelpers.cs" />
     <Compile Include="Vehicle.cs" />
+    <Compile Include="VehicleModel.cs" />
     <Compile Include="VehicleType.cs" />
     <Compile Include="Role.cs" />
     <Compile Include="Vendor.cs" />
