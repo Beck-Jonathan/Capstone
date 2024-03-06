@@ -237,6 +237,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Vendors\AddUpdateDeleteVendor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Vendors\ViewAllVendors.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="WorkOrders\UpdateWorkOrder.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -268,6 +276,12 @@
     </Compile>
     <Compile Include="Employees\EmployeeProfilePage.xaml.cs">
       <DependentUpon>EmployeeProfilePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Vendors\AddUpdateDeleteVendor.xaml.cs">
+      <DependentUpon>AddUpdateDeleteVendor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Vendors\ViewAllVendors.xaml.cs">
+      <DependentUpon>ViewAllVendors.xaml</DependentUpon>
     </Compile>
     <Compile Include="WorkOrders\UpdateWorkOrder.xaml.cs">
       <DependentUpon>UpdateWorkOrder.xaml</DependentUpon>

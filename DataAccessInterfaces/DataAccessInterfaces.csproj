@@ -54,6 +54,7 @@
     <Compile Include="IEmployeeAccessor.cs" />
     <Compile Include="IRoleAccessor.cs" />
     <Compile Include="IVehicleModelAccessor.cs" />
+    <Compile Include="IVendorAccessor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

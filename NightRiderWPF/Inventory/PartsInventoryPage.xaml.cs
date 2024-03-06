@@ -298,5 +298,9 @@ namespace NightRiderWPF.Inventory
                 }
             }
         }
+        private void btnViewVendors_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new Vendors.ViewAllVendors());
+        }
     }
 }
