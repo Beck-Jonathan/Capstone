@@ -246,3 +246,37 @@ BEGIN
 	[Position] = @p_Old_Position
 END
 GO
+
+--Created By: James Williams
+--Date: 2024-02-22
+-- Deactivate employee record
+print'' print'*** Creating sp_deactivate_employee ***'
+GO
+CREATE PROCEDURE [dbo].[sp_deactivate_employee]
+(
+	@p_Employee_ID				[int]
+)
+AS
+	BEGIN
+		UPDATE [dbo].[Employee]
+		SET [Is_Active] = 0
+		WHERE @p_Employee_ID = [Employee_ID]
+	END
+GO
+
+--Created By: James Williams
+--Date: 2024-02-22
+-- Activate employee record
+print'' print'*** Creating sp_activate_employee ***'
+GO
+CREATE PROCEDURE [dbo].[sp_activate_employee]
+(
+	@p_Employee_ID				[int]
+)
+AS
+	BEGIN
+		UPDATE [dbo].[Employee]
+		SET [Is_Active] = 1
+		WHERE @p_Employee_ID = [Employee_ID]
+	END
+GO

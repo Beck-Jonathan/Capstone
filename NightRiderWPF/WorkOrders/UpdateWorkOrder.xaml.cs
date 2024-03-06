@@ -39,33 +39,69 @@ namespace NightRiderWPF.WorkOrders
         ///     
         ///     added the service_order_ID in order to update an existing service order
         /// </remarks>
-        public ServiceOrder SelectedWorkOrder { get; private set; }
-        public ServiceOrder_VM ServiceOrder_VM = null;
+        public ServiceOrder_VM SelectedWorkOrder { get; private set; }
         private int serviceOrderID;
 
 
-        public UpdateWorkOrder(ServiceOrder selectedWorkOrder)
+        public UpdateWorkOrderPage(ServiceOrder_VM selectedWorkOrder)
         {
             InitializeComponent();
             SelectedWorkOrder = selectedWorkOrder;
-            ServiceTypetxt.Text = selectedWorkOrder.Service_Type_ID;
+            CurrentServiceTypetxt.Text = selectedWorkOrder.Service_Type_ID;
             RequestDescriptiontxt.Text = selectedWorkOrder.Service_Description;
             serviceOrderID = selectedWorkOrder.Service_Order_ID;
-        }
+            if (SelectedWorkOrder != null && SelectedWorkOrder.Critical_Issue)
+            {
+                Yesrbtn.IsChecked = true;
+                Norbtn.IsChecked = false;
+            }
+            else
+            {
+                Yesrbtn.IsChecked = false;
+                Norbtn.IsChecked = true;
+            }
 
+        }
 
         private void Confirmbtn_Click(object sender, RoutedEventArgs e)
         {
-
             try
             {
                 IServiceOrderManager serviceOrderManager = new ServiceOrderManager();
 
-                // Update the properties of the SelectedWorkOrder object based on UI inputs
-                SelectedWorkOrder.Service_Order_ID = serviceOrderID;
-                SelectedWorkOrder.Service_Type_ID = ServiceTypetxt.Text;
-                SelectedWorkOrder.Service_Description = RequestDescriptiontxt.Text;
+                // Get the old and new Service Type IDs
+                string oldServiceTypeID = SelectedWorkOrder.Service_Type_ID;
+                string newServiceTypeID = NewServiceTypetxt.Text;
 
+                // Check if newServiceTypeID is null or empty
+                if (string.IsNullOrWhiteSpace(newServiceTypeID))
+                {
+                    MessageBox.Show("New Service Type cannot be null or empty.");
+                    return;
+                }
+
+                // Get the new Service Description
+                string newServiceDescription = RequestDescriptiontxt.Text;
+
+                // Check if newServiceDescription is null or empty
+                if (string.IsNullOrWhiteSpace(newServiceDescription))
+                {
+                    MessageBox.Show("Service Description cannot be null or empty.");
+                    return;
+                }
+
+                // Update the properties of the SelectedWorkOrder
+                SelectedWorkOrder.Service_Order_ID = serviceOrderID;
+                SelectedWorkOrder.Service_Type_ID = newServiceTypeID;
+                SelectedWorkOrder.Service_Description = newServiceDescription;
+                if (Yesrbtn.IsChecked == true)
+                {
+                    SelectedWorkOrder.Critical_Issue = true;
+                }
+                else
+                {
+                    SelectedWorkOrder.Critical_Issue = false;
+                }
 
                 // Perform the update operation
                 serviceOrderManager.UpdateServiceOrder(SelectedWorkOrder);
@@ -81,41 +117,12 @@ namespace NightRiderWPF.WorkOrders
                 // Handle any exceptions that occur during the update process
                 MessageBox.Show("Error updating service order: " + ex.Message);
             }
-
-        }
-        //yes radio button
-        private void Yesrbtn_Checked(object sender, RoutedEventArgs e)
-        {
-
-            SelectedWorkOrder.Critical_Issue = true;
-
-
-        }
-        //no radio button
-        private void Norbtn_Checked(object sender, RoutedEventArgs e)
-        {
-            SelectedWorkOrder.Critical_Issue = false;
-
         }
 
-        private void Page_Loaded(object sender, RoutedEventArgs e)
+
+        private void Addbtn_Click(object sender, RoutedEventArgs e)
         {
-
-
-
-
-            // Set the initial state of the radio buttons based on the CriticalIssue property
-            if (SelectedWorkOrder.Critical_Issue)
-            {
-                Yesrbtn.IsChecked = true;
-            }
-            else
-            {
-                Norbtn.IsChecked = true;
-            }
-
+            
         }
     }
-
 }
-

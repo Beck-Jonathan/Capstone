@@ -23,8 +23,14 @@ namespace DataAccessLayer
     /// UPDATED: 2024-02-16
     /// <br />
     ///  Add AuthenticateEmployee method
+    /// <br /> <br />
+    /// UPDATER: Jared Hutton
+    /// <br />
+    /// UPDATED: 2024-02-24
+    /// <br />
+    ///  Add UpdateLoginPasswordHash and GetLoginEmailByUsername methods
     /// </remarks>
-   public class LoginAccessor : ILoginAccessor
+    public class LoginAccessor : ILoginAccessor
     {
         /// <summary>
         ///     Authenticates given username and password hash and retrieves the authenticated employee data
@@ -48,6 +54,13 @@ namespace DataAccessLayer
         ///    CONTRIBUTOR: Jared Hutton
         /// <br />
         ///    CREATED: 2024-02-16
+        /// </remarks>
+        /// /// <br /><br />
+        ///    UPDATER: Steven Sanchez
+        /// <br />
+        ///    UPDATED: 2024-02-27
+        /// <br />
+        ///     added new Login object for username
         /// </remarks>
         public Employee_VM AuthenticateEmployee(string username, string passwordHash)
         {
@@ -98,7 +111,11 @@ namespace DataAccessLayer
                         Zip = reader.GetString(9),
                         Phone_Number = reader.GetString(10),
                         Email = reader.GetString(11),
-                        Position = reader.GetString(12)
+                        Position = reader.GetString(12),
+                        Login = new Login()
+                        {
+                            Username = reader.GetString(13),
+                        }
                     };
 
                     while (reader.Read())
@@ -506,5 +523,121 @@ namespace DataAccessLayer
 
             return employee;
         }
+
+        /// <summary>
+        ///     Changes the associated user's password hash
+        /// </summary>
+        /// <param name="username">
+        ///    The username of the user
+        /// </param>
+        /// <param name="passwordHash">
+        ///    The user's new password hash
+        /// </param>
+        /// <returns>
+        ///    <see cref="int">int</see>: The number of rows affected by the operation
+        /// </returns>
+        /// <remarks>
+        ///    Parameters:
+        /// <br />
+        ///    <see cref="string">string</see> username: The username of the user
+        /// <br />
+        ///    <see cref="string">string</see> passwordHash: The user's new password hash
+        /// <br /><br />
+        ///    CONTRIBUTOR: Jared Hutton
+        /// <br />
+        ///    CREATED: 2024-02-24
+        /// </remarks>
+        public int UpdateLoginPasswordHash(string username, string passwordHash)
+        {
+            int rowsAffected = 0;
+
+            var conn = DBConnectionProvider.GetConnection();
+
+            var cmdText = "sp_update_login_password_hash";
+
+            var cmd = new SqlCommand(cmdText, conn);
+
+            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+
+            cmd.Parameters.Add("@Username", System.Data.SqlDbType.NVarChar);
+            cmd.Parameters.Add("@Password_Hash", System.Data.SqlDbType.NVarChar);
+
+            cmd.Parameters["@Username"].Value = username;
+            cmd.Parameters["@Password_Hash"].Value = passwordHash;
+
+            try
+            {
+                conn.Open();
+                rowsAffected = cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            return rowsAffected;
+        }
+
+        /// <summary>
+        ///     Retrieves the email associated with a user
+        /// </summary>
+        /// <param name="username">
+        ///    The username of the user
+        /// </param>
+        /// <returns>
+        ///    <see cref="string">string</see>: The user's registered email
+        /// </returns>
+        /// <remarks>
+        ///    Parameters:
+        /// <br />
+        ///    <see cref="string">string</see> username: The username of the user
+        /// <br /><br />
+        ///    CONTRIBUTOR: Jared Hutton
+        /// <br />
+        ///    CREATED: 2024-02-24
+        /// </remarks>
+        public string GetLoginEmailByUsername(string username)
+        {
+            string email = null;
+
+            var conn = DBConnectionProvider.GetConnection();
+
+            var cmdText = "sp_get_login_email_by_username";
+
+            var cmd = new SqlCommand(cmdText, conn);
+
+            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+
+            cmd.Parameters.Add("@Username", System.Data.SqlDbType.NVarChar);
+
+            cmd.Parameters["@Username"].Value = username;
+
+            try
+            {
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                if (reader.HasRows)
+                {
+                    reader.Read();
+
+                    email = reader.GetString(0);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            return email;
+       }
     }
 }

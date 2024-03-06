@@ -15,19 +15,47 @@ namespace LogicLayer
     /// 
     ///     Provides CRUD operations on the data source for client data.
     /// </summary>
-    /// 
     /// <remarks>
-    /// UPDATER: Jared Roberts
-    /// <br />
-    ///    UPDATED: 2024-02-11
-    /// <br />
-    ///     Changed the argument type for the EditClient method from int to Client_VM &
-    ///     Changed the return type for the GetClientById method from Client to Client_VM
+    /// UPDATER: Isabella Rosenbohm <br />
+    /// UPDATED: 2024-02-20 <br />
+    ///     Implemented AddClient method
+    /// <br/><br/>
+    /// UPDATER: Isabella Rosenbohm <br/>
+    /// UPDATED: 2024-02-27 <br/>
+    ///     Changed intake param of EditClient from newClient to client 
     /// </remarks>
 
     public interface IClientManager
     {
-        int AddClient(Client client);
+        /// <summary>
+        ///     Inserts new client record into the Client table
+        /// </summary>
+        /// <param name="newClient">
+        ///    Client_VM object that contains the data of the new client to be added to the database
+        /// </param>
+        /// <returns>
+        ///    <see cref="bool">true</see> if the client object is valid; otherwise, <see cref="bool">false</see>.
+        /// </returns>
+        /// <remarks>
+        ///    Parameters:
+        /// <br />
+        ///    <see cref="Client_VM">Client_VM</see> a: Client object to be inserted
+        /// <br /><br />
+        ///    Exceptions:
+        /// <br />
+        ///    <see cref="ApplicationException">ApplicationException</see>: Thrown when error entering record
+        /// <br /><br />
+        ///    CONTRIBUTOR: Isabella Rosenbohm
+        /// <br />
+        ///    CREATED: 2024-02-20
+        /// <br /><br />
+        ///    UPDATER: updater_name
+        /// <br />
+        ///    UPDATED: yyyy-MM-dd
+        /// <br />
+        ///     update comment
+        /// </remarks>
+        bool AddClient(Client_VM newClient);
         Client_VM GetClientById(int id);
         /// <summary>
         ///     A method that returns an IEnumerable containing all Client_VM records.
@@ -38,8 +66,7 @@ namespace LogicLayer
         /// <br />
         ///   Throws an application exception when it catches an exception from ClientAccessor.
         /// <br /><br />
-        ///    CONTRIBUTOR: Isabella Rosenbohm
-        /// <br />
+        ///    CONTRIBUTOR: Isabella Rosenbohm <br />
         ///    CREATED: 2024-02-05
         /// </remarks>
         IEnumerable<Client> GetAllClients();

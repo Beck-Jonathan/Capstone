@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Net;
+using System.IO.Ports;
 
 namespace DataAccessLayer
 {
@@ -16,7 +17,54 @@ namespace DataAccessLayer
     {
         public int InsertClient(Client_VM client)
         {
-            throw new NotImplementedException();
+            int rows = 0;
+
+            var conn = DBConnectionProvider.GetConnection();
+            var cmdText = "sp_insert_client";
+            var cmd = new SqlCommand(cmdText, conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            cmd.Parameters.Add("@p_GivenName", SqlDbType.NVarChar, 50);
+            cmd.Parameters.Add("@p_FamilyName", SqlDbType.NVarChar, 50);
+            cmd.Parameters.Add("@p_MiddleName", SqlDbType.NVarChar, 50);
+            cmd.Parameters.Add("@p_DOB", SqlDbType.Date);
+            cmd.Parameters.Add("@p_Email", SqlDbType.NVarChar, 255);
+            cmd.Parameters.Add("@p_PostalCode", SqlDbType.NVarChar, 9);
+            cmd.Parameters.Add("@p_City", SqlDbType.NVarChar, 50);
+            cmd.Parameters.Add("@p_Region", SqlDbType.NVarChar, 50);
+            cmd.Parameters.Add("@p_Address", SqlDbType.NVarChar, 100);
+            cmd.Parameters.Add("@p_TextNumber", SqlDbType.NVarChar, 12);
+            cmd.Parameters.Add("@p_VoiceNumber", SqlDbType.NVarChar, 12);
+            cmd.Parameters.Add("@p_Active", SqlDbType.Bit);
+
+            cmd.Parameters["@p_GivenName"].Value = client.GivenName;
+            cmd.Parameters["@p_FamilyName"].Value = client.FamilyName;
+            cmd.Parameters["@p_MiddleName"].Value = client.MiddleName;
+            cmd.Parameters["@p_DOB"].Value = client.DOB;
+            cmd.Parameters["@p_Email"].Value = client.Email;
+            cmd.Parameters["@p_PostalCode"].Value = client.PostalCode;
+            cmd.Parameters["@p_City"].Value = client.City;
+            cmd.Parameters["@p_Region"].Value = client.Region;
+            cmd.Parameters["@p_Address"].Value = client.Address;
+            cmd.Parameters["@p_TextNumber"].Value = client.TextNumber;
+            cmd.Parameters["@p_VoiceNumber"].Value = client.VoiceNumber;
+            cmd.Parameters["@p_Active"].Value = client.IsActive;
+
+            try
+            {
+                conn.Open();
+                rows = cmd.ExecuteNonQuery();
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return rows;
         }
 
         public IEnumerable<Client_VM> SelectAllClients()
@@ -41,7 +89,7 @@ namespace DataAccessLayer
                             ClientID = reader.GetInt32(0),
                             GivenName = reader.GetString(1),
                             FamilyName = reader.GetString(2),
-                            // Middle_Name should be GetString(3)
+                            MiddleName = reader.GetString(3),
                             DOB = reader.GetDateTime(4),
                             Email = reader.GetString(5),
                             City = reader.GetString(6),
@@ -76,15 +124,13 @@ namespace DataAccessLayer
         ///    <see cref="Client_VM">Client_VM</see>: The Client_VM object for the Client with the given ID.
         /// </returns>
         /// <remarks>
-        ///    Exceptions:
-        /// <br />
-        ///    <see cref="ApplicationException">ApplicationException</see>: Thrown when a Client isn't found.
-        /// <br /><br />
-        ///    CONTRIBUTOR: Jared Roberts
-        /// <br />
-        ///    CREATED: 2024-02-11
-        /// <br /><br />
-        ///     Initial creation
+        ///    Exceptions: <br />
+        ///    <see cref="ApplicationException">ApplicationException</see>: Thrown when a Client isn't found. <br /><br />
+        ///    CONTRIBUTOR: Jared Roberts <br />
+        ///    CREATED: 2024-02-11 <br />
+        ///    UPDATER: Isabella Rosenbohm <br />
+        ///    UPDATED: 2024-03-05 <br /><br />
+        ///         Changed Parameters.AddWithValues line from @ClientID to @Client_ID as it wasn't correct
         /// </remarks>
         public Client_VM SelectClientById(int id)
         {
@@ -95,7 +141,7 @@ namespace DataAccessLayer
             var cmd = new SqlCommand(cmdText, conn);
             cmd.CommandType = CommandType.StoredProcedure;
 
-            cmd.Parameters.AddWithValue("@ClientID", id);
+            cmd.Parameters.AddWithValue("@Client_ID", id);
 
             try
             {
@@ -237,13 +283,17 @@ namespace DataAccessLayer
         /// <br />
         ///    <see cref="ArgumentException">ArgumentException</see>: Thrown when incorrect fields are given for the user.
         /// <br /><br />
-        ///    CONTRIBUTOR: Jared Roberts
-        /// <br />
-        ///    CREATED: 2024-02-11
-        /// <br /><br />
-        ///     Initial creation
+        /// CONTRIBUTOR: Jared Roberts
+        /// CREATED: 2024-02-11
+        /// <br/><br/>
+        /// UPDATER: Jared Roberts <br/>
+        /// UPDATED: 2024-02-11 <br/>
+        ///     Changed the argument type for the UpdateClient method from int to Client_VM
+        /// UPDATER: Isabella Rosenbohm <br/>
+        /// UPDATED: 2024-02-27 <br/>
+        ///     Rewrote UpdateClient method so it no longer needs Old data params as Client_ID should be sufficient
         /// </remarks>
-        public int UpdateClient(Client_VM newClient)
+        public int UpdateClient(Client_VM client)
         {
             int rows = 0;
 
@@ -255,33 +305,19 @@ namespace DataAccessLayer
 
             cmd.CommandType = CommandType.StoredProcedure;
 
-            cmd.Parameters.AddWithValue(@"Client_ID", newClient.ClientID);
-            cmd.Parameters.AddWithValue(@"OldGivenName", newClient.GivenName);
-            cmd.Parameters.AddWithValue(@"OldFamilyName", newClient.FamilyName);
-            cmd.Parameters.AddWithValue(@"OldMiddleName", newClient.MiddleName);
-            cmd.Parameters.AddWithValue(@"OldDOB", newClient.DOB);
-            cmd.Parameters.AddWithValue(@"OldEmail", newClient.Email);
-            cmd.Parameters.AddWithValue(@"OldPostalCode", newClient.PostalCode);
-            cmd.Parameters.AddWithValue(@"OldCity", newClient.City);
-            cmd.Parameters.AddWithValue(@"OldRegion", newClient.Region);
-            cmd.Parameters.AddWithValue(@"OldAddress", newClient.Address);
-            cmd.Parameters.AddWithValue(@"OldTextNumber", newClient.TextNumber);
-            cmd.Parameters.AddWithValue(@"OldVoiceNumber", newClient.VoiceNumber);
-            cmd.Parameters.AddWithValue(@"OldActive", newClient.IsActive);
-            cmd.Parameters.AddWithValue(@"NewGivenName", newClient.GivenName);
-            cmd.Parameters.AddWithValue(@"NewFamilyName", newClient.FamilyName);
-            cmd.Parameters.AddWithValue(@"NewMiddleName", newClient.MiddleName);
-            cmd.Parameters.AddWithValue(@"NewDOB", newClient.DOB);
-            cmd.Parameters.AddWithValue(@"NewEmail", newClient.Email);
-            cmd.Parameters.AddWithValue(@"NewPostalCode", newClient.PostalCode);
-            cmd.Parameters.AddWithValue(@"NewCity", newClient.City);
-            cmd.Parameters.AddWithValue(@"NewRegion", newClient.Region);
-            cmd.Parameters.AddWithValue(@"NewAddress", newClient.Address);
-            cmd.Parameters.AddWithValue(@"NewTextNumber", newClient.TextNumber);
-            cmd.Parameters.AddWithValue(@"NewVoiceNumber", newClient.VoiceNumber);
-            cmd.Parameters.AddWithValue(@"NewActive", newClient.IsActive);
-
-
+            cmd.Parameters.AddWithValue(@"Client_ID", client.ClientID);
+            cmd.Parameters.AddWithValue(@"GivenName", client.GivenName);
+            cmd.Parameters.AddWithValue(@"FamilyName", client.FamilyName);
+            cmd.Parameters.AddWithValue(@"MiddleName", client.MiddleName);
+            cmd.Parameters.AddWithValue(@"DOB", client.DOB);
+            cmd.Parameters.AddWithValue(@"Email", client.Email);
+            cmd.Parameters.AddWithValue(@"PostalCode", client.PostalCode);
+            cmd.Parameters.AddWithValue(@"City", client.City);
+            cmd.Parameters.AddWithValue(@"Region", client.Region);
+            cmd.Parameters.AddWithValue(@"Address", client.Address);
+            cmd.Parameters.AddWithValue(@"TextNumber", client.TextNumber);
+            cmd.Parameters.AddWithValue(@"VoiceNumber", client.VoiceNumber);
+            cmd.Parameters.AddWithValue(@"Active", client.IsActive);
 
             try
             {

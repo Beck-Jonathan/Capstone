@@ -23,7 +23,8 @@ BEGIN
     e.[Zip],
     e.[Phone_Number],
     e.[Email],
-    e.[Position]
+    e.[Position],
+    l.[Username]
   FROM [dbo].[Employee] e
   LEFT JOIN [dbo].[Employee_Role] er ON e.[Employee_ID] = er.[Employee_ID]
   JOIN [dbo].[Login] l ON e.[Employee_ID] = l.[Employee_ID]
@@ -71,5 +72,42 @@ BEGIN
     AND [Employee_ID] IS NOT NULL
     AND [Username] = @Username
     AND [Password_Hash] = @Password_Hash;
+END;
+GO
+
+print '' print '*** creating sp_update_login_password_hash ***'
+GO
+-- Initial Creator: Jared Hutton
+-- Creation Date: 2024-02-24
+-- Last Modified: Jared Hutton
+-- Modification Description: Initial Creation
+-- Stored Procedure Description: Changes the associated user's password hash
+CREATE PROCEDURE [dbo].[sp_update_login_password_hash] (
+  @Username [nvarchar](50),
+  @Password_Hash [nvarchar](100)
+)
+AS
+BEGIN
+  UPDATE [dbo].[Login] SET [Password_Hash] = @Password_Hash WHERE [Username] = @Username;
+END;
+GO
+
+print '' print '*** creating sp_get_login_email_by_username ***'
+GO
+-- Initial Creator: Jared Hutton
+-- Creation Date: 2024-02-24
+-- Last Modified: Jared Hutton
+-- Modification Description: Initial Creation
+-- Stored Procedure Description: Retrieves the email associated with a login object by the username
+CREATE PROCEDURE [dbo].[sp_get_login_email_by_username] (
+  @Username [nvarchar](50)
+)
+AS
+BEGIN
+  SELECT COALESCE(e.[Email], c.[Email])
+  FROM [dbo].[Login] l
+  LEFT JOIN [dbo].[Employee] e ON l.[Employee_ID] = e.[Employee_ID]
+  LEFT JOIN [dbo].[Client] c ON l.[Client_ID] = c.[Client_ID]
+  WHERE l.[Username] = @Username;
 END;
 GO

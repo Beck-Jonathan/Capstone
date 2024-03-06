@@ -11,7 +11,9 @@ namespace DataObjects
     /// CREATED: 2024-02-01
     ///     Vehicle data object for storing vehicle information.
     /// </summary>
+    /// <remarks>
     /// 
+    /// </remarks>
     public class Vehicle
     {
         public string VIN {  get; set; }

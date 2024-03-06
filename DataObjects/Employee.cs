@@ -13,6 +13,13 @@ namespace DataObjects
     /// <br />
     ///     Represents an employee within the organization
     /// </summary>
+    /// <br /><br />
+    ///    UPDATER: Steven Sanchez
+    /// <br />
+    ///    UPDATED: 2024-02-27
+    /// <br />
+    ///     added Login to the Employee_VM
+    /// </remarks>
     public class Employee
     {
         public int Employee_ID { get; set; }
@@ -34,6 +41,7 @@ namespace DataObjects
     /// <inheritdoc />
     public class Employee_VM : Employee
     {
+        public Login Login { get; set; }
         public IEnumerable<Role> Roles { get; set; }
     }
 }

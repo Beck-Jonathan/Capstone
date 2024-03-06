@@ -64,20 +64,21 @@ namespace NightRiderWPF.Employees
         /// <br />
         ///    CREATED: 2024-02-03
         /// <br /><br />
-        ///    UPDATER: updater_name
+        ///    UPDATER: Steven Sanchez
         /// <br />
-        ///    UPDATED: yyyy-MM-dd
+        ///    UPDATED: 2024-02-28
         /// <br />
-        ///     Update comments go here. Explain what you changed in this method.
-        ///     A new remark should be added for each update to this method.
+        ///     Added a method to remove columns and Updated the search, filter,
+        ///     and back button event handlers
+        ///     
         /// </remarks>
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             employeeManager = new EmployeeManager();
             try
             {
-                datEmployee_List.ItemsSource = employeeManager.GetEmployees();
-                var columnsToRemove = new[] { "Employee_Roles", "Address2", "DOB" };
+                datEmployee_List.ItemsSource = employeeManager.GetAllEmployees();
+                var columnsToRemove = new[] { "Employee_Roles", "Address2", "DOB", "Login", "Roles" };
                 foreach (var columnName in columnsToRemove)
                 {
                     var columnToRemove = datEmployee_List.Columns.FirstOrDefault(c => c.Header.ToString() == columnName);
@@ -99,20 +100,67 @@ namespace NightRiderWPF.Employees
         private void datEmployee_List_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             Employee_VM selected_employee = null;
-            if(datEmployee_List.SelectedItem != null) 
+            if (datEmployee_List.SelectedItem != null)
             {
                 selected_employee = datEmployee_List.SelectedItem as Employee_VM;
                 NavigationService.Navigate(new AdminViewEmployee(employeeManager, selected_employee));
 
             }
-            
-            
+        }
 
+        private void searchtxt_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            string searchText = searchtxt.Text.ToLower();
+            datEmployee_List.ItemsSource = employeeManager.GetEmployees().Where(emp =>
+                emp.Given_Name.ToLower().Contains(searchText) || emp.Family_Name.ToLower().Contains(searchText) ||
+                emp.Position.ToLower().Contains(searchText));
+            var columnsToRemove = new[] { "Employee_Roles", "Address2", "DOB", "Login", "Roles" };
+            RemoveColumns(columnsToRemove);
+        }
+
+        private void filtercbo_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            string selectedValue = (filtercbo.SelectedItem as ComboBoxItem)?.Content?.ToString();
+            if (selectedValue == "A-Z")
+            {
+                datEmployee_List.ItemsSource = employeeManager.GetEmployees().OrderBy(emp => emp.Given_Name);
+            }
+            else if (selectedValue == "Z-A")
+            {
+                datEmployee_List.ItemsSource = employeeManager.GetEmployees().OrderByDescending(emp => emp.Given_Name);
+            }
+            var columnsToRemove = new[] { "Employee_Roles", "Address2", "DOB", "Login", "Roles" };
+            RemoveColumns(columnsToRemove);
+        }
+
+        private void RemoveColumns(string[] columnsToRemove)
+        {
+            foreach (var columnName in columnsToRemove)
+            {
+                var columnToRemove = datEmployee_List.Columns.FirstOrDefault(c => c.Header.ToString() == columnName);
+                if (columnToRemove != null)
+                {
+                    datEmployee_List.Columns.Remove(columnToRemove);
+                }
+            }
         }
 
         private void AdminAddbtn_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.Navigate(new AdminCreateNewEmployee());
+        }
+
+        private void AdminBackbtn_Click(object sender, RoutedEventArgs e)
+        {
+
+            if (NavigationService.CanGoBack)
+            {
+                NavigationService.GoBack();
+            }
+            else
+            {
+                MessageBox.Show("No previous page available.");
+            }
         }
     }
 }

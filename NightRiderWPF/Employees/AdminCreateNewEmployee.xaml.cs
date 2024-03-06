@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 
-     
+
 
 namespace NightRiderWPF.Employees
 {
@@ -48,6 +48,11 @@ namespace NightRiderWPF.Employees
                 generateCBOStates(cboState);
                 cboState.SelectedIndex = 0;
 
+                //Hide fields until Country field has data
+                cboState.Visibility = Visibility.Hidden;
+                lblState.Visibility = Visibility.Hidden;
+
+
                 //Generates a list box of possible employee roles
                 foreach (var role in _roleManager.GetAllRoles())
                 {
@@ -72,8 +77,13 @@ namespace NightRiderWPF.Employees
             string address1 = txtAddress1.Text;
             string address2 = txtAddress2.Text ?? "";
             string city = txtCity.Text;
-            string state = cboState.SelectedValue.ToString();
-            string country = txtCountry.Text;
+            string state = "";
+            if (txtCountry.Text.ToUpper() == "USA" || txtCountry.Text.ToUpper() == "US")
+            {
+                state = cboState.SelectedValue.ToString().ToUpper();
+            }
+            string country = txtCountry.Text.ToUpper();
+            DateTime dob = dateDOB.SelectedDate.Value;
             string zip = txtZip.Text;
             string phone = txtPhone.Text;
             string email = txtEmail.Text;
@@ -85,11 +95,7 @@ namespace NightRiderWPF.Employees
                 MessageBox.Show("Please enter a valid email");
                 return;
             }
-            if (!FormValidationHelper.IsValidZipCode(zip))
-            {
-                MessageBox.Show("Please enter a valid zipcode");
-                return;
-            }
+
             if (!FormValidationHelper.IsValidPhoneNumber(phone))
             {
                 MessageBox.Show("Please enter a valid telephone number");
@@ -101,7 +107,6 @@ namespace NightRiderWPF.Employees
                 string.IsNullOrWhiteSpace(familyName) ||
                 string.IsNullOrWhiteSpace(address1) ||
                 string.IsNullOrWhiteSpace(city) ||
-                string.IsNullOrWhiteSpace(state) ||
                 string.IsNullOrWhiteSpace(country) ||
                 string.IsNullOrWhiteSpace(zip) ||
                 string.IsNullOrWhiteSpace(phone) ||
@@ -111,7 +116,15 @@ namespace NightRiderWPF.Employees
                 MessageBox.Show("Please fill in all required fields.");
                 return;
             }
-
+            IEnumerable<Employee> employees = _employeeManager.GetAllEmployees();
+            foreach (var employee in employees)
+            {
+                if (txtEmail.Text == employee.Email)
+                {
+                    MessageBox.Show("An employee with that email already exists");
+                    return;
+                }
+            }
 
 
             Employee_VM newEmployee = new Employee_VM()
@@ -119,6 +132,7 @@ namespace NightRiderWPF.Employees
 
                 Given_Name = givenName,
                 Family_Name = familyName,
+                DOB = dob,
                 Address = address1,
                 Address2 = address2,
                 City = city,
@@ -164,6 +178,7 @@ namespace NightRiderWPF.Employees
             txtGivenName.Text = "";
             txtFamilyName.Text = "";
             txtAddress1.Text = "";
+            dateDOB.SelectedDate = DateTime.Now;
             txtAddress2.Text = "";
             txtCity.Text = "";
             cboState.SelectedIndex = 0;
@@ -202,6 +217,29 @@ namespace NightRiderWPF.Employees
             else
             {
                 MessageBox.Show("No page to go back to.");
+            }
+        }
+
+
+        private void txtCountry_KeyUp(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (txtCountry.Text == "" || txtCountry.Text == null)
+            {
+                cboState.Visibility = Visibility.Hidden;
+                lblState.Visibility = Visibility.Hidden;
+
+            }
+            else if (txtCountry.Text.ToUpper() == "USA" || txtCountry.Text.ToUpper() == "US")
+            {
+                cboState.Visibility = Visibility.Visible;
+                lblState.Visibility = Visibility.Visible;
+
+            }
+            else
+            {
+                cboState.Visibility = Visibility.Hidden;
+                lblState.Visibility = Visibility.Hidden;
+
             }
         }
     }

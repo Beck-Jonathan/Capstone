@@ -45,6 +45,11 @@
     <Compile Include="Client\IDependentManager.cs" />
     <Compile Include="RouteStop\IRouteManager.cs" />
     <Compile Include="RouteStop\RouteManager.cs" />
+    <Compile Include="PasswordReset\PasswordResetManager.cs" />
+    <Compile Include="PurchaseOrder\IPOLineItemsManager.cs" />
+    <Compile Include="PurchaseOrder\IPurchase_OrderManager.cs" />
+    <Compile Include="PurchaseOrder\POLineItemsManager.cs" />
+    <Compile Include="PurchaseOrder\PurchaseOrderManager.cs" />
     <Compile Include="ServiceOrder\IServiceOrderManager.cs" />
     <Compile Include="AppData\Authentication.cs" />
     <Compile Include="Login\LoginManager.cs" />
@@ -53,8 +58,8 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="Utilities\IPasswordHasher.cs" />
     <Compile Include="Utilities\PasswordHasher.cs" />
+    <Compile Include="Utilities\VerificationCodeGenerator.cs" />
     <Compile Include="Vehicle\IVehicleManager.cs" />
     <Compile Include="ServiceOrder\ServiceOrderManager.cs" />
     <Compile Include="Vehicle\VehicleManager.cs" />
@@ -94,5 +99,6 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

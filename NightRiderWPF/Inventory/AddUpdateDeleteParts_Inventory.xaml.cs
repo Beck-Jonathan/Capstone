@@ -32,11 +32,16 @@ namespace NightRiderWPF.Inventory
 
     public partial class AddUpdateDeleteParts_Invnetory : Page
     {
+        Parts_Inventory _part = null;
+        Parts_InventoryManager _parts_inventoryManager = null;
+
         //Populate all fields with the values from the passed object.
-        public AddUpdateDeleteParts_Invnetory(Parts_Inventory _part)
+        public AddUpdateDeleteParts_Invnetory(Parts_Inventory part)
         {
 
             InitializeComponent();
+            _part = part;
+            _parts_inventoryManager = new Parts_InventoryManager();
 
             tbxParts_InventoryParts_Inventory_ID.Text = _part.Parts_Inventory_ID.ToString();
             tbxParts_InventoryItem_Description.Text = _part.Item_Description;
@@ -50,11 +55,42 @@ namespace NightRiderWPF.Inventory
             tbxParts_InventoryStock_Level.Text = _part.Stock_Level.ToString();
 
             //chkParts_InventoryIs_Active.IsChecked = _part.Is_Active;
+
+            if(_part.Is_Active == false)
+            {
+                btnRemoveParts_Inventory.Visibility = Visibility.Hidden;
+            }
         }
 
         private void btnBck_Click(object sender, RoutedEventArgs e)
         {
             this.NavigationService.GoBack();
+        }
+
+        private void btnRemoveParts_Inventory_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult result = MessageBox.Show("Are you sure? Part will be removed from active inventory.", 
+                "Remove Part", MessageBoxButton.YesNoCancel, MessageBoxImage.Warning);
+            if(result == MessageBoxResult.Yes) 
+            {
+                try
+                {
+                    if(_parts_inventoryManager.RemoveParts_Inventory(_part) == 1)
+                    {
+                        MessageBox.Show("Part removed from active inventory, leaving page.", "Success!");
+                        this.NavigationService.GoBack();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Something went wrong, removal failed.", "Removal Failed");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Removal Failed", 
+                        MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
         }
     }
 }

@@ -10,27 +10,28 @@
     <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Row="0" Grid.Column="0" >
         <StackPanel Margin="0 , 0 , 0 ,300">
             <StackPanel.Resources>
-                <Style TargetType="{x:Type TextBox}">
-                    <Setter Property="Margin" Value="0,50,0,0"/>
+                <Style TargetType="TextBox">
+                    <Setter Property="Margin" Value="5"/>
+                    <Setter Property="VerticalAlignment" Value="Center"/>
+                    <Setter Property="HorizontalAlignment" Value="Stretch"/>
                 </Style>
             </StackPanel.Resources>
-            <Grid Background="#FFF0F0F0" >
+            <Grid Background="#FFF0F0F0" Height="735" Width="795" >
                 <Grid.RowDefinitions >
                     <!-- Create Grid Rows as needed, but try to keep rows consistent between related pages -->
-                    <RowDefinition ></RowDefinition>
-                    <RowDefinition ></RowDefinition>
-                    <RowDefinition ></RowDefinition>
-                    <RowDefinition ></RowDefinition>
-                    <RowDefinition ></RowDefinition>
-                    <RowDefinition ></RowDefinition>
-                    <RowDefinition ></RowDefinition>
-                    <RowDefinition ></RowDefinition>
-                    <RowDefinition ></RowDefinition>
-                    <RowDefinition ></RowDefinition>
-                    <RowDefinition ></RowDefinition>
-                    <RowDefinition ></RowDefinition>
-                    <RowDefinition ></RowDefinition>
-                    <RowDefinition ></RowDefinition>
+                    <RowDefinition Height="75"/>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="20"/>
+                    <RowDefinition Height="40"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition></ColumnDefinition>
@@ -40,70 +41,59 @@
                 </Grid.ColumnDefinitions>
 
                 <Label x:Name="profilelbl" Grid.Row="0"  Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" 
-        VerticalAlignment="Bottom" Content="Employee Profile" FontSize="15px" FontWeight="Bold"/>
+        VerticalAlignment="Center" Content="Employee Profile" FontSize="15px" FontWeight="Bold"/>
                 <Label x:Name="GivenNamelbl" Grid.Row="1"  Grid.Column="0" HorizontalAlignment="Right" Margin="0 0 5 0"
-               VerticalAlignment="Bottom" Content="Given Name"/>
-                <TextBox x:Name="GivenNametxt" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" 
-                         VerticalContentAlignment="Center" HorizontalAlignment="Left" Width="400" Height="30"/>
+               VerticalAlignment="Center" Content="Given Name"/>
+                <TextBox x:Name="GivenNametxt" IsReadOnly="True" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Padding="5" VerticalAlignment="Center" />
 
                 <Label x:Name="FamilyNamelbl" Grid.Row="2"  Grid.Column="0" HorizontalAlignment="Right" Margin="0 0 5 0"
-       VerticalAlignment="Bottom" Content="Family Name"/>
+       VerticalAlignment="Center" Content="Family Name"/>
                 <TextBox x:Name="FamilyNametxt" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2"
-                         VerticalContentAlignment="Center" HorizontalAlignment="Left" Width="400" Height="30"/>
+                         VerticalContentAlignment="Center" IsReadOnly="True" VerticalAlignment="Center" Padding="5"/>
 
                 <Label x:Name="Phonelbl" Grid.Row="3"  Grid.Column="0" HorizontalAlignment="Right" Margin="0 0 5 0"
-        VerticalAlignment="Bottom" Content="Phone"/>
+        VerticalAlignment="Center" Content="Phone"/>
                 <TextBox x:Name="Phonetxt" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2"
-                         VerticalContentAlignment="Center" HorizontalAlignment="Left" Width="400" Height="30"/>
+                         VerticalContentAlignment="Center" IsReadOnly="True" Padding="5" VerticalAlignment="Center"/>
 
 
                 <Label x:Name="Ziplbl" Grid.Row="4"  Grid.Column="0" HorizontalAlignment="Right" Margin="0 0 5 0"
-       VerticalAlignment="Bottom" Content="Zip Code"/>
-                <TextBox x:Name="Ziptxt" Grid.Row="4" Grid.Column="1" 
-                         VerticalContentAlignment="Center" HorizontalAlignment="Left" Width="200" Height="30"/>
+       VerticalAlignment="Center" Content="Zip Code"/>
+                <TextBox x:Name="Ziptxt" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2"
+                         VerticalContentAlignment="Center" Padding="5" IsReadOnly="True" VerticalAlignment="Center"/>
 
                 <Label x:Name="Citylbl" Grid.Row="5"  Grid.Column="0" HorizontalAlignment="Right" Margin="0 0 5 0"
-       VerticalAlignment="Bottom" Content="City"/>
+       VerticalAlignment="Center" Content="City"/>
                 <TextBox x:Name="Citytxt" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2"
-                         VerticalContentAlignment="Center" HorizontalAlignment="Left" Width="400" Height="30"/>
+                         VerticalContentAlignment="Center" Padding="5" IsReadOnly="True" VerticalAlignment="Center"/>
 
                 <Label x:Name="Statelbl" Grid.Row="6"  Grid.Column="0" HorizontalAlignment="Right" Margin="0 0 5 0"
-       VerticalAlignment="Bottom" Content="State"/>
+       VerticalAlignment="Center" Content="State"/>
                 <TextBox x:Name="Statetxt" Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2" 
-                         VerticalContentAlignment="Center" HorizontalAlignment="Left" Width="400" Height="30"/>
+                         VerticalContentAlignment="Center" IsReadOnly="True" Padding="5" VerticalAlignment="Center"/>
 
                 <Label x:Name="Addresslbl" Grid.Row="7"  Grid.Column="0" HorizontalAlignment="Right" Margin="0 0 5 0"
-        VerticalAlignment="Bottom" Content="Address 1"/>
-                <TextBox x:Name="Addresstxt" Grid.Row="7" Grid.Column="1" VerticalContentAlignment="Center" HorizontalAlignment="Left" Width="200" Height="30"/>
+        VerticalAlignment="Center" Content="Address 1"/>
+                <TextBox x:Name="Addresstxt" Grid.Row="7" Grid.Column="1" IsReadOnly="True" Grid.ColumnSpan="2" VerticalContentAlignment="Center" Padding="5" VerticalAlignment="Center"/>
 
                 <Label x:Name="Address2lbl" Grid.Row="8"  Grid.Column="0" HorizontalAlignment="Right" Margin="0 0 5 0"
-        VerticalAlignment="Bottom" Content="Address 2"/>
+        VerticalAlignment="Center" Content="Address 2"/>
                 <TextBox x:Name="Address2txt" Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="2"
-                         VerticalContentAlignment="Center" HorizontalAlignment="Left" Width="400" Height="30"/>
+                         VerticalContentAlignment="Center" Padding="5" IsReadOnly="True" VerticalAlignment="Center"/>
 
                 <Label x:Name="Emaillbl" Grid.Row="9"  Grid.Column="0" HorizontalAlignment="Right" Margin="0 0 5 0"
- VerticalAlignment="Bottom" Content="Email"/>
+ VerticalAlignment="Center" Content="Email"/>
                 <TextBox x:Name="Emailtxt" Grid.Row="9" Grid.Column="1" Grid.ColumnSpan="2"
-                         VerticalContentAlignment="Center" HorizontalAlignment="Left" Width="400" Height="30"/>
+                         VerticalContentAlignment="Center" Padding="5" IsReadOnly="True" VerticalAlignment="Center"/>
 
                 <Label x:Name="UserNamelbl" Grid.Row="10"  Grid.Column="0" HorizontalAlignment="Right" Margin="0 0 5 0"
-        VerticalAlignment="Bottom" Content="User Name"/>
-                <TextBox x:Name="UserNametxt" Grid.Row="10" Grid.Column="1" Grid.ColumnSpan="2" 
-                         VerticalContentAlignment="Center" HorizontalAlignment="Left" Width="400" Height="30"/>
+        VerticalAlignment="Center" Content="User Name"/>
+                <TextBox x:Name="UserNametxt"  Grid.Row="10" Grid.Column="1" Grid.ColumnSpan="2" 
+                         VerticalContentAlignment="Center" Padding="5" IsReadOnly="True" VerticalAlignment="Center"/>
 
-                <Label x:Name="Passwordlbl" Grid.Row="11"  Grid.Column="0" HorizontalAlignment="Right" Margin="0 0 5 0"
-        VerticalAlignment="Bottom" Content="Password"/>
-                <TextBox x:Name="Passwordtxt" Grid.Row="11" Grid.Column="1" Grid.ColumnSpan="2"
-                         VerticalContentAlignment="Center" HorizontalAlignment="Left" Width="400" Height="30"/>
-
-                <Label x:Name="ConfirmPasswordlbl" Grid.Row="12"  Grid.Column="0" HorizontalAlignment="Right" Margin="0 0 5 0"
-        VerticalAlignment="Bottom" Content="Confirm Password"/>
-                <TextBox x:Name="ConfirmPasswordtxt" Grid.Row="12" Grid.Column="1" Grid.ColumnSpan="2"
-                         VerticalContentAlignment="Center" HorizontalAlignment="Left" Width="400" Height="30"/>
-
-
-                <Button x:Name="backbtn" Grid.Row="13" Content="Back" Grid.Column="2"   Margin="0,15,100,0"/>
-                <Button x:Name="updatebtn" Grid.Row="13" Grid.Column="1" Content="Update"  Margin="0,15,100,0" Click="updatebtn_Click"/>
+                <Button x:Name="backbtn" Grid.Row="13" Content="Back" Grid.Column="2" HorizontalAlignment="Right" Width="100" Click="backbtn_Click"/>
+                <Button x:Name="UpdatePasswordbtn" Grid.Row="13" Content="Update Password" Grid.Column="1" HorizontalAlignment="Right" Padding="4"  Click="ChangePasswordbtn_Click"  />
+                <Button x:Name="updatebtn" Grid.Row="13" Grid.Column="0" Content="Update" Width="100"  HorizontalAlignment="Right" Click="updatebtn_Click"/>
 
             </Grid>
         </StackPanel>

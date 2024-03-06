@@ -17,8 +17,8 @@
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="250px"></ColumnDefinition>
-                    <ColumnDefinition></ColumnDefinition>
-                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                    <ColumnDefinition Width="2*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 <Image Source="Resources/Images/Nightrider-01.png" Grid.Column="0" />
                 <Label Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" 
@@ -30,13 +30,16 @@
                         <RowDefinition></RowDefinition>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1*"></ColumnDefinition>
-                        <ColumnDefinition Width="2*"></ColumnDefinition>
+                        <ColumnDefinition Width="5*"></ColumnDefinition>
+                        <ColumnDefinition Width="8*"></ColumnDefinition>
+                        <ColumnDefinition Width="4*"></ColumnDefinition>
+                        <ColumnDefinition Width="4*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
                     <Label
                         x:Name="lbl_userAuthenticatedConfirmation"
                         Grid.Row="0"
                         Grid.Column="0"
+                        Grid.ColumnSpan="4"
                         HorizontalAlignment="Right"
                         VerticalAlignment="Top"
                         Visibility="Hidden" />
@@ -48,10 +51,20 @@
                         Width="100"
                         Content="Log Out"
                         Visibility="Hidden" Click="btn_logout_Click" />
-                    <Label Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" 
-                           x:Name="lblUsername" Content="Username:" />
-                    <TextBox Grid.Row="0" Grid.Column="1" HorizontalAlignment="Stretch" 
-                             VerticalAlignment="Center" x:Name="txtUsername" />
+                    <Label
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center" 
+                        x:Name="lblUsername"
+                        Content="Username:" />
+                    <TextBox
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        Grid.ColumnSpan="2"
+                        HorizontalAlignment="Stretch" 
+                        VerticalAlignment="Center"
+                        x:Name="txtUsername" />
                     <Label Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" 
                            x:Name="lblPassword" Content="Password:" />
                     <PasswordBox Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" 
@@ -81,6 +94,8 @@
                 <ListBoxItem Content="Client Lookup" x:Name="ClientLookupPage" Margin="0" />
                 <ListBoxItem Content="Dependent List" x:Name="GuardianViewDependentList" Margin="0" />
                 <ListBoxItem Content="Admin Home" x:Name="AdminHome" Margin="0" />
+                <ListBoxItem Content="Create Role" x:Name="CreateRole" Margin="0" />
+                <ListBoxItem Content="View Purchase Orders" x:Name="ViewPurchaseOrders" Margin="0" />
                 <!-- copy the above and replace relevant values. -->
             </ListBox>
             <Border Grid.Column="1" BorderBrush="Black" BorderThickness="2px">

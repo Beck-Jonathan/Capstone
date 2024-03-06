@@ -17,6 +17,7 @@ namespace DataObjects
     public class Role
     {
         public string RoleID { get; set; }
+        public string RoleDescription { get; set; }
         public bool IsActive { get; set; }
     }
 
