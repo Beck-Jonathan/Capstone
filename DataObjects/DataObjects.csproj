@@ -49,6 +49,7 @@
     <Compile Include="Login.cs" />
     <Compile Include="Parts_Inventory.cs" />
     <Compile Include="Employee.cs" />
+    <Compile Include="Parts_Request.cs" />
     <Compile Include="PasswordReset.cs" />
     <Compile Include="POLineItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

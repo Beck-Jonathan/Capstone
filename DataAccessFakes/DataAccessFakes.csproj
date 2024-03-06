@@ -44,6 +44,7 @@
     <Compile Include="DependentAccessorFake.cs" />
     <Compile Include="LoginAccessorFake.cs" />
     <Compile Include="ClientAccessorFake.cs" />
+    <Compile Include="PartsRequestAccessorFake.cs" />
     <Compile Include="Parts_Inventory_Fakes.cs" />
     <Compile Include="EmployeeAccessorFake.cs" />
     <Compile Include="PasswordResetAccessorFake.cs" />

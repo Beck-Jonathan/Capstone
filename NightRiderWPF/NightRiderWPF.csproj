@@ -84,6 +84,9 @@
     <Compile Include="Login\EmployeeLoginPage.xaml.cs">
       <DependentUpon>EmployeeLoginPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="PartsRequests\ViewPartRequestsPage.xaml.cs">
+      <DependentUpon>ViewPartRequestsPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="RouteStop\RouteList.xaml.cs">
       <DependentUpon>RouteList.xaml</DependentUpon>
     </Compile>
@@ -127,6 +130,10 @@
     <Page Include="Login\EmployeeLoginPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PartsRequests\ViewPartRequestsPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="PasswordResets\ChangePasswordPage.xaml">
       <SubType>Designer</SubType>

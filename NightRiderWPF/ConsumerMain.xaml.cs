@@ -5,6 +5,7 @@ using NightRiderWPF.WorkOrders;
 using NightRiderWPF.Vehicles;
 using NightRiderWPF.Employees;
 using NightRiderWPF.Clients;
+using NightRiderWPF.PartsRequests;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -202,11 +203,13 @@ namespace NightRiderWPF
                         btnDriverSchedules.Visibility = Visibility.Visible;
                         btnVehicleSchedules.Visibility = Visibility.Visible;
                         btnRoutes.Visibility = Visibility.Visible;
+                        btnPartsRequests.Visibility = Visibility.Visible;
                         break;
                     case "FleetAdmin":
                         btnVehicles.Visibility= Visibility.Visible;
                         btnVehicleSchedules.Visibility= Visibility.Visible;
                         btnMaintenance.Visibility= Visibility.Visible;
+                        btnPartsRequests.Visibility = Visibility.Visible;
                         break;
                     case "Mechanic":
                         btnMaintenance.Visibility= Visibility.Visible;
@@ -218,6 +221,7 @@ namespace NightRiderWPF
                     case "PartsPerson":
                         btnInventory.Visibility= Visibility.Visible;
                         btnMaintenance.Visibility=Visibility.Visible;
+                        btnPartsRequests.Visibility = Visibility.Visible;
                         break;
                     case "Driver":
                     // btnMySchedule.Visibility= Visibility.Visible;
@@ -327,6 +331,34 @@ namespace NightRiderWPF
                 }
                 btn.Background = Statics.PrimaryColor;
                 PageViewer.Navigate(new RouteList());
+            }
+        }
+
+        /// <summary>
+        /// AUTHOR: Ben Collins
+        /// <br />
+        /// CREATED: 2024-03-05
+        /// <br />
+        ///     A page for displaying all of the Parts Requests.
+        /// </summary>
+        /// 
+        /// <remarks>
+        /// <br />
+        ///     Initial Creation
+        /// </remarks>
+        private void btnPartsRequests_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button btn && btn.Name == "btnPartsRequests")
+            {
+                foreach (var child in stackMainNav.Children)
+                {
+                    if (child is Button button)
+                    {
+                        button.Background = Statics.SecondaryColor;
+                    }
+                }
+                btn.Background = Statics.PrimaryColor;
+                PageViewer.Navigate(new ViewPartRequestsPage());
             }
         }
     }

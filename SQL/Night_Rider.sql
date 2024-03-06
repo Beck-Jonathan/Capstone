@@ -1546,13 +1546,13 @@ print ''
 Print '***Insert Sample Data For The  Parts_Request table***' 
  go
 INSERT INTO [dbo].[Parts_Request]
-    ([Employee_ID], [Service_Detail_ID], [Date_Requested])
+    ([Employee_ID], [Service_Detail_ID], [Date_Requested], [Is_Active])
 VALUES
-    (100001, 100001, GETDATE()),
-    (100002, 100002, GETDATE()),
-    (100001, 100002, GETDATE()),
-    (100003, 100003, GETDATE()),
-    (100003, 100004, GETDATE())
+    (100001, 100001, '2023-12-5', 1),
+    (100002, 100002, '2023-5-16', 1),
+    (100001, 100002, '2024-1-18', 1),
+    (100003, 100003, '2024-2-20', 1),
+    (100003, 100004, '2024-1-3', 0)
 go
 
 /******************
@@ -1565,15 +1565,15 @@ Print '***Create the [dbo].[Parts_Request_Line_Items] table***'
 CREATE TABLE [dbo].[Parts_Request_Line_Items]
 (
     [Parts_Request_ID] [int] NOT NULL,
-    [Part_Inventory_ID] [int] NOT NULL,
+    [Parts_Inventory_ID] [int] NOT NULL,
     [Qty_Requested] [int] NOT NULL,
     [Active] [bit] NOT NULL DEFAULT 1,
 
     CONSTRAINT [FK_Parts_Request_Line_Items_Parts_Request_ID] FOREIGN KEY([Parts_Request_ID])
         REFERENCES [dbo].[Parts_Request]([Parts_Request_ID]),
-    CONSTRAINT [FK_Parts_Request_Line_Items_Parts_Inventory_ID] FOREIGN KEY([Part_Inventory_ID])
+    CONSTRAINT [FK_Parts_Request_Line_Items_Parts_Inventory_ID] FOREIGN KEY([Parts_Inventory_ID])
         REFERENCES [dbo].[Parts_Inventory]([Parts_Inventory_ID]),
-    CONSTRAINT [CPK_Parts_Request_Line_Items] PRIMARY KEY([Parts_Request_ID], [Part_Inventory_ID]),
+    CONSTRAINT [CPK_Parts_Request_Line_Items] PRIMARY KEY([Parts_Request_ID], [Parts_Inventory_ID]),
 )
 GO
 
@@ -1592,7 +1592,7 @@ GO
 INSERT INTO [dbo].[Parts_Request_Line_Items]
     (
     [Parts_Request_ID],
-    [Part_Inventory_ID],
+    [Parts_Inventory_ID],
     [Qty_Requested])
 VALUES
     (100000, 100000, 5),
