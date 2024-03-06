@@ -13,7 +13,7 @@ namespace DataAccessFakes
     /// <br />
     /// CREATED: 2024-02-01
     /// <br />
-    ///     Provides access to test data stored in memory representing the client table
+    ///     Provides access to test data stored in memory representing the login table
     /// </summary>
     /// <remarks>
     /// UPDATER: Jared Hutton

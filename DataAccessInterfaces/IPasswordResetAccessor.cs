@@ -30,7 +30,6 @@ namespace DataAccessInterfaces
         /// <br />
         ///    <see cref="string">string</see> verificationCode: The verification code which the user will use to verify their identity
         /// </remarks>
-
         int InsertPasswordReset(string username, string verificationCode);
 
         /// <summary>

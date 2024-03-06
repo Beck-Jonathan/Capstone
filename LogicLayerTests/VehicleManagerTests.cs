@@ -55,7 +55,7 @@ namespace LogicLayerTests
                     VIN = "testaddgoodvin123",
                     VehicleNumber = "Test-01",
                     VehicleMileage = 1000,
-                    ModelLookupID = 100000,
+                    VehicleModelID = 100000,
                     VehicleLicensePlate = "Test01",
                     VehicleMake = "Mercedes",
                     VehicleModel = "Sprinter",
@@ -82,7 +82,7 @@ namespace LogicLayerTests
                     VIN = "testaddvin1234567",
                     VehicleNumber = "Test-01",
                     VehicleMileage = 1000,
-                    ModelLookupID = 100000,
+                    VehicleModelID = 100000,
                     VehicleLicensePlate = "Test01",
                     VehicleMake = "Mercedes",
                     VehicleModel = "Sprinter",
@@ -191,7 +191,7 @@ namespace LogicLayerTests
                 VIN = "testaddvin1234567",
                 VehicleNumber = "Test-01",
                 VehicleMileage = 1000,
-                ModelLookupID = 100001,
+                VehicleModelID = 100001,
                 VehicleLicensePlate = "Test01",
                 VehicleMake = "Mercedes",
                 VehicleModel = "Sprinter",
@@ -202,7 +202,7 @@ namespace LogicLayerTests
                 VIN = "testaddvin1234567",
                 VehicleNumber = "Test-01",
                 VehicleMileage = 1000,
-                ModelLookupID = 100001,
+                VehicleModelID = 100001,
                 VehicleLicensePlate = "Test01",
                 VehicleMake = "Mercedes",
                 VehicleModel = "Sprinter",
@@ -225,7 +225,7 @@ namespace LogicLayerTests
                 VIN = "testaddvin9874567",
                 VehicleNumber = "Test-00",
                 VehicleMileage = 1010,
-                ModelLookupID = 100001,
+                VehicleModelID = 100001,
                 VehicleLicensePlate = "Test01",
                 VehicleMake = "Mercedes",
                 VehicleModel = "Sprinter",
@@ -236,7 +236,7 @@ namespace LogicLayerTests
                 VIN = "testaddvin9874567",
                 VehicleNumber = "Test-00",
                 VehicleMileage = 1010,
-                ModelLookupID = 100001,
+                VehicleModelID = 100001,
                 VehicleLicensePlate = "Test10",
                 VehicleMake = "Mercedes",
                 VehicleModel = "Sprinter",
@@ -258,7 +258,7 @@ namespace LogicLayerTests
                 VIN = "testaddvin9874567",
                 VehicleNumber = "Test-00",
                 VehicleMileage = 1010,
-                ModelLookupID = 100000,
+                VehicleModelID = 100000,
                 VehicleLicensePlate = "Test10",
                 VehicleMake = "Mercedes",
                 VehicleModel = "Sprinter",
@@ -281,7 +281,7 @@ namespace LogicLayerTests
                 VIN = "testaddvin9874567",
                 VehicleNumber = "Test-00",
                 VehicleMileage = 1010,
-                ModelLookupID = 100001,
+                VehicleModelID = 100001,
                 VehicleLicensePlate = "Test10",
                 VehicleMake = "Mercedes",
                 VehicleModel = "Sprinter",
@@ -303,13 +303,13 @@ namespace LogicLayerTests
                 VIN = "testaddvin9874567",
                 VehicleNumber = "Test-00",
                 VehicleMileage = 1010,
-                ModelLookupID = 100001,
+                VehicleModelID = 100001,
                 VehicleLicensePlate = "Test10",
                 VehicleMake = "Mercedes",
                 VehicleModel = "Sprinter",
                 VehicleYear = 2024,
                 MaxPassengers = 10
-            }).ModelLookupID;
+            }).VehicleModelID;
 
             Assert.AreEqual(expectedResult, actualResult);
         }
@@ -326,13 +326,13 @@ namespace LogicLayerTests
                 VIN = "testaddvin9874567",
                 VehicleNumber = "Test-00",
                 VehicleMileage = 1010,
-                ModelLookupID = 100000,
+                VehicleModelID = 100000,
                 VehicleLicensePlate = "Test10",
                 VehicleMake = "Mercedes",
                 VehicleModel = "Sprinter",
                 VehicleYear = 2024,
                 MaxPassengers = 10
-            }).ModelLookupID;
+            }).VehicleModelID;
 
             Assert.AreEqual(expectedResult, actualResult);
         }
@@ -348,7 +348,7 @@ namespace LogicLayerTests
                 VIN = "testaddvin1234567",
                 VehicleNumber = "Test-01",
                 VehicleMileage = 1000,
-                ModelLookupID = 100001,
+                VehicleModelID = 100001,
                 VehicleLicensePlate = "Test01",
                 VehicleMake = "Mercedes",
                 VehicleModel = "Sprinter",
@@ -375,7 +375,7 @@ namespace LogicLayerTests
                 VIN = "testaddgoodvin123",
                 VehicleNumber = "Test-01",
                 VehicleMileage = 1000,
-                ModelLookupID = 100000,
+                VehicleModelID = 100000,
                 VehicleLicensePlate = "Test01",
                 VehicleMake = "Mercedes",
                 VehicleModel = "Sprinter",

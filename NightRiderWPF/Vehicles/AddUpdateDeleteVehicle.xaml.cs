@@ -31,6 +31,9 @@ namespace NightRiderWPF.Vehicles
     /// UPDATER: Chris Baenizger
     /// UPDATED: 2024-02-23
     /// Added implementation for deactivate vehicle.
+    /// UPDATER: Jared Hutton
+    /// UPDATED: 2024-03-03
+    /// Implement correct vehicle model functionality
     /// </remarks>
 
     public partial class AddUpdateDeleteVehicle : Page
@@ -39,22 +42,27 @@ namespace NightRiderWPF.Vehicles
         private VehicleManager _vehicleManager = null;
         private string _pageType = null;
 
+        private IVehicleModelManager _vehicleModelManager;
+        private IEnumerable<VehicleModel> _vehicleModels;
+
         // Default constructor, shows add button, submit disabled
-        public AddUpdateDeleteVehicle()
+        public AddUpdateDeleteVehicle(IVehicleModelManager vehicleModelManager)
         {
             _pageType = "add";
             InitializeComponent();
             UpdateDisplay();
+            _vehicleModelManager = vehicleModelManager;
         }
 
         // Vehicle view, shows vehicle information and has update button
         // when update selected shows submit button, add/update becomes cancel.
-        public AddUpdateDeleteVehicle(Vehicle vehicle)
+        public AddUpdateDeleteVehicle(IVehicleModelManager vehicleModelManager, Vehicle vehicle)
         {
             _vehicle = vehicle;
             _pageType = "display";
             InitializeComponent();
             UpdateDisplay();
+            _vehicleModelManager = vehicleModelManager;
         }
 
         private void UpdateDisplay()
@@ -66,7 +74,7 @@ namespace NightRiderWPF.Vehicles
                     txtVIN.IsEnabled = false;
                     cmbVehicleMake.IsEnabled = false;
                     cmbVehicleModel.IsEnabled = false;
-                    txtVehicleYear.IsEnabled = false;
+                    cmbVehicleYear.IsEnabled = false;
                     txtVehicleMileage.IsEnabled = false;
                     txtVehicleLicensePlate.IsEnabled = false;
                     txtVehicleDescription.IsEnabled = false;
@@ -90,7 +98,7 @@ namespace NightRiderWPF.Vehicles
                     txtVIN.IsEnabled = false;
                     cmbVehicleMake.IsEnabled = false;
                     cmbVehicleModel.IsEnabled = false;
-                    txtVehicleYear.IsEnabled = false;
+                    cmbVehicleYear.IsEnabled = false;
                     txtVehicleMileage.IsEnabled = false;
                     txtVehicleLicensePlate.IsEnabled = false;
                     txtVehicleDescription.IsEnabled = false;
@@ -113,8 +121,10 @@ namespace NightRiderWPF.Vehicles
                     txtVehicleNumber.IsEnabled = true;
                     txtVIN.IsEnabled = true;
                     cmbVehicleMake.IsEnabled = true;
-                    cmbVehicleModel.IsEnabled = true;
-                    txtVehicleYear.IsEnabled = true;
+                    cmbVehicleModel.IsEnabled = !string.IsNullOrWhiteSpace(_vehicle.VehicleMake) &&
+                                                _vehicleModels.Count(x => x.Make == _vehicle.VehicleMake) > 1;
+                    cmbVehicleYear.IsEnabled = !string.IsNullOrWhiteSpace(_vehicle.VehicleModel) &&
+                                                _vehicleModels.Count(x => x.Name == _vehicle.VehicleMake && x.Name == _vehicle.VehicleModel) > 1;
                     txtVehicleMileage.IsEnabled = true;
                     txtVehicleLicensePlate.IsEnabled = true;
                     txtVehicleDescription.IsEnabled = true;
@@ -135,8 +145,6 @@ namespace NightRiderWPF.Vehicles
                     txtVehicleNumber.IsEnabled = true;
                     txtVIN.IsEnabled = true;
                     cmbVehicleMake.IsEnabled = true;
-                    cmbVehicleModel.IsEnabled = true;
-                    txtVehicleYear.IsEnabled = true;
                     txtVehicleMileage.IsEnabled = true;
                     txtVehicleLicensePlate.IsEnabled = true;
                     txtVehicleDescription.IsEnabled = true;
@@ -161,24 +169,24 @@ namespace NightRiderWPF.Vehicles
             {
                 txtVehicleNumber.Text = "";
                 txtVIN.Text = "";
-                cmbVehicleMake.Text = "";
-                cmbVehicleModel.Text = "";
-                txtVehicleYear.Text = "";
+                cmbVehicleMake.SelectedItem = null;
+                cmbVehicleModel.SelectedItem = null;
+                cmbVehicleYear.SelectedItem = null;
                 txtVehicleMileage.Text = "";
                 txtVehicleLicensePlate.Text = "";
                 txtVehicleDescription.Text = "";
                 txtDateEntered.Text = "";
                 txtSeatCount.Text = "";
-                cmbVehicleType.Text = "";
+                cmbVehicleType.SelectedItem = null;
                 ckbRental.IsChecked = false;
             }
             else
             {
                 txtVehicleNumber.Text = _vehicle.VehicleNumber.ToString();
                 txtVIN.Text = _vehicle.VIN;
-                cmbVehicleMake.Text = _vehicle.VehicleMake;
-                cmbVehicleModel.Text = _vehicle.VehicleModel;
-                txtVehicleYear.Text = _vehicle.VehicleYear.ToString();
+                cmbVehicleMake.SelectedItem = _vehicle.VehicleMake;
+                cmbVehicleModel.SelectedItem = _vehicle.VehicleModel;
+                cmbVehicleYear.SelectedItem = _vehicle.VehicleYear.ToString();
                 txtVehicleMileage.Text = _vehicle.VehicleMileage.ToString();
                 txtVehicleLicensePlate.Text = _vehicle.VehicleLicensePlate;
                 txtVehicleDescription.Text = _vehicle.VehicleDescription;
@@ -195,9 +203,23 @@ namespace NightRiderWPF.Vehicles
 
             try
             {
-                cmbVehicleType.ItemsSource = _vehicleManager.GetVehicleTypes();
-                cmbVehicleModel.ItemsSource = _vehicleManager.GetVehicleModels();
-                cmbVehicleMake.ItemsSource = _vehicleManager.GetVehicleMakes();
+                _vehicleModels = _vehicleModelManager.GetVehicleModels();
+                cmbVehicleMake.ItemsSource = _vehicleModels.Select(vehicleModel => vehicleModel.Make);
+                if (_vehicle.VehicleMake != null)
+                {
+                    cmbVehicleModel.ItemsSource = _vehicleModels.Where(x => x.Make == _vehicle.VehicleMake)
+                                                                .Select(vehicleModel => vehicleModel.Name);
+
+                    if (_vehicle.VehicleModel != null)
+                    {
+                        cmbVehicleYear.ItemsSource = _vehicleModels.Where(x => x.Name == _vehicle.VehicleModel)
+                                                                   .Select(vehicleModel => vehicleModel.Year.ToString());
+                    }
+                }
+                else
+                {
+                    cmbVehicleModel.IsEnabled = false;
+                }
             }
             catch (Exception)
             {
@@ -251,10 +273,10 @@ namespace NightRiderWPF.Vehicles
                             txtVehicleLicensePlate.Focus();
                             return;
                         }
-                        if (txtVehicleYear.Text.Equals("") || !ValidationHelpers.IsValidYear(int.Parse(txtVehicleYear.Text)))
+                        if (cmbVehicleYear.Text.Equals("") || !ValidationHelpers.IsValidYear(int.Parse(cmbVehicleYear.Text)))
                         {
                             MessageBox.Show("Please enter a valid year.", "Invalid Year", MessageBoxButton.OK, MessageBoxImage.Error);
-                            txtVehicleYear.Focus();
+                            cmbVehicleYear.Focus();
                             return;
                         }
                         if (txtVehicleDescription.Text.Equals(""))
@@ -276,34 +298,15 @@ namespace NightRiderWPF.Vehicles
                             VIN = txtVIN.Text,
                             VehicleNumber = txtVehicleNumber.Text,
                             VehicleMileage = int.Parse(txtVehicleMileage.Text),
+                            VehicleModelID = _vehicle.VehicleModelID,
                             VehicleLicensePlate = txtVehicleLicensePlate.Text,
-                            VehicleMake = cmbVehicleMake.Text,
-                            VehicleModel = cmbVehicleModel.Text,
-                            VehicleYear = int.Parse(txtVehicleYear.Text),
+                            VehicleYear = int.Parse(cmbVehicleYear.Text),
                             DateEntered = DateTime.Now.Date,
                             MaxPassengers = int.Parse(txtSeatCount.Text),
                             VehicleDescription = txtVehicleDescription.Text,
                             VehicleType = cmbVehicleType.Text,
                             Rental = ckbRental.IsChecked.Value
                         };
-
-                        // lookup ModelLookupID and see if it exsists.
-                        _vehicle.ModelLookupID = _vehicleManager.GetModelLookupID(_vehicle).ModelLookupID;
-                        if (_vehicle.ModelLookupID == 0)
-                        {
-                            // if Model ID wasn't found prompt use if they want to add it and update.
-                            var update = MessageBox.Show("Unable to find a matching make and model.\nWould you like to add it?", "No Make/Model", MessageBoxButton.YesNo, MessageBoxImage.Question);
-                            if ((int)update == 6)
-                            {
-                                // add new model if it didn't exsist and set ModelID to vehicle
-                                var modelAdded = _vehicleManager.AddModelLookup(_vehicle);
-                                if (modelAdded)
-                                {
-                                    // get new model lookup id that was added
-                                    _vehicle.ModelLookupID = _vehicleManager.GetModelLookupID(_vehicle).ModelLookupID;
-                                }
-                            }
-                        }
 
                         // Try to add the vehicle to the database
                         result = _vehicleManager.AddVehicle(_vehicle);
@@ -362,10 +365,10 @@ namespace NightRiderWPF.Vehicles
                             txtVehicleLicensePlate.Focus();
                             return;
                         }
-                        if (txtVehicleYear.Text.Equals("") || !ValidationHelpers.IsValidYear(int.Parse(txtVehicleYear.Text)))
+                        if (cmbVehicleYear.Text.Equals("") || !ValidationHelpers.IsValidYear(int.Parse(cmbVehicleYear.Text)))
                         {
                             MessageBox.Show("Please enter a valid year.", "Invalid Year", MessageBoxButton.OK, MessageBoxImage.Error);
-                            txtVehicleYear.Focus();
+                            cmbVehicleYear.Focus();
                             return;
                         }
                         if (txtVehicleDescription.Text.Equals(""))
@@ -385,36 +388,22 @@ namespace NightRiderWPF.Vehicles
                         Vehicle newVehicle = new Vehicle()
                         {
                             VIN = txtVIN.Text,
+                            VehicleModelID = _vehicleModels.Single(x => x.Make == cmbVehicleMake.Text &&
+                                                                        x.Name == cmbVehicleModel.Text &&
+                                                                        x.Year == int.Parse(cmbVehicleYear.Text))
+                                                           .VehicleModelID,
                             VehicleNumber = txtVehicleNumber.Text,
                             VehicleMileage = int.Parse(txtVehicleMileage.Text),
                             VehicleLicensePlate = txtVehicleLicensePlate.Text,
                             VehicleMake = cmbVehicleMake.Text,
                             VehicleModel = cmbVehicleModel.Text,
-                            VehicleYear = int.Parse(txtVehicleYear.Text),
+                            VehicleYear = int.Parse(cmbVehicleYear.Text),
                             DateEntered = DateTime.Parse(txtDateEntered.Text),
                             MaxPassengers = int.Parse(txtSeatCount.Text),
                             VehicleDescription = txtVehicleDescription.Text,
                             VehicleType = cmbVehicleType.Text,
                             Rental = ckbRental.IsChecked.Value
                         };
-
-                        // lookup ModelLookupID in case user changed the make, model, year or passenger seat count.
-                        newVehicle.ModelLookupID = _vehicleManager.GetModelLookupID(newVehicle).ModelLookupID;
-                        if (newVehicle.ModelLookupID == 0)
-                        {
-                            // if Model ID wasn't found prompt use if they want to add it and update.
-                            var update = MessageBox.Show("Unable to find a matching make and model.\nWould you like to add it?", "No Make/Model", MessageBoxButton.YesNo, MessageBoxImage.Question);
-                            if ((int)update == 6)
-                            {
-                                // add new model if it didn't exsist
-                                var modelAdded = _vehicleManager.AddModelLookup(newVehicle);
-                                if (modelAdded)
-                                {
-                                    // get new model lookup id that was added
-                                    newVehicle = _vehicleManager.GetModelLookupID(newVehicle);
-                                }
-                            }
-                        }
 
                         // try to update the vehicle and save success to results
                         result = _vehicleManager.EditVehicle(_vehicle, newVehicle);
@@ -426,7 +415,7 @@ namespace NightRiderWPF.Vehicles
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show("There was a problem updating the vehicle.\n" + ex.InnerException.Message, "Update Vehicle Error",
+                        MessageBox.Show("There was a problem updating the vehicle.\n" + ex.InnerException?.Message, "Update Vehicle Error",
                             MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                     if (result == true)
@@ -508,6 +497,88 @@ namespace NightRiderWPF.Vehicles
                 {
                     MessageBox.Show("Unable to deactivate the vehicle.", "Deactivate Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
+            }
+        }
+
+        private void cmbVehicleMake_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            string make = cmbVehicleMake.SelectedItem as string;
+
+            if (string.IsNullOrWhiteSpace(make))
+            {
+                cmbVehicleYear.IsEnabled = false;
+                cmbVehicleModel.SelectedItem = null;
+                cmbVehicleModel.ItemsSource = null;
+
+                cmbVehicleYear.IsEnabled = false;
+                cmbVehicleYear.SelectedItem = null;
+                cmbVehicleYear.ItemsSource = null;
+            }
+            else if (make != _vehicle.VehicleMake)
+            {
+                _vehicle.VehicleMake = make;
+
+                FillVehicleModelOptions();
+            }
+        }
+
+        private void cmbVehicleModel_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            string model = cmbVehicleModel.SelectedItem as string;
+
+            if (string.IsNullOrWhiteSpace(model))
+            {
+                cmbVehicleYear.IsEnabled = false;
+                cmbVehicleYear.SelectedItem = null;
+                cmbVehicleYear.ItemsSource = null;
+            }
+            else if (model != _vehicle.VehicleModel)
+            {
+                _vehicle.VehicleModel = model;
+
+                FillVehicleYearOptions();
+            }
+        }
+
+        private void FillVehicleModelOptions()
+        {
+            var models = _vehicleModels.Where(x => x.Make == _vehicle.VehicleMake)
+                                       .Select(x => x.Name);
+
+            cmbVehicleModel.ItemsSource = models;
+
+            if (models.Count() > 1)
+            {
+                cmbVehicleYear.SelectedItem = null;
+                cmbVehicleYear.IsEnabled = true;
+            }
+            else
+            {
+                cmbVehicleModel.IsEnabled = false;
+                cmbVehicleModel.SelectedIndex = 0;
+
+                FillVehicleYearOptions();
+            }
+        }
+
+        private void FillVehicleYearOptions()
+        {
+            var years = _vehicleModels.Where(x => x.Make == _vehicle.VehicleMake && x.Name == _vehicle.VehicleModel)
+                                      .Select(x => x.Year.ToString());
+
+            cmbVehicleYear.ItemsSource = years;
+
+            if (years.Count() > 1)
+            {
+                cmbVehicleYear.SelectedItem = null;
+                cmbVehicleYear.IsEnabled = true;
+            }
+            else
+            {
+                _vehicle.VehicleYear = Int32.Parse(years.Single());
+
+                cmbVehicleYear.IsEnabled = false;
+                cmbVehicleYear.SelectedIndex = 0;
             }
         }
     }

@@ -55,7 +55,7 @@ namespace LogicLayer
         {
             try
             {
-                vehicle.ModelLookupID = _vehicleAccessor.SelectModelLookupID(vehicle);
+                vehicle.VehicleModelID = _vehicleAccessor.SelectModelLookupID(vehicle);
             }
             catch (Exception)
             {
