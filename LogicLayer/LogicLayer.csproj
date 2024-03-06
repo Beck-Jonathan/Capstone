@@ -43,6 +43,8 @@
   <ItemGroup>
     <Compile Include="Client\DependentManager.cs" />
     <Compile Include="Client\IDependentManager.cs" />
+    <Compile Include="RouteStop\IRouteManager.cs" />
+    <Compile Include="RouteStop\RouteManager.cs" />
     <Compile Include="ServiceOrder\IServiceOrderManager.cs" />
     <Compile Include="AppData\Authentication.cs" />
     <Compile Include="Login\LoginManager.cs" />

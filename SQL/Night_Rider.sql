@@ -225,9 +225,9 @@ CREATE TABLE [dbo].[Route]
 (
     [Route_ID] [int] IDENTITY(100000,1),
     [Route_Name] [nvarchar](255) NOT NULL,
-    [Route_Start_Time] [time] NOT NULL,
-    [Route_Cycle] [int] NOT NULL,
-    [Route_End_Time] [time] NOT NULL,
+    [Route_Start_Time] [datetime] NOT NULL,
+    [Route_Cycle] [time] NOT NULL,
+    [Route_End_Time] [datetime] NOT NULL,
     [Days_Of_Service] [char](7) NOT NULL DEFAULT '0000000',
     [Is_Active] [bit] NOT NULL DEFAULT(1),
     CONSTRAINT [PK_Route] PRIMARY KEY([Route_ID])
@@ -242,11 +242,11 @@ go
 INSERT INTO [dbo].[Route]
     ([Route_Name], [Route_Start_Time], [Route_Cycle], [Route_End_Time], [Days_Of_Service])
 VALUES
-    ('Cedar Rapids Northeast', '05:00:00', 100001, '20:00:00', '0111100'),
-    ('Cedar Rapids Southwest', '05:00:00', 100002, '20:00:00', '0111100'),
-    ('Hiawatha', '06:30:00', 100001, '19:00:00', '0111111'),
-    ('Marion', '09:00:00', 100003, '18:30:00', '0010100'),
-    ('Center Point', '05:30:00', 100002, '22:00:00', '0111110');
+    ('Cedar Rapids Northeast', '1900-01-01 05:00:00', '01:30:00', '1900-01-01 20:00:00', '0111100'),
+    ('Cedar Rapids Southwest', '1900-01-01 05:00:00', '02:00:00', '1900-01-01 20:00:00', '0111100'),
+    ('Hiawatha', '1900-01-01 06:30:00', '01:00:00', '1900-01-01 19:00:00', '0111111'),
+    ('Marion', '1900-01-01 09:00:00', '00:30:00', '1900-01-01 18:30:00', '0010100'),
+    ('Center Point', '1900-01-01 05:30:00', '01:00:00', '1900-01-01 22:00:00', '0111110');
 go
 
 /******************

@@ -25,6 +25,7 @@ using LogicLayer.Utilities;
 using LogicLayer;
 using DataObjects;
 using NightRiderWPF.Login;
+using NightRiderWPF.RouteStop;
 
 namespace NightRiderWPF
 {
@@ -200,6 +201,7 @@ namespace NightRiderWPF
                         btnInventory.Visibility = Visibility.Visible;
                         btnDriverSchedules.Visibility = Visibility.Visible;
                         btnVehicleSchedules.Visibility = Visibility.Visible;
+                        btnRoutes.Visibility = Visibility.Visible;
                         break;
                     case "FleetAdmin":
                         btnVehicles.Visibility= Visibility.Visible;
@@ -218,7 +220,10 @@ namespace NightRiderWPF
                         btnMaintenance.Visibility=Visibility.Visible;
                         break;
                     case "Driver":
-                        // btnMySchedule.Visibility= Visibility.Visible;
+                    // btnMySchedule.Visibility= Visibility.Visible;
+                    case "Operator":
+                        btnRoutes.Visibility = Visibility.Visible;
+                        break;
                     default: break;
                 }
             }
@@ -306,6 +311,22 @@ namespace NightRiderWPF
                 }
                 btn.Background = Statics.PrimaryColor;
                 // PageViewer.Navigate(new VehicleSchedulesPage());
+            }
+        }
+
+        private void btnRoutes_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button btn && btn.Name == "btnRoutes")
+            {
+                foreach (var child in stackMainNav.Children)
+                {
+                    if (child is Button button)
+                    {
+                        button.Background = Statics.SecondaryColor;
+                    }
+                }
+                btn.Background = Statics.PrimaryColor;
+                PageViewer.Navigate(new RouteList());
             }
         }
     }

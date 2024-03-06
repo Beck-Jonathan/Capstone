@@ -82,6 +82,8 @@
                             Background="{x:Static resources:Statics.SecondaryColor}" Visibility="Hidden" Click="btnDriverSchedules_Click" />
                     <Button Content="Vehicle Scheduling" x:Name="btnVehicleSchedules" Height="50px" Foreground="{x:Static resources:Statics.ButtonText}"
                             Background="{x:Static resources:Statics.SecondaryColor}" Visibility="Hidden" Click="btnVehicleSchedules_Click" />
+                    <Button Content="Routes" x:Name="btnRoutes" Height="50px" Foreground="{x:Static resources:Statics.ButtonText}"
+                            Background="{x:Static resources:Statics.SecondaryColor}" Visibility="Hidden" Click="btnRoutes_Click" />
                 </StackPanel>
             </Border>
             <Border Grid.Column="1" BorderBrush="Black" BorderThickness="2px">
