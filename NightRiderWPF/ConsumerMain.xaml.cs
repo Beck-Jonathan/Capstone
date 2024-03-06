@@ -275,6 +275,10 @@ namespace NightRiderWPF
 
             lbl_userAuthenticatedConfirmation.Visibility = Visibility.Hidden;
             btn_logout.Visibility = Visibility.Hidden;
+            foreach(Button btn in stackMainNav.Children)
+            {
+                btn.Visibility = Visibility.Collapsed;
+            }
 
             while (PageViewer.CanGoBack)
             {
