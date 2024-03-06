@@ -1528,6 +1528,7 @@ CREATE TABLE [dbo].[Parts_Request]
     [Parts_Request_ID] [int] IDENTITY(100000,1) NOT NULL,
     [Employee_ID] [int] NOT NULL,
     [Service_Detail_ID] [int] NOT NULL,
+    [Parts_Request_Notes] [nvarchar](MAX) NULL,
     [Date_Requested] [date] NOT NULL,
     [Is_Active] [bit] DEFAULT 1 NOT NULL,
     CONSTRAINT [PK_Parts_Request] PRIMARY KEY ([Parts_Request_ID]),
@@ -1546,13 +1547,13 @@ print ''
 Print '***Insert Sample Data For The  Parts_Request table***' 
  go
 INSERT INTO [dbo].[Parts_Request]
-    ([Employee_ID], [Service_Detail_ID], [Date_Requested], [Is_Active])
+    ([Employee_ID], [Service_Detail_ID], [Parts_Request_Notes], [Date_Requested], [Is_Active])
 VALUES
-    (100001, 100001, '2023-12-5', 1),
-    (100002, 100002, '2023-5-16', 1),
-    (100001, 100002, '2024-1-18', 1),
-    (100003, 100003, '2024-2-20', 1),
-    (100003, 100004, '2024-1-3', 0)
+    (100001, 100001, "Needing part to fix issue in vehicle.", '2023-12-05', 1),
+    (100002, 100002, "This specific part will allow us to get this vehicle back on the lot.", '2023-05-16', 1),
+    (100001, 100002, "We seem to keep running out of this, maybe order more.", '2024-01-18', 1),
+    (100003, 100003, "We only need a handful more. Maybe 4 at most.", '2024-02-20', 1),
+    (100003, 100004, "Part keeps breaking and needs replaced.", '2024-01-03', 0)
 go
 
 /******************

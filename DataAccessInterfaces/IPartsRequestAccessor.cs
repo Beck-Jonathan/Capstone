@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace DataAccessInterfaces
 {
     /// <summary>
-    /// AUTHOR: Ben Collins
+    /// AUTHOR: Ben Collins, Everett DeVaux
     /// <br />
     /// CREATED: 2024-03-02
     /// <br />
@@ -19,9 +19,11 @@ namespace DataAccessInterfaces
     /// <remarks>
     /// UPDATER: [Updater's Name]
     /// <br />
-    /// UPDATED: yyyy-MM-dd
+    /// UPDATED: 2024-03-02
     /// <br />
     ///     Initial creation
+    ///     <br />
+    ///     Added List<Parts_Request> GetPartsRequestDetails();
     /// </remarks>
     public interface IPartsRequestAccessor
     {
@@ -48,5 +50,30 @@ namespace DataAccessInterfaces
         ///     Initial Creation
         /// </remarks>
         List<Parts_Request> GetAllActivePartsRequests();
+
+
+        /// <summary>
+        ///     Retrieves Parts Request Details from the database.
+        /// </summary>
+        /// <returns>
+        ///    <see cref="Parts_Request"></see> objects otherwise, <see cref="Exception">execption</see>.
+        /// </returns>
+        /// <remarks>
+        ///    Exceptions:
+        /// <br />
+        ///    <see cref="ArgumentException">ArgumentException</see>: No records returned
+        /// <br /><br />
+        ///    CONTRIBUTOR: Everett DeVaux
+        /// <br />
+        ///    CREATED: 2024-03-02
+        /// <br />
+        /// <br />
+        ///    UPDATER: [Updater's Name]
+        /// <br />
+        ///    UPDATED: yyyy-MM-dd
+        /// <br />
+        ///     Initial Creation
+        /// </remarks>
+        Parts_Request GetActivePartsRequestDetails(int partsRequestID);
     }
 }

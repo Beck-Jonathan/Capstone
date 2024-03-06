@@ -1,6 +1,7 @@
 ﻿using DataObjects;
 using LogicLayer;
 using LogicLayer.PartsRequest;
+using NightRiderWPF.PartsRequests;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -149,6 +150,21 @@ namespace NightRiderWPF.PartsRequests
             catch (Exception)
             {
                 MessageBox.Show("No page to navigate back too.");
+            }
+        }
+
+        private void btnPartRequestsPage_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Parts_Request selectedRow = (Parts_Request)datgrdPartsRequestsView.SelectedItem;
+
+                this.NavigationService.Navigate(new ViewPartRequestDetailsPage(selectedRow));
+            }
+            catch (Exception)
+            {
+
+                throw;
             }
         }
     }

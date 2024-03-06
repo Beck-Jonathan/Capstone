@@ -1,0 +1,110 @@
+﻿<Page x:Class="NightRiderWPF.PartsRequests.ViewPartRequestDetailsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:NightRiderWPF.PartsRequests"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="ViewPartRequestDetailsPage">
+
+    <Grid Background="AliceBlue">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="425"/>
+            <ColumnDefinition />
+            <ColumnDefinition Width="330"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Request Labels -->
+        <Grid Grid.Row="0" Grid.Column="0" Background="#FF999999" Grid.ColumnSpan="3">
+            <Label x:Name="lblRequestDetails" Content="Request Details" 
+                   FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Top" 
+                   Margin="15,0,0,0" FontSize="14" />
+        </Grid>
+
+        <Grid Grid.Row="1" Grid.Column="0">
+            <Label x:Name="lblRequestNum" Content="Request #" 
+                   FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Top" 
+                   Margin="50,10,0,0" FontSize="16"/>
+
+            <Label x:Name="lblPartRequested" Content="Part Requested" 
+                   FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Top" 
+                   Margin="23,55,0,0" FontSize="12"/>
+
+            <Label x:Name="lblQuantity" Content="Quantity" 
+                   FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Top" 
+                   Margin="58,105,0,0" FontSize="12"/>
+
+            <Label x:Name="lblVehicle" Content="Vehicle" 
+                   FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Top" 
+                   Margin="65,155,0,0" FontSize="12"/>
+
+            <Label x:Name="lblNotes" Content="Notes" 
+                   FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Top" 
+                   Margin="70,205,0,0" FontSize="12"/>
+
+            <Label x:Name="lblDateRequested" Content="Date Requested" 
+                   FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Top" 
+                   Margin="15,322,0,0" FontSize="12"/>
+
+            <Label x:Name="lblRequestFrom" Content="Request From" 
+                   FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Top" 
+                   Margin="30,367,0,0" FontSize="12"/>
+        </Grid>
+
+        <!-- Request Details Textboxes -->
+        <Grid Grid.Row="1" Grid.Column="0">
+            <TextBox x:Name="txtbxPartRequest" Width="275" Height="30" 
+                     HorizontalAlignment="Left" VerticalAlignment="Top" 
+                     Margin="120,55,0,0"  IsReadOnly="True"/>
+
+            <TextBox x:Name="txtbxQuantity" Width="275" Height="30" 
+                     HorizontalAlignment="Left" VerticalAlignment="Top" 
+                     Margin="120,105,0,0" IsReadOnly="True"/>
+
+            <TextBox x:Name="txtbxVehicle" Width="275" Height="30" 
+                     HorizontalAlignment="Left" VerticalAlignment="Top" 
+                     Margin="120,155,0,0" IsReadOnly="True"/>
+
+            <TextBox x:Name="txtbxNotes" Width="275" Height="90" 
+                     HorizontalAlignment="Left" VerticalAlignment="Top" 
+                     Margin="120,210,0,0" IsReadOnly="True"/>
+
+            <TextBox x:Name="txtbxDateRequested" Width="275" Height="30" 
+                     HorizontalAlignment="Left" VerticalAlignment="Top" 
+                     Margin="120,320,0,0" IsReadOnly="True"/>
+
+            <TextBox x:Name="txtbxRequestFrom" Width="275" Height="30" 
+                     HorizontalAlignment="Left" VerticalAlignment="Top" 
+                     Margin="120,365,0,0" IsReadOnly="True"/>
+
+        </Grid>
+
+        <!-- Request Details Picture Box / Add to order btn -->
+        <Grid Grid.Row="1" Grid.Column="2">
+            <Image x:Name="imgPartRequestDetails" Height="275" Width="261" 
+                   HorizontalAlignment="Right" Margin="5,0,40,15" OpacityMask="Black" 
+                    />
+            <Button x:Name="btnAddToOrder" VerticalAlignment="Top" 
+                    Height="30" Width="175" Margin="0,20,0,0" Content="Add to Order" IsEnabled="False" />
+        </Grid>
+
+        <!-- Footer Buttons -->
+        <Grid Grid.Row="1" Grid.Column="2">
+            <Button x:Name="btnBack" Content="Back" FontWeight="Bold" 
+                    Width="120" Height="30" 
+                    HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,180,40" BorderThickness="1,1,2,2" Click="btnBack_Click"/>
+
+            <Button x:Name="btnReject" Content="Reject" FontWeight="Bold" 
+                    Width="120" Height="30" 
+                    HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,40,40" BorderThickness="1,1,2,2" IsEnabled="False"/>
+        </Grid>
+
+    </Grid>
+
+</Page>

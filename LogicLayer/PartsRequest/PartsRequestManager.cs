@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace LogicLayer.PartsRequest
 {
     /// <summary>
-    /// AUTHOR: Ben Collins
+    /// AUTHOR: Ben Collins, Everett DeVaux
     /// <br />
     /// CREATED: 2024-03-02
     /// <br />
@@ -19,11 +19,13 @@ namespace LogicLayer.PartsRequest
     /// </summary>
     /// 
     /// <remarks>
-    /// UPDATER: [Updater's Name]
+    /// UPDATER: Everett DeVaux
     /// <br />
-    /// UPDATED: yyyy-MM-dd
+    /// UPDATED: 2023-03-02
     /// <br />
     ///     Initial creation
+    ///     <br />
+    ///     Created public List<Parts_Request> GetPartsRequestDetails()
     /// </remarks>
     public class PartsRequestManager : IPartsRequestsManager
     {
@@ -77,6 +79,44 @@ namespace LogicLayer.PartsRequest
             }
 
             return partsRequests;
+        }
+
+        /// <summary>
+        ///     Retrieves all Parts_Request records from the database for request details
+        /// </summary>
+        /// <returns>
+        ///    List of <see cref="Parts_Request">Parts_Request</see> objects
+        /// </returns>
+        /// <remarks>
+        ///    Exceptions:
+        /// <br />
+        ///    <see cref="Exception">Exception</see>: Thrown when error encountered
+        /// <br /><br />
+        ///    CONTRIBUTOR: Everett DeVaux
+        /// <br />
+        ///    CREATED: 2024-03-02
+        /// <br />
+        /// <br />
+        ///    UPDATER: [Updater's Name]
+        /// <br />
+        ///    UPDATED: yyyy-MM-dd
+        /// <br />
+        ///     Initial Creation
+        /// </remarks>
+        public Parts_Request GetPartsRequestDetails(int partRequestID)
+        {
+            Parts_Request partsRequestsdetails = null;
+
+            try
+            {
+                partsRequestsdetails = _partsRequestAccessor.GetActivePartsRequestDetails(partRequestID);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            return partsRequestsdetails;
         }
     }
 }

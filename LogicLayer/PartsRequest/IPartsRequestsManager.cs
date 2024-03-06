@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace LogicLayer.PartsRequest
 {
     /// <summary>
-    /// AUTHOR: Ben Collins
+    /// AUTHOR: Ben Collins, Everett DeVaux
     /// <br />
     /// CREATED: 2024-03-02
     /// <br />
@@ -17,11 +17,13 @@ namespace LogicLayer.PartsRequest
     /// </summary>
     /// 
     /// <remarks>
-    /// UPDATER: [Updater's Name]
+    /// UPDATER: Everett DeVaux
     /// <br />
-    /// UPDATED: yyyy-MM-dd
+    /// UPDATED: 2024-03-02
     /// <br />
     ///     Initial creation
+    ///     <br />
+    ///     
     /// </remarks>
     public interface IPartsRequestsManager
     {
@@ -48,5 +50,29 @@ namespace LogicLayer.PartsRequest
         ///     Initial Creation
         /// </remarks>
         List<Parts_Request> GetAllPartsRequests();
+
+        /// <summary>
+        ///     Retrieves all Parts_Request records from the database to get Request Details
+        /// </summary>
+        /// <returns>
+        ///    <see cref="Parts_Request"></see> objects
+        /// </returns>
+        /// <remarks>
+        ///    Exceptions:
+        /// <br />
+        ///    <see cref="Exception">Exception</see>: Thrown when error encountered
+        /// <br /><br />
+        ///    CONTRIBUTOR: Everett DeVaux
+        /// <br />
+        ///    CREATED: 2024-03-02
+        /// <br />
+        /// <br />
+        ///    UPDATER: [Updater's Name]
+        /// <br />
+        ///    UPDATED: yyyy-MM-dd
+        /// <br />
+        ///     Initial Creation
+        /// </remarks>
+        Parts_Request GetPartsRequestDetails(int partRequestID);
     }
 }
