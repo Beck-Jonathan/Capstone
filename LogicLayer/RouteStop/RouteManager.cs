@@ -14,6 +14,12 @@ namespace LogicLayer.RouteStop
     /// DATE: 2024-03-05
     /// Handles the interaction logic for Routes
     /// </summary>
+    /// <remarks>
+    /// UPDATER: Chris Baenziger
+    /// UPDATED: 2024-03-05
+    /// COMMENTS:
+    ///     Added Activate and deactivate route.
+    /// </remarks>
     public class RouteManager : IRouteManager
     {
         IRouteAccessor _routeAccessor;
@@ -26,9 +32,18 @@ namespace LogicLayer.RouteStop
             _routeAccessor = routeAccessor;
         }
 
-        public int ActivateRoute(int routeId)
+        public bool ActivateRoute(int routeId)
         {
-            throw new NotImplementedException();
+            bool result = false;
+            try
+            {
+                result = (1 == _routeAccessor.UpdateRouteByIDAsActive(routeId));
+            }
+            catch (Exception ex)
+            {
+                throw new ArgumentException("Unable to activate vehicle", ex);
+            }
+            return result;
         }
 
         public int AddRoute(RouteVM route)
@@ -36,9 +51,18 @@ namespace LogicLayer.RouteStop
             throw new NotImplementedException();
         }
 
-        public int DeactivateRoute(int routeId)
+        public bool DeactivateRoute(int routeId)
         {
-            throw new NotImplementedException();
+            bool result = false;
+            try
+            {
+                result = (1 == _routeAccessor.UpdateRouteByIDAsInactive(routeId));
+            }
+            catch (Exception ex)
+            {
+                throw new ArgumentException("Unable to deactivate vehicle", ex);
+            }
+            return result;
         }
 
         public int EditRoute(RouteVM oldRoute, RouteVM newRoute)

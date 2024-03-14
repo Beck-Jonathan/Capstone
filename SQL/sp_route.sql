@@ -20,3 +20,37 @@ AS
 		FROM	[Route]
 	END
 GO
+
+print ''
+print '*** Create sp_activate_route_by_id ***'
+GO
+-- AUTHOR: Chris Baenziger
+-- CREATED: 2024-03-02
+CREATE PROCEDURE [dbo].[sp_activate_route_by_id]
+	(
+	@RouteID        [int]
+)
+AS
+BEGIN
+	UPDATE [Route]
+    SET [Is_Active] = 1
+    WHERE @RouteID = [Route_ID]
+END
+GO
+
+print ''
+print '*** Create sp_deactivate_route_by_id ***'
+GO
+-- AUTHOR: Chris Baenziger
+-- CREATED: 2024-03-02
+CREATE PROCEDURE [dbo].[sp_deactivate_route_by_id]
+	(
+	@RouteID        [int]
+)
+AS
+BEGIN
+	UPDATE [Route]
+    SET [Is_Active] = 0
+    WHERE @RouteID = [Route_ID]
+END
+GO
