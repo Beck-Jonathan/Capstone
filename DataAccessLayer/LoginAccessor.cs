@@ -115,7 +115,8 @@ namespace DataAccessLayer
                         Login = new Login()
                         {
                             Username = reader.GetString(13),
-                        }
+                        },
+                        DOB = reader.GetDateTime(14)
                     };
 
                     while (reader.Read())
