@@ -10,6 +10,7 @@
 /// Updated: yyyy/mm/dd 
 using DataObjects;
 using LogicLayer;
+using LogicLayer.AppData;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +25,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace NightRiderWPF.Employees
 {
@@ -32,11 +34,11 @@ namespace NightRiderWPF.Employees
     /// </summary>
     public partial class EmployeeProfilePage : Page
     {
-        private EmployeeManager _employeeManager;
+
         private Employee_VM _employee;
-        public EmployeeProfilePage(Employee_VM employeeVM)
+        public EmployeeProfilePage(Employee_VM employee)
         {
-            _employee = employeeVM;
+            _employee = employee;
             InitializeComponent();
         }
         /// <summary>
@@ -60,15 +62,14 @@ namespace NightRiderWPF.Employees
         /// <br /><br />
         ///    CONTRIBUTOR: Steven Sanchez
         /// <br />
-        ///    CREATED: 2024-02-11
-        /// <br /><br />
-        ///    UPDATER: updater_name
+        ///    CREATED: 2024-02-11 /// <br /><br />
+        ///    UPDATER: Steven Sanchez
         /// <br />
-        ///    UPDATED: yyyy-MM-dd
+        ///    UPDATED: 2024-02-27
         /// <br />
-        ///     Update comments go here. Explain what you changed in this method.
-        ///     A new remark should be added for each update to this method.
+        ///     added username
         /// </remarks>
+
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
@@ -84,6 +85,7 @@ namespace NightRiderWPF.Employees
                     Emailtxt.Text = _employee.Email;
                     Addresstxt.Text = _employee.Address;
                     Ziptxt.Text = _employee.Zip;
+                    UserNametxt.Text = _employee.Login.Username;
                 }
                 else
                 {
@@ -93,15 +95,10 @@ namespace NightRiderWPF.Employees
             }
             catch (Exception ex)
             {
-
-                MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message,
+                MessageBox.Show(ex.Message + "\n\n" + ex.InnerException?.Message,
                         "Employee Retrieval Failed.", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
-            
-
-
-
         }
 
         private void updatebtn_Click(object sender, RoutedEventArgs e)
@@ -115,6 +112,30 @@ namespace NightRiderWPF.Employees
 
                 throw;
             }
+        }
+
+        private void backbtn_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (NavigationService.CanGoBack)
+                {
+                    NavigationService.GoBack();
+                }
+                else
+                {
+                    MessageBox.Show("No previous page available.");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred: {ex.Message}");
+            }
+        }
+
+        private void ChangePasswordbtn_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

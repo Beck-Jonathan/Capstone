@@ -27,11 +27,12 @@ sqlcmd -S localhost -E -i SQL/sp_inspection_report.sql
 sqlcmd -S localhost -E -i SQL/sp_login.sql
 sqlcmd -S localhost -E -i SQL/sp_maintenance_schedule.sql
 sqlcmd -S localhost -E -i SQL/sp_model_compatibility.sql
-sqlcmd -S localhost -E -i SQL/sp_model_lookup.sql
+sqlcmd -S localhost -E -i SQL/sp_vehicle_model.sql
 sqlcmd -S localhost -E -i SQL/sp_notification.sql
 sqlcmd -S localhost -E -i SQL/sp_packing_slip.sql
 sqlcmd -S localhost -E -i SQL/sp_parts_inventory.sql
 sqlcmd -S localhost -E -i SQL/sp_parts_request.sql
+sqlcmd -S localhost -E -i SQL/sp_password_reset.sql
 sqlcmd -S localhost -E -i SQL/sp_purchase_order.sql
 sqlcmd -S localhost -E -i SQL/sp_purchase_order_line_items.sql
 sqlcmd -S localhost -E -i SQL/sp_refuel_log.sql

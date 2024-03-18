@@ -1,0 +1,39 @@
+﻿<Page x:Class="NightRiderWPF.Login.EmployeeLoginPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:NightRiderWPF.DeveloperView"
+      xmlns:resources="clr-namespace:NightRiderWPF.Resources"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="SamplePage" Loaded="Page_Loaded">
+    <Grid Background="{x:Static resources:Statics.BackgroundPage}">
+        <Grid.RowDefinitions>
+            <!-- Create Grid Rows as needed, but try to keep rows consistent between related pages -->
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        
+        <Grid Grid.Row="1" Grid.RowSpan="2" Grid.Column="1" Grid.ColumnSpan="4" Background="{x:Static resources:Statics.BackgroundItem}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30px" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Label x:Name="lblLoginGreeting" HorizontalAlignment="Center" Content="Hello, username! Logged in as: " Grid.Row="0" />
+            <Label x:Name="lblLoginRoles" HorizontalAlignment="Center" Content="Admin" Grid.Row="1" />
+        </Grid>
+
+    </Grid>
+
+</Page>

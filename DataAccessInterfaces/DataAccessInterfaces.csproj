@@ -42,6 +42,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IDependentAccessor.cs" />
+    <Compile Include="IPartsRequestAccessor.cs" />
+    <Compile Include="IRouteAccessor.cs" />
+    <Compile Include="IPasswordResetAccessor.cs" />
+    <Compile Include="IPOLineItemsAccessor.cs" />
+    <Compile Include="IPurchase_OrderAccessor.cs" />
     <Compile Include="IServiceOrderAccessor.cs" />
     <Compile Include="ILoginAccessor.cs" />
     <Compile Include="IVehicleAccessor.cs" />
@@ -49,6 +54,8 @@
     <Compile Include="IParts_InventoryAccessor.cs" />
     <Compile Include="IEmployeeAccessor.cs" />
     <Compile Include="IRoleAccessor.cs" />
+    <Compile Include="IVehicleModelAccessor.cs" />
+    <Compile Include="IVendorAccessor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

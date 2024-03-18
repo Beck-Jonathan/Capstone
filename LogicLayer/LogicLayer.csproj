@@ -43,6 +43,15 @@
   <ItemGroup>
     <Compile Include="Client\DependentManager.cs" />
     <Compile Include="Client\IDependentManager.cs" />
+    <Compile Include="PartsRequest\IPartsRequestsManager.cs" />
+    <Compile Include="PartsRequest\PartsRequestManager.cs" />
+    <Compile Include="RouteStop\IRouteManager.cs" />
+    <Compile Include="RouteStop\RouteManager.cs" />
+    <Compile Include="PasswordReset\PasswordResetManager.cs" />
+    <Compile Include="PurchaseOrder\IPOLineItemsManager.cs" />
+    <Compile Include="PurchaseOrder\IPurchase_OrderManager.cs" />
+    <Compile Include="PurchaseOrder\POLineItemsManager.cs" />
+    <Compile Include="PurchaseOrder\PurchaseOrderManager.cs" />
     <Compile Include="ServiceOrder\IServiceOrderManager.cs" />
     <Compile Include="AppData\Authentication.cs" />
     <Compile Include="Login\LoginManager.cs" />
@@ -51,8 +60,9 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="Utilities\IPasswordHasher.cs" />
     <Compile Include="Utilities\PasswordHasher.cs" />
+    <Compile Include="Utilities\VerificationCodeGenerator.cs" />
+    <Compile Include="VehicleModel\VehicleModelManager.cs" />
     <Compile Include="Vehicle\IVehicleManager.cs" />
     <Compile Include="ServiceOrder\ServiceOrderManager.cs" />
     <Compile Include="Vehicle\VehicleManager.cs" />
@@ -66,6 +76,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Role\RoleManager.cs" />
     <Compile Include="Utilities\FormValidationHelper.cs" />
+    <Compile Include="Vendor\IVendorManager.cs" />
+    <Compile Include="Vendor\VendorManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DataAccessFakes\DataAccessFakes.csproj">
@@ -92,5 +104,6 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

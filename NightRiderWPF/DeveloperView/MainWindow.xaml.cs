@@ -24,9 +24,11 @@ using NightRiderWPF.Login;
 using LogicLayer;
 using LogicLayer.Utilities;
 using DataObjects;
-using NightRiderWPF.NoUsername;
+using NightRiderWPF.PasswordReset;
+using NightRiderWPF.PurchaseOrders;
+using NightRiderWPF.VehicleModels;
 
-namespace NightRiderWPF
+namespace NightRiderWPF.DeveloperView
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -34,13 +36,23 @@ namespace NightRiderWPF
     public partial class MainWindow : Window
     {
         private ILoginManager _loginManager;
+        private IVehicleModelManager _vehicleModelManager;
+
         private IPasswordHasher _passwordHasher;
+        private IVerificationCodeGenerator _verificationCodeGenerator;
 		
         public MainWindow()
         {
             _passwordHasher = new PasswordHasher();
+            _verificationCodeGenerator = new VerificationCodeGenerator();
             _loginManager = new LoginManager(_passwordHasher);
+            _vehicleModelManager = new VehicleModelManager();
             InitializeComponent();
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            ShowNavItemsBasedOnRoles();
         }
 
         private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -68,6 +80,9 @@ namespace NightRiderWPF
                     case "AdminEmployeeListPage":
                         PageViewer.Navigate(new AdminEmployeeListPage());
                         break;
+                    case "lstbxit_vehicleModels":
+                        PageViewer.Navigate(new VehicleModelsListPage(_vehicleModelManager));
+                        break;
                     case "VehicleLookupListPage":
                         PageViewer.Navigate(new VehicleLookupListPage());
                         break;
@@ -75,7 +90,7 @@ namespace NightRiderWPF
                         PageViewer.Navigate(new EmployeeProfilePage(Authentication.AuthenticatedEmployee));
                         break;
                     case "ViewWorkOrderPage":
-                        PageViewer.Navigate(new ViewWorkOrderPage());
+                        PageViewer.Navigate(new ViewWorkOrderList());
                         break;
                     case "ClientPersonalPage":
                         PageViewer.Navigate(new ClientPersonalPage(Authentication.AuthenticatedClient));
@@ -88,6 +103,12 @@ namespace NightRiderWPF
                         break;
                     case "AdminHome":
                         PageViewer.Navigate(new AdminHome());
+                        break;
+                    case "CreateRole":
+                        PageViewer.Navigate(new RoleViews.CreateRole());
+                        break;
+                    case "ViewPurchaseOrders":
+                        PageViewer.Navigate(new Parts_Person_View_Purchase_Orders());
                         break;
                 }
             }
@@ -112,10 +133,12 @@ namespace NightRiderWPF
             lblUsername.Visibility = Visibility.Visible;
             lblPassword.Visibility = Visibility.Visible;
             btnLogin.Visibility = Visibility.Visible;
-            btnCreateAccount.Visibility = Visibility.Visible;
+            btnForgotPassword.Visibility = Visibility.Visible;
 
             lbl_userAuthenticatedConfirmation.Visibility = Visibility.Hidden;
             btn_logout.Visibility = Visibility.Hidden;
+
+            ShowNavItemsBasedOnRoles();
         }
 
         /// <summary>
@@ -154,12 +177,14 @@ namespace NightRiderWPF
                 lblPassword.Visibility = Visibility.Hidden;
                 pwdPassword.Visibility = Visibility.Hidden;
                 btnLogin.Visibility = Visibility.Hidden;
-                btnCreateAccount.Visibility = Visibility.Hidden;
+                btnForgotPassword.Visibility = Visibility.Hidden;
 
                 lbl_userAuthenticatedConfirmation.Content = BuildUserAuthenticatedConfirmationContent();
                 lbl_userAuthenticatedConfirmation.Visibility = Visibility.Visible;
 
                 btn_logout.Visibility = Visibility.Visible;
+
+                ShowNavItemsBasedOnRoles();
             }
             catch (ArgumentException)
             {
@@ -192,6 +217,40 @@ namespace NightRiderWPF
         private void btnForgotUsername_Click(object sender, RoutedEventArgs e)
         {
             PageViewer.Navigate(new UsernameRequest());
+		}
+		
+        /// <summary>
+        ///     Handles click behavior for the "Forgot Password" button
+        ///     open password reset request page
+        /// </summary>
+        /// <remarks>
+        ///    CONTRIBUTOR: Jared Hutton
+        /// <br />
+        ///    CREATED: 2024-02-24
+        /// </remarks>
+        private void btnForgotPassword_Click(object sender, RoutedEventArgs e)
+        {
+            PageViewer.Navigate(new RequestAndVerifyPasswordResetCodePage(_passwordHasher, _verificationCodeGenerator));
+        }
+
+        /// <summary>
+        ///     Shows/hides navigation menu items based on the currently authenticated user's roles
+        /// </summary>
+        /// <remarks>
+        ///    CONTRIBUTOR: Jared Hutton
+        /// <br />
+        ///    CREATED: 2024-03-02
+        /// </remarks>
+        private void ShowNavItemsBasedOnRoles()
+        {
+            if (Authentication.AuthenticatedEmployee != null)
+            {
+                lstbxit_vehicleModels.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                lstbxit_vehicleModels.Visibility = Visibility.Collapsed;
+            }
         }
     }
 }

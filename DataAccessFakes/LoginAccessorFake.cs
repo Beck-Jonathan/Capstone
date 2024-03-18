@@ -13,7 +13,7 @@ namespace DataAccessFakes
     /// <br />
     /// CREATED: 2024-02-01
     /// <br />
-    ///     Provides access to test data stored in memory representing the client table
+    ///     Provides access to test data stored in memory representing the login table
     /// </summary>
     /// <remarks>
     /// UPDATER: Jared Hutton
@@ -21,6 +21,13 @@ namespace DataAccessFakes
     /// UPDATED: 2024-02-16
     /// <br />
     ///  Add AuthenticateEmployee method
+    /// <br /> <br />
+    /// UPDATER: Jared Hutton
+    /// <br />
+    /// UPDATED: 2024-02-24
+    /// <br />
+    ///  Add UpdateLoginPasswordHash and GetLoginEmailByUsername methods, change _fakeLoginData
+    ///  from IEnumerable to List
     /// </remarks>
    public class LoginAccessorFake : ILoginAccessor
     {
@@ -28,13 +35,14 @@ namespace DataAccessFakes
         List<Login_VM> fakeLoginData;
 
         /// <summary>
-        /// AUTHOR: Jared Hutton
-        /// <br />
-        /// CREATED: 2024-02-01
-        /// <br />
         ///     Instantiates a fake login accessor. Accepts a collection of login objects mimicking a data source.
         /// </summary>
-        public LoginAccessorFake(IEnumerable<Login_VM> fakeLoginData)
+        /// <remarks>
+        ///    CONTRIBUTOR: Jared Hutton
+        /// <br />
+        ///    CREATED: 2024-02-01
+        /// </remarks>
+        public LoginAccessorFake(List<Login_VM> fakeLoginData)
         {
             _fakeLoginData = fakeLoginData;
         }
@@ -50,7 +58,7 @@ namespace DataAccessFakes
         public LoginAccessorFake()
         {
             EmployeeAccessorFake employeeFakes = new EmployeeAccessorFake();
-            List<Employee_VM> fakeEmployees = employeeFakes.GetAllEmployees();
+            List<Employee_VM> fakeEmployees = (List<Employee_VM>)employeeFakes.GetAllEmployees();
             fakeLoginData = new List<Login_VM>();
             
             for (int i = 0; i < fakeEmployees.Count; i++)
@@ -291,6 +299,68 @@ namespace DataAccessFakes
                 .Select(login => login.Employee)
                 .FirstOrDefault();
         }
+		/// <summary>
+		///     Changes the associated user's password hash
+        /// </summary>
+        /// <param name="username">
+        ///    The username of the user
+        /// </param>
+        /// <param name="passwordHash">
+        ///    The user's new password hash
+        /// </param>
+        /// <returns>
+        ///    <see cref="int">int</see>: The number of rows affected by the operation
+        /// </returns>
+        /// <remarks>
+        ///    Parameters:
+        /// <br />
+		/// <see cref="string">string</see> username: The username of the user
+        /// <br />
+        ///    <see cref="string">string</see> passwordHash: The user's new password hash
+        /// <br /><br />
+        ///    CONTRIBUTOR: Jared Hutton
+        /// <br />
+        ///    CREATED: 2024-02-24
+        /// </remarks>
+        public int UpdateLoginPasswordHash(string username, string passwordHash)
+        {
+            int rowsAffected = 0;
+
+            var retrievedLogin = _fakeLoginData.FirstOrDefault(login => login.Username == username);
+
+            if (retrievedLogin != null)
+            {
+                retrievedLogin.PasswordHash = passwordHash;
+                rowsAffected = 1;
+            }
+
+            return rowsAffected;
+        }
+
+        /// <summary>
+        ///     Retrieves the email associated with a user
+        /// </summary>
+        /// <param name="username">
+        ///    The username of the user
+        /// </param>
+        /// <returns>
+        ///    <see cref="string">string</see>: The user's registered email
+		/// </returns>
+        /// <remarks>
+        ///    Parameters:
+        /// <br />
+		///    <see cref="string">string</see> username: The username of the user
+        /// <br /><br />
+        ///    CONTRIBUTOR: Jared Hutton
+        /// <br />
+        ///    CREATED: 2024-02-24
+        /// </remarks>
+        public string GetLoginEmailByUsername(string username)
+        {
+            var retrievedLogin = _fakeLoginData.FirstOrDefault(login => login.Username == username);
+
+            return retrievedLogin == null ? null : retrievedLogin.Employee != null ? retrievedLogin.Employee.Email : retrievedLogin.Client.Email;
+		}
 
         /// <summary>
         ///     retrieves user's security questions using a given Email.
@@ -300,10 +370,6 @@ namespace DataAccessFakes
         /// </param>
         /// <returns>
         ///    <see cref="string[]">string[]</see>: The security questions
-        /// </returns>
-        /// <remarks>
-        ///    Parameters:
-        /// <br />
         ///    <see cref="string">string</see> email: The email given by the user, which their account is registered with.
         /// <br /><br />
         ///    CONTRIBUTOR: Parker Svoboda
@@ -337,11 +403,7 @@ namespace DataAccessFakes
         /// </param>
         /// <returns>
         ///    <see cref="string[]">string[]</see>: The security questions
-        /// </returns>
-        /// <remarks>
-        ///    Parameters:
-        /// <br />
-        ///    <see cref="string">string</see> email: The email given by the user, which their account is registered with.
+		///    <see cref="string">string</see> email: The email given by the user, which their account is registered with.
         /// <br /><br />
         ///    CONTRIBUTOR: Parker Svoboda
         /// <br />
@@ -367,7 +429,7 @@ namespace DataAccessFakes
                     && login.Employee.Email == email)
                 .Select(login => login.Username)
                 .FirstOrDefault() :
-                throw new ArgumentException("1 or more answers are wrong!"); 
+                throw new ArgumentException("1 or more answers are wrong!");
         }
     }
 }

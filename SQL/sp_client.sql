@@ -81,52 +81,100 @@ GO
 print '' print '*** creating sp_update_client ***'
 GO
 -- AUTHOR: Jared Roberts
+-- UPDATER: Isabella Rosenbohm
+-- UPDATED: 2/27/24
+-- Edited so no longer needs old data in the stored procedure
 CREATE PROCEDURE [dbo].[sp_update_client]
 (
-	@Client_ID			[int],		                               
-	@OldGivenName		[nvarchar] (50),
-	@OldFamilyName		[nvarchar] (50),
-	@OldMiddleName		[nvarchar] (50),
-	@OldDOB				[date],
-	@OldEmail			[nvarchar] (255),
-	@OldPostalCode		[nvarchar] (9),
-	@OldCity			[nvarchar] (50),
-	@OldRegion			[nvarchar] (50),
-	@OldAddress			[nvarchar] (100),
-	@OldTextNumber		[nvarchar] (12),
-	@OldVoiceNumber		[nvarchar] (12),
-	@OldActive			[bit],
-	@NewGivenName		[nvarchar] (50),					
-	@NewFamilyName		[nvarchar] (50),
-	@NewMiddleName		[nvarchar] (50),
-	@NewDOB				[date],
-	@NewEmail			[nvarchar] (255),
-	@NewPostalCode		[nvarchar] (9),
-	@NewCity			[nvarchar] (50),
-	@NewRegion			[nvarchar] (50),
-	@NewAddress			[nvarchar] (100),
-	@NewTextNumber		[nvarchar] (12),
-	@NewVoiceNumber		[nvarchar] (12),
-	@NewActive			[bit]
+	@Client_ID		[int],		                               
+	@GivenName		[nvarchar] (50),					
+	@FamilyName		[nvarchar] (50),
+	@MiddleName		[nvarchar] (50),
+	@DOB			[date],
+	@Email			[nvarchar] (255),
+	@PostalCode		[nvarchar] (9),
+	@City			[nvarchar] (50),
+	@Region			[nvarchar] (50),
+	@Address		[nvarchar] (100),
+	@TextNumber		[nvarchar] (12),
+	@VoiceNumber	[nvarchar] (12),
+	@Active			[bit]
 )
 AS	
 	BEGIN
 		UPDATE	[Client]
-		SET		[Given_Name]			= @NewGivenName,
-				[Family_Name]			= @NewFamilyName,
-				[Middle_Name]			= @NewMiddleName,
-				[DOB]					= @NewDOB,
-				[Email]					= @NewEmail,
-				[Postal_Code]			= @NewPostalCode,
-				[City]					= @NewCity,
-				[Region]				= @NewRegion,
-				[Address]				= @NewAddress,
-				[Text_Number]			= @NewTextNumber,
-				[Voice_Number]			= @NewVoiceNumber,
-				[Is_Active]				= @NewActive
+		SET		[Given_Name]			= @GivenName,
+				[Family_Name]			= @FamilyName,
+				[Middle_Name]			= @MiddleName,
+				[DOB]					= @DOB,
+				[Email]					= @Email,
+				[Postal_Code]			= @PostalCode,
+				[City]					= @City,
+				[Region]				= @Region,
+				[Address]				= @Address,
+				[Text_Number]			= @TextNumber,
+				[Voice_Number]			= @VoiceNumber,
+				[Is_Active]				= @Active
 		WHERE	[Client_ID]				= @Client_ID
 		RETURN	@@ROWCOUNT
 	END
+GO
+
+print '' print '*** creating sp_insert_client ***'
+GO
+-- AUTHOR: Isabella Rosenbohm
+CREATE PROCEDURE [dbo].[sp_insert_client]
+(
+	@p_GivenName		[nvarchar] (50),
+	@p_FamilyName		[nvarchar] (50),
+	@p_MiddleName		[nvarchar] (50),
+	@p_DOB				[date],
+	@p_Email			[nvarchar] (255),
+	@p_PostalCode		[nvarchar] (9),
+	@p_City				[nvarchar] (50),
+	@p_Region			[nvarchar] (50),
+	@p_Address			[nvarchar] (100),
+	@p_TextNumber		[nvarchar] (12),
+	@p_VoiceNumber		[nvarchar] (12),
+	@p_Active			[bit]
+)
+AS
+BEGIN
+    DECLARE @p_ClientID int
+
+    INSERT INTO [dbo].[Client] (
+        [Given_Name],
+        [Family_Name],
+		[Middle_Name],
+        [DOB],
+        [Email],
+        [Postal_Code],
+        [City],
+        [Region],
+        [Address],
+        [Text_Number],
+        [Voice_Number],
+        [Is_Active]
+    )
+    VALUES (
+        @p_GivenName,
+		@p_FamilyName,
+		@p_MiddleName,
+		@p_DOB,
+		@p_Email,
+		@p_PostalCode,
+		@p_City,
+		@p_Region,
+		@p_Address,
+		@p_TextNumber,
+		@p_VoiceNumber,
+		@p_Active
+    );
+
+    SET @p_ClientID = SCOPE_IDENTITY();
+	
+	SELECT @p_ClientID AS 'Client_ID';
+END
 GO
 
 print '' print '*** creating sp_select_client_by_email ***'

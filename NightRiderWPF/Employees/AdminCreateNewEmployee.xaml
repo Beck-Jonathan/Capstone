@@ -21,7 +21,7 @@
             <RowDefinition/>
             <RowDefinition/>
             <RowDefinition/>
-            
+
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -46,7 +46,7 @@
         <Label Grid.Column="1" Grid.Row="2" Content="*Email:" FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 10 0"/>
         <TextBox x:Name="txtEmail" TabIndex="3" Grid.Row="2" Grid.Column="2" Margin="5" VerticalAlignment="Center" Padding="5" InputScope="EmailUserName"/>
 
-        <Label Grid.Column="3" Grid.Row="4" Content="*Zip:" FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 10 0"/>
+        <Label Grid.Column="3" Grid.Row="4" Content="Zip:" FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 10 0"/>
         <TextBox x:Name="txtZip" TabIndex="8" Grid.Row="4" Grid.Column="4" Margin="5" VerticalAlignment="Center" Padding="5" InputScope="PostalCode"/>
 
         <Label Grid.Column="1" Grid.Row="3" Content="*Address 1:" FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 10 0"/>
@@ -59,10 +59,10 @@
         <TextBox x:Name="txtCity" TabIndex="7" Grid.Row="4" Grid.Column="2" Margin="5" VerticalAlignment="Center" Padding="5" InputScope="AddressCity"/>
 
         <Label Grid.Column="1" Grid.Row="5" Content="*Country:" FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 10 0"/>
-        <TextBox x:Name="txtCountry" TabIndex="9" Grid.Row="5" Grid.Column="2" Margin="5" VerticalAlignment="Center" Padding="5" InputScope="AddressCountryName" />
+        <TextBox x:Name="txtCountry" TabIndex="9" Grid.Row="5" Grid.Column="2" Margin="5" VerticalAlignment="Center" Padding="5" InputScope="AddressCountryName" KeyUp="txtCountry_KeyUp" />
 
-        <Label Grid.Column="3" Grid.Row="5" Content="*State:" FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 10 0"/>
-        <ComboBox x:Name="cboState" TabIndex="10" Grid.Row="5" Grid.Column="4" Margin="5" VerticalAlignment="Center" Padding="5"/>
+        <Label x:Name="lblState" Grid.Column="3" Grid.Row="5" Visibility="Hidden" Content="State:" FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 10 0"/>
+        <ComboBox x:Name="cboState" Visibility="Hidden" TabIndex="10" Grid.Row="5" Grid.Column="4" Margin="5" VerticalAlignment="Center" Padding="5"/>
 
         <Label Grid.Column="3" Grid.Row="6" Content="*Phone:" FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 10 0"/>
         <TextBox x:Name="txtPhone" TabIndex="11" Grid.Row="6" Grid.Column="4" Margin="5" VerticalAlignment="Center" Padding="5" InputScope="TelephoneNumber"/>

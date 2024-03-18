@@ -36,14 +36,14 @@ namespace NightRiderWPF.Employees
         {
             _selected_employee = employee_VM;
             _employeeManager = employeeManager;
-            
+
             InitializeComponent();
             //attempt to populate employee roles list
             try
             {
                 _roles = _employeeManager.GetRolesByEmployeeID(_selected_employee.Employee_ID);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show("Error accessing employee information\n\n", ex.InnerException.Message);
             }
@@ -63,12 +63,33 @@ namespace NightRiderWPF.Employees
             txtAddress1.Text = _selected_employee.Address;
             txtAddress2.Text = _selected_employee.Address2;
             txtCity.Text = _selected_employee.City;
+            if (_selected_employee.Country.ToUpper() == "USA" || _selected_employee.Country.ToUpper() == "US")
+            {
+                lblState.Visibility = Visibility.Visible;
+                txtState.Visibility = Visibility.Visible;
+                txtState.Text = _selected_employee.State;
+            }
+            else
+            {
+                lblState.Visibility = Visibility.Hidden;
+                txtState.Visibility = Visibility.Hidden;
+            }
             txtCountry.Text = _selected_employee.Country;
             txtState.Text = _selected_employee.State;
             txtPhone.Text = _selected_employee.Phone_Number;
             txtPosition.Text = _selected_employee.Position;
             lstRolesView.Items.Clear();
-            foreach(var role in _roles)
+            btnEmployeeActivation.Visibility = Visibility.Hidden;
+            if (_selected_employee.Is_Active)
+            {
+                btnEmployeeActivation.Content = "Deactivate Employee";
+            }
+            else
+            {
+                btnEmployeeActivation.Content = "Activate Employee";
+            }
+
+            foreach (var role in _roles)
             {
                 lstRolesView.Items.Add(role.RoleID.ToString());
             }
@@ -92,7 +113,7 @@ namespace NightRiderWPF.Employees
         //Description:When Update button is clicked
         private void btnUpdateEmployee_Click(object sender, RoutedEventArgs e)
         {
-            
+
             //Update UI from view-only to update
             txtGivenName.IsReadOnly = false;
             txtFamilyName.IsReadOnly = false;
@@ -104,20 +125,28 @@ namespace NightRiderWPF.Employees
             txtCountry.IsReadOnly = false;
             txtPhone.IsReadOnly = false;
             txtPosition.IsReadOnly = false;
-            cboState.Visibility = Visibility.Visible;
+            if (txtCountry.Text.ToUpper() == "USA" || txtCountry.Text.ToUpper() == "US")
+            {
+                cboState.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                cboState.Visibility = Visibility.Hidden;
+            }
             txtState.Visibility = Visibility.Hidden;
             generateCBOStates(cboState);
             cboState.SelectedValue = _selected_employee.State;
             dateDOB.Visibility = Visibility.Visible;
             dateDOB.Text = txtDOB.Text;
             txtDOB.Visibility = Visibility.Hidden;
+            btnEmployeeActivation.Visibility = Visibility.Visible;
             if (cboState.SelectedItem != null)
             {
                 _selected_employee.State = cboState.SelectedItem.ToString();
             }
             btnUpdateEmployeeSubmit.Visibility = Visibility.Visible;
             btnUpdateEmployee.Visibility = Visibility.Hidden;
-           
+
 
         }
         //Created By: James Williams
@@ -126,30 +155,26 @@ namespace NightRiderWPF.Employees
         private void btnUpdateEmployeeSubmit_Click(object sender, RoutedEventArgs e)
         {
 
-            
+
             //Input validation
-            if(!IsValidEmail(txtEmail.Text))
+            if (!IsValidEmail(txtEmail.Text))
             {
                 MessageBox.Show("Please enter a valid email");
                 return;
-               
+
             }
             else if (!IsValidPhoneNumber(txtPhone.Text))
             {
                 MessageBox.Show("Please enter a valid phone number");
                 return;
-               
+
             }
-            else if (!IsValidZipCode(txtZip.Text))
-            {
-                MessageBox.Show("Please enter valid zip");
-                return;
-               
-            }
-            else if(string.IsNullOrWhiteSpace(txtGivenName.Text) ||
+
+            else if (string.IsNullOrWhiteSpace(txtGivenName.Text) ||
                 string.IsNullOrWhiteSpace(txtFamilyName.Text) ||
                 string.IsNullOrWhiteSpace(txtAddress1.Text) ||
                 string.IsNullOrWhiteSpace(txtCity.Text) ||
+                string.IsNullOrWhiteSpace(txtZip.Text) ||
                 string.IsNullOrWhiteSpace(txtCountry.Text) ||
                 string.IsNullOrWhiteSpace(txtPosition.Text))
             {
@@ -157,7 +182,7 @@ namespace NightRiderWPF.Employees
                 return;
             }
             //if validation passes
-            else 
+            else
             {
                 //create an updated employee record
                 _updated_employee = new Employee_VM()
@@ -170,17 +195,25 @@ namespace NightRiderWPF.Employees
                     City = txtCity.Text,
                     Zip = txtZip.Text,
                     Email = txtEmail.Text,
-                    State = cboState.Text,
+
                     Country = txtCountry.Text,
                     Phone_Number = txtPhone.Text,
                     Position = txtPosition.Text
                 };
 
+                string state = "";
+                if (txtCountry.Text.ToUpper() == "USA" || txtCountry.Text.ToUpper() == "US")
+                {
+                    state = cboState.SelectedValue.ToString().ToUpper();
+
+                }
+                _updated_employee.State = state;
                 //attempt update
                 int rows = 0;
                 try
                 {
                     rows = _employeeManager.EditEmployee(_updated_employee, _selected_employee);
+
                 }
                 catch (Exception ex)
                 {
@@ -208,7 +241,10 @@ namespace NightRiderWPF.Employees
                     txtDOB.Visibility = Visibility.Visible;
                     btnUpdateEmployeeSubmit.Visibility = Visibility.Hidden;
                     btnUpdateEmployee.Visibility = Visibility.Visible;
+                    btnEmployeeActivation.Visibility = Visibility.Hidden;
                     _selected_employee = _updated_employee;
+                    this.NavigationService.GoBack();
+
                 }
             }
 
@@ -232,7 +268,74 @@ namespace NightRiderWPF.Employees
             }
         }
 
-      
+        //Created By: James Williams
+        //Creation Date: 2024-02-23
+        //Description: Employee activation controller
+        private void btnEmployeeActivation_Click(object sender, RoutedEventArgs e)
+        {
+            string employeeStatus = _selected_employee.Is_Active ? "deactivate" : "reactivate";
+            var result = MessageBox.Show("Are you sure you want to " + employeeStatus + " this employee's record?", "Confirm Update", MessageBoxButton.OKCancel, MessageBoxImage.Question);
+            if (result == MessageBoxResult.OK)
+            {
+                try
+                {
+                    //Control to change if employee record is active
+                    if (btnEmployeeActivation.Content.ToString() == "Activate Employee")
+                    {
+
+                        int rows = _employeeManager.ReactivateEmployeeByID(_selected_employee.Employee_ID);
+                        if (rows == 0)
+                        {
+                            MessageBox.Show("Error reactivating employee");
+                        }
+                        else
+                        {
+                            MessageBox.Show("Employee reactivated successfully");
+                            this.NavigationService.GoBack();
+                        }
+                    }
+                    else
+                    {
+                        int rows = _employeeManager.DeactivateEmployeeByID(_selected_employee.Employee_ID);
+                        if (rows == 0)
+                        {
+                            MessageBox.Show("Error deactivating employee");
+                        }
+                        else
+                        {
+                            MessageBox.Show("Employee deactivated successfully");
+                            this.NavigationService.GoBack();
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error updating employee record\n\n" + ex.InnerException.Message);
+                }
+            }
+        }
+
+        private void txtCountry_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (txtCountry.Text == "" || txtCountry.Text == null)
+            {
+                cboState.Visibility = Visibility.Hidden;
+                lblState.Visibility = Visibility.Hidden;
+
+            }
+            else if (txtCountry.Text.ToUpper() == "USA" || txtCountry.Text.ToUpper() == "US")
+            {
+                cboState.Visibility = Visibility.Visible;
+                lblState.Visibility = Visibility.Visible;
+
+            }
+            else
+            {
+                cboState.Visibility = Visibility.Hidden;
+                lblState.Visibility = Visibility.Hidden;
+
+            }
+        }
     }
 
 }

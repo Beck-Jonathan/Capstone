@@ -30,9 +30,20 @@ namespace LogicLayer
             throw new NotImplementedException();
         }
 
-        public int AddClient(Client client)
+        public bool AddClient(Client_VM client)
         {
-            throw new NotImplementedException();
+            bool result = false;
+
+            try
+            {
+                result = (1 == _clientAccessor.InsertClient(client));
+            }
+            catch (Exception ex)
+            {
+                throw new ArgumentException("Error adding client.", ex);
+            }
+
+            return result;
         }
 
         public void DeactivateClient(int id)
@@ -55,20 +66,21 @@ namespace LogicLayer
         /// <br />
         ///    <see cref="ApplicationException">ApplicationException</see>: Thrown when the UpdateClient method fails.
         /// <br /><br />
-        ///    CONTRIBUTOR: Jared Roberts
-        /// <br />
-        ///    CREATED: 2024-02-11
-        /// <br /><br />
-        ///     Initial creation
+        /// CONTRIBUTOR: Jared Roberts <br />
+        /// CREATED: 2024-02-11
+        /// <br/><br/>
+        /// UPDATER: Isabella Rosenbohm <br/>
+        /// UPDATED: 2024-02-27 <br/>
+        ///     Changed intake param of EditClient from newClient to client 
         /// </remarks>
-        public int EditClient(Client_VM newClient)
+        public int EditClient(Client_VM client)
         {
 
             int rows = 0;
 
             try
             {
-                rows = _clientAccessor.UpdateClient(newClient);
+                rows = _clientAccessor.UpdateClient(client);
             }
             catch (Exception ex)
             {

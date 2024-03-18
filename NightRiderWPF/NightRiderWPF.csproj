@@ -63,8 +63,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Compile Include="Clients\AdminAddClient.xaml.cs">
+      <DependentUpon>AdminAddClient.xaml</DependentUpon>
+    </Compile>
     <Compile Include="AdminHome.xaml.cs">
       <DependentUpon>AdminHome.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Clients\AdminEditClient.xaml.cs">
+      <DependentUpon>AdminEditClient.xaml</DependentUpon>
     </Compile>
     <Compile Include="Clients\ClientLookupPage.xaml.cs">
       <DependentUpon>ClientLookupPage.xaml</DependentUpon>
@@ -74,6 +80,39 @@
     </Compile>
     <Compile Include="Login\UsernameRequestPage.xaml.cs">
       <DependentUpon>UsernameRequestPage.xaml</DependentUpon>
+	</Compile>
+    <Compile Include="Employees\EmployeeAuthenticator.xaml.cs">
+      <DependentUpon>EmployeeAuthenticator.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Login\EmployeeLoginPage.xaml.cs">
+      <DependentUpon>EmployeeLoginPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PartsRequests\ViewPartRequestDetailsPage.xaml.cs">
+      <DependentUpon>ViewPartRequestDetailsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PartsRequests\ViewPartRequestsPage.xaml.cs">
+      <DependentUpon>ViewPartRequestsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="RouteStop\RouteList.xaml.cs">
+      <DependentUpon>RouteList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PasswordResets\ChangePasswordPage.xaml.cs">
+      <DependentUpon>ChangePasswordPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PasswordResets\RequestAndVerifyPasswordResetCodePage.xaml.cs">
+      <DependentUpon>RequestAndVerifyPasswordResetCodePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PurchaseOrders\Parts_Person_View_Current_PO_Details.xaml.cs">
+      <DependentUpon>Parts_Person_View_Current_PO_Details.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PurchaseOrders\Parts_Person_View_Purchase_Orders.xaml.cs">
+      <DependentUpon>Parts_Person_View_Purchase_Orders.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="RoleViews\CreateRole.xaml.cs">
+      <DependentUpon>CreateRole.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="VehicleModels\VehicleModelsListPage.xaml.cs">
+      <DependentUpon>VehicleModelsListPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Vehicles\VehicleLookupListPage.xaml.cs">
       <DependentUpon>VehicleLookupListPage.xaml</DependentUpon>
@@ -82,11 +121,59 @@
       <DependentUpon>GuardianViewDependentList.xaml</DependentUpon>
     </Compile>
     <Compile Include="Resources\Statics.cs" />
+    <Page Include="Clients\AdminEditClient.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Clients\ClientLookupPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Login\UsernameRequestPage.xaml">
+	  <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Employees\EmployeeAuthenticator.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Login\EmployeeLoginPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PartsRequests\ViewPartRequestDetailsPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="PartsRequests\ViewPartRequestsPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="PasswordResets\ChangePasswordPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="RouteStop\RouteList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PasswordResets\RequestAndVerifyPasswordResetCodePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PurchaseOrders\Parts_Person_View_Current_PO_Details.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PurchaseOrders\Parts_Person_View_Purchase_Orders.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="RoleViews\CreateRole.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="VehicleModels\VehicleModelsListPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -100,6 +187,10 @@
     <Compile Include="Inventory\PartsInventoryPage.xaml.cs">
       <DependentUpon>PartsInventoryPage.xaml</DependentUpon>
     </Compile>
+    <Page Include="Clients\AdminAddClient.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Clients\ToBeReworked\ClientPersonalPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -167,7 +258,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="WorkOrders\UpdateWorkOrderPage.xaml">
+    <Page Include="Vendors\AddUpdateDeleteVendor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Vendors\ViewAllVendors.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WorkOrders\UpdateWorkOrder.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -179,7 +278,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MainWindow.xaml">
+    <Page Include="DeveloperView\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -199,8 +298,14 @@
     <Compile Include="Employees\EmployeeProfilePage.xaml.cs">
       <DependentUpon>EmployeeProfilePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="WorkOrders\UpdateWorkOrderPage.xaml.cs">
-      <DependentUpon>UpdateWorkOrderPage.xaml</DependentUpon>
+    <Compile Include="Vendors\AddUpdateDeleteVendor.xaml.cs">
+      <DependentUpon>AddUpdateDeleteVendor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Vendors\ViewAllVendors.xaml.cs">
+      <DependentUpon>ViewAllVendors.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WorkOrders\UpdateWorkOrder.xaml.cs">
+      <DependentUpon>UpdateWorkOrder.xaml</DependentUpon>
     </Compile>
     <Compile Include="WorkOrders\ViewWorkOrderPage.xaml.cs">
       <DependentUpon>ViewWorkOrderPage.xaml</DependentUpon>
@@ -211,7 +316,7 @@
     <Compile Include="Login\LoginWindow.xaml.cs">
       <DependentUpon>LoginWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MainWindow.xaml.cs">
+    <Compile Include="DeveloperView\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
@@ -268,6 +373,8 @@
     <Resource Include="Resources\Images\NightRider-01.png" />
     <Resource Include="Resources\Images\NightRider-02.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Helpers\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

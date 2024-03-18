@@ -10,7 +10,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace LogicLayerTests
 {
     /// <summary>
-    /// AUTHOR: Jared Roberts, Isabella Rosenbahm
+    /// AUTHOR: Jared Roberts, Isabella Rosenbohm
     /// <br />
     /// CREATED: 2024-02-11
     /// <br />
@@ -23,14 +23,21 @@ namespace LogicLayerTests
     /// UPDATED: 2024-02-11
     /// <br />
     ///    Added TestGetClientByIDReturnsCorrectClient and TestEditClientWorksCorrectly
-    /// </remarks>
-    /// <remarks>
+    /// <br /> <br />
     /// UPDATER: Jacob Wendt
     /// <br />
     /// UPDATED: 2024-02-20
     /// <br />
     ///    Added TestGetClientByEmailReturnsCorrectClient
     ///    Added TestGetClientByEmailThrowsExceptionWhenGivenBadData
+    /// <br /> <br />
+    /// UPDATER: Isabella Rosenbohm
+    /// <br />
+    /// UPDATED: 2024-02-21
+    /// <br />
+    ///    Added TestAddClientReturnsTrue and TestAddClientReturnsErrorWithDuplicateData
+    ///    Rewrote TestGetClientByIDReturnsCorrectClient, TestGetClientByEmailReturnsCorrectClient,
+    ///    and TestGetClientByEmailThrowsExceptionWhenGivenBadData as they were not correctly written
     /// </remarks>
     [TestClass]
     public class ClientManagerTests
@@ -95,32 +102,12 @@ namespace LogicLayerTests
         [TestMethod]
         public void TestGetClientByIDReturnsCorrectClient()
         {
-            IEnumerable<Client_VM> testClientData = new List<Client_VM>()
-            {
-                new Client_VM()
-                {
-                    ClientID = 100006,
-                    GivenName = "Joseph",
-                    FamilyName = "Joestar"
-                },
-
-                new Client_VM()
-                {
-                    ClientID = 123456,
-                    GivenName = "Wrong",
-                    FamilyName = "Name"
-                }
-            };
-
-            ClientAccessorFake clientAccessorFake = new ClientAccessorFake(testClientData);
-            _clientManager = new ClientManager(clientAccessorFake);
-
             // Arrange
-            string expectedGivenName = "Joseph";
-            string expectedFamilyName = "Joestar";
+            string expectedGivenName = "Joe";
+            string expectedFamilyName = "Dirt";
 
             // Act
-            Client client = _clientManager.GetClientById(100006);
+            Client client = _clientManager.GetClientById(2);
 
             // Assert
             Assert.AreEqual(expectedGivenName, client.GivenName);
@@ -173,78 +160,85 @@ namespace LogicLayerTests
             // If pass means updated successfully
             Assert.AreEqual(expectedResult, actualResult);
         }
+        
+        [TestMethod]
+        public void TestAddClientReturnsTrue()
+        {
+            bool expectedResult = true;
+            bool actualResult = false;
+
+            actualResult = _clientManager.AddClient(
+            new Client_VM
+            {
+                GivenName = "Ichiro",
+                FamilyName = "Yamada",
+                DOB = DateTime.Parse("1998-6-26"),
+                Email = "iyamada@gmail.com",
+                PostalCode = "88888",
+                City = "Ikebukuro",
+                Region = "JP-13",
+                Address = "888 Tokyo Street",
+                TextNumber = "543-777-7777",
+                VoiceNumber = "543-555-5555",
+                IsActive = true,
+                Username = "iyamada26"
+            });
+
+            Assert.AreEqual(expectedResult, actualResult);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void TestAddClientReturnsErrorWithDuplicateData()
+        {
+            bool expectedResult = true;
+            bool actualResult = false;
+
+            actualResult = _clientManager.AddClient(
+                new Client_VM
+                {
+                    GivenName = "Foo",
+                    FamilyName = "Bar",
+                    DOB = DateTime.Parse("1905-1-2"),
+                    Email = "foobar@gmail.com",
+                    PostalCode = "12345",
+                    City = "Fake City",
+                    Region = "US-NV",
+                    Address = "123 Fake Street",
+                    TextNumber = "123-123-1234",
+                    VoiceNumber = "321-321-4321",
+                    IsActive = true,
+                    Username = "foobar123"
+                });
+
+            Assert.AreEqual(expectedResult, actualResult);
+        }
+
         [TestMethod]
         public void TestGetClientByEmailReturnsCorrectClient()
         {
-            IEnumerable<Client_VM> testClientData = new List<Client_VM>()
-            {
-                new Client_VM()
-                {
-                    ClientID = 158789,
-                    GivenName = "Joseph",
-                    FamilyName = "Joestar",
-                    Email = "jstar@gmail.com"
-                },
+            string email = "foobar@gmail.com";
+            int expectedID = 1;
+            int actualID = 0;
 
-                new Client_VM()
-                {
-                    ClientID = 128749,
-                    GivenName = "Wrong",
-                    FamilyName = "Name",
-                    Email = "wname@gmail.com"
-                }
-            };
+            actualID = _clientManager.GetClientByEmail(email).ClientID;
 
-            ClientAccessorFake clientAccessorFake = new ClientAccessorFake(testClientData);
-            _clientManager = new ClientManager(clientAccessorFake);
+            Assert.AreEqual(expectedID, actualID);
 
-            // Arrange
-            string expectedGivenName = "Joseph";
-            string expectedFamilyName = "Joestar";
-
-            // Act
-            Client client = _clientManager.GetClientByEmail("jstar@gmail.com");
-
-            // Assert
-            Assert.AreEqual(expectedGivenName, client.GivenName);
-            Assert.AreEqual(expectedFamilyName, client.FamilyName);
         }
+
 
         [TestMethod]
         [ExpectedException(typeof(ApplicationException))]
         public void TestGetClientByEmailThrowsExceptionWhenGivenBadData()
         {
-            IEnumerable<Client_VM> testClientData = new List<Client_VM>()
-            {
-                new Client_VM()
-                {
-                    ClientID = 158789,
-                    GivenName = "Joseph",
-                    FamilyName = "Joestar",
-                    Email = "jstar@gmail.com"
-                },
+            string email = "abc@test.com";
+            int acutalID = 0;
 
-                new Client_VM()
-                {
-                    ClientID = 128749,
-                    GivenName = "Wrong",
-                    FamilyName = "Name",
-                    Email = "wname@gmail.com"
-                }
-            };
+            acutalID = _clientManager.GetClientByEmail(email).ClientID; 
 
-            ClientAccessorFake clientAccessorFake = new ClientAccessorFake(testClientData);
-            _clientManager = new ClientManager(clientAccessorFake);
-
-            // Arrange
-            // string expectedGivenName = "Joseph";
-            // string expectedFamilyName = "Joestar";
-
-            // Act
-            Client client = _clientManager.GetClientByEmail("jtar@gmail.com");
-
-            // Assert
-            // Assert.ThrowsException<ArgumentException>(() => _clientManager.GetClientByEmail("jtar@gmail.com"));
+            // no assertion needed; should catch exception
         }
     }
+    
 }

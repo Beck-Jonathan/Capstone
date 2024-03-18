@@ -29,10 +29,15 @@ namespace NightRiderWPF.Vehicles
     /// <remarks>
     ///     Initial Creation
     ///     Genereated the function from the back end to the front end
-    
+
     /// UPDATER: Chris Baenziger
     /// UPDATED: 2024-02-17
     ///     
+    /// </remarks>
+    /// <remarks>
+    /// UPDATER: Chris Baenizger
+    /// UPDATED: 2024-02-23
+    /// Added implementation for deactivate vehicle.
     /// </remarks>
     public partial class VehicleLookupListPage : Page
     {
@@ -63,7 +68,7 @@ namespace NightRiderWPF.Vehicles
 
         private void addVehicleBtn_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new AddUpdateDeleteVehicle());
+            NavigationService.Navigate(new AddUpdateDeleteVehicle(new VehicleModelManager()));
         }
 
         private void addRentalBtn_Click(object sender, RoutedEventArgs e)
@@ -174,7 +179,7 @@ namespace NightRiderWPF.Vehicles
                 }
                 if (vehicle != null)
                 {
-                    NavigationService.Navigate(new AddUpdateDeleteVehicle(vehicle));
+                    NavigationService.Navigate(new AddUpdateDeleteVehicle(new VehicleModelManager(), vehicle));
                 }
             }
         }

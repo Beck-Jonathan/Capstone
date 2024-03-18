@@ -31,7 +31,9 @@ namespace LogicLayer
             string securityResponse1,
             string securityResponse2,
             string securityResponse3);
-        string[] GetSecurityQuestionsforUsernameRetrieval(string email);
+        void EditLoginPassword(string username, string password);
+        string GetLoginEmailByUsername(string username);
+		string[] GetSecurityQuestionsforUsernameRetrieval(string email);
         string GetUsername(string email, 
             string securityResponse1,
             string securityResponse2,
@@ -334,8 +336,70 @@ namespace LogicLayer
 
             return employee;
         }
+		
+		/// <summary>
+        ///     Changes the associated user's password
+        /// </summary>
+        /// <param name="username">
+        ///    The username of the user
+        /// </param>
+        /// <param name="password">
+        ///    The user's new password
+        /// </param>
+        /// <remarks>
+        ///    Parameters:
+        /// <br />
+        ///    <see cref="string">string</see> username: The username of the user
+        /// <br />
+        ///    <see cref="string">string</see> password: The user's new password
+        /// <br /><br />
+        ///    CONTRIBUTOR: Jared Hutton
+        /// <br />
+        ///    CREATED: 2024-02-24
+        /// </remarks>
+        public void EditLoginPassword(string username, string password)
+        {
+            string passwordHash = _passwordHasher.HashPassword(password);
+
+            int rowsAffected = _loginAccessor.UpdateLoginPasswordHash(username, passwordHash);
+
+            if (rowsAffected == 0)
+            {
+                throw new ArgumentException("Username not found");
+            }
+        }
 
         /// <summary>
+        ///     Retrieves the email associated with a user
+        /// </summary>
+        /// <param name="username">
+        ///    The username of the user
+        /// </param>
+        /// <returns>
+        ///    <see cref="string">string</see>: The user's registered email
+        /// </returns>
+        /// <remarks>
+        ///    Parameters:
+        /// <br />
+        ///    <see cref="string">string</see> username: The username of the user
+        /// <br /><br />
+        ///    CONTRIBUTOR: Jared Hutton
+        /// <br />
+        ///    CREATED: 2024-02-24
+        /// </remarks>
+        public string GetLoginEmailByUsername(string username)
+        {
+            string email = _loginAccessor.GetLoginEmailByUsername(username);
+
+            if (email == null)
+            {
+                throw new ArgumentException("Username not found");
+            }
+
+            return email;
+        }
+		
+		/// <summary>
         ///     Authenticates given username, password, and security responses if authenticated to an employee
         /// </summary>
         /// <param name="email">

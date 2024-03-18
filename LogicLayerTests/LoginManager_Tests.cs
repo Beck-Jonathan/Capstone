@@ -24,6 +24,12 @@ namespace LogicLayerTests
     /// UPDATED: 2024-02-16
     /// <br />
     ///  Add AuthenticateEmployee method
+    /// <br /> <br />
+    /// UPDATER: Jared Hutton
+    /// <br />
+    /// UPDATED: 2024-02-16
+    /// <br />
+    ///  Add AuthenticateEmployee method
     /// </remarks>
     [TestClass]
     public class LoginManager_Tests
@@ -45,6 +51,15 @@ namespace LogicLayerTests
             _passwordHasher = new PasswordHasher();
         }
 
+        /// <summary>
+        ///     Test that authenticating an employee's username and password returns the correct employee when
+        ///     the username and password are found
+        /// </summary>
+        /// <remarks>
+        ///    CONTRIBUTOR: Jared Hutton
+        /// <br />
+        ///    CREATED: 2024-02-16
+        /// </remarks>
         [TestMethod]
         public void AuthenticateEmployee_ReturnsCorrectEmployee()
         {
@@ -86,6 +101,14 @@ namespace LogicLayerTests
             Assert.AreEqual(expectedEmployeeId, retrievedEmployee.Employee_ID);
         }
 
+        /// <summary>
+        ///     Test that authenticating an employee's username and password fails when the username and password are not found
+        /// </summary>
+        /// <remarks>
+        ///    CONTRIBUTOR: Jared Hutton
+        /// <br />
+        ///    CREATED: 2024-02-16
+        /// </remarks>
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
         public void AuthenticateEmployee_FailsOnInvalidLogin()
@@ -502,8 +525,156 @@ namespace LogicLayerTests
                 "Kirkwood",
                 "Caroline");
         }
+		
+		/// <summary>
+        ///     Test that editing a user's password updates the password hash to the correct value
+        /// </summary>
+        /// <remarks>
+        ///    CONTRIBUTOR: Jared Hutton
+        /// <br />
+        ///    CREATED: 2024-02-24
+        /// </remarks>
+        [TestMethod]
+        public void EditLoginPassword_CorrectlyEditsPassword()
+        {
+            // Arrange
+            string username = "jackrussel49";
+            string newPassword = "galaxy";
+            string expectedPasswordHash = "eba4ae33f54ae0f96bed25bfc13abd887ae157380330cd3fd3f0a4d054ce3a3f";
+
+            List<Login_VM> testLoginData = new List<Login_VM>
+            {
+                new Login_VM
+                {
+                    Username = username,
+                    PasswordHash = "oldPasswordHash"
+                }, new Login_VM
+                {
+                    Username = "incorrect",
+                    PasswordHash = "invalidpasswordhash"
+                }
+            };
+
+            var loginAccessor = new LoginAccessorFake(testLoginData);
+
+            _loginManager = new LoginManager(_passwordHasher, loginAccessor);
+
+            // Act
+            _loginManager.EditLoginPassword(username, newPassword);
+
+            // Assert
+            var retrievedLogin = testLoginData.Single(login => login.Username == username);
+
+            Assert.AreEqual(expectedPasswordHash, retrievedLogin.PasswordHash);
+        }
 
         /// <summary>
+        ///     Test that editing a user's password throws an error when the user is not found
+        /// </summary>
+        /// <remarks>
+        ///    CONTRIBUTOR: Jared Hutton
+        /// <br />
+        ///    CREATED: 2024-02-24
+        /// </remarks>
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void EditLoginPassword_FailsOnInvalidUsername()
+        {
+            // Arrange
+            List<Login_VM> testLoginData = new List<Login_VM>
+            {
+                new Login_VM
+                {
+                    Username = "jackrussel49",
+                    PasswordHash = "eba4ae33f54ae0f96bed25bfc13abd887ae157380330cd3fd3f0a4d054ce3a3f"
+                }
+            };
+
+            var loginAccessor = new LoginAccessorFake(testLoginData);
+
+            _loginManager = new LoginManager(_passwordHasher, loginAccessor);
+
+            // Act
+            _loginManager.EditLoginPassword("wrongusername", "");
+        }
+
+        /// <summary>
+        ///     Test that retrieving an email associated with a login returns the correct emil
+        /// </summary>
+        /// <remarks>
+        ///    CONTRIBUTOR: Jared Hutton
+        /// <br />
+        ///    CREATED: 2024-02-24
+        /// </remarks>
+        [TestMethod]
+        public void GetLoginEmailByUsername_ReturnsCorrectEmail()
+        {
+            // Arrange
+            string username = "jackrussel49";
+            string expectedEmail = "correctemail@right.com";
+
+            List<Login_VM> testLoginData = new List<Login_VM>
+            {
+                new Login_VM
+                {
+                    Username = username,
+                    Employee = new Employee_VM
+                    {
+                        Email = expectedEmail
+                    }
+                }, new Login_VM
+                {
+                    Username = "incorrect",
+                    Employee = new Employee_VM
+                    {
+                        Email = "wrongemail"
+                    }
+                }
+            };
+
+            var loginAccessor = new LoginAccessorFake(testLoginData);
+
+            _loginManager = new LoginManager(_passwordHasher, loginAccessor);
+
+            // Act
+            string retrievedEmail = _loginManager.GetLoginEmailByUsername(username);
+
+            // Assert
+            Assert.AreEqual(expectedEmail, retrievedEmail);
+        }
+
+        /// <summary>
+        ///     Test that retrieving an email fails when username is not found
+        /// </summary>
+        /// <remarks>
+        ///    CONTRIBUTOR: Jared Hutton
+        /// <br />
+        ///    CREATED: 2024-02-24
+        /// </remarks>
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void GetLoginEmailByUsername_FailsOnInvalidUsername()
+        {
+            // Arrange
+            string username = "invalid";
+
+            List<Login_VM> testLoginData = new List<Login_VM>
+            {
+                new Login_VM
+                {
+                    Username = "jackrussel49"
+                }
+            };
+
+            var loginAccessor = new LoginAccessorFake(testLoginData);
+
+            _loginManager = new LoginManager(_passwordHasher, loginAccessor);
+
+            // Act
+            string retrievedEmail = _loginManager.GetLoginEmailByUsername(username);
+        }
+   
+		/// <summary>
         ///     Test that when email gets a match, Security Questions are recieved
         /// </summary>
         /// <remarks>
@@ -553,7 +724,6 @@ namespace LogicLayerTests
             _loginManager.GetSecurityQuestionsforUsernameRetrieval(email);
         }
 
-
         /// <summary>
         ///     Test that when email doesn't match anything in the database, throws exception
         /// </summary>
@@ -584,6 +754,5 @@ namespace LogicLayerTests
             //Assert
             Assert.AreEqual(expectedUsername,username);
         }
-
     }
 }

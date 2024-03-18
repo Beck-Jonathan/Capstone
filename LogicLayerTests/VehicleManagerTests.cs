@@ -21,6 +21,12 @@ namespace LogicLayerTests
     ///     Initial creation
     ///     Added Vehicle Lookup 
     /// </remarks>
+    /// <remarks>
+    /// UPDATE: Chris Baenziger
+    /// UPDATED: 2024-02-25
+    /// Added tests for deactivating vehicle
+    /// </remarks>
+
 
     [TestClass]
     public class VehicleManagerTests
@@ -49,7 +55,7 @@ namespace LogicLayerTests
                     VIN = "testaddgoodvin123",
                     VehicleNumber = "Test-01",
                     VehicleMileage = 1000,
-                    ModelLookupID = 100000,
+                    VehicleModelID = 100000,
                     VehicleLicensePlate = "Test01",
                     VehicleMake = "Mercedes",
                     VehicleModel = "Sprinter",
@@ -76,7 +82,7 @@ namespace LogicLayerTests
                     VIN = "testaddvin1234567",
                     VehicleNumber = "Test-01",
                     VehicleMileage = 1000,
-                    ModelLookupID = 100000,
+                    VehicleModelID = 100000,
                     VehicleLicensePlate = "Test01",
                     VehicleMake = "Mercedes",
                     VehicleModel = "Sprinter",
@@ -185,7 +191,7 @@ namespace LogicLayerTests
                 VIN = "testaddvin1234567",
                 VehicleNumber = "Test-01",
                 VehicleMileage = 1000,
-                ModelLookupID = 100001,
+                VehicleModelID = 100001,
                 VehicleLicensePlate = "Test01",
                 VehicleMake = "Mercedes",
                 VehicleModel = "Sprinter",
@@ -196,7 +202,7 @@ namespace LogicLayerTests
                 VIN = "testaddvin1234567",
                 VehicleNumber = "Test-01",
                 VehicleMileage = 1000,
-                ModelLookupID = 100001,
+                VehicleModelID = 100001,
                 VehicleLicensePlate = "Test01",
                 VehicleMake = "Mercedes",
                 VehicleModel = "Sprinter",
@@ -219,7 +225,7 @@ namespace LogicLayerTests
                 VIN = "testaddvin9874567",
                 VehicleNumber = "Test-00",
                 VehicleMileage = 1010,
-                ModelLookupID = 100001,
+                VehicleModelID = 100001,
                 VehicleLicensePlate = "Test01",
                 VehicleMake = "Mercedes",
                 VehicleModel = "Sprinter",
@@ -230,7 +236,7 @@ namespace LogicLayerTests
                 VIN = "testaddvin9874567",
                 VehicleNumber = "Test-00",
                 VehicleMileage = 1010,
-                ModelLookupID = 100001,
+                VehicleModelID = 100001,
                 VehicleLicensePlate = "Test10",
                 VehicleMake = "Mercedes",
                 VehicleModel = "Sprinter",
@@ -252,7 +258,7 @@ namespace LogicLayerTests
                 VIN = "testaddvin9874567",
                 VehicleNumber = "Test-00",
                 VehicleMileage = 1010,
-                ModelLookupID = 100000,
+                VehicleModelID = 100000,
                 VehicleLicensePlate = "Test10",
                 VehicleMake = "Mercedes",
                 VehicleModel = "Sprinter",
@@ -275,7 +281,7 @@ namespace LogicLayerTests
                 VIN = "testaddvin9874567",
                 VehicleNumber = "Test-00",
                 VehicleMileage = 1010,
-                ModelLookupID = 100001,
+                VehicleModelID = 100001,
                 VehicleLicensePlate = "Test10",
                 VehicleMake = "Mercedes",
                 VehicleModel = "Sprinter",
@@ -297,13 +303,13 @@ namespace LogicLayerTests
                 VIN = "testaddvin9874567",
                 VehicleNumber = "Test-00",
                 VehicleMileage = 1010,
-                ModelLookupID = 100001,
+                VehicleModelID = 100001,
                 VehicleLicensePlate = "Test10",
                 VehicleMake = "Mercedes",
                 VehicleModel = "Sprinter",
                 VehicleYear = 2024,
                 MaxPassengers = 10
-            }).ModelLookupID;
+            }).VehicleModelID;
 
             Assert.AreEqual(expectedResult, actualResult);
         }
@@ -320,13 +326,65 @@ namespace LogicLayerTests
                 VIN = "testaddvin9874567",
                 VehicleNumber = "Test-00",
                 VehicleMileage = 1010,
-                ModelLookupID = 100000,
+                VehicleModelID = 100000,
                 VehicleLicensePlate = "Test10",
                 VehicleMake = "Mercedes",
                 VehicleModel = "Sprinter",
                 VehicleYear = 2024,
                 MaxPassengers = 10
-            }).ModelLookupID;
+            }).VehicleModelID;
+
+            Assert.AreEqual(expectedResult, actualResult);
+        }
+
+        [TestMethod]
+        public void TestDeactivateVehicleReturnsRowsAffected()
+        {
+            bool expectedResult = true;
+            bool actualResult = false;
+
+            actualResult = _vehicleManager.DeactivateVehicle(new Vehicle()
+            {
+                VIN = "testaddvin1234567",
+                VehicleNumber = "Test-01",
+                VehicleMileage = 1000,
+                VehicleModelID = 100001,
+                VehicleLicensePlate = "Test01",
+                VehicleMake = "Mercedes",
+                VehicleModel = "Sprinter",
+                VehicleYear = 2024,
+                MaxPassengers = 3,
+                VehicleType = "Van",
+                VehicleDescription = "Van",
+                Rental = false,
+                DateEntered = DateTime.Now
+            });
+
+            Assert.AreEqual(expectedResult, actualResult);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void TestDeactivateVehicleThrowsErrorWithBadData()
+        {
+            bool expectedResult = false;
+            bool actualResult = true;
+
+            actualResult = _vehicleManager.DeactivateVehicle(new Vehicle()
+            {
+                VIN = "testaddgoodvin123",
+                VehicleNumber = "Test-01",
+                VehicleMileage = 1000,
+                VehicleModelID = 100000,
+                VehicleLicensePlate = "Test01",
+                VehicleMake = "Mercedes",
+                VehicleModel = "Sprinter",
+                VehicleDescription = "Van",
+                VehicleYear = 2024,
+                MaxPassengers = 10,
+                Rental = false,
+                DateEntered = DateTime.Now
+            });
 
             Assert.AreEqual(expectedResult, actualResult);
         }
