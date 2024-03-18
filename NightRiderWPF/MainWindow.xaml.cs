@@ -24,6 +24,7 @@ using NightRiderWPF.Login;
 using LogicLayer;
 using LogicLayer.Utilities;
 using DataObjects;
+using NightRiderWPF.NoUsername;
 
 namespace NightRiderWPF
 {
@@ -186,6 +187,11 @@ namespace NightRiderWPF
             Authentication.AuthenticatedClient = null; // more security
             UpdateUIforLogout();
             return;
+        }
+
+        private void btnForgotUsername_Click(object sender, RoutedEventArgs e)
+        {
+            PageViewer.Navigate(new UsernameRequest());
         }
     }
 }
