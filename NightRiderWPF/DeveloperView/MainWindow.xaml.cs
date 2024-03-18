@@ -214,7 +214,11 @@ namespace NightRiderWPF.DeveloperView
             return;
         }
 
-
+        private void btnForgotUsername_Click(object sender, RoutedEventArgs e)
+        {
+            PageViewer.Navigate(new UsernameRequest());
+		}
+		
         /// <summary>
         ///     Handles click behavior for the "Forgot Password" button
         ///     open password reset request page

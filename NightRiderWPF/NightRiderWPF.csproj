@@ -78,6 +78,9 @@
     <Compile Include="Clients\ToBeReworked\ClientPersonalPage.xaml.cs">
       <DependentUpon>ClientPersonalPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Login\UsernameRequestPage.xaml.cs">
+      <DependentUpon>UsernameRequestPage.xaml</DependentUpon>
+	</Compile>
     <Compile Include="Employees\EmployeeAuthenticator.xaml.cs">
       <DependentUpon>EmployeeAuthenticator.xaml</DependentUpon>
     </Compile>
@@ -124,6 +127,10 @@
     </Page>
     <Page Include="Clients\ClientLookupPage.xaml">
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Login\UsernameRequestPage.xaml">
+	  <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Employees\EmployeeAuthenticator.xaml">
