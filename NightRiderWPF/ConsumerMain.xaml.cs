@@ -192,7 +192,7 @@ namespace NightRiderWPF
 
             foreach (var role in Authentication.AuthenticatedEmployee.Roles)
             {
-                switch(role.RoleID)
+                switch (role.RoleID)
                 {
                     case "Admin":
                         btnClients.Visibility = Visibility.Visible;
@@ -204,29 +204,35 @@ namespace NightRiderWPF
                         btnVehicleSchedules.Visibility = Visibility.Visible;
                         btnRoutes.Visibility = Visibility.Visible;
                         btnPartsRequests.Visibility = Visibility.Visible;
+                        btn_profile.Visibility = Visibility.Visible;
                         break;
                     case "FleetAdmin":
-                        btnVehicles.Visibility= Visibility.Visible;
-                        btnVehicleSchedules.Visibility= Visibility.Visible;
-                        btnMaintenance.Visibility= Visibility.Visible;
+                        btnVehicles.Visibility = Visibility.Visible;
+                        btnVehicleSchedules.Visibility = Visibility.Visible;
+                        btnMaintenance.Visibility = Visibility.Visible;
                         btnPartsRequests.Visibility = Visibility.Visible;
+                        btn_profile.Visibility = Visibility.Visible;
                         break;
                     case "Mechanic":
-                        btnMaintenance.Visibility= Visibility.Visible;
-                        btnInventory.Visibility= Visibility.Visible;
+                        btnMaintenance.Visibility = Visibility.Visible;
+                        btnInventory.Visibility = Visibility.Visible;
+                        btn_profile.Visibility = Visibility.Visible;
                         break;
                     case "Maintenance":
                         btnMaintenance.Visibility = Visibility.Visible;
+                        btn_profile.Visibility = Visibility.Visible;
                         break;
                     case "PartsPerson":
-                        btnInventory.Visibility= Visibility.Visible;
-                        btnMaintenance.Visibility=Visibility.Visible;
+                        btnInventory.Visibility = Visibility.Visible;
+                        btnMaintenance.Visibility = Visibility.Visible;
                         btnPartsRequests.Visibility = Visibility.Visible;
+                        btn_profile.Visibility = Visibility.Visible;
                         break;
                     case "Driver":
                     // btnMySchedule.Visibility= Visibility.Visible;
                     case "Operator":
                         btnRoutes.Visibility = Visibility.Visible;
+                        btn_profile.Visibility = Visibility.Visible;
                         break;
                     default: break;
                 }
@@ -235,7 +241,8 @@ namespace NightRiderWPF
             if (isAdmin)
             {
                 PageViewer.Navigate(new AdminHome());
-            } else
+            }
+            else
             {
                 PageViewer.Navigate(new EmployeeLoginPage());
             }
@@ -276,10 +283,10 @@ namespace NightRiderWPF
             lblPassword.Visibility = Visibility.Visible;
             btnLogin.Visibility = Visibility.Visible;
             btnForgotPassword.Visibility = Visibility.Visible;
-
+            btn_profile.Visibility = Visibility.Hidden;
             lbl_userAuthenticatedConfirmation.Visibility = Visibility.Hidden;
             btn_logout.Visibility = Visibility.Hidden;
-            foreach(Button btn in stackMainNav.Children)
+            foreach (Button btn in stackMainNav.Children)
             {
                 btn.Visibility = Visibility.Collapsed;
             }
@@ -364,6 +371,11 @@ namespace NightRiderWPF
                 btn.Background = Statics.PrimaryColor;
                 PageViewer.Navigate(new ViewPartRequestsPage());
             }
+        }
+
+        private void btn_profile_Click(object sender, RoutedEventArgs e)
+        {
+            PageViewer.Navigate(new EmployeeProfilePage(Authentication.AuthenticatedEmployee));
         }
     }
 }

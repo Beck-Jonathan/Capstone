@@ -115,7 +115,8 @@ namespace DataAccessLayer
                         Login = new Login()
                         {
                             Username = reader.GetString(13),
-                        }
+                        },
+                        DOB = reader.GetDateTime(14)
                     };
 
                     while (reader.Read())
@@ -164,7 +165,7 @@ namespace DataAccessLayer
         /// <br />
         ///    CREATED: 2024-02-01
         /// </remarks>
-       public string[] AuthenticateClientForSecurityQuestions(string username, string passwordHash)
+        public string[] AuthenticateClientForSecurityQuestions(string username, string passwordHash)
         {
             string[] securityQuestions = null;
 
