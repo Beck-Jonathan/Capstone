@@ -23,11 +23,13 @@ namespace NightRiderWPF.VehicleModels
     public partial class VehicleModelsListPage : Page
     {
         private IVehicleModelManager _vehicleModelManager;
+        private IVehicleManager _vehicleManager;
         private IEnumerable<VehicleModel> _vehicleModels;
 
-        public VehicleModelsListPage(IVehicleModelManager vehicleModelManager)
+        public VehicleModelsListPage(IVehicleModelManager vehicleModelManager, IVehicleManager vehicleManager)
         {
             _vehicleModelManager = vehicleModelManager;
+            _vehicleManager = vehicleManager;
 
             InitializeComponent();
         }
@@ -59,6 +61,19 @@ namespace NightRiderWPF.VehicleModels
             _vehicleModels = _vehicleModelManager.GetVehicleModels();
 
             dat_vehicleModelsList.ItemsSource = _vehicleModels;
+        }
+
+        /// <summary>
+        ///     Handle new vehicle model button click; open new vehicle form
+        /// </summary>
+        /// <remarks>
+        ///    CONTRIBUTOR: Jared Hutton
+        /// <br />
+        ///    CREATED: 2024-03-19
+        /// </remarks>
+        private void btn_newVehicleModel_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new VehicleModelAddEditPage(_vehicleModelManager, _vehicleManager));
         }
     }
 }
