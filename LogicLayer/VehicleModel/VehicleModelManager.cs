@@ -15,6 +15,7 @@ namespace LogicLayer
     public interface IVehicleModelManager
     {
         IEnumerable<VehicleModel> GetVehicleModels();
+        bool AddVehicleModel(VehicleModel vehicleModel);
     }
 
     /// <summary>
@@ -47,6 +48,36 @@ namespace LogicLayer
         public IEnumerable<VehicleModel> GetVehicleModels()
         {
             return _vehicleModelAccessor.GetVehicleModels();
+        }
+
+        /// <summary>
+        ///     Adds a new vehicle model
+        /// </summary>
+        /// <param name="vehicleModel">
+        ///    The VehicleModel being added
+        /// </param>
+        /// <returns>
+        ///    <see cref="bool">bool</see>: Whether the vehicle model was successfully added
+        /// </returns>
+        /// <remarks>
+        ///    Parameters:
+        /// <br />
+        ///    <see cref="VehicleModel">VehicleModel</see> vehicleModel: The VehicleModel being added
+        /// <br /><br />
+        ///    CONTRIBUTOR: Jared Hutton
+        /// <br />
+        ///    CREATED: 2024-03-19
+        /// </remarks>
+        public bool AddVehicleModel(VehicleModel vehicleModel)
+        {
+            int rowsAffected = _vehicleModelAccessor.InsertVehicleModel(vehicleModel);
+
+            if (rowsAffected == 0)
+            {
+                throw new ApplicationException("Failed to insert vehicle model");
+            }
+
+            return true;
         }
     }
 }

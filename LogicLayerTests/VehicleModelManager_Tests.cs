@@ -21,6 +21,7 @@ namespace LogicLayerTests
     public class VehicleModelManager_Tests
     {
         private VehicleModelManager _vehicleModelManager;
+        private List<VehicleModel> _testVehicleModels;
 
         /// <summary>
         ///     Initialize the required test objects
@@ -33,7 +34,7 @@ namespace LogicLayerTests
         [TestInitialize]
         public void TestInitialize()
         {
-            var testVehicleModels = new List<VehicleModel>()
+            _testVehicleModels = new List<VehicleModel>()
             {
                 new VehicleModel
                 {
@@ -73,7 +74,7 @@ namespace LogicLayerTests
                 }
             };
 
-            var vehicleModelAccessor = new VehicleModelAccessorFake(testVehicleModels);
+            var vehicleModelAccessor = new VehicleModelAccessorFake(_testVehicleModels);
 
             _vehicleModelManager = new VehicleModelManager(vehicleModelAccessor);
         }
@@ -130,6 +131,32 @@ namespace LogicLayerTests
                     retrievedVehicleModels
                         .Where(retrievedVehicleModel => VehicleModelsAreEqual(expectedVehicleModel, retrievedVehicleModel))
                         .Count() == 1));
+        }
+
+        /// <summary>
+        ///     Test that InsertVehicleModel inserts the vehicle correctly
+        /// </summary>
+        /// <remarks>
+        ///    CONTRIBUTOR: Jared Hutton
+        /// <br />
+        ///    CREATED: 2024-03-19
+        /// </remarks>
+        [TestMethod]
+        public void InsertVehicleModel_InsertsVehicleCorrectly()
+        {
+            // Arrange
+            VehicleModel vehicle = new VehicleModel
+            {
+                Name = "TestName",
+                Make = "TestMake",
+                Year = 1999
+            };
+
+            // Act
+            _vehicleModelManager.AddVehicleModel(vehicle);
+
+            // Assert
+            Assert.IsTrue(VehicleModelsAreEqual(vehicle, _testVehicleModels.Last()));
         }
 
         /// <summary>

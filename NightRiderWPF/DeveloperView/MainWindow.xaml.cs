@@ -81,7 +81,7 @@ namespace NightRiderWPF.DeveloperView
                         PageViewer.Navigate(new AdminEmployeeListPage());
                         break;
                     case "lstbxit_vehicleModels":
-                        PageViewer.Navigate(new VehicleModelsListPage(_vehicleModelManager));
+                        PageViewer.Navigate(new VehicleModelsListPage(_vehicleModelManager, null));
                         break;
                     case "VehicleLookupListPage":
                         PageViewer.Navigate(new VehicleLookupListPage());

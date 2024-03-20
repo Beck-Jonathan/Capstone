@@ -27,6 +27,7 @@ using LogicLayer;
 using DataObjects;
 using NightRiderWPF.Login;
 using NightRiderWPF.RouteStop;
+using NightRiderWPF.VehicleModels;
 
 namespace NightRiderWPF
 {
@@ -37,7 +38,6 @@ namespace NightRiderWPF
     /// </summary>
     public partial class ConsumerMain : Window
     {
-
         private ILoginManager _loginManager;
         private IPasswordHasher _passwordHasher;
         public ConsumerMain()
@@ -207,9 +207,16 @@ namespace NightRiderWPF
                         btn_profile.Visibility = Visibility.Visible;
                         break;
                     case "FleetAdmin":
+<<<<<<< HEAD
                         btnVehicles.Visibility = Visibility.Visible;
                         btnVehicleSchedules.Visibility = Visibility.Visible;
                         btnMaintenance.Visibility = Visibility.Visible;
+=======
+                        btnVehicles.Visibility= Visibility.Visible;
+                        btnVehicleModels.Visibility = Visibility.Visible;
+                        btnVehicleSchedules.Visibility= Visibility.Visible;
+                        btnMaintenance.Visibility= Visibility.Visible;
+>>>>>>> dev
                         btnPartsRequests.Visibility = Visibility.Visible;
                         btn_profile.Visibility = Visibility.Visible;
                         break;
@@ -382,6 +389,29 @@ namespace NightRiderWPF
         {
             PageViewer.Navigate(new EmployeeProfilePage(Authentication.AuthenticatedEmployee));
         }
+
+        /// <summary>
+        /// AUTHOR: Jared Hutton
+        /// <br />
+        /// CREATED: 2024-03-19
+        /// <br />
+        ///     A page for displaying all of the vehicle models
+        /// </summary>
+       private void btnVehicleModels_Click(object sender, RoutedEventArgs e)
+       {
+           if (sender is Button btn && btn.Name == "btnVehicleModels")
+           {
+               foreach (var child in stackMainNav.Children)
+               {
+                   if (child is Button button)
+                   {
+                       button.Background = Statics.SecondaryColor;
+                   }
+               }
+               btn.Background = Statics.PrimaryColor;
+               PageViewer.Navigate(new VehicleModelsListPage(new VehicleModelManager(), new VehicleManager()));
+           }
+       }
     }
 }
 // checked by James Williams

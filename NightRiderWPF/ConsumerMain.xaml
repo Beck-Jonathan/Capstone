@@ -78,6 +78,13 @@
                             Background="{x:Static resources:Statics.SecondaryColor}" Click="btnEmployees_Click" Visibility="Collapsed" />
                     <Button Content="Vehicles" x:Name="btnVehicles" Height="50px" Foreground="{x:Static resources:Statics.ButtonText}"
                             Background="{x:Static resources:Statics.SecondaryColor}" Click="btnVehicles_Click" Visibility="Collapsed" />
+                    <Button Content="Vehicle Models"
+                            x:Name="btnVehicleModels"
+                            Height="50px"
+                            Foreground="{x:Static resources:Statics.ButtonText}"
+                            Background="{x:Static resources:Statics.SecondaryColor}"
+                            Click="btnVehicleModels_Click"
+                            Visibility="Collapsed" />
                     <Button Content="Maintenance" x:Name="btnMaintenance" Height="50px" Foreground="{x:Static resources:Statics.ButtonText}"
                             Background="{x:Static resources:Statics.SecondaryColor}" Click="btnMaintenance_Click" Visibility="Collapsed" />
                     <Button Content="Inventory" x:Name="btnInventory" Height="50px" Foreground="{x:Static resources:Statics.ButtonText}"

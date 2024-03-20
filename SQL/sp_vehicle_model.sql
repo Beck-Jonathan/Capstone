@@ -31,20 +31,17 @@ print''
 print '*** Create the sp_add_vehicle_model ***'
 GO
 -- AUTHOR: Chris Baenziger
-CREATE PROCEDURE [dbo].[sp_add_vehicle_model]
-    (
-    @Max_Passengers         [int],
-    @Name           [nvarchar](255),
-    @Make           [nvarchar](255),
-    @Vehicle_Model_ID [int],
-    @Year           [int]
+CREATE PROCEDURE [dbo].[sp_add_vehicle_model] (
+    @Name            [nvarchar](255),
+    @Make            [nvarchar](255),
+    @Vehicle_Type_Id [nvarchar](255),
+    @Year            [int],
+    @Max_Passengers  [int]
 )
 AS
 BEGIN
-    INSERT INTO [dbo].[Vehicle_Model]
-        ([Max_Passengers], [Name], [Make], [Vehicle_Model_ID], [Year])
-    VALUES
-        (@Max_Passengers, @Name, @Make, @Vehicle_Model_ID, @Year)
+    INSERT INTO [dbo].[Vehicle_Model] ([Name], [Make], [Year], [Vehicle_Type_Id], [Max_Passengers])
+      VALUES (@Name, @Make, @Year, @Vehicle_Type_Id, @Max_Passengers);
     SELECT SCOPE_IDENTITY();
 END
 GO
