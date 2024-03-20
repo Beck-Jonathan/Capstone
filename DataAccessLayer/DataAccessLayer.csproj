@@ -55,6 +55,7 @@
     <Compile Include="RouteAccessor.cs" />
     <Compile Include="Purchase_OrderAccessor.cs" />
     <Compile Include="ServiceOrderAccessor.cs" />
+    <Compile Include="SourceAccessor.cs" />
     <Compile Include="VehicleAccessor.cs" />
     <Compile Include="RoleAccessor.cs" />
     <Compile Include="VehicleModelAccessor.cs" />

@@ -93,6 +93,12 @@
     <Compile Include="PartsRequests\ViewPartRequestsPage.xaml.cs">
       <DependentUpon>ViewPartRequestsPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="PurchaseOrders\Parts_Person_Add_Update_Delete_Line_Items.xaml.cs">
+      <DependentUpon>Parts_Person_Add_Update_Delete_Line_Items.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PurchaseOrders\Parts_Person_Add_Update_Delete_Purchase_Order.xaml.cs">
+      <DependentUpon>Parts_Person_Add_Update_Delete_Purchase_Order.xaml</DependentUpon>
+    </Compile>
     <Compile Include="RouteStop\RouteList.xaml.cs">
       <DependentUpon>RouteList.xaml</DependentUpon>
     </Compile>
@@ -150,6 +156,14 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="PasswordResets\ChangePasswordPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PurchaseOrders\Parts_Person_Add_Update_Delete_Line_Items.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PurchaseOrders\Parts_Person_Add_Update_Delete_Purchase_Order.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

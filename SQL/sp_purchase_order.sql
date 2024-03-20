@@ -93,3 +93,36 @@ where [Purchase_Order_Date]>@Start_Date
 and [Purchase_Order_Date]<@End_Date
  END 
  GO
+ 
+  /******************
+Create the insert script for the Purchase_Order table
+Jonathan Beck 3/1
+***************/
+print '' Print '***Create the insert script for the Purchase_Order table***' 
+ go 
+CREATE PROCEDURE [DBO].[sp_insert_purchase_order]
+(@Vendor_ID [int]
+,@Purchase_Order_Date [date]
+,@Delivery_Address [nvarchar](50)
+,@Delivery_Address2 [nvarchar](50)
+,@Delivery_City [nvarchar](20)
+,@Delivery_State [nvarchar](2)
+,@Delivery_Country [nvarchar](3)
+,@Delivery_Zip [nvarchar](9)
+)as 
+ begin
+ insert into [dbo].Purchase_Order(
+[Vendor_ID],[Purchase_Order_Date],[Delivery_Address],[Delivery_Address2],[Delivery_City],[Delivery_State],[Delivery_Country],[Delivery_Zip])
+ VALUES (
+@Vendor_ID
+,@Purchase_Order_Date
+,@Delivery_Address
+,@Delivery_Address2
+,@Delivery_City
+,@Delivery_State
+,@Delivery_Country
+,@Delivery_Zip
+)
+select SCOPE_IDENTITY();
+end
+Go

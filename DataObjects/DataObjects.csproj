@@ -32,6 +32,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -60,6 +61,7 @@
     <Compile Include="Purchase_Order.cs" />
     <Compile Include="ServiceOrder.cs" />
     <Compile Include="HelperObjects\Time.cs" />
+    <Compile Include="Source.cs" />
     <Compile Include="ValidationHelpers.cs" />
     <Compile Include="Vehicle.cs" />
     <Compile Include="VehicleModel.cs" />

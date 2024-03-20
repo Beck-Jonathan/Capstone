@@ -43,6 +43,8 @@
   <ItemGroup>
     <Compile Include="Client\DependentManager.cs" />
     <Compile Include="Client\IDependentManager.cs" />
+    <Compile Include="Inventory\ISourceManager.cs" />
+    <Compile Include="Inventory\SourceManager.cs" />
     <Compile Include="PartsRequest\IPartsRequestsManager.cs" />
     <Compile Include="PartsRequest\PartsRequestManager.cs" />
     <Compile Include="RouteStop\IRouteManager.cs" />

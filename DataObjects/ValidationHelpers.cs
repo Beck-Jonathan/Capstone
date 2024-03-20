@@ -251,6 +251,41 @@ namespace DataObjects
             /// </remarks>
             return (!licensePlate.Equals("") && licensePlate.Length < 11 && licensePlate.Length > 0);
         }
+
+        //Created By Jonathan Beck
+        //3/19/2024
+        public static List<String> generateCBOStates()
+        {
+            List<string> states = new List<string>
+            {
+                "AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA",
+                "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD",
+                "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ",
+                "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC",
+                "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY"
+            };
+            return states;
+        }
+
+        //Created By Jonathan Beck
+        //3/19/2024
+        public static Boolean isValidZip(this string zip)
+        {
+            Boolean result = true;
+            if (zip.Length == 5 || zip.Length == 9)
+            {
+                char[] chars = zip.ToCharArray();
+                foreach (char c in chars)
+                {
+                    int x = 0;
+                    if (Int32.TryParse(c.ToString(), out x) == false)
+                    {
+                        result = false; break;
+                    }
+                }
+            }
+            return result;
+        }
     }
 }
 

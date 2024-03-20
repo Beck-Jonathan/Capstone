@@ -103,5 +103,22 @@ namespace DataAccessFakes
 
             return result;
         }
+
+        /// <summary>
+        /// Jonathan Beck
+        /// Created: 2024/01/31
+        /// 
+        /// Insert purchse order
+        /// </summary>
+        public int InsertPurchaseOrder(Purchase_Order purchaseOrder)
+        {
+            int starting = fakeorders.Count;
+            purchaseOrder.Purchase_Order_ID = starting + 1;
+            fakeorders.Add(purchaseOrder);
+            int ending = fakeorders.Count;
+
+            return ending;
+
+        }
     }
 }
