@@ -33,6 +33,11 @@ namespace LogicLayer
             string securityResponse3);
         void EditLoginPassword(string username, string password);
         string GetLoginEmailByUsername(string username);
+        string[] GetSecurityQuestionsforUsernameRetrieval(string email);
+        string GetUsername(string email,
+            string securityResponse1,
+            string securityResponse2,
+            string securityResponse3);
     }
 
     /// <summary>
@@ -392,6 +397,80 @@ namespace LogicLayer
             }
 
             return email;
+        }
+
+        /// <summary>
+        ///     Authenticates given username, password, and security responses if authenticated to an employee
+        /// </summary>
+        /// <param name="email">
+        ///    The email of the user whose username was forgotten.
+        /// </param>
+        /// <returns>
+        ///    <see cref="bool">boolean</see> success: The user's username was successfully retrieved (and will be emailed to the email given.)
+        /// </returns>
+        /// <remarks>
+        ///    Parameters:
+        ///    <see cref="string">string</see> email: The email given by the user
+        /// <br />
+        ///    CONTRIBUTOR: Parker Svoboda
+        /// <br />
+        ///    CREATED: 2024-02-26
+        /// </remarks>
+        public string[] GetSecurityQuestionsforUsernameRetrieval(string email)
+        {
+            try
+            {
+                string[] questions = _loginAccessor.VerifyUsernameRetrieval(email);
+                return questions;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        /// <summary>
+        ///     Authenticates given username, password, and security responses if authenticated to an employee
+        /// </summary>
+        /// <param name="email">
+        ///    The email of the user whose username was forgotten.
+        /// <param name="securityResponse1">
+        ///    The response to the first security question
+        /// </param>
+        /// <param name="securityResponse2">
+        ///    The response to the second security question
+        /// </param>
+        /// <param name="securityResponse3">
+        ///    The response to the third security question
+        /// </param>
+        /// <returns>
+        ///    <see cref="bool">boolean</see> success: The user's username was successfully retrieved (and will be emailed to the email given.)
+        /// </returns>
+        /// <remarks>
+        ///    Parameters:
+        ///    <see cref="string">string</see> email: The email given by the user
+        /// <br />
+        ///    <see cref="string">string</see> securityResponse1: The response to the first security question
+        /// <br />
+        ///    <see cref="string">string</see> securityResponse2: The response to the second security question
+        /// <br />
+        ///    <see cref="string">string</see> securityResponse3: The response to the third security question
+        /// <br /><br />
+        ///    CONTRIBUTOR: Parker Svoboda
+        /// <br />
+        ///    CREATED: 2024-03-02
+        /// </remarks>
+        public string GetUsername(string email, string securityResponse1, string securityResponse2, string securityResponse3)
+        {
+            try
+            {
+                string username = _loginAccessor.RetrieveUsername(email, securityResponse1, securityResponse2, securityResponse3);
+                return username;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 }

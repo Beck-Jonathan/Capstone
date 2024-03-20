@@ -365,6 +365,11 @@ namespace NightRiderWPF
                 PageViewer.Navigate(new ViewPartRequestsPage());
             }
         }
+
+        private void btnForgotUsername_Click(object sender, RoutedEventArgs e)
+        {
+            PageViewer.Navigate(new UsernameRequestPage());
+        }
     }
 }
 // checked by James Williams

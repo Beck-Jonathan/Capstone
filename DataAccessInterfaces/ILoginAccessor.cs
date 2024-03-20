@@ -194,5 +194,48 @@ namespace DataAccessInterfaces
         ///    <see cref="string">string</see> username: The username of the user
         /// </remarks>
         string GetLoginEmailByUsername(string username);
+
+        /// <summary>
+        ///     retrieves user's security questions using a given Email.
+        /// </summary>
+        /// <param name="email">
+        ///    The email of the user who forgot their Username.
+        /// </param>
+        /// <returns>
+        ///    <see cref="string[]">string[]</see>: The security questions
+		/// </returns>
+        /// <remarks>
+        ///    Parameters:
+        /// <br />
+		///    <see cref="string">string</see> email: The email given by the user, which their account is registered with.
+        /// <br /><br />
+        ///    CONTRIBUTOR: Parker Svoboda
+        /// <br />
+        ///    CREATED: 2024-02-25
+        /// </remarks>
+        string[] VerifyUsernameRetrieval(string email);
+
+        /// <summary>
+        ///     retrieves username using a given security responses and email.
+        /// </summary>
+        /// <param name="email">
+        ///    The email of the user who forgot their Username.
+        /// </param>
+        /// <returns>
+        ///    <see cref="string[]">string[]</see>: The security questions
+		/// </returns>
+        /// <remarks>
+        ///    Parameters:
+        /// <br />
+		///    <see cref="string">string</see> email: The email given by the user, which their account is registered with.
+        /// <br /><br />
+        ///    CONTRIBUTOR: Parker Svoboda
+        /// <br />
+        ///    CREATED: 2024-02-25
+        /// </remarks>
+        string RetrieveUsername(string email,
+            string securityResponse1,
+            string securityResponse2,
+            string securityResponse3);
     }
 }
