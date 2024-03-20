@@ -207,16 +207,10 @@ namespace NightRiderWPF
                         btn_profile.Visibility = Visibility.Visible;
                         break;
                     case "FleetAdmin":
-<<<<<<< HEAD
-                        btnVehicles.Visibility = Visibility.Visible;
-                        btnVehicleSchedules.Visibility = Visibility.Visible;
-                        btnMaintenance.Visibility = Visibility.Visible;
-=======
                         btnVehicles.Visibility= Visibility.Visible;
                         btnVehicleModels.Visibility = Visibility.Visible;
                         btnVehicleSchedules.Visibility= Visibility.Visible;
                         btnMaintenance.Visibility= Visibility.Visible;
->>>>>>> dev
                         btnPartsRequests.Visibility = Visibility.Visible;
                         btn_profile.Visibility = Visibility.Visible;
                         break;

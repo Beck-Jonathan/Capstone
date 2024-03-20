@@ -158,7 +158,3 @@ BEGIN
     AND (l.[Security_Response_3] IS NULL OR l.[Security_Response_3] = @Security_Response_3);
 END;
 GO
-<<<<<<< HEAD
-=======
-
->>>>>>> origin/main

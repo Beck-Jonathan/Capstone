@@ -1803,7 +1803,7 @@ Print '***Insert Sample Data For The  Login table***'
  go
 
 INSERT INTO [dbo].[Login]
-    ([Username], [Client_ID], [Employee_ID],
+    ([Username], [Employee_ID],
     [Security_Question_1],[Security_Response_1],
     [Security_Question_2],[Security_Response_2],
     [Security_Question_3],[Security_Response_3])
