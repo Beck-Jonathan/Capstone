@@ -1808,8 +1808,8 @@ INSERT INTO [dbo].[Login]
     [Security_Question_2],[Security_Response_2],
     [Security_Question_3],[Security_Response_3])
 VALUES
-    ('JoeSmith1994', 100000, 'what is your favorite animal?', 'lion', null, null, null, null),
-    ('Jacmar125', 100001, 'what is your favorite animal?', 'Ocelot', 'what is your favorite food?', 'Ramen', null, null),
+    ('JoeSmith1994', 100000, 'what is your favorite animal?', 'lion', 'what is your favorite food?', 'Ramen', 'what was your first dogs name?', 'Hoola'),
+    ('Jacmar125', 100001, 'what is your favorite animal?', 'Ocelot', 'what is your favorite food?', 'Bibimbap', 'what was your first dogs name?', 'Jeff'),
     ('Lebold2202', 100002, 'what is your favorite animal?', 'Foxes', 'what is your favorite food?', 'Spaghetti', 'what was your first dogs name?', 'Lola');
 GO
 
