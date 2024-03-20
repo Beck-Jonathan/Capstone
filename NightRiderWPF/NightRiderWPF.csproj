@@ -80,15 +80,12 @@
     </Compile>
     <Compile Include="Login\UsernameRequestPage.xaml.cs">
       <DependentUpon>UsernameRequestPage.xaml</DependentUpon>
-	</Compile>
+    </Compile>
     <Compile Include="Employees\EmployeeAuthenticator.xaml.cs">
       <DependentUpon>EmployeeAuthenticator.xaml</DependentUpon>
     </Compile>
     <Compile Include="Login\EmployeeLoginPage.xaml.cs">
       <DependentUpon>EmployeeLoginPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Login\UsernameRequestPage.xaml.cs">
-      <DependentUpon>UsernameRequestPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="PartsRequests\ViewPartRequestDetailsPage.xaml.cs">
       <DependentUpon>ViewPartRequestDetailsPage.xaml</DependentUpon>
@@ -139,7 +136,7 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Login\UsernameRequestPage.xaml">
-	  <SubType>Designer</SubType>
+      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Employees\EmployeeAuthenticator.xaml">
@@ -147,10 +144,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Login\EmployeeLoginPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Login\UsernameRequestPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

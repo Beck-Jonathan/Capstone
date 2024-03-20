@@ -216,7 +216,7 @@ namespace NightRiderWPF.DeveloperView
 
         private void btnForgotUsername_Click(object sender, RoutedEventArgs e)
         {
-            PageViewer.Navigate(new UsernameRequest());
+            PageViewer.Navigate(new UsernameRequestPage());
 		}
 		
         /// <summary>
