@@ -60,12 +60,12 @@ namespace DataAccessFakes
             EmployeeAccessorFake employeeFakes = new EmployeeAccessorFake();
             List<Employee_VM> fakeEmployees = (List<Employee_VM>)employeeFakes.GetAllEmployees();
             fakeLoginData = new List<Login_VM>();
-            
+
             for (int i = 0; i < fakeEmployees.Count; i++)
             {
                 fakeLoginData.Add(new Login_VM()
                 {
-                    Username = (fakeEmployees[i].Given_Name+fakeEmployees[i].Family_Name+ fakeEmployees[i].Zip).ToLower(),
+                    Username = (fakeEmployees[i].Given_Name + fakeEmployees[i].Family_Name + fakeEmployees[i].Zip).ToLower(),
                     PasswordHash = "e312910dfb28cc0c938c297f846ca61467023e47d68908e1900ab1b72d0ed7d3",
                     EmployeeID = fakeEmployees[i].Employee_ID,
                     ClientID = null,
@@ -422,7 +422,7 @@ namespace DataAccessFakes
                 .Select(login =>
                     new string[] { login.SecurityResponse1, login.SecurityResponse2, login.SecurityResponse3 })
                 .FirstOrDefault();
-            return (securityResponse1 == SecurityResponses[0] && securityResponse2 == SecurityResponses[1] && securityResponse3 == SecurityResponses[2]) ? 
+            return (securityResponse1 == SecurityResponses[0] && securityResponse2 == SecurityResponses[1] && securityResponse3 == SecurityResponses[2]) ?
                 fakeLoginData.Where(login =>
                     login.IsActive
                     && login.EmployeeID != null

@@ -194,7 +194,7 @@ namespace DataAccessInterfaces
 		 ///    <see cref="string">string</see> username: The username of the user
         /// </remarks>
         string GetLoginEmailByUsername(string username);
-		
+
         /// <summary>
         ///     retrieves user's security questions using a given Email.
         /// </summary>
@@ -213,8 +213,8 @@ namespace DataAccessInterfaces
         /// <br />
         ///    CREATED: 2024-02-25
         /// </remarks>
-        string[] VerifyUsernameRetrieval (string email);
 
+        string[] VerifyUsernameRetrieval(string email);
         /// <summary>
         ///     retrieves username using a given security responses and email.
         /// </summary>

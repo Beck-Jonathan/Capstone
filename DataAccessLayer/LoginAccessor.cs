@@ -166,7 +166,7 @@ namespace DataAccessLayer
         /// <br />
         ///    CREATED: 2024-02-01
         /// </remarks>
-       public string[] AuthenticateClientForSecurityQuestions(string username, string passwordHash)
+        public string[] AuthenticateClientForSecurityQuestions(string username, string passwordHash)
         {
             string[] securityQuestions = null;
 
@@ -641,8 +641,8 @@ namespace DataAccessLayer
 			
             return email;
         }
-		
-		/// <summary>
+
+        /// <summary>
         ///     retrieves user's security questions using a given Email.
         /// </summary>
         /// <param name="email">
@@ -683,7 +683,7 @@ namespace DataAccessLayer
                     questions[0] = reader.GetString(0);
                     questions[1] = reader.GetString(1);
                     questions[2] = reader.GetString(2);
-				    }
+                }
             }
             catch (Exception ex)
             {
@@ -693,7 +693,7 @@ namespace DataAccessLayer
             {
                 conn.Close();
             }
-			return questions;
+            return questions;
         }
 
         /// <summary>
@@ -761,9 +761,10 @@ namespace DataAccessLayer
                 conn.Open();  //execute the command and capture result
                 var reader = cmd.ExecuteReader();
                 //process the results
-                if (reader.HasRows) {
+                if (reader.HasRows)
+                {
                     reader.Read();
-                    username = reader.GetString(0); 
+                    username = reader.GetString(0);
                 }
             }
             catch (Exception ex)

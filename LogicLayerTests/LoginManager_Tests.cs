@@ -673,8 +673,8 @@ namespace LogicLayerTests
             // Act
             string retrievedEmail = _loginManager.GetLoginEmailByUsername(username);
         }
-   
-		/// <summary>
+
+        /// <summary>
         ///     Test that when email gets a match, Security Questions are recieved
         /// </summary>
         /// <remarks>
@@ -686,11 +686,11 @@ namespace LogicLayerTests
         public void GetSecurityQuestionsforUsernameRetrieval_Success()
         {
             // Arrange
-            string email = "tess@company.com";
+            string email = "jake@company.com";
             string[] expectedArray = new string[] { "question1", "question2", "question3" };
             LoginAccessorFake loginAccessor = new LoginAccessorFake();
             _loginManager = new LoginManager(_passwordHasher, loginAccessor);
-            
+
             // Action
 
             string[] questions = _loginManager.GetSecurityQuestionsforUsernameRetrieval(email);
@@ -716,7 +716,7 @@ namespace LogicLayerTests
         public void GetSecurityQuestionsforUsernameRetrieval_FailureBadEmail()
         {
             // Arrange
-            string email = "tess@achoo.com";
+            string email = "jake@achoo.com";
             LoginAccessorFake loginAccessor = new LoginAccessorFake();
             _loginManager = new LoginManager(_passwordHasher, loginAccessor);
 
@@ -740,11 +740,11 @@ namespace LogicLayerTests
         /// Parameters changed to use Security Responses, method changed to use said Security Responses
         /// </remarks>
         [TestMethod]
-        public void GetUsername_Success() 
+        public void GetUsername_Success()
         {
             // Arrange
-            string email = "tess@company.com";
-            string expectedUsername = "tessdabest12345";
+            string email = "jake@company.com";
+            string expectedUsername = "jakedoe12345";
             LoginAccessorFake loginAccessor = new LoginAccessorFake();
             _loginManager = new LoginManager(_passwordHasher, loginAccessor);
 
@@ -752,7 +752,7 @@ namespace LogicLayerTests
             string username = _loginManager.GetUsername(email, "response1", "response2", "response3");
 
             //Assert
-            Assert.AreEqual(expectedUsername,username);
+            Assert.AreEqual(expectedUsername, username);
         }
     }
 }

@@ -33,8 +33,8 @@ namespace LogicLayer
             string securityResponse3);
         void EditLoginPassword(string username, string password);
         string GetLoginEmailByUsername(string username);
-		string[] GetSecurityQuestionsforUsernameRetrieval(string email);
-        string GetUsername(string email, 
+        string[] GetSecurityQuestionsforUsernameRetrieval(string email);
+        string GetUsername(string email,
             string securityResponse1,
             string securityResponse2,
             string securityResponse3);
@@ -398,8 +398,8 @@ namespace LogicLayer
 
             return email;
         }
-		
-		/// <summary>
+
+        /// <summary>
         ///     Authenticates given username, password, and security responses if authenticated to an employee
         /// </summary>
         /// <param name="email">

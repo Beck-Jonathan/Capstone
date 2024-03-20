@@ -12,6 +12,7 @@
 using DataAccessFakes;
 using DataObjects;
 using LogicLayer;
+using NightRiderWPF.PurchaseOrders;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -42,6 +43,17 @@ namespace NightRiderWPF.Inventory
         public PartsInventoryPage()
         {
             InitializeComponent();
+        }
+
+        /// <summary>
+        /// Jonathan Beck
+        /// Created: 2024/02/25
+        /// 
+        /// NAviate to the view purchase orders page
+        
+        private void btnOrders_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new Parts_Person_View_Purchase_Orders());
         }
 
         /// <summary>

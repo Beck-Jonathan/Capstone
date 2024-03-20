@@ -1,0 +1,63 @@
+﻿<Page x:Class="NightRiderWPF.PurchaseOrders.Parts_Person_Add_Update_Delete_Purchase_Order"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:NightRiderWPF.PurchaseOrders"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="Parts_Person_Add_Update_Delete_Purchase_Order">
+
+    <Grid Background="#99999999">
+        <Grid.RowDefinitions>
+            <!-- Create Grid Rows as needed, but try to keep rows consistent between related pages -->
+            <RowDefinition Height="40px"></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="10px"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+
+            <ColumnDefinition Width="10px"></ColumnDefinition>
+            <ColumnDefinition Width="150px"></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition Width="150px"></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition ></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition ></ColumnDefinition>
+
+        </Grid.ColumnDefinitions>
+        <Label x:Name = "lblTitle" HorizontalAlignment="Right" FontSize="20px" Grid.Column = "4" Grid.ColumnSpan="3" Grid.Row = "0" Content = "Create Purchase Order" />
+        <Label x:Name = "lblPurchase_OrderVendor_ID" HorizontalAlignment="Right" Grid.Column = "1" Grid.Row = "1" Content = "Vendor Name " />
+        <ComboBox x:Name = "cbxPurchase_OrderVendor_ID" Grid.ColumnSpan="3" Grid.Column = "2" Grid.Row = "1" />
+        <Label x:Name = "lblPurchase_OrderPurchase_Order_Date" HorizontalAlignment="Right" Grid.Column = "1" Grid.Row = "2" Content = "Order Date " />
+        <DatePicker x:Name = "dpkPurchase_OrderPurchase_Order_Date" Grid.ColumnSpan="3" Grid.Column = "2" Grid.Row = "2" />
+        <Label x:Name = "lblPurchase_OrderDelivery_Address" HorizontalAlignment="Right" Grid.Column = "1" Grid.Row = "3" Content = "Delivery Address " />
+        <TextBox x:Name = "tbxPurchase_OrderDelivery_Address" Grid.ColumnSpan="3" Grid.Column = "2" Grid.Row = "3" />
+        <Label x:Name = "lblPurchase_OrderDelivery_Address2"  HorizontalAlignment="Right" Grid.Column = "1" Grid.Row = "4" Content = "Delivery Address2 " />
+        <TextBox x:Name = "tbxPurchase_OrderDelivery_Address2" Grid.ColumnSpan="3" Grid.Column = "2" Grid.Row = "4" />
+        <Label x:Name = "lblPurchase_OrderDelivery_City" HorizontalAlignment="Right" Grid.Column = "6" Grid.Row = "1" Content = "Delivery City " />
+        <TextBox x:Name = "tbxPurchase_OrderDelivery_City" Grid.ColumnSpan="3" Grid.Column = "7" Grid.Row = "1" />
+        <Label x:Name = "lblPurchase_OrderDelivery_State" HorizontalAlignment="Right" Grid.Column = "6" Grid.Row = "2" Content = "Delivery State " />
+        <ComboBox x:Name = "cboPurchase_OrderDelivery_State" Grid.ColumnSpan="3" Grid.Column = "7" Grid.Row = "2" />
+        <Label x:Name = "lblPurchase_OrderDelivery_Country" HorizontalAlignment="Right" Grid.Column = "6" Grid.Row = "3" Content = "Delivery Country " />
+        <ComboBox x:Name = "cbxPurchase_OrderDelivery_Country" Grid.ColumnSpan="3" Grid.Column = "7" Grid.Row = "3" />
+        <Label x:Name = "lblPurchase_OrderDelivery_Zip" HorizontalAlignment="Right" Grid.Column = "6" Grid.Row = "4" Content = "Delivery Zip " />
+        <TextBox x:Name = "tbxPurchase_OrderDelivery_Zip" Grid.ColumnSpan="3" Grid.Column = "7" Grid.Row = "4" />
+        <Button x:Name="btnAddPurchase_Order" Grid.ColumnSpan="3" Grid.Column="6" Grid.Row="7" Content="Add Line Items" Height="40px" Width="200px" Click="btnAddPurchase_Order_Click"/>
+        <Button x:Name="btnBack" Grid.ColumnSpan="2" Grid.Column="3" Grid.Row="7" Content="Back" Height="40px" Click="btnBack_Click" />
+
+    </Grid>
+</Page>

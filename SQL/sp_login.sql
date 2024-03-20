@@ -112,6 +112,7 @@ BEGIN
 END;
 GO
 
+
 -- AUTHOR: Parker Svoboda
 Print '***Creating [dbo].[sp_get_security_questions_for_username_retrieval]***' 
  go
@@ -157,3 +158,7 @@ BEGIN
     AND (l.[Security_Response_3] IS NULL OR l.[Security_Response_3] = @Security_Response_3);
 END;
 GO
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/main

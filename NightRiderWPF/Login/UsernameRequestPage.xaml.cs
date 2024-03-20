@@ -15,7 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace NightRiderWPF.NoUsername
+namespace NightRiderWPF.Login
 {
     /// <summary>
     /// Author:Parker Svoboda 
@@ -27,14 +27,14 @@ namespace NightRiderWPF.NoUsername
     /// <br />
     ///    CREATED: 2024-02-25
     /// </remarks>
-    public partial class UsernameRequest : Page
+    public partial class UsernameRequestPage : Page
     {
         private ILoginManager _loginManager;
         private string _email;
         private string _response1;
         private string _response2;
         private string _response3;
-        public UsernameRequest()
+        public UsernameRequestPage()
         {
             InitializeComponent();
 
@@ -75,7 +75,7 @@ namespace NightRiderWPF.NoUsername
                 MessageBox.Show("No Username was found!", ex.Message, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-        
+
         private void btnUsernameRequest_Click(object sender, RoutedEventArgs e)
         {
             _email = txtEmail.Text;

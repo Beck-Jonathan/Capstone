@@ -1808,20 +1808,9 @@ INSERT INTO [dbo].[Login]
     [Security_Question_2],[Security_Response_2],
     [Security_Question_3],[Security_Response_3])
 VALUES
-    ('JoeSmith1994', 100000, null, 'what is your favorite animal?', 'lion', 'what is your favorite food?', 'Ramen', 'what was your first dogs name?', 'Holly'),
-    ('Jacmar125', 100001, null, 'what is your favorite animal?', 'Ocelot', 'what is your favorite food?', 'Ramen', 'what was your first dogs name?', 'Ken'),
-    ('Lebold2202', 100002, null, 'what is your favorite animal?', 'Foxes', 'what is your favorite food?', 'Spaghetti', 'what was your first dogs name?', 'Lola'),
-    ('CeramicHavoc', 100003, null, 'what is your favorite animal?', 'Ocelot', 'what is your favorite food?', 'Ramen', 'what was your first dogs name?', 'Bud'),
-	('JohnSmith115', null, 100000, 'what is your favorite animal?', 'lion', 'what is your favorite food?', 'Ramen', 'what was your first dogs name?', 'Jimmy'),
-    ('DylanLink53', null, 100001, 'what is your favorite animal?', 'Ocelot', 'what is your favorite food?', 'Ramen', 'what was your first dogs name?', 'Jeff'),
-    ('GunterSchnee0401', null , 100002, 'what is your favorite animal?', 'Foxes', 'what is your favorite food?', 'Spaghetti', 'what was your first dogs name?', 'Lola'),
-	('MarissaGraham01', null , 100003, 'what is your favorite animal?', 'Ocelot', 'what is your favorite food?', 'Spaghetti', 'what was your first dogs name?', 'Lola'),
-	('AuriKoskinen82', null , 100004, 'what is your favorite animal?', 'Ocelot', 'what is your favorite food?', 'Spaghetti', 'what was your first dogs name?', 'Lola'),
-	('LindaFlyin68', null , 100005, 'what is your favorite animal?', 'Tiger', 'what is your favorite food?', 'Spaghetti', 'what was your first dogs name?', 'Lola'),
-	('FrancisPole1985', null , 100006, 'what is your favorite animal?', 'Liger', 'what is your favorite food?', 'Spaghetti', 'what was your first dogs name?', 'Lola'),
-	('TheseusSlay0331', null , 100007, 'what is your favorite animal?', 'Wolf', 'what is your favorite food?', 'Spaghetti', 'what was your first dogs name?', 'Lola'),
-	('Trisha06', null , 100008, 'what is your favorite animal?', 'Foxes', 'what is your favorite food?', 'Spaghetti', 'what was your first dogs name?', 'Lola'),
-	('JustinTime1225', null , 100009, 'what is your favorite animal?', 'Foxes', 'what is your favorite food?', 'Spaghetti', 'what was your first dogs name?', 'Lola');
+    ('JoeSmith1994', 100000, 'what is your favorite animal?', 'lion', 'what is your favorite food?', 'Ramen', 'what was your first dogs name?', 'Hoola'),
+    ('Jacmar125', 100001, 'what is your favorite animal?', 'Ocelot', 'what is your favorite food?', 'Bibimbap', 'what was your first dogs name?', 'Jeff'),
+    ('Lebold2202', 100002, 'what is your favorite animal?', 'Foxes', 'what is your favorite food?', 'Spaghetti', 'what was your first dogs name?', 'Lola');
 GO
 
 /******************
