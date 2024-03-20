@@ -24,7 +24,8 @@ BEGIN
     e.[Phone_Number],
     e.[Email],
     e.[Position],
-    l.[Username]
+    l.[Username],
+	e.[DOB]
   FROM [dbo].[Employee] e
   LEFT JOIN [dbo].[Employee_Role] er ON e.[Employee_ID] = er.[Employee_ID]
   JOIN [dbo].[Login] l ON e.[Employee_ID] = l.[Employee_ID]

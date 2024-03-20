@@ -60,6 +60,8 @@
                         Background="{x:Static resources:Statics.SecondaryColor}" Foreground="{x:Static resources:Statics.ButtonText}"
                         Content="Log Out"
                         Visibility="Hidden" Click="btn_logout_Click" />
+                    <Button x:Name="btn_profile" Grid.Row="2" Grid.Column="2" Content="View Profile" 
+                        Background="{x:Static resources:Statics.SecondaryColor}" Foreground="{x:Static resources:Statics.ButtonText}" Visibility="Hidden" Click="btn_profile_Click"/>
                 </Grid>
             </Grid>
         </Border>
