@@ -70,7 +70,7 @@ namespace DataAccessFakes
             part3.Item_Specifications = "Yep, that's wire!";
             part3.Stock_Level = 20;
             part3.Is_Active = true;
-            part1.CompatibleVehicleModelIds = new List<int> { 1 };
+            part3.CompatibleVehicleModelIds = new List<int> { 1 };
             _fakeparts.Add(part3);
 
 
@@ -140,7 +140,7 @@ namespace DataAccessFakes
         /// </remarks>
         public IEnumerable<Parts_Inventory> SelectPartsCompatibleWithVehicleModelId(int vehicleModelId)
         {
-            return _fakeparts.Where(x => x.CompatibleVehicleModelIds.Contains(vehicleModelId));
+            return _fakeparts.Where(x => x.CompatibleVehicleModelIds != null &&  x.CompatibleVehicleModelIds.Contains(vehicleModelId));
         }
 
         /// <summary>
