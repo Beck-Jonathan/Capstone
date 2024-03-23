@@ -29,6 +29,7 @@ namespace DataObjects
         public int Ordered_Qty { set; get; }
         public int Stock_Level { set; get; }
         public bool Is_Active { set; get; }
+        public List<int> CompatibleVehicleModelIds { set; get; }
 
         // Reviewed By: John Beck
 

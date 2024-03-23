@@ -24,13 +24,72 @@ namespace NightRiderWPF.VehicleModels
     {
         private IVehicleModelManager _vehicleModelManager;
         private IVehicleManager _vehicleManager;
+        private IParts_InventoryManager _partsInventoryManager;
 
-        public VehicleModelAddEditPage(IVehicleModelManager vehicleModelManager, IVehicleManager vehicleManager)
+        private VehicleModel _vehicleModel;
+
+        public VehicleModelAddEditPage(
+            IVehicleModelManager vehicleModelManager, 
+            IVehicleManager vehicleManager,
+            IParts_InventoryManager partsInventoryManager,
+            VehicleModel vehicleModel = null)
         {
             InitializeComponent();
 
             _vehicleModelManager = vehicleModelManager;
             _vehicleManager = vehicleManager;
+            _partsInventoryManager = partsInventoryManager;
+            _vehicleModel = vehicleModel;
+        }
+
+        /// <summary>
+        ///     Handles load event for page; change page appearance
+        ///     based on whether creating, editing, or viewing
+        ///     a vehicle model; load supplementary data
+        /// </summary>
+        /// <remarks>
+        ///    CONTRIBUTOR: Jared Hutton
+        /// <br />
+        ///    CREATED: 2024-03-22
+        /// </remarks>
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            // Populate year and type combo boxes
+            List<int> years = new List<int>();
+
+            for (int year = 1940; year < 2031; year++)
+            {
+                years.Add(year);
+            }
+
+            cmbYear.ItemsSource = years;
+            cmbType.ItemsSource = _vehicleManager.GetVehicleTypes();
+            
+            // Code based on whether adding or editing vehicle model
+            if (_vehicleModel == null)
+            {
+                btnSave.Content = "Add New Vehicle";
+            }
+            else
+            {
+                btnSave.Content = "Save Changes";
+
+                txtName.Text = _vehicleModel.Name;
+                txtMake.Text = _vehicleModel.Make;
+                cmbYear.SelectedValue = _vehicleModel.Year;
+                cmbType.SelectedValue = _vehicleModel.VehicleTypeID;
+                txtMaxPassengers.Text = _vehicleModel.MaxPassengers.ToString();
+
+                try
+                {
+                    dat_compatiblePartsList.ItemsSource =
+                        _partsInventoryManager.GetPartsCompatibleWithVehicleModelID(_vehicleModel.VehicleModelID);
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("An error occurred while retrieving compatible parts");
+                }
+            }
         }
 
         /// <summary>
@@ -40,7 +99,7 @@ namespace NightRiderWPF.VehicleModels
         /// <remarks>
         ///    CONTRIBUTOR: Jared Hutton
         /// <br />
-        ///    CREATED: 2024-0-19
+        ///    CREATED: 2024-03-19
         /// </remarks>
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
@@ -84,14 +143,17 @@ namespace NightRiderWPF.VehicleModels
 
             try
             {
-                _vehicleModelManager.AddVehicleModel(new VehicleModel
+                if (_vehicleModel == null)
                 {
-                    Name = name,
-                    Make = make,
-                    Year = year,
-                    VehicleTypeID = type,
-                    MaxPassengers = maxPassengers
-                });
+                    _vehicleModelManager.AddVehicleModel(new VehicleModel
+                    {
+                        Name = name,
+                        Make = make,
+                        Year = year,
+                        VehicleTypeID = type,
+                        MaxPassengers = maxPassengers
+                    });
+                }
 
                 NavigationService.GoBack();
             }
@@ -99,19 +161,6 @@ namespace NightRiderWPF.VehicleModels
             {
                 MessageBox.Show("An error occurred");
             }
-        }
-
-        private void Page_Loaded(object sender, RoutedEventArgs e)
-        {
-            List<int> years = new List<int>();
-
-            for (int year = 1940; year < 2031; year++)
-            {
-                years.Add(year);
-            }
-
-            cmbYear.ItemsSource = years;
-            cmbType.ItemsSource = _vehicleManager.GetVehicleTypes();
         }
     }
 }

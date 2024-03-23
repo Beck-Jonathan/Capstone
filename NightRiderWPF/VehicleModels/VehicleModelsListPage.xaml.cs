@@ -24,14 +24,19 @@ namespace NightRiderWPF.VehicleModels
     {
         private IVehicleModelManager _vehicleModelManager;
         private IVehicleManager _vehicleManager;
+        private IParts_InventoryManager _partsInventoryManager;
         private IEnumerable<VehicleModel> _vehicleModels;
 
-        public VehicleModelsListPage(IVehicleModelManager vehicleModelManager, IVehicleManager vehicleManager)
+        public VehicleModelsListPage(
+            IVehicleModelManager vehicleModelManager,
+            IVehicleManager vehicleManager,
+            IParts_InventoryManager partsInventoryManager)
         {
+            InitializeComponent();
+
             _vehicleModelManager = vehicleModelManager;
             _vehicleManager = vehicleManager;
-
-            InitializeComponent();
+            _partsInventoryManager = partsInventoryManager;
         }
 
         /// <summary>
@@ -45,7 +50,17 @@ namespace NightRiderWPF.VehicleModels
         /// </remarks>
         private void dat_vehicleModelsList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
+            if (dat_vehicleModelsList.SelectedItem != null)
+            {
+                var selectedVehicleModel = dat_vehicleModelsList.SelectedItem as VehicleModel;
 
+                NavigationService.Navigate(
+                    new VehicleModelAddEditPage(
+                        _vehicleModelManager,
+                        _vehicleManager,
+                        _partsInventoryManager,
+                        selectedVehicleModel));
+            }
         }
 
         /// <summary>
@@ -73,7 +88,10 @@ namespace NightRiderWPF.VehicleModels
         /// </remarks>
         private void btn_newVehicleModel_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new VehicleModelAddEditPage(_vehicleModelManager, _vehicleManager));
+            NavigationService.Navigate(new VehicleModelAddEditPage(
+                _vehicleModelManager,
+                _vehicleManager,
+                _partsInventoryManager));
         }
     }
 }

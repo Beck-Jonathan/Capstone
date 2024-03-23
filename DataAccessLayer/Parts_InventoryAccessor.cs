@@ -298,6 +298,60 @@ namespace DataAccessLayer
             return rows;
         }
 
+        /// <summary>
+        ///     Selects all parts compatible with a given vehicle model
+        /// </summary>
+        /// <param name="vehicleModelId">
+        ///    The ID of the vehicle model
+        /// </param>
+        /// <returns>
+        ///    <see cref="IEnumerable{Parts_Inventory}">IEnumerable<Parts_Inventory></Parts_Inventory></see>: The parts compativle with the given vehicle model
+        /// </returns>
+        /// <remarks>
+        ///    Parameters:
+        /// <br />
+        ///    <see cref="int">int</see> vehicleModelId: The ID of the vehicle model
+        /// <br /><br />
+        ///    CONTRIBUTOR: Jared Hutton
+        /// <br />
+        ///    CREATED: 2024-03-22
+        /// </remarks>
+        public IEnumerable<Parts_Inventory> SelectPartsCompatibleWithVehicleModelId(int vehicleModelId)
+        {
+            List<Parts_Inventory> output = new List<Parts_Inventory>();
+            var conn = DBConnectionProvider.GetConnection();
+            var commandText = "sp_select_parts_compatible_with_vehicle_model_id";
+            var cmd = new SqlCommand(commandText, conn);
+
+            cmd.Parameters.Add("@Vehicle_Model_Id", SqlDbType.Int);
+
+            cmd.Parameters["@Vehicle_Model_Id"].Value = vehicleModelId;
+
+            cmd.CommandType = CommandType.StoredProcedure;
+            try
+            {
+                conn.Open();
+                var reader = cmd.ExecuteReader();
+                if (reader.HasRows)
+                    while (reader.Read())
+                    {
+                        var _Parts_Inventory = new Parts_Inventory();
+                        _Parts_Inventory.Part_Name = reader.GetString(0);
+                        _Parts_Inventory.Part_Quantity = reader.GetInt32(1);
+                        output.Add(_Parts_Inventory);
+                    }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return output;
+        }
+
         // Reviewed By: John Beck
     }
 }

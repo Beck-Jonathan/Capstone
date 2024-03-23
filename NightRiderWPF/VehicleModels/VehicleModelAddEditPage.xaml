@@ -5,25 +5,25 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:NightRiderWPF.VehicleModels"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="800"
+      d:DesignWidth="1050"
       Title="VehicleModelAddEditPage"
       Loaded="Page_Loaded">
     <Grid Background="LightGray" Grid.Column="1" Height="570px" Width="800px">
         <Grid.RowDefinitions>
-            <RowDefinition Height="20px"></RowDefinition>
+            <RowDefinition Height="5px"></RowDefinition>
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition Height="20px"></RowDefinition>
+            <RowDefinition Height="5px"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="250px"/>
+            <ColumnDefinition Width="180px"/>
             <ColumnDefinition />
-            <ColumnDefinition Width="150px" />
-            <ColumnDefinition Width="150px" />
+            <ColumnDefinition />
+            <ColumnDefinition />
             <ColumnDefinition Width="10px" />
         </Grid.ColumnDefinitions>
 
@@ -31,6 +31,7 @@
         <Label x:Name="lblName"
                Content="Model Name"
                Grid.Row="1"
+               Grid.Column="0"
                FontSize="20"
                FontWeight="Bold"
                VerticalContentAlignment="Center"
@@ -47,6 +48,7 @@
         <Label x:Name="lblMake"
                Content="Make"
                Grid.Row="2"
+               Grid.Column="0"
                FontSize="20"
                FontWeight="Bold"
                VerticalContentAlignment="Center"
@@ -63,6 +65,7 @@
         <Label x:Name="lblYear"
                Content="Year"
                Grid.Row="3"
+               Grid.Column="0"
                FontSize="20"
                FontWeight="Bold"
                VerticalContentAlignment="Center"
@@ -78,6 +81,7 @@
         <Label x:Name="lblType"
                Content="Type"
                Grid.Row="4"
+               Grid.Column="0"
                FontSize="20"
                FontWeight="Bold"
                VerticalContentAlignment="Center"
@@ -93,6 +97,7 @@
         <Label x:Name="lblMaxPassengers"
                Content="Max Passengers"
                Grid.Row="5"
+               Grid.Column="0"
                FontSize="20"
                FontWeight="Bold"
                VerticalContentAlignment="Center"
@@ -107,9 +112,52 @@
                  FontSize="14"
 				 MaxLength="60" />
 
+        <DataGrid
+            x:Name="dat_compatiblePartsList"
+            Grid.Row="1"
+            Grid.RowSpan="5"
+            Grid.Column="2"
+            AutoGenerateColumns="False"
+            IsReadOnly="True">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Part" Binding="{Binding Part_Name}" />
+                <DataGridTextColumn Header="Quantity" Binding="{Binding Part_Quantity}" />
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="Remove" Width="50px" Height="30px" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+
         <!--Operation Buttons-->
-        <Button Grid.Row="6" Grid.Column="2" x:Name="btnAdd" Content="Add Vehicle Model" Margin="5px" FontWeight="Bold"
-            Background="Gray" Foreground="AliceBlue" FontSize="14" Click="btnAdd_Click"></Button>
+        <Button Grid.Row="1"
+                Grid.Column="3"
+                x:Name="btnAddCompatiblePart"
+                Content="Add Compatible Part"
+                Margin="5px"
+                FontWeight="Bold"
+                Background="Gray"
+                Foreground="AliceBlue"
+                Height="30px"
+                Width="160px"
+                FontSize="14"
+                Click="btnAdd_Click" />
+
+        <Button Grid.Row="5"
+                Grid.Column="3"
+                x:Name="btnSave"
+                Content="Save Changes"
+                Margin="5px"
+                FontWeight="Bold"
+                Background="Gray"
+                Foreground="AliceBlue"
+                Height="30px"
+                Width="160px"
+                FontSize="14"
+                Click="btnAdd_Click" />
 
     </Grid>
 </Page>

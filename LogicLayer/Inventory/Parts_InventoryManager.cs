@@ -16,6 +16,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -183,6 +184,40 @@ namespace LogicLayer
 
                 throw ex;
             }
+            return result;
+        }
+
+        /// <summary>
+        ///     Retrieves all parts compatible with a given vehicle model
+        /// </summary>
+        /// <param name="vehicleModelId">
+        ///    The ID of the vehicle model
+        /// </param>
+        /// <returns>
+        ///    <see cref="IEnumerable{Parts_Inventory}">IEnumerable<Parts_Inventory></Parts_Inventory></see>: The parts compativle with the given vehicle model
+        /// </returns>
+        /// <remarks>
+        ///    Parameters:
+        /// <br />
+        ///    <see cref="int">int</see> vehicleModelId: The ID of the vehicle model
+        /// <br /><br />
+        ///    CONTRIBUTOR: Jared Hutton
+        /// <br />
+        ///    CREATED: 2024-03-22
+        /// </remarks>
+        public IEnumerable<Parts_Inventory> GetPartsCompatibleWithVehicleModelID(int vehicleModelId)
+        {
+            IEnumerable<Parts_Inventory> result = null;
+
+            try
+            {
+                result = _parts_inventoryaccessor.SelectPartsCompatibleWithVehicleModelId(vehicleModelId);
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+
             return result;
         }
 

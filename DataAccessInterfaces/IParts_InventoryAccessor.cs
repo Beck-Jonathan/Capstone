@@ -76,6 +76,22 @@ namespace DataAccessInterfaces
         /// <remarks></remarks>
         int DeactivateParts_Inventory(Parts_Inventory part);
 
+        /// <summary>
+        ///     Selects all parts compatible with a given vehicle model
+        /// </summary>
+        /// <param name="vehicleModelId">
+        ///    The ID of the vehicle model
+        /// </param>
+        /// <returns>
+        ///    <see cref="IEnumerable{Parts_Inventory}">IEnumerable<Parts_Inventory></Parts_Inventory></see>: The parts compativle with the given vehicle model
+        /// </returns>
+        /// <remarks>
+        ///    Parameters:
+        /// <br />
+        ///    <see cref="int">int</see> vehicleModelId: The ID of the vehicle model
+        /// </remarks>
+        IEnumerable<Parts_Inventory> SelectPartsCompatibleWithVehicleModelId(int vehicleModelId);
+
         // Reviewed By: John Beck
     }
 

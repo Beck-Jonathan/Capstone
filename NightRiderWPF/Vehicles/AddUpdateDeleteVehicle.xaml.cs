@@ -205,7 +205,7 @@ namespace NightRiderWPF.Vehicles
             {
                 _vehicleModels = _vehicleModelManager.GetVehicleModels();
                 cmbVehicleMake.ItemsSource = _vehicleModels.Select(vehicleModel => vehicleModel.Make);
-                if (_vehicle.VehicleMake != null)
+                if (_vehicle != null && _vehicle.VehicleMake != null)
                 {
                     cmbVehicleModel.ItemsSource = _vehicleModels.Where(x => x.Make == _vehicle.VehicleMake)
                                                                 .Select(vehicleModel => vehicleModel.Name);

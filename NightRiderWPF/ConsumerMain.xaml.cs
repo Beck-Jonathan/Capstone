@@ -198,6 +198,7 @@ namespace NightRiderWPF
                         btnClients.Visibility = Visibility.Visible;
                         btnEmployees.Visibility = Visibility.Visible;
                         btnVehicles.Visibility = Visibility.Visible;
+                        btnVehicleModels.Visibility = Visibility.Visible;
                         btnMaintenance.Visibility = Visibility.Visible;
                         btnInventory.Visibility = Visibility.Visible;
                         btnDriverSchedules.Visibility = Visibility.Visible;
@@ -403,7 +404,10 @@ namespace NightRiderWPF
                    }
                }
                btn.Background = Statics.PrimaryColor;
-               PageViewer.Navigate(new VehicleModelsListPage(new VehicleModelManager(), new VehicleManager()));
+               PageViewer.Navigate(new VehicleModelsListPage(
+                   new VehicleModelManager(),
+                   new VehicleManager(),
+                   new Parts_InventoryManager()));
            }
        }
     }

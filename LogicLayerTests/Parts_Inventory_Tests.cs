@@ -225,6 +225,27 @@ namespace LogicLayerTests
 
         }
 
+        /// <summary>
+        ///     Test that retrieving parts compatible with vehicle model id returns the expected number of results
+        /// </summary>
+        /// <remarks>
+        ///    CONTRIBUTOR: Jared Hutton
+        /// <br />
+        ///    CREATED: 2024-03-22
+        /// </remarks>
+        [TestMethod]
+        public void GetPartsCompatibleWithVehicleModelID_ReturnsParts()
+        {
+            // Arrange
+            int expectedNumResults = 2;
+
+            // Act
+            var results = _mgr.GetPartsCompatibleWithVehicleModelID(1);
+
+            // Assert
+            Assert.AreEqual(expectedNumResults, results.Count());
+        }
+
         // Reviewed By: John Beck
     }
 }

@@ -34,7 +34,7 @@ namespace DataAccessFakes
         /// Updated: 2024/02/06
         /// </remarks>
 
-        private List<Parts_Inventory> fakeparts = new List<Parts_Inventory>();
+        private List<Parts_Inventory> _fakeparts = new List<Parts_Inventory>();
         public Parts_Inventory_Fakes()
         {
             Parts_Inventory part1 = new Parts_Inventory();
@@ -47,7 +47,8 @@ namespace DataAccessFakes
             part1.Item_Specifications = "Tight as can be!";
             part1.Stock_Level = 20;
             part1.Is_Active = true;
-            fakeparts.Add(part1);
+            part1.CompatibleVehicleModelIds = new List<int> { 1 };
+            _fakeparts.Add(part1);
             Parts_Inventory part2 = new Parts_Inventory();
             part2.Parts_Inventory_ID = 2;
             part2.Part_Quantity = 1;
@@ -58,7 +59,7 @@ namespace DataAccessFakes
             part2.Item_Specifications = "Loose as can be!";
             part2.Stock_Level = 20;
             part2.Is_Active = false;
-            fakeparts.Add(part2);
+            _fakeparts.Add(part2);
             Parts_Inventory part3 = new Parts_Inventory();
             part3.Parts_Inventory_ID = 3;
             part3.Part_Quantity = 1;
@@ -69,7 +70,8 @@ namespace DataAccessFakes
             part3.Item_Specifications = "Yep, that's wire!";
             part3.Stock_Level = 20;
             part3.Is_Active = true;
-            fakeparts.Add(part3);
+            part1.CompatibleVehicleModelIds = new List<int> { 1 };
+            _fakeparts.Add(part3);
 
 
         }
@@ -84,11 +86,11 @@ namespace DataAccessFakes
         public int DeactivateParts_Inventory(Parts_Inventory part)
         {
             int result = 0;
-            for (int i = 0; i < fakeparts.Count; i++)
+            for (int i = 0; i < _fakeparts.Count; i++)
             {
-                if (fakeparts[i].Parts_Inventory_ID == part.Parts_Inventory_ID)
+                if (_fakeparts[i].Parts_Inventory_ID == part.Parts_Inventory_ID)
                 {
-                    fakeparts[i].Is_Active = false;
+                    _fakeparts[i].Is_Active = false;
                     result = 1;
                     break;
                 }
@@ -115,7 +117,30 @@ namespace DataAccessFakes
 
         public List<Parts_Inventory> selectAllParts_Inventory()
         {
-            return fakeparts;
+            return _fakeparts;
+        }
+
+        /// <summary>
+        ///     Selects all parts compatible with a given vehicle model
+        /// </summary>
+        /// <param name="vehicleModelId">
+        ///    The ID of the vehicle model
+        /// </param>
+        /// <returns>
+        ///    <see cref="IEnumerable{Parts_Inventory}">IEnumerable<Parts_Inventory></Parts_Inventory></see>: The parts compativle with the given vehicle model
+        /// </returns>
+        /// <remarks>
+        ///    Parameters:
+        /// <br />
+        ///    <see cref="int">int</see> vehicleModelId: The ID of the vehicle model
+        /// <br /><br />
+        ///    CONTRIBUTOR: Jared Hutton
+        /// <br />
+        ///    CREATED: 2024-03-22
+        /// </remarks>
+        public IEnumerable<Parts_Inventory> SelectPartsCompatibleWithVehicleModelId(int vehicleModelId)
+        {
+            return _fakeparts.Where(x => x.CompatibleVehicleModelIds.Contains(vehicleModelId));
         }
 
         /// <summary>
@@ -134,7 +159,7 @@ namespace DataAccessFakes
         public List<Parts_Inventory> selectParts_Inventory()
         {
             List<Parts_Inventory> result = new List<Parts_Inventory>();
-            foreach(var p in fakeparts)
+            foreach(var p in _fakeparts)
             {
                 if (p.Is_Active)
                 {
@@ -163,7 +188,7 @@ namespace DataAccessFakes
         public Parts_Inventory selectParts_InventoryByPrimaryKey(int Parts_InventoryID)
         {
             Parts_Inventory result = new Parts_Inventory();
-            foreach (Parts_Inventory part in fakeparts)
+            foreach (Parts_Inventory part in _fakeparts)
             {
                 if (part.Parts_Inventory_ID == Parts_InventoryID)
                 {
@@ -191,7 +216,7 @@ namespace DataAccessFakes
             int result = 0;
             if (oldPart != null && newPart != null)
             {
-                foreach(Parts_Inventory part in fakeparts)
+                foreach(Parts_Inventory part in _fakeparts)
                 {
                     if(part.Parts_Inventory_ID ==  oldPart.Parts_Inventory_ID)
                     {

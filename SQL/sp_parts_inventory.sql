@@ -145,3 +145,18 @@ AS
         SELECT      @@ROWCOUNT
     END
 GO
+
+-- AUTHOR: Jared Hutton
+print '' print '*** creating sp_select_parts_compatible_with_vehicle_model_id ***'
+GO
+CREATE PROCEDURE [dbo].[sp_select_parts_compatible_with_vehicle_model_id] (
+  @Vehicle_Model_Id [INT]
+)
+AS
+BEGIN
+  SELECT pi.[Part_Name], pi.[Part_Quantity]
+  FROM [dbo].[Parts_Inventory] pi
+  JOIN [dbo].[Model_Compatibility] mc ON pi.[Parts_Inventory_ID] = mc.[Parts_Inventory_ID]
+  WHERE mc.[Vehicle_Model_ID] = @Vehicle_Model_ID;
+END;
+GO
