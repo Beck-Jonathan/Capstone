@@ -287,6 +287,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="WorkOrders\CreateWorkOrderPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="WorkOrders\UpdateWorkOrder.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -324,6 +328,9 @@
     </Compile>
     <Compile Include="Vendors\ViewAllVendors.xaml.cs">
       <DependentUpon>ViewAllVendors.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WorkOrders\CreateWorkOrderPage.xaml.cs">
+      <DependentUpon>CreateWorkOrderPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="WorkOrders\UpdateWorkOrder.xaml.cs">
       <DependentUpon>UpdateWorkOrder.xaml</DependentUpon>

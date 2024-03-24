@@ -117,5 +117,95 @@ namespace LogicLayerTests
             // Assert
             Assert.AreEqual(0, rowsAffected); // Assuming the update failed since service order doesn't exist
         }
+        /// <summary>
+        /// Tests that the CreateServiceOrder method passes.
+        /// </summary>
+        /// <returns>
+        ///   The number of rows affected by the create operation
+        /// </returns>
+        /// <remarks>
+        /// <br />
+        /// <br /><br />
+        ///    CONTRIBUTOR: Steven Sanchez
+        /// <br />
+        ///    CREATED: 2024-03-12
+        /// <br />
+        /// <br />
+        ///    UPDATER: 
+        /// <br />
+        ///    UPDATED: 
+        /// <br />
+        ///     
+        /// </remarks>
+        [TestMethod]
+        public void TestCreateServiceOrderPasses()
+        {
+            // Arrange
+            ServiceOrder_VM serviceOrderToCreate = new ServiceOrder_VM()
+            {
+                VIN = "1HGCM82633A987654",
+                Service_Order_Version = 1,
+                Service_Line_Item_ID = 100000,
+                Service_Type_ID = "Engine Tune-up",
+                Created_By_Employee_ID = 100001,
+                Serviced_By_Employee_ID = 100002,
+                Date_Started = DateTime.Now,
+                Date_Finished = DateTime.Now,
+                Is_Active = true,
+                Critical_Issue = true
+            };
+
+            // Act
+            bool rowsAffected = _serviceOrderManager.CreateServiceOrder(serviceOrderToCreate);
+
+            // Assert
+            Assert.AreEqual(true, rowsAffected);
+        }
+
+        /// <summary>
+        /// Tests that the CreateServiceOrder method fails.
+        /// </summary>
+        /// <returns>
+        ///   The number of rows affected by the create operation
+        /// </returns>
+        /// <remarks>
+        /// <br />
+        /// <br /><br />
+        ///    CONTRIBUTOR: Steven Sanchez
+        /// <br />
+        ///    CREATED: 2024-03-12
+        /// <br />
+        /// <br />
+        ///    UPDATER: 
+        /// <br />
+        ///    UPDATED: 
+        /// <br />
+        ///     
+        /// </remarks>
+        [TestMethod]
+        public void TestCreateServiceOrderFails()
+        {
+
+            ServiceOrder_VM serviceOrderToCreate = new ServiceOrder_VM()
+            {
+                Service_Order_ID = 100000, // Existing ID in the fakes
+                VIN = "1HGCM82633A987654",
+                Service_Order_Version = 1,
+                Service_Line_Item_ID = 100000,
+                Service_Type_ID = "Engine Tune-up",
+                Created_By_Employee_ID = 100001,
+                Serviced_By_Employee_ID = 100002,
+                Date_Started = DateTime.Now,
+                Date_Finished = DateTime.Now,
+                Is_Active = true,
+                Critical_Issue = true
+            };
+
+            // Act
+            bool rowsAffected = _serviceOrderManager.CreateServiceOrder(serviceOrderToCreate);
+
+            // Assert
+            Assert.AreEqual(false, rowsAffected);
+        }
     }
 }
