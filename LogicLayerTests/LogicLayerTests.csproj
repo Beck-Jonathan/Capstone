@@ -82,6 +82,10 @@
       <Project>{cc39f13c-ddc9-41bb-853c-ec5deaa13daa}</Project>
       <Name>DataAccessInterfaces</Name>
     </ProjectReference>
+    <ProjectReference Include="..\DataAccessLayer\DataAccessLayer.csproj">
+      <Project>{4C48ECE8-1DBC-47C5-BCAF-0EA0AD41697D}</Project>
+      <Name>DataAccessLayer</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DataObjects\DataObjects.csproj">
       <Project>{a9192e97-5087-4bb1-8aed-b6b9025b041d}</Project>
       <Name>DataObjects</Name>

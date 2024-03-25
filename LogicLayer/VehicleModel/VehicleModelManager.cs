@@ -16,6 +16,8 @@ namespace LogicLayer
     {
         IEnumerable<VehicleModel> GetVehicleModels();
         bool AddVehicleModel(VehicleModel vehicleModel);
+
+        bool UpdateVehicleModel(VehicleModelVM oldModel, VehicleModelVM newModel);
     }
 
     /// <summary>
@@ -28,16 +30,26 @@ namespace LogicLayer
     public class VehicleModelManager : IVehicleModelManager
     {
         private IVehicleModelAccessor _vehicleModelAccessor;
+        private IParts_InventoryManager _partsManager;
 
         public VehicleModelManager()
         {
             _vehicleModelAccessor = new VehicleModelAccessor();
+            _partsManager = new Parts_InventoryManager();
         }
 
         public VehicleModelManager(IVehicleModelAccessor vehicleModelAccessor)
         {
             _vehicleModelAccessor = vehicleModelAccessor;
         }
+
+        public VehicleModelManager(IVehicleModelAccessor vehicleModelAccessor, IParts_InventoryManager partsManager)
+        {
+            _vehicleModelAccessor = vehicleModelAccessor;
+            _partsManager = partsManager;
+        }
+
+
 
         /// <summary>
         ///     Retrieves all active vehicle models
@@ -78,6 +90,59 @@ namespace LogicLayer
             }
 
             return true;
+        }
+        /// <summary>
+        ///     Updates a vehicle model
+        /// </summary>
+        /// <param name="vehicleModel">
+        ///    The VehicleModel being added
+        /// </param>
+        /// <returns>
+        ///    <see cref="bool">bool</see>: Whether the vehicle model was successfully updated
+        /// </returns>
+        /// <remarks>
+        ///    Parameters:
+        /// <br />
+        ///    <see cref="VehicleModelVM">VehicleModelVM</see> oldModel: The original version of the vehicle
+        /// <br /><br />
+        /// /// <br />
+        ///    <see cref="VehicleModelVM">VehicleModelVM</see> newModel: the udpated version of the vehicle
+        /// <br /><br />
+        ///    CONTRIBUTOR: Jonathan Beck
+        /// <br />
+        ///    CREATED: 2024-03-24
+        /// </remarks>
+
+        public bool UpdateVehicleModel(VehicleModelVM oldModel, VehicleModelVM newModel)
+        {
+            
+            int updates = 0;
+            try
+            {
+                foreach (Parts_Inventory part in oldModel.Compatible_Parts)
+                {
+                    bool delete = true;
+                    foreach (Parts_Inventory part2 in newModel.Compatible_Parts)
+                    {
+                        if (part2.Parts_Inventory_ID == part.Parts_Inventory_ID) {
+                            delete = false; break;
+                        }
+                    }
+                    if (delete) 
+                    {
+                        _partsManager.PurgeModelPartCompatibility(oldModel.VehicleModelID, part.Parts_Inventory_ID);
+                        updates++;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+
+            return (updates > 0);
         }
     }
 }

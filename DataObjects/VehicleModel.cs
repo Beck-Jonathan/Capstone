@@ -23,4 +23,9 @@ namespace DataObjects
         public int MaxPassengers { get; set; }
         public bool IsActive { get; set; } = true;
     }
+
+    public class VehicleModelVM : VehicleModel
+    {
+        public IEnumerable<Parts_Inventory> Compatible_Parts { get; set; }
+    }
 }

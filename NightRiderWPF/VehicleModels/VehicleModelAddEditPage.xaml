@@ -125,7 +125,7 @@
                 <DataGridTemplateColumn>
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button Content="Remove" Width="50px" Height="30px" />
+                            <Button Content="Remove" Width="50px" Height="30px" Click="Button_Click" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
@@ -157,7 +157,20 @@
                 Height="30px"
                 Width="160px"
                 FontSize="14"
-                Click="btnAdd_Click" />
+                Click="btnSave_Click" />
+        
+        <Button Grid.Row="4"
+        Grid.Column="3"
+        x:Name="btnCancel"
+        Content="Cancel Changes"
+        Margin="5px"
+        FontWeight="Bold"
+        Background="Gray"
+        Foreground="AliceBlue"
+        Height="30px"
+        Width="160px"
+        FontSize="14"
+        Click="btnCancel_Click" />
 
     </Grid>
 </Page>

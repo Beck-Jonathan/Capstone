@@ -102,6 +102,25 @@ namespace DataAccessFakes
             return result;
         }
 
+        //Jonathan Beck March 24 2024
+        public int DeleteModelCompatibility(int vehicleModelId, int Parts_InventoryID)
+        {
+            int start = SelectPartsCompatibleWithVehicleModelId(vehicleModelId).Count();
+            foreach (Parts_Inventory p in _fakeparts) {
+                if (p.Parts_Inventory_ID == Parts_InventoryID && p.CompatibleVehicleModelIds.Contains(vehicleModelId)) { 
+                
+                    p.CompatibleVehicleModelIds.Remove(vehicleModelId);
+                    break;
+                }
+            
+            }
+            int end = SelectPartsCompatibleWithVehicleModelId(vehicleModelId).Count();
+
+
+
+            return start-end;
+        }
+
         /// <summary>
         /// Jonathan Beck
         /// Created: 2024/02/01
