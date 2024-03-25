@@ -248,6 +248,7 @@ namespace DataAccessLayer
                             MaxPassengers = reader.GetInt32(3),
                             VehicleMileage = reader.GetInt32(4),
                             VehicleDescription = reader.GetString(5),
+                            VIN = reader.GetString(9),
                         });
                     }
                 }

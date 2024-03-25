@@ -39,5 +39,29 @@ namespace LogicLayer
         /// </update>
         int UpdateServiceOrder(ServiceOrder serviceOrder);
 
+        /// <summary>
+        /// Creates a service order with the provided details.
+        /// </summary>
+        /// <param name="serviceOrder">The service order object containing the details.</param>
+        /// <returns>
+        ///     Returns an integer indicating the outcome of the create operation:
+        /// </returns>
+        /// <remarks>
+        /// </remarks>
+        /// <contributor>
+        ///     Steven Sanchez
+        /// </contributor>
+        /// <created>2024-03-12</created>
+        /// <updated>yyyy-MM-dd</updated>
+        /// <update>
+        /// <summary>
+        /// Update comments go here.
+        /// </summary>
+        /// <remarks>
+        /// Explain what you changed in this method.
+        /// A new remark should be added for each update to this method.
+        /// </remarks>
+        /// </update>
+        bool CreateServiceOrder(ServiceOrder_VM serviceOrder);
     }
 }

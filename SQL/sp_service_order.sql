@@ -121,3 +121,43 @@ BEGIN
 END
 
 GO
+
+-- Initial Creator: Steven Sanchez
+-- Creation Date: 2024/03/12
+-- Last Modified: 
+-- Modification Description: initial creation
+-- Stored Procedure Description: insert a Service_Order record
+
+PRINT '*** Creating sp_insert_service_order_and_type ***'
+GO
+
+CREATE PROCEDURE [dbo].[sp_insert_service_order_and_type]
+(
+    @Service_Order_ID INT,
+    @Service_Order_Version INT,
+    @VIN NVARCHAR(17),
+    @Service_Type_ID NVARCHAR(256),
+    @Created_By_Employee_ID INT,
+    @Date_Started DATETIME,
+    @Date_Finished DATETIME,
+    @Service_Description NVARCHAR(256)
+)
+AS
+BEGIN
+
+    -- Check if the Service_Type_ID exists
+    IF NOT EXISTS (SELECT 1 FROM dbo.Service_Type WHERE Service_Type_ID = @Service_Type_ID)
+    BEGIN
+        -- If it doesn't exist, insert it
+        INSERT INTO dbo.Service_Type (Service_Type_ID, Service_Description)
+        VALUES (@Service_Type_ID, @Service_Description);
+    END
+
+    -- Now insert into Service_Order table
+    INSERT INTO dbo.Service_Order (Service_Order_ID, Service_Order_Version, VIN, Service_Type_ID, Created_By_Employee_ID, Date_Started , Date_Finished )
+    VALUES (@Service_Order_ID, @Service_Order_Version, @VIN, @Service_Type_ID, @Created_By_Employee_ID, @Date_Started, @Date_Finished) ;
+
+    RETURN @@ROWCOUNT;
+
+END
+GO

@@ -153,5 +153,76 @@ namespace DataAccessLayer
 
             return rowsAffected;
         }
+
+        /// <summary>
+        /// Creates a  service order with the provided details.
+        /// </summary>
+        /// <param name="serviceOrder">The service order object containing the details.</param>
+        /// <returns>
+        ///     Returns an integer indicating the outcome of the create operation:
+        /// </returns>
+        /// <remarks>
+        /// </remarks>
+        /// <contributor>
+        ///     Steven Sanchez
+        /// </contributor>
+        /// <created>2024-03-12</created>
+        /// <updated>yyyy-MM-dd</updated>
+        /// <update>
+        /// <summary>
+        /// Update comments go here.
+        /// </summary>
+        /// <remarks>
+        /// Explain what you changed in this method.
+        /// A new remark should be added for each update to this method.
+        /// </remarks>
+        public int CreateServiceOrder(ServiceOrder_VM serviceOrder)
+        {
+            int rows = 0;
+
+            // start with a connection object
+            var conn = DBConnectionProvider.GetConnection();
+
+            // set the command text
+            var commandText = "sp_insert_service_order_and_type";
+
+            // create the command object
+            var cmd = new SqlCommand(commandText, conn);
+
+            // set the command type
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@Service_Order_ID", serviceOrder.Service_Order_ID);
+            cmd.Parameters.AddWithValue("@Service_Order_Version", serviceOrder.Service_Order_Version);
+            cmd.Parameters.AddWithValue("@VIN", serviceOrder.VIN);
+            cmd.Parameters.AddWithValue("@Service_Type_ID", serviceOrder.Service_Type_ID);
+            cmd.Parameters.AddWithValue("@Created_By_Employee_ID", serviceOrder.Created_By_Employee_ID);
+            cmd.Parameters.AddWithValue("@Date_Started", serviceOrder.Date_Started);
+            cmd.Parameters.AddWithValue("@Date_Finished", serviceOrder.Date_Finished);
+            cmd.Parameters.AddWithValue("@Service_Description", serviceOrder.Service_Description);
+            try
+            {
+
+                conn.Open();
+
+
+                rows = cmd.ExecuteNonQuery();
+
+                if (rows == 0)
+                {
+                    throw new ArgumentException("Service Order could not be created");
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("Error creating Service Order", ex);
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return rows;
+        }
     }
 }
