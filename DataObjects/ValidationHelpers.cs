@@ -9,6 +9,8 @@
 /// Updater Michael Springer
 /// Updated: 2024-02-19
 /// Merged with Chris Baenziger's Version Created on 2024-02-06
+/// Updeater: Michael Springer
+/// Updated: 2024-03026
 /// </remarks>
 
 using System;
@@ -74,7 +76,7 @@ namespace DataObjects
             int nameLength = 100;
             bool result = false;
             // stackoverflow.com/a/2385967 one or more letters or valid characters
-            string pattern = @"^[a-z ,.'-]+$";
+            string pattern = @"^[A-z ,.'-]+$";
             Regex rg = new Regex(pattern);
             result = (name.Length <= nameLength && (rg.Match(name).Success));
             return result;
@@ -84,7 +86,7 @@ namespace DataObjects
             int nameLength = 100;
             bool result = false;
             // stackoverflow.com/a/2385967 one or more letters or valid characters
-            string pattern = @"^[a-z ,.'-]+$";
+            string pattern = @"^[A-z ,.'-]+$";
             Regex rg = new Regex(pattern);
             result = (name.Length <= nameLength && (rg.Match(name).Success));
             return result;

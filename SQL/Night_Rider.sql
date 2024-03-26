@@ -1987,7 +1987,7 @@ CREATE TABLE [dbo].[Dependent]
     [Gender] [nvarchar](20) NULL,
     [Emergency_Contact] [nvarchar](100) NOT NULL,
 	[Contact_Relationship] 	[nvarchar](100) 				NOT NULL,
-    [Emergency_Phone] [nvarchar](11) NOT NULL,
+    [Emergency_Phone] [nvarchar](12) NOT NULL,
     [Is_Active] [bit] NOT NULL DEFAULT 1,
     CONSTRAINT 		[pk_Dependent_ID] PRIMARY KEY ([Dependent_ID])
 )
@@ -2079,6 +2079,17 @@ Insert Sample Data For The  Client_Dependent_Role table
 
 print '' Print '***Insert Sample Data For The  Client_Dependent_Role table***' 
  go
+  go
+ INSERT INTO [dbo].[Client_Dependent_Role]
+		([Client_ID], [Dependent_ID], [Relationship], [Is_Active])
+	VALUES
+		(100000, 100000, 'Parent', 0),
+		(100000, 100001, 'Parent', 1),
+		(100000, 100002, 'Parent', 1),
+		(100003, 100002, 'Legal Custodian', 1),
+		(100004, 100003, 'Parent', 1),
+		(100002, 100003, 'Parent', 1)
+GO
 
 /******************
 Create the [dbo].[Notification] table

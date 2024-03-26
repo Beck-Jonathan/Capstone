@@ -91,9 +91,9 @@ namespace LogicLayer
             return rows;
         }
 
-        public IEnumerable<Client> GetAllClients()
+        public IEnumerable<DataObjects.Client> GetAllClients()
         {
-            IEnumerable<Client> clients = null;
+            IEnumerable<DataObjects.Client> clients = null;
 
             try
             {
@@ -176,12 +176,12 @@ namespace LogicLayer
             return client;
         }
 
-        public IEnumerable<Client> GetClients()
+        public IEnumerable<DataObjects.Client> GetClients()
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Client> GetInactiveClients()
+        public IEnumerable<DataObjects.Client> GetInactiveClients()
         {
             throw new NotImplementedException();
         }

@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Accommodation.cs" />
+    <Compile Include="ClientDependentRole.cs" />
     <Compile Include="Dependent.cs" />
     <Compile Include="Client.cs" />
     <Compile Include="ClientRole.cs" />

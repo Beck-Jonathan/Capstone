@@ -69,8 +69,8 @@ namespace LogicLayer
         ///    CONTRIBUTOR: Isabella Rosenbohm <br />
         ///    CREATED: 2024-02-05
         /// </remarks>
-        IEnumerable<Client> GetAllClients();
-        IEnumerable<Client> GetClients();
+        IEnumerable<DataObjects.Client> GetAllClients();
+        IEnumerable<DataObjects.Client> GetClients();
         /// <summary>
         ///    A method that returns a Client_VM record containing a matching email field
         /// </summary>
@@ -92,7 +92,7 @@ namespace LogicLayer
         ///     Initial creation
         /// </remarks>
         Client_VM GetClientByEmail(string email);
-        IEnumerable<Client> GetInactiveClients();
+        IEnumerable<DataObjects.Client> GetInactiveClients();
         int EditClient(Client_VM newClient);
         void DeactivateClient(int id);
         void ActivateClient(int id);

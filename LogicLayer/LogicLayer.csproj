@@ -41,7 +41,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Client\ClientDependentRoleManager.cs" />
     <Compile Include="Client\DependentManager.cs" />
+    <Compile Include="Client\IClientDependentRoleManager.cs" />
     <Compile Include="Client\IDependentManager.cs" />
     <Compile Include="Inventory\ISourceManager.cs" />
     <Compile Include="Inventory\SourceManager.cs" />

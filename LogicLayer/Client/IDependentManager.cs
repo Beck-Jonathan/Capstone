@@ -35,6 +35,10 @@ namespace LogicLayer
         /// 
         /// </summary>
         IEnumerable<DependentVM> GetDependentList();
+        IEnumerable<DependentVM> GetDependentListByClientId(int clientId);
+        DependentVM GetDependentByDependentId(int dependentId);
+
+        int EditDependent(DependentVM oldDependentInfo, DependentVM newDependentInfo, int clientId);
 
 
     }
