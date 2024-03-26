@@ -69,7 +69,7 @@ namespace NightRiderWPF.RouteStop
 
         private void btnToggleRouteActive_Click(object sender, RoutedEventArgs e)
         {
-            var route = grdRouteList.SelectedItem as Route;
+            var route = datRouteList.SelectedItem as Route;
             if (route != null)
             {
                 if (route.IsActive)
