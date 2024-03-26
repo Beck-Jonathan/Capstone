@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ClientDependentRoleAccessorFake.cs" />
     <Compile Include="DependentAccessorFake.cs" />
     <Compile Include="LoginAccessorFake.cs" />
     <Compile Include="ClientAccessorFake.cs" />

@@ -15,7 +15,7 @@ CREATE PROCEDURE [dbo].[sp_insert_dependent]
     @Gender             [nvarchar](20),
     @Emergency_Contact  [nvarchar](100),
     @Contact_Relationship [nvarchar](100),
-    @Emergency_Phone    [nvarchar](11)
+    @Emergency_Phone    [nvarchar](12)
 
 )
 AS
@@ -57,6 +57,7 @@ GO
 CREATE PROCEDURE [dbo].[sp_update_dependent]
 (
     @Dependent_ID       [int],
+    @Client_ID          [int],
     @Old_Given_Name     [nvarchar](50),
     @Old_Family_Name    [nvarchar](50),
     @Old_Middle_Name    [nvarchar](100),
@@ -64,7 +65,7 @@ CREATE PROCEDURE [dbo].[sp_update_dependent]
     @Old_Gender         [nvarchar](20),
     @Old_Emergency_Contact [nvarchar](100),
     @Old_Contact_Relationship [nvarchar](100),
-    @Old_Emergency_Phone [nvarchar](11),
+    @Old_Emergency_Phone [nvarchar](12),
     @Old_Client_Relationship [nvarchar](100),
     @New_Given_Name     [nvarchar](50),
     @New_Family_Name    [nvarchar](50),
@@ -73,7 +74,7 @@ CREATE PROCEDURE [dbo].[sp_update_dependent]
     @New_Gender         [nvarchar](20),
     @New_Emergency_Contact [nvarchar](100),
     @New_Contact_Relationship [nvarchar](100),
-    @New_Emergency_Phone [nvarchar](11),
+    @New_Emergency_Phone [nvarchar](12),
     @New_Client_Relationship [nvarchar](100)
 )
 AS
@@ -91,9 +92,9 @@ AS
                 WHERE [Dependent_ID] = @Dependent_ID
                     AND [Given_Name] = @Old_Given_Name
                     AND [Family_Name] = @Old_Family_Name
-                    AND [Middle_Name] = @Old_Middle_Name
+                    AND ([Middle_Name] = @Old_Middle_Name OR(@Old_Middle_Name IS NULL AND [Middle_Name] IS NULL))
                     AND [DOB] = @Old_DOB
-                    AND [Gender] = @Old_Gender
+                    AND ([Gender] = @Old_Gender OR (@Old_Gender IS NULL AND [Gender] IS NULL))
                     AND [Emergency_Contact] = @Old_Emergency_Contact
                     AND [Contact_Relationship] = @Old_Contact_Relationship
                     AND [Emergency_Phone] = @Old_Emergency_Phone;
@@ -101,6 +102,7 @@ AS
             UPDATE [dbo].[Client_Dependent_Role]
                 SET [Relationship] = @New_Client_Relationship
                 WHERE [Dependent_ID] = @Dependent_ID
+                    AND [Client_ID] = @Client_ID
                     AND [Relationship] = @Old_Client_Relationship;
         COMMIT TRANSACTION;
     END
@@ -127,4 +129,33 @@ BEGIN
 		FROM [Dependent] 
 		WHERE [is_active] = 1
 	END
+GO
+
+DROP PROCEDURE IF EXISTS sp_select_dependents_by_client_id
+print '' print '*** creating sp_select_dependents_by_client_id***'
+GO
+CREATE PROCEDURE [dbo].[sp_select_dependents_by_client_id]
+(
+    @Client_ID [int]
+)
+AS
+    BEGIN
+        SELECT
+        [Dependent].[Dependent_ID],	
+        [Dependent].[Given_Name],			
+        [Dependent].[Family_Name],			
+        [Dependent].[Middle_Name],			
+        [Dependent].[DOB],
+        [Dependent].[Gender],
+        [Emergency_Contact],
+        [Contact_Relationship],
+        [Emergency_Phone],
+        [Dependent].[Is_Active]
+        FROM [Dependent]
+        INNER JOIN [Client_Dependent_Role] ON [Dependent].[Dependent_ID] = [Client_Dependent_Role].[Dependent_ID]
+        WHERE [Client_Dependent_Role].[Client_ID] = @Client_ID
+            AND [Client_Dependent_role].[Is_Active] = 1
+            AND [Dependent].[Is_Active] = 1
+        ORDER BY [Dependent].[Dependent_ID]
+    END
 GO

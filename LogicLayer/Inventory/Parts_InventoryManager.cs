@@ -221,6 +221,44 @@ namespace LogicLayer
             return result;
         }
 
+        /// <summary>
+        ///     Retrieves all parts compatible with a given vehicle model
+        /// </summary>
+        /// <param name="model_ID">
+        ///    The ID of the vehicle model
+        /// </param>
+        /// <param name="part_ID">
+        ///    The ID of the part
+        /// </param>
+        /// <returns>
+        ///    <see cref="Int">int</see>: 1 if the part compatibility was removed
+        /// </returns>
+        /// <remarks>
+        ///    Parameters:
+        /// <br />
+        ///    <see cref="int">int</see> model_ID: The ID of the vehicle model
+        ///   <see cref="int">int</see> part_ID: The ID of the part
+        ///   /// <br /><br />
+        ///    CONTRIBUTOR: Jonathan Beck
+        /// <br />
+        ///    CREATED: 2024-03-24
+        /// </remarks>
+        /// </remarks>
+
+        public int PurgeModelPartCompatibility(int model_ID, int part_ID) {
+            int result = 0;
+            try
+            {
+                result= _parts_inventoryaccessor.DeleteModelCompatibility(model_ID, part_ID);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            return result;
+        }
+
         // Reviewed By: John Beck
     }
 }

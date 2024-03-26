@@ -75,6 +75,9 @@
     <Compile Include="Clients\ClientLookupPage.xaml.cs">
       <DependentUpon>ClientLookupPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Clients\GuardianViewEditDependent.xaml.cs">
+      <DependentUpon>GuardianViewEditDependent.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Clients\ToBeReworked\ClientPersonalPage.xaml.cs">
       <DependentUpon>ClientPersonalPage.xaml</DependentUpon>
     </Compile>
@@ -141,6 +144,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Clients\ClientLookupPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Clients\GuardianViewEditDependent.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -301,6 +308,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="WorkOrders\CreateWorkOrderPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="WorkOrders\UpdateWorkOrder.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -338,6 +349,9 @@
     </Compile>
     <Compile Include="Vendors\ViewAllVendors.xaml.cs">
       <DependentUpon>ViewAllVendors.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WorkOrders\CreateWorkOrderPage.xaml.cs">
+      <DependentUpon>CreateWorkOrderPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="WorkOrders\UpdateWorkOrder.xaml.cs">
       <DependentUpon>UpdateWorkOrder.xaml</DependentUpon>

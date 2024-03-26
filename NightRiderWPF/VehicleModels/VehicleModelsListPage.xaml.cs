@@ -52,14 +52,30 @@ namespace NightRiderWPF.VehicleModels
         {
             if (dat_vehicleModelsList.SelectedItem != null)
             {
-                var selectedVehicleModel = dat_vehicleModelsList.SelectedItem as VehicleModel;
+                VehicleModel selectedVehicleModel = dat_vehicleModelsList.SelectedItem as VehicleModel;
+                VehicleModelVM selectedAsVM = new VehicleModelVM
+                {
+                    Make = selectedVehicleModel.Make,
+                    MaxPassengers = selectedVehicleModel.MaxPassengers,
+
+
+                    Name = selectedVehicleModel.Name,
+                    VehicleModelID = selectedVehicleModel.VehicleModelID,
+                    VehicleTypeID = selectedVehicleModel.VehicleTypeID,
+                    Year = selectedVehicleModel.Year,
+
+                    IsActive = selectedVehicleModel.IsActive,
+                    Compatible_Parts = new List<Parts_Inventory>()
+                    
+                };
+
 
                 NavigationService.Navigate(
                     new VehicleModelAddEditPage(
                         _vehicleModelManager,
                         _vehicleManager,
                         _partsInventoryManager,
-                        selectedVehicleModel));
+                        selectedAsVM));
             }
         }
 

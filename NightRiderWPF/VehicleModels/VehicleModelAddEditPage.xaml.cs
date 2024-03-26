@@ -26,13 +26,16 @@ namespace NightRiderWPF.VehicleModels
         private IVehicleManager _vehicleManager;
         private IParts_InventoryManager _partsInventoryManager;
 
-        private VehicleModel _vehicleModel;
+        private VehicleModelVM _vehicleModel;
+        private VehicleModelVM _newVehcileModel;
+        List<Parts_Inventory> oldCompatible;
+        List<Parts_Inventory> newCompatible;
 
         public VehicleModelAddEditPage(
             IVehicleModelManager vehicleModelManager, 
             IVehicleManager vehicleManager,
             IParts_InventoryManager partsInventoryManager,
-            VehicleModel vehicleModel = null)
+            VehicleModelVM vehicleModel = null)
         {
             InitializeComponent();
 
@@ -40,6 +43,21 @@ namespace NightRiderWPF.VehicleModels
             _vehicleManager = vehicleManager;
             _partsInventoryManager = partsInventoryManager;
             _vehicleModel = vehicleModel;
+            if (_vehicleModel != null ) {
+                _newVehcileModel = new VehicleModelVM
+                {
+                    Make = _vehicleModel.Make,
+                    MaxPassengers = _vehicleModel.MaxPassengers,
+
+
+                    Name = _vehicleModel.Name,
+                    VehicleModelID = _vehicleModel.VehicleModelID,
+                    VehicleTypeID = _vehicleModel.VehicleTypeID,
+                    Year = _vehicleModel.Year,
+
+                    IsActive = _vehicleModel.IsActive
+                };
+ }
         }
 
         /// <summary>
@@ -63,7 +81,16 @@ namespace NightRiderWPF.VehicleModels
             }
 
             cmbYear.ItemsSource = years;
-            cmbType.ItemsSource = _vehicleManager.GetVehicleTypes();
+            try
+            {
+                cmbType.ItemsSource = _vehicleManager.GetVehicleTypes();
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.Message);
+            }
+            
             
             // Code based on whether adding or editing vehicle model
             if (_vehicleModel == null)
@@ -82,14 +109,23 @@ namespace NightRiderWPF.VehicleModels
 
                 try
                 {
-                    dat_compatiblePartsList.ItemsSource =
-                        _partsInventoryManager.GetPartsCompatibleWithVehicleModelID(_vehicleModel.VehicleModelID);
-                }
+                    oldCompatible = (List<Parts_Inventory>)_partsInventoryManager.GetPartsCompatibleWithVehicleModelID(_vehicleModel.VehicleModelID);
+                    newCompatible = (List<Parts_Inventory>)_partsInventoryManager.GetPartsCompatibleWithVehicleModelID(_vehicleModel.VehicleModelID);
+                    _vehicleModel.Compatible_Parts = oldCompatible;
+                    _newVehcileModel.Compatible_Parts = newCompatible;
+
+                    dat_compatiblePartsList.ItemsSource = newCompatible;
+                    
+                 }
                 catch (Exception)
                 {
                     MessageBox.Show("An error occurred while retrieving compatible parts");
                 }
             }
+            
+            btnAddCompatiblePart.IsEnabled = false;
+            btnSave.IsEnabled = false;
+
         }
 
         /// <summary>
@@ -160,6 +196,71 @@ namespace NightRiderWPF.VehicleModels
             catch(Exception)
             {
                 MessageBox.Show("An error occurred");
+            }
+        }
+
+        /// <summary>
+        ///     Handles click events for the remove button;
+        ///     Removes a part from the compatibility list, and updates the UI. Does not save to database at this time
+        /// </summary>
+        /// <remarks>
+        ///    CONTRIBUTOR: Jonathan Beck
+        /// <br />
+        ///    CREATED: 2024-03-24
+        /// </remarks>
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Parts_Inventory part = dat_compatiblePartsList.SelectedItem as Parts_Inventory;
+            if (part != null)
+            {
+                newCompatible.Remove(part);
+               
+            }
+            dat_compatiblePartsList.ItemsSource = null;
+
+            dat_compatiblePartsList.ItemsSource = newCompatible;
+           
+            btnSave.IsEnabled = true;
+        }
+
+        /// <summary>
+        ///    saves the changes to teh database
+        /// </summary>
+        /// <remarks>
+        ///    CONTRIBUTOR: Jonathan Beck
+        /// <br />
+        ///    CREATED: 2024-03-24
+        /// </remarks>
+
+        private void btnSave_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                _vehicleModelManager.UpdateVehicleModel(_vehicleModel, _newVehcileModel);
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.Message);
+            }
+            MessageBox.Show("Updated!");
+            NavigationService.GoBack();
+        }
+        /// <summary>
+        ///     goes to the previous page, and does not save the cnages
+        /// </summary>
+        /// <remarks>
+        ///    CONTRIBUTOR: Jonathan Beck
+        /// <br />
+        ///    CREATED: 2024-03-24
+        /// </remarks>
+
+        private void btnCancel_Click(object sender, RoutedEventArgs e)
+        {
+            if (NavigationService.CanGoBack) {
+                NavigationService.GoBack();
+
             }
         }
     }
