@@ -20,7 +20,7 @@
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
         <Label Grid.Column="1" Grid.Row="0" Content="Routes" Foreground="{x:Static resources:Statics.PrimaryColor}" FontSize="16pt" VerticalAlignment="Center" HorizontalAlignment="Center" />
-        <DataGrid x:Name="grdRouteList" IsReadOnly="True" AutoGenerateColumns="False" Grid.Row="1" Grid.Column="1">
+        <DataGrid x:Name="datRouteList" AutoGenerateColumns="False" Grid.Row="1" Grid.Column="1" MouseDoubleClick="datRouteList_MouseDoubleClick">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Route Name" Binding="{Binding RouteName}" />
                 <DataGridTextColumn Header="Start Time" Binding="{Binding StartTime}" />

@@ -81,7 +81,7 @@ namespace DataAccessLayer
             throw new NotImplementedException();
         }
 
-        public List<RouteVM> selectRoutes()
+        public IEnumerable<RouteVM> selectRoutes()
         {
             List<RouteVM> routes = new List<RouteVM>();
             var conn = DBConnectionProvider.GetConnection();

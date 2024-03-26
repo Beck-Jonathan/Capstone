@@ -31,6 +31,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.Maps.MapControl.WPF, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Maps.MapControl.WPF.1.0.0.3\lib\net40-Client\Microsoft.Maps.MapControl.WPF.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -41,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BingMapsAccessor.cs" />
     <Compile Include="ClientAccessor.cs" />
     <Compile Include="ClientDependentRoleAccessor.cs" />
     <Compile Include="DBConnectionProvider.cs" />
@@ -55,6 +62,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RouteAccessor.cs" />
     <Compile Include="Purchase_OrderAccessor.cs" />
+    <Compile Include="RouteStopAccessor.cs" />
     <Compile Include="ServiceOrderAccessor.cs" />
     <Compile Include="SourceAccessor.cs" />
     <Compile Include="StopAccessor.cs" />
@@ -72,6 +80,9 @@
       <Project>{a9192e97-5087-4bb1-8aed-b6b9025b041d}</Project>
       <Name>DataObjects</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
