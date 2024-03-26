@@ -43,18 +43,21 @@ namespace NightRiderWPF.VehicleModels
             _vehicleManager = vehicleManager;
             _partsInventoryManager = partsInventoryManager;
             _vehicleModel = vehicleModel;
-            _newVehcileModel = new VehicleModelVM {
-                Make = _vehicleModel.Make,
-                MaxPassengers = _vehicleModel.MaxPassengers,
+            if (_vehicleModel != null ) {
+                _newVehcileModel = new VehicleModelVM
+                {
+                    Make = _vehicleModel.Make,
+                    MaxPassengers = _vehicleModel.MaxPassengers,
 
-                
-                Name = _vehicleModel.Name,
-                VehicleModelID = _vehicleModel.VehicleModelID,
-                VehicleTypeID = _vehicleModel.VehicleTypeID,
-                Year = _vehicleModel.Year,
-                
-                IsActive = _vehicleModel.IsActive       
- };
+
+                    Name = _vehicleModel.Name,
+                    VehicleModelID = _vehicleModel.VehicleModelID,
+                    VehicleTypeID = _vehicleModel.VehicleTypeID,
+                    Year = _vehicleModel.Year,
+
+                    IsActive = _vehicleModel.IsActive
+                };
+ }
         }
 
         /// <summary>
