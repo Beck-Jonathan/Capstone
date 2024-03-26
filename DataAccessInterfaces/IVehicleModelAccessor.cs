@@ -19,5 +19,20 @@ namespace DataAccessInterfaces
         ///    <see cref="IEnumerable{VehicleModel}">IEnumerable&lt;VehicleModel&gt;</see>: All active vehicle models
         /// </returns>
         IEnumerable<VehicleModel> GetVehicleModels();
+
+        /// <summary>
+        ///     Inserts a new vehicle model
+        /// </summary>
+        /// <param name="vehicleModel">
+        ///    The VehicleModel being added
+        /// </param>
+        /// <returns>
+        ///    <see cref="int">bool</see>: The number of rows affected in the VehicleModel table
+        /// </returns>
+        /// <remarks>
+        ///    Parameters:
+        /// <br />
+        ///    <see cref="VehicleModel">VehicleModel</see> vehicleModel: The VehicleModel being inserted
+        int InsertVehicleModel(VehicleModel vehicleModel);
     }
 }

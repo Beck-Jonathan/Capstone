@@ -41,3 +41,19 @@ AS
         SELECT SCOPE_IDENTITY() AS 'Client_Dependent_Role_ID'
     END
 GO
+
+-- AUTHOR: Michael Springer
+print '' print '*** Creating sp_select_client_dependent_role_by_client_id ***'
+GO
+CREATE PROCEDURE [dbo].[sp_select_client_dependent_role_by_client_id]
+(
+    @Client_ID [int]
+)
+AS
+    BEGIN
+        SELECT [Client_ID], [Dependent_ID], [Relationship], [Is_Active]
+        FROM [dbo].[Client_Dependent_Role]
+        WHERE [Client_ID] = @Client_ID
+            AND [Is_Active] = 1
+    END
+GO

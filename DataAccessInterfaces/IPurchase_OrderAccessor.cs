@@ -45,5 +45,23 @@ namespace DataAccessInterfaces
         /// </remarks>
         List<Purchase_OrderVM> GetPurchaseOrderByDateRange(DateTime startDate, DateTime endDate);
 
+        /// <summary>
+        ///     Creates the purchase order
+        /// </summary>
+        /// <param cref="Purchase_OrderVM" name="purchaseOrder">
+        ///    The Purchase order to add to the database
+        /// </param>
+        /// 
+        /// <returns>
+        ///    <see cref="int">int</see>: The ID of the purchase order
+        /// </returns>
+        /// 
+        ///    Exceptions:
+        ///    <see cref="SqlException">SqlException</see>: Thrown if there is a problem accessing the DB.
+        ///    CONTRIBUTOR: Jonathan Beck
+        ///    CREATED: 2024-03-18
+        /// </remarks>
+        int InsertPurchaseOrder(Purchase_Order purchaseOrder);
+
     }
 }

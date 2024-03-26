@@ -75,8 +75,14 @@
     <Compile Include="Clients\ClientLookupPage.xaml.cs">
       <DependentUpon>ClientLookupPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Clients\GuardianViewEditDependent.xaml.cs">
+      <DependentUpon>GuardianViewEditDependent.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Clients\ToBeReworked\ClientPersonalPage.xaml.cs">
       <DependentUpon>ClientPersonalPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Login\UsernameRequestPage.xaml.cs">
+      <DependentUpon>UsernameRequestPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Employees\EmployeeAuthenticator.xaml.cs">
       <DependentUpon>EmployeeAuthenticator.xaml</DependentUpon>
@@ -89,6 +95,15 @@
     </Compile>
     <Compile Include="PartsRequests\ViewPartRequestsPage.xaml.cs">
       <DependentUpon>ViewPartRequestsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PurchaseOrders\Parts_Person_Add_Update_Delete_Line_Items.xaml.cs">
+      <DependentUpon>Parts_Person_Add_Update_Delete_Line_Items.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PurchaseOrders\Parts_Person_Add_Update_Delete_Purchase_Order.xaml.cs">
+      <DependentUpon>Parts_Person_Add_Update_Delete_Purchase_Order.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="RouteStop\AddStop.xaml.cs">
+      <DependentUpon>AddStop.xaml</DependentUpon>
     </Compile>
     <Compile Include="RouteStop\RouteList.xaml.cs">
       <DependentUpon>RouteList.xaml</DependentUpon>
@@ -108,6 +123,12 @@
     <Compile Include="RoleViews\CreateRole.xaml.cs">
       <DependentUpon>CreateRole.xaml</DependentUpon>
     </Compile>
+    <Compile Include="RouteStop\StopList.xaml.cs">
+      <DependentUpon>StopList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="VehicleModels\VehicleModelAddEditPage.xaml.cs">
+      <DependentUpon>VehicleModelAddEditPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="VehicleModels\VehicleModelsListPage.xaml.cs">
       <DependentUpon>VehicleModelsListPage.xaml</DependentUpon>
     </Compile>
@@ -123,6 +144,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Clients\ClientLookupPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Clients\GuardianViewEditDependent.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Login\UsernameRequestPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -146,6 +175,18 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="PurchaseOrders\Parts_Person_Add_Update_Delete_Line_Items.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PurchaseOrders\Parts_Person_Add_Update_Delete_Purchase_Order.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="RouteStop\AddStop.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="RouteStop\RouteList.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -165,6 +206,14 @@
     <Page Include="RoleViews\CreateRole.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="RouteStop\StopList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="VehicleModels\VehicleModelAddEditPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="VehicleModels\VehicleModelsListPage.xaml">
       <SubType>Designer</SubType>
@@ -259,6 +308,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="WorkOrders\CreateWorkOrderPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="WorkOrders\UpdateWorkOrder.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -296,6 +349,9 @@
     </Compile>
     <Compile Include="Vendors\ViewAllVendors.xaml.cs">
       <DependentUpon>ViewAllVendors.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WorkOrders\CreateWorkOrderPage.xaml.cs">
+      <DependentUpon>CreateWorkOrderPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="WorkOrders\UpdateWorkOrder.xaml.cs">
       <DependentUpon>UpdateWorkOrder.xaml</DependentUpon>

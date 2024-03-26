@@ -100,5 +100,34 @@ namespace DataAccessFakes
             if (results.Count == 0) { throw new ArgumentException("PO Line Items not found"); }
             return results;
         }
+
+        /// <summary>
+        /// Jonathan Beck
+        /// Created: 2024/03/18
+        /// 
+        /// Insert a po line item
+        /// </summary>
+        public int InsertPOLineItem(POLineItem lineItem)
+        {
+            int starting = fakePOLines.Count;
+            POLineItemVM pOLineItemVM = new POLineItemVM();
+
+            pOLineItemVM.PurchaseOrderID = lineItem.PurchaseOrderID;
+            pOLineItemVM.PartsInventoryID = lineItem.PartsInventoryID;
+            pOLineItemVM.LineNumber = lineItem.LineNumber;
+            pOLineItemVM.LineItemName = lineItem.LineItemName;
+            pOLineItemVM.Quantity = lineItem.Quantity;
+            pOLineItemVM.LineItemDescription = lineItem.LineItemDescription;
+            pOLineItemVM.isActive = lineItem.isActive;
+            pOLineItemVM.Part = parts_Inventory_Fakes.selectParts_InventoryByPrimaryKey(lineItem.PartsInventoryID);
+
+
+
+
+            fakePOLines.Add(pOLineItemVM);
+            int ending = fakePOLines.Count;
+
+            return ending - starting;
+        }
     }
 }

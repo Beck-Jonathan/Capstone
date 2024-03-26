@@ -1,0 +1,109 @@
+﻿<Page x:Class="NightRiderWPF.Clients.GuardianViewEditDependent"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:NightRiderWPF.Clients"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="GuardianViewEditDependent" Loaded="Page_Loaded">
+
+    <Grid x:Name="grdMain" Background="LightBlue">
+        <Grid.RowDefinitions>
+            <!-- Create Grid Rows as needed, but try to keep rows consistent between related pages -->
+            <RowDefinition Height="50" />
+            <RowDefinition Height="35" />
+            <RowDefinition Height="25" />
+            <RowDefinition Height="35" />
+            <RowDefinition Height="25" />
+            <RowDefinition Height="35" />
+            <RowDefinition Height="25" />
+            <RowDefinition Height="35" />
+            <RowDefinition Height="25" />
+            <RowDefinition Height="35" />
+            <RowDefinition Height="25" />
+            <RowDefinition Height="35" />
+            <RowDefinition Height="25" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Label x:Name="lblTitle" FontSize="18" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4">Dependent:</Label>
+        <Label x:Name="lblFirstName" Grid.Row="3" Grid.Column="0">First Name</Label>
+        <Label x:Name="lblLastName" Grid.Row="5" Grid.Column="0">Last Name</Label>
+        <Label x:Name="lblMiddleName" Grid.Row="7" Grid.Column="0">Middle Name</Label>
+        <Label x:Name="lblDOB" Grid.Row="9" Grid.Column="0">Date of Birth</Label>
+        <Label x:Name="lblGender" Grid.Row="11" Grid.Column="0">Gender</Label>
+        <Label x:Name="lblRelationship" Grid.Row="1" Grid.Column="0">Relationship</Label>
+
+        <Label x:Name="lblEmergencyContact" Grid.Row="1" Grid.Column="3">Emergency Contact</Label>
+        <Label x:Name="lblEmergencyRelationship" Grid.Row="3" Grid.Column="3">Contact Relationship</Label>
+        <Label x:Name="lblEmergencyPhone" Grid.Row="5" Grid.Column="3">Emergency Phone</Label>
+        <Label x:Name="lblAccommodations" Grid.Row="7" Grid.Column="3">Accommodations</Label>
+
+        <TextBox x:Name="txtFirstName" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Width="175"
+             Height="25" HorizontalAlignment="Left"></TextBox>
+        <TextBox x:Name="txtLastName" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" Width="175"
+     Height="25" HorizontalAlignment="Left"></TextBox>
+        <TextBox x:Name="txtMiddleName" Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="2" Width="175"
+     Height="25" HorizontalAlignment="Left"></TextBox>
+        <DatePicker x:Name="dtpBirthDate" Grid.Row="9" Grid.Column="1" Grid.ColumnSpan="2" Width="175"
+                Height="25" HorizontalAlignment="Left" VerticalAlignment="Center"></DatePicker>
+        <ComboBox x:Name="cboGender" Grid.Row="11" Grid.Column="1" Grid.ColumnSpan="2" Width="175"
+             Height="25" HorizontalAlignment="Left">
+            <ComboBoxItem Content="Female"/>
+            <ComboBoxItem Content="Male"/>
+            <ComboBoxItem Content="Nonbinary"/>
+            <ComboBoxItem Content="Other"/>
+            <ComboBoxItem Content="Not Disclosed"/>
+        </ComboBox>
+        <ComboBox x:Name="cboRelationship" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Width="175"
+     Height="25" HorizontalAlignment="Left">
+            <ComboBoxItem Content="Parent"/>
+            <ComboBoxItem Content="Legal Guardian"/>
+            <ComboBoxItem Content="State Custodian"/>
+            <ComboBoxItem Content="Aide/ Caregiver"/>
+            <ComboBoxItem Content="Other"/>
+        </ComboBox>
+
+
+        <TextBox x:Name="txtEmergencyContact" Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="2" Width="175"
+            Height="25" HorizontalAlignment="Left"></TextBox>
+        <TextBox x:Name="txtContactRelationship" Grid.Row="3" Grid.Column="4" Grid.ColumnSpan="2" Width="175"
+            Height="25" HorizontalAlignment="Left"></TextBox>
+        <TextBox x:Name="txtEmergencyPhone" Grid.Row="5" Grid.Column="4" Grid.ColumnSpan="2" Width="175"
+            Height="25" HorizontalAlignment="Left"></TextBox>
+        <ComboBox x:Name="cboAccommodations" Grid.Row="7" Grid.Column="4" Grid.ColumnSpan="2" Width="175"
+              Height="25" HorizontalAlignment="Left">
+            <ComboBoxItem Content="WheelChair Accessibility"/>
+            <ComboBoxItem Content="Entry Ramp or Lift"/>
+            <ComboBoxItem Content="Priority Seating"/>
+            <ComboBoxItem Content="Extended Boarding time"/>
+            <ComboBoxItem Content="Boarding Assistance"/>
+            <ComboBoxItem Content="Service Animal Seating"/>
+            <ComboBoxItem Content="Audio Stop Announcement"/>
+            <ComboBoxItem Content="Visual Stop Notification"/>
+        </ComboBox>
+        <Button x:Name="btnEditDependent" Grid.Row="11" Grid.Column="3" Height="25" Width="90" Click="btnEditDependent_Click">Edit</Button>
+        <Button x:Name="btnCancel" Grid.Row="11" Grid.Column="3" Height="25" Width="90" Click="btnCancel_Click">Cancel</Button>
+        <Button x:Name="btnSubmitDependent" Grid.Row="11" Grid.Column="4" Height="25" Width="90" Click="btnSubmitDependent_Click">Submit</Button>
+        <Button x:Name="btnDeleteDependent" Grid.Row="11" Grid.Column="4" Height="25" Width="90" Click="btnDeleteDependent_Click">Delete</Button>
+        <Label x:Name="errRelationship" Visibility="Hidden"  Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" VerticalAlignment="Top">Select a relationship type</Label>
+        <Label x:Name="errFirstName" Visibility="Hidden" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" VerticalAlignment="Top">Enter a first name</Label>
+        <Label x:Name="errLastName" Visibility="Hidden" Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2" VerticalAlignment="Top">Enter a last name</Label>
+        <Label x:Name="errMiddleName" Visibility="Hidden" Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="2" VerticalAlignment="Top">Invalid Middle Name</Label>
+        <Label x:Name="errRGender" Visibility="Hidden" Grid.Row="12" Grid.Column="1" Grid.ColumnSpan="2" VerticalAlignment="Top">Select a gender</Label>
+        <Label x:Name="errDOB" Grid.Row="10" Grid.Column="1" Grid.ColumnSpan="2" VerticalAlignment="Top">Select a date of birth</Label>
+
+
+        <Label x:Name="errEmergencyContact" Visibility="Hidden" Grid.Row="2" Grid.Column="4" Grid.ColumnSpan="2">Enter an emergency contact</Label>
+        <Label x:Name="errContactRelationship" Visibility="Hidden" Grid.Row="4" Grid.Column="4" Grid.ColumnSpan="2" VerticalAlignment="Top">Enter contact relationship</Label>
+        <Label x:Name="errEmergencyPhone" Visibility="Hidden" Grid.Row="6" Grid.Column="4" Grid.ColumnSpan="2" VerticalAlignment="Top">Enter a valid phone number</Label>
+        <Label x:Name="errAccommodations" Visibility="Hidden" Grid.Row="8" Grid.Column="4" Grid.ColumnSpan="2" VerticalAlignment="Top">Entry Error</Label>
+    </Grid>
+</Page>

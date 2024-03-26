@@ -81,7 +81,7 @@ namespace NightRiderWPF.DeveloperView
                         PageViewer.Navigate(new AdminEmployeeListPage());
                         break;
                     case "lstbxit_vehicleModels":
-                        PageViewer.Navigate(new VehicleModelsListPage(_vehicleModelManager));
+                        PageViewer.Navigate(new VehicleModelsListPage(_vehicleModelManager, null, null));
                         break;
                     case "VehicleLookupListPage":
                         PageViewer.Navigate(new VehicleLookupListPage());
@@ -214,7 +214,11 @@ namespace NightRiderWPF.DeveloperView
             return;
         }
 
-
+        private void btnForgotUsername_Click(object sender, RoutedEventArgs e)
+        {
+            PageViewer.Navigate(new UsernameRequestPage());
+		}
+		
         /// <summary>
         ///     Handles click behavior for the "Forgot Password" button
         ///     open password reset request page

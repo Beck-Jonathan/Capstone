@@ -85,6 +85,48 @@ namespace DataAccessInterfaces
         /// <returns>The ID of the newly created record</returns>
         int InsertParts_Inventory(Parts_Inventory newPart);
 
+        ///<summary>
+        ///     Selects all parts compatible with a given vehicle model
+        /// </summary>
+        /// <param name="vehicleModelId">
+        ///    The ID of the vehicle model
+        /// </param>
+        /// <returns>
+        ///    <see cref="IEnumerable{Parts_Inventory}">IEnumerable<Parts_Inventory></Parts_Inventory></see>: The parts compativle with the given vehicle model
+        /// </returns>
+        /// <remarks>
+        ///    Parameters:
+        /// <br />
+        ///    <see cref="int">int</see> vehicleModelId: The ID of the vehicle model
+        /// </remarks>
+        IEnumerable<Parts_Inventory> SelectPartsCompatibleWithVehicleModelId(int vehicleModelId);
+
+        /// <summary>
+        ///     Retrieves all parts compatible with a given vehicle model
+        /// </summary>
+        /// <param name="model_ID">
+        ///    The ID of the vehicle model
+        /// </param>
+        /// <param name="part_ID">
+        ///    The ID of the part
+        /// </param>
+        /// <returns>
+        ///    <see cref="Int">Int</see>: 1 if the part compatibility was removed
+        /// </returns>
+        /// <remarks>
+        ///    Parameters:
+        /// <br />
+        ///    <see cref="int">int</see> vehicleModelId: The ID of the vehicle model
+        ///   <see cref="int">int</see> Parts_InventoryID: The ID of the part
+        ///   /// <br /><br />
+        ///    CONTRIBUTOR: Jonathan Beck
+        /// <br />
+        ///    CREATED: 2024-03-24
+        /// </remarks>
+        /// </remarks>
+
+        int DeleteModelCompatibility(int vehicleModelId, int Parts_InventoryID);
+
         // Reviewed By: John Beck
     }
 

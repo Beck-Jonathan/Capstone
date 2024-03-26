@@ -75,5 +75,58 @@ namespace DataAccessLayer
             return vehicleModels;
         }
 
+        /// <summary>
+        ///     Inserts a new vehicle model
+        /// </summary>
+        /// <param name="vehicleModel">
+        ///    The VehicleModel being added
+        /// </param>
+        /// <returns>
+        ///    <see cref="int">bool</see>: The number of rows affected in the VehicleModel table
+        /// </returns>
+        /// <remarks>
+        ///    Parameters:
+        /// <br />
+        ///    <see cref="VehicleModel">VehicleModel</see> vehicleModel: The VehicleModel being inserted
+        public int InsertVehicleModel(VehicleModel vehicleModel)
+        {
+            int rowsAffected = 0;
+
+            var conn = DBConnectionProvider.GetConnection();
+
+            var cmdText = "sp_add_vehicle_model";
+
+            var cmd = new SqlCommand(cmdText, conn);
+
+            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+
+            cmd.Parameters.Add("@Name", System.Data.SqlDbType.NVarChar);
+            cmd.Parameters.Add("@Make", System.Data.SqlDbType.NVarChar);
+            cmd.Parameters.Add("@Vehicle_Type_Id", System.Data.SqlDbType.NVarChar);
+            cmd.Parameters.Add("@Max_Passengers", System.Data.SqlDbType.NVarChar);
+            cmd.Parameters.Add("@Year", System.Data.SqlDbType.Int);
+
+            cmd.Parameters["@Max_Passengers"].Value = vehicleModel.MaxPassengers;
+            cmd.Parameters["@Name"].Value = vehicleModel.Name;
+            cmd.Parameters["@Vehicle_Type_Id"].Value = vehicleModel.VehicleTypeID;
+            cmd.Parameters["@Make"].Value = vehicleModel.Make;
+            cmd.Parameters["@Year"].Value = vehicleModel.Year;
+
+            try
+            {
+                conn.Open();
+                rowsAffected = cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            return rowsAffected;
+       }
     }
 }

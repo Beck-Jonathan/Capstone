@@ -35,6 +35,7 @@ namespace DataObjects
     {
         private IEnumerable<Accommodation> Accommodations { get; set; }
         // private IEnumerable<Client> Guardians { get; set; }
-        
+        public IEnumerable<ClientDependentRole> ClientDependentRoles { get; set; }
+
     }
 }

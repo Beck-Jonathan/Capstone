@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ClientAccessor.cs" />
+    <Compile Include="ClientDependentRoleAccessor.cs" />
     <Compile Include="DBConnectionProvider.cs" />
     <Compile Include="DependentAccessor.cs" />
     <Compile Include="Helpers\SqlDataReaderHelpers.cs" />
@@ -55,6 +56,8 @@
     <Compile Include="RouteAccessor.cs" />
     <Compile Include="Purchase_OrderAccessor.cs" />
     <Compile Include="ServiceOrderAccessor.cs" />
+    <Compile Include="SourceAccessor.cs" />
+    <Compile Include="StopAccessor.cs" />
     <Compile Include="VehicleAccessor.cs" />
     <Compile Include="RoleAccessor.cs" />
     <Compile Include="VehicleModelAccessor.cs" />

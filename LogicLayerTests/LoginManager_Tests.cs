@@ -525,8 +525,8 @@ namespace LogicLayerTests
                 "Kirkwood",
                 "Caroline");
         }
-
-        /// <summary>
+		
+		/// <summary>
         ///     Test that editing a user's password updates the password hash to the correct value
         /// </summary>
         /// <remarks>
@@ -673,5 +673,86 @@ namespace LogicLayerTests
             // Act
             string retrievedEmail = _loginManager.GetLoginEmailByUsername(username);
         }
-   }
+
+        /// <summary>
+        ///     Test that when email gets a match, Security Questions are recieved
+        /// </summary>
+        /// <remarks>
+        ///    CONTRIBUTOR: Parker Svoboda
+        /// <br />
+        ///    CREATED: 2024-02-25
+        /// </remarks>
+        [TestMethod]
+        public void GetSecurityQuestionsforUsernameRetrieval_Success()
+        {
+            // Arrange
+            string email = "jake@company.com";
+            string[] expectedArray = new string[] { "question1", "question2", "question3" };
+            LoginAccessorFake loginAccessor = new LoginAccessorFake();
+            _loginManager = new LoginManager(_passwordHasher, loginAccessor);
+
+            // Action
+
+            string[] questions = _loginManager.GetSecurityQuestionsforUsernameRetrieval(email);
+
+            //assert
+
+            Assert.AreEqual(expectedArray[0], questions[0]);
+            Assert.AreEqual(expectedArray[1], questions[1]);
+            Assert.AreEqual(expectedArray[2], questions[2]);
+
+        }
+
+        /// <summary>
+        ///     Test that when email doesn't match anything in the database, throws exception
+        /// </summary>
+        /// <remarks>
+        ///    CONTRIBUTOR: Parker Svoboda
+        /// <br />
+        ///    CREATED: 2024-02-25
+        /// </remarks>
+        [TestMethod]
+        [ExpectedException(typeof(NullReferenceException))]
+        public void GetSecurityQuestionsforUsernameRetrieval_FailureBadEmail()
+        {
+            // Arrange
+            string email = "jake@achoo.com";
+            LoginAccessorFake loginAccessor = new LoginAccessorFake();
+            _loginManager = new LoginManager(_passwordHasher, loginAccessor);
+
+            // Action
+            _loginManager.GetSecurityQuestionsforUsernameRetrieval(email);
+        }
+
+        /// <summary>
+        ///     Test that when email doesn't match anything in the database, throws exception
+        /// </summary>
+        /// <remarks>
+        ///    CONTRIBUTOR: Parker Svoboda
+        /// <br />
+        ///    CREATED: 2024-02-27
+        /// </remarks>
+        /// <br /><br />
+        ///    UPDATER: Parker Svoboda
+        /// <br />
+        ///    UPDATED: 2024-03-04
+        /// <br />
+        /// Parameters changed to use Security Responses, method changed to use said Security Responses
+        /// </remarks>
+        [TestMethod]
+        public void GetUsername_Success()
+        {
+            // Arrange
+            string email = "jake@company.com";
+            string expectedUsername = "jakedoe12345";
+            LoginAccessorFake loginAccessor = new LoginAccessorFake();
+            _loginManager = new LoginManager(_passwordHasher, loginAccessor);
+
+            // Action
+            string username = _loginManager.GetUsername(email, "response1", "response2", "response3");
+
+            //Assert
+            Assert.AreEqual(expectedUsername, username);
+        }
+    }
 }

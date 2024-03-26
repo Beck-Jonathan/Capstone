@@ -1465,11 +1465,24 @@ INSERT INTO [dbo].[Model_Compatibility]
     [Parts_Inventory_ID]
     )
 VALUES
-    (100001, 100000),
-    (100002, 100004),
+    (100001, 100001),
+    (100001, 100002),
+    (100001, 100003),
+    (100001, 100004),
+    (100001, 100005),
+	(100002, 100006),
+    (100002, 100007),
+    (100002, 100008),
+    (100002, 100009),
+    (100002, 100010),
+	(100003, 100011),
+    (100003, 100001),
+    (100003, 100002),
     (100003, 100003),
-    (100004, 100002),
-    (100000, 100001);
+    (100004, 100004),
+	(100004, 100005),
+    (100004, 100006);
+    
 GO
 
 /******************
@@ -1808,8 +1821,8 @@ INSERT INTO [dbo].[Login]
     [Security_Question_2],[Security_Response_2],
     [Security_Question_3],[Security_Response_3])
 VALUES
-    ('JoeSmith1994', 100000, 'what is your favorite animal?', 'lion', null, null, null, null),
-    ('Jacmar125', 100001, 'what is your favorite animal?', 'Ocelot', 'what is your favorite food?', 'Ramen', null, null),
+    ('JoeSmith1994', 100000, 'what is your favorite animal?', 'lion', 'what is your favorite food?', 'Ramen', 'what was your first dogs name?', 'Hoola'),
+    ('Jacmar125', 100001, 'what is your favorite animal?', 'Ocelot', 'what is your favorite food?', 'Bibimbap', 'what was your first dogs name?', 'Jeff'),
     ('Lebold2202', 100002, 'what is your favorite animal?', 'Foxes', 'what is your favorite food?', 'Spaghetti', 'what was your first dogs name?', 'Lola');
 GO
 
@@ -1974,7 +1987,7 @@ CREATE TABLE [dbo].[Dependent]
     [Gender] [nvarchar](20) NULL,
     [Emergency_Contact] [nvarchar](100) NOT NULL,
 	[Contact_Relationship] 	[nvarchar](100) 				NOT NULL,
-    [Emergency_Phone] [nvarchar](11) NOT NULL,
+    [Emergency_Phone] [nvarchar](12) NOT NULL,
     [Is_Active] [bit] NOT NULL DEFAULT 1,
     CONSTRAINT 		[pk_Dependent_ID] PRIMARY KEY ([Dependent_ID])
 )
@@ -2066,6 +2079,17 @@ Insert Sample Data For The  Client_Dependent_Role table
 
 print '' Print '***Insert Sample Data For The  Client_Dependent_Role table***' 
  go
+  go
+ INSERT INTO [dbo].[Client_Dependent_Role]
+		([Client_ID], [Dependent_ID], [Relationship], [Is_Active])
+	VALUES
+		(100000, 100000, 'Parent', 0),
+		(100000, 100001, 'Parent', 1),
+		(100000, 100002, 'Parent', 1),
+		(100003, 100002, 'Legal Custodian', 1),
+		(100004, 100003, 'Parent', 1),
+		(100002, 100003, 'Parent', 1)
+GO
 
 /******************
 Create the [dbo].[Notification] table

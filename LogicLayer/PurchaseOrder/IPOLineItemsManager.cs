@@ -44,5 +44,23 @@ namespace LogicLayer
         ///    CREATED: 2024-02-17
         /// </remarks>
         List<POLineItemVM> LookupPOLineItemByPurchaseOrderNumber(int PONumber);
+
+        /// <summary>
+        ///     Inserts a purchase order line item
+        /// </summary>
+        /// <param cref="POLineItem" name="lineItem">
+        ///    The line item that will be added to the order
+        /// </param>
+        /// 
+        /// <returns>
+        ///    <see cref="int">int</see>: The line number of the item inserted
+        /// </returns>
+        /// 
+        ///    Exceptions:
+        ///    <see cref="SqlException">SqlException</see>: Thrown if there is a problem accessing the DB.
+        ///    CONTRIBUTOR: Jonathan Beck
+        ///    CREATED: 2024-03-18
+        /// </remarks>
+        int CreatePurchaseOrderLineItem(POLineItem lineItem);
     }
 }

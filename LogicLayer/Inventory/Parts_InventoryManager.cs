@@ -16,6 +16,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -208,6 +209,78 @@ namespace LogicLayer
                 throw new ApplicationException("Something went wrong", ex);
             }
             return id;
+        }
+
+        ///<summary>
+        ///     Retrieves all parts compatible with a given vehicle model
+        /// </summary>
+        /// <param name="vehicleModelId">
+        ///    The ID of the vehicle model
+        /// </param>
+        /// <returns>
+        ///    <see cref="IEnumerable{Parts_Inventory}">IEnumerable<Parts_Inventory></Parts_Inventory></see>: The parts compativle with the given vehicle model
+        /// </returns>
+        /// <remarks>
+        ///    Parameters:
+        /// <br />
+        ///    <see cref="int">int</see> vehicleModelId: The ID of the vehicle model
+        /// <br /><br />
+        ///    CONTRIBUTOR: Jared Hutton
+        /// <br />
+        ///    CREATED: 2024-03-22
+        /// </remarks>
+        public IEnumerable<Parts_Inventory> GetPartsCompatibleWithVehicleModelID(int vehicleModelId)
+        {
+            IEnumerable<Parts_Inventory> result = null;
+
+            try
+            {
+                result = _parts_inventoryaccessor.SelectPartsCompatibleWithVehicleModelId(vehicleModelId);
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        ///     Retrieves all parts compatible with a given vehicle model
+        /// </summary>
+        /// <param name="model_ID">
+        ///    The ID of the vehicle model
+        /// </param>
+        /// <param name="part_ID">
+        ///    The ID of the part
+        /// </param>
+        /// <returns>
+        ///    <see cref="Int">int</see>: 1 if the part compatibility was removed
+        /// </returns>
+        /// <remarks>
+        ///    Parameters:
+        /// <br />
+        ///    <see cref="int">int</see> model_ID: The ID of the vehicle model
+        ///   <see cref="int">int</see> part_ID: The ID of the part
+        ///   /// <br /><br />
+        ///    CONTRIBUTOR: Jonathan Beck
+        /// <br />
+        ///    CREATED: 2024-03-24
+        /// </remarks>
+        /// </remarks>
+
+        public int PurgeModelPartCompatibility(int model_ID, int part_ID) {
+            int result = 0;
+            try
+            {
+                result= _parts_inventoryaccessor.DeleteModelCompatibility(model_ID, part_ID);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            return result;
         }
 
         // Reviewed By: John Beck
