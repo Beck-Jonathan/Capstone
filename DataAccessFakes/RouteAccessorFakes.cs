@@ -29,7 +29,61 @@ namespace DataAccessFakes
                 EndTime = new Time(16, 0, 0),
                 RepeatTime = new TimeSpan(4, 0, 0),
                 DaysOfService = new ActivityWeek(new char[] { '0', '0', '0', '0', '0', '1', '1' }),
-                IsActive = true
+                IsActive = true,
+                RouteStops = new List<RouteStopVM>()
+                {
+                    new RouteStopVM()
+                    {
+                        RouteId = 100001,
+                        StopId = 0,
+                        StopNumber = 1,
+                        OffsetFromRouteStart = new TimeSpan(0),
+                        IsActive = true,
+                        stop = new Stop()
+                        {
+                            StopId = 0,
+                            StreetAddress = "6301 Kirkwood Blvd SW, Cedar Rapids, IA",
+                            ZIPCode = "52404",
+                            Latitude = 41.917250m,
+                            Longitude = -91.656470m,
+                            IsActive = true
+                        }
+                    },
+                    new RouteStopVM()
+                    {
+                        RouteId = 100001,
+                        StopId = 1,
+                        StopNumber = 2,
+                        OffsetFromRouteStart = new TimeSpan(0),
+                        IsActive = true,
+                        stop = new Stop()
+                        {
+                            StopId = 1,
+                            StreetAddress = "5008, 1220 1st Ave NE, Cedar Rapids, IA",
+                            ZIPCode = "52402",
+                            Latitude = 41.989670m,
+                            Longitude = -91.649529m,
+                            IsActive = true
+                        }
+                    },
+                    new RouteStopVM()
+                    {
+                        RouteId = 100001,
+                        StopId = 2,
+                        StopNumber = 3,
+                        OffsetFromRouteStart = new TimeSpan(0),
+                        IsActive = true,
+                        stop = new Stop()
+                        {
+                            StopId = 2,
+                            StreetAddress = "1330 Elmhurst Dr NE, Cedar Rapids, IA",
+                            ZIPCode = "52402",
+                            Latitude = 42.002548m,
+                            Longitude = -91.652069m,
+                            IsActive = true
+                        }
+                    }
+                }
             });
             routes.Add(new RouteVM()
             {
@@ -76,7 +130,12 @@ namespace DataAccessFakes
 
         public int InsertRoute(RouteVM route)
         {
-            throw new NotImplementedException();
+            if(routes.Where(fakeRoute => fakeRoute.RouteId == route.RouteId).Any())
+            {
+                throw new Exception("route with that id already exists");
+            }
+            routes.Add(route);
+            return routes.Count();
         }
 
         public RouteVM selectRouteById(int routeId)
@@ -92,14 +151,33 @@ namespace DataAccessFakes
             return result;
         }
 
-        public List<RouteVM> selectRoutes()
+        public IEnumerable<RouteVM> selectRoutes()
         {
             return routes;
         }
 
         public int UpdateRoute(RouteVM oldRoute, RouteVM newRoute)
         {
-            throw new NotImplementedException();
+            int result = 0;
+            if (oldRoute.RouteId == newRoute.RouteId)
+            {
+                for (int i = 0;  i < routes.Count; i++)
+                {
+                    if (routes[i].RouteId == oldRoute.RouteId)
+                    {
+                        routes[i] = newRoute;
+                        result = i;
+                        break;
+                    } else if (i == routes.Count - 1)
+                    {
+                        throw new Exception("Old route not in dataset");
+                    }
+                }
+            } else
+            {
+                throw new ArgumentException("Route doesn't match.");
+            }
+            return result;
         }
     }
 }

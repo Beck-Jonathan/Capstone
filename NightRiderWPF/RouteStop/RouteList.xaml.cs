@@ -27,7 +27,7 @@ namespace NightRiderWPF.RouteStop
     /// </summary>
     public partial class RouteList : Page
     {
-        private List<RouteVM> _routes;
+        private IEnumerable<RouteVM> _routes;
         private IRouteManager _routeManager;
         public RouteList()
         {
@@ -43,7 +43,17 @@ namespace NightRiderWPF.RouteStop
                 NavigationService.GoBack();
                 
             }
-            grdRouteList.ItemsSource = _routes;
+            datRouteList.ItemsSource = _routes;
+        }
+
+        private void datRouteList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            RouteVM selectedRoute = null;
+            if(datRouteList.SelectedItem != null)
+            {
+                selectedRoute = datRouteList.SelectedItem as RouteVM;
+                NavigationService.Navigate(new ViewRoute(selectedRoute, _routeManager));
+            }
         }
     }
 }

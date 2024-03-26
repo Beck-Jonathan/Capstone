@@ -46,6 +46,6 @@ namespace DataObjects.RouteObjects
     ///
     public class RouteVM : Route
     {
-        public List<RouteStopVM> RouteStops {  get; set; }
+        public IEnumerable<RouteStopVM> RouteStops {  get; set; }
     }
 }

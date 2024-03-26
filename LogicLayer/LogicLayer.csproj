@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.Maps.MapControl.WPF, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Maps.MapControl.WPF.1.0.0.3\lib\net40-Client\Microsoft.Maps.MapControl.WPF.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -43,13 +46,17 @@
   <ItemGroup>
     <Compile Include="Client\DependentManager.cs" />
     <Compile Include="Client\IDependentManager.cs" />
-    <Compile Include="RouteStop\IRouteManager.cs" />
-    <Compile Include="RouteStop\RouteManager.cs" />
     <Compile Include="PasswordReset\PasswordResetManager.cs" />
     <Compile Include="PurchaseOrder\IPOLineItemsManager.cs" />
     <Compile Include="PurchaseOrder\IPurchase_OrderManager.cs" />
     <Compile Include="PurchaseOrder\POLineItemsManager.cs" />
     <Compile Include="PurchaseOrder\PurchaseOrderManager.cs" />
+    <Compile Include="RouteStop\IRouteManager.cs" />
+    <Compile Include="RouteStop\IRouteStopManager.cs" />
+    <Compile Include="RouteStop\IStopManager.cs" />
+    <Compile Include="RouteStop\RouteManager.cs" />
+    <Compile Include="RouteStop\RouteStopManager.cs" />
+    <Compile Include="RouteStop\StopManager.cs" />
     <Compile Include="ServiceOrder\IServiceOrderManager.cs" />
     <Compile Include="AppData\Authentication.cs" />
     <Compile Include="Login\LoginManager.cs" />
@@ -95,11 +102,14 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Helpers\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
