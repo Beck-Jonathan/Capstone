@@ -298,5 +298,38 @@ namespace LogicLayerTests
         }
 
         // Reviewed By: John Beck
+
+        /// <summary>
+        ///     Test for a passing adding part compatiblity to vehicle model
+        /// </summary>
+        /// <remarks>
+        ///    CONTRIBUTOR: James Williams
+        /// <br />
+        ///    CREATED: 2024-03-24
+        /// </remarks>
+
+        [TestMethod]
+        public void AddPartCompatibilityPasses()
+        {
+            int expected = 1;
+            int actual = 0;
+            actual = _mgr.AddModelPartCompatibility(1, 2);
+            Assert.AreEqual(expected, actual);
+        }
+        /// <summary>
+        ///     Test that expects an ApplicationException when a duplicate entry is added
+        /// </summary>
+        /// <remarks>
+        ///    CONTRIBUTOR: James Williams
+        /// <br />
+        ///    CREATED: 2024-03-24
+        /// </remarks>
+
+        [TestMethod]
+        [ExpectedException(typeof(ApplicationException))]
+        public void AddPartCompatibilityFailsArgumentExceptionDuplicateEntry()
+        {
+            int addPart = _mgr.AddModelPartCompatibility(1, 1);
+        }
     }
 }

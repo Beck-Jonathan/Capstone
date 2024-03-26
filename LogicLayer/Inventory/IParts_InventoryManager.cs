@@ -123,6 +123,28 @@ namespace LogicLayer
         int PurgeModelPartCompatibility(int model_ID, int part_ID);
 
         // Reviewed By: John Beck
+
+        /// <summary>
+        ///     Adds a compatible part to a vehicle model
+        /// </summary>
+        /// <param name="model_ID">
+        ///    The ID of the vehicle model
+        /// </param>
+        /// <param name="part_ID">
+        ///    The ID of the part
+        /// </param>
+        /// <returns>
+        ///    <see cref="Int">: 1 if the part compatibility was added.
+        /// </returns>
+        /// <remarks>
+        ///    Parameters:
+        /// <br />
+        ///    <see cref="int">int</see> model_ID: The ID of the vehicle model
+        ///   <see cref="int">int</see> part_ID: The ID of the part
+        /// </remarks>
+        /// Updater Name: James Williams
+        /// Updated: 2024/03/26
+        int AddModelPartCompatibility(int modelID, int partID);
     }
 
 }

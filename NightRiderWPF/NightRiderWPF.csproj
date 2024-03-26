@@ -117,6 +117,9 @@
     <Compile Include="RoleViews\CreateRole.xaml.cs">
       <DependentUpon>CreateRole.xaml</DependentUpon>
     </Compile>
+    <Compile Include="VehicleModels\AddCompatiblePartToModelPage.xaml.cs">
+      <DependentUpon>AddCompatiblePartToModelPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="VehicleModels\VehicleModelAddEditPage.xaml.cs">
       <DependentUpon>VehicleModelAddEditPage.xaml</DependentUpon>
     </Compile>
@@ -187,6 +190,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="RoleViews\CreateRole.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="VehicleModels\AddCompatiblePartToModelPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

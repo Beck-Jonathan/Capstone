@@ -259,6 +259,25 @@ namespace LogicLayer
             return result;
         }
 
+        public int AddModelPartCompatibility(int modelID, int partID)
+        {
+            int rows = 0;
+            try
+            {
+                rows = _parts_inventoryaccessor.AddModelCompatibility(modelID, partID);
+                if(rows != 1)
+                {
+                    throw new ArgumentException("Error updating compatible parts");
+                }
+                    
+            }
+            catch(Exception ex)
+            {
+                throw new ApplicationException("Error adding compatible part", ex);
+            }
+            return rows;
+        }
+
         // Reviewed By: John Beck
     }
 }
