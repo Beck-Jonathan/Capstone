@@ -20,16 +20,22 @@
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
         <Label Grid.Column="1" Grid.Row="0" Content="Routes" Foreground="{x:Static resources:Statics.PrimaryColor}" FontSize="16pt" VerticalAlignment="Center" HorizontalAlignment="Center" />
+<<<<<<< HEAD
         <DataGrid x:Name="datRouteList" AutoGenerateColumns="False" Grid.Row="1" Grid.Column="1" MouseDoubleClick="datRouteList_MouseDoubleClick">
+=======
+        <DataGrid x:Name="grdRouteList" IsReadOnly="True" AutoGenerateColumns="False" Grid.Row="1" Grid.Column="1">
+>>>>>>> origin/main
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Route Name" Binding="{Binding RouteName}" />
                 <DataGridTextColumn Header="Start Time" Binding="{Binding StartTime}" />
                 <DataGridTextColumn Header="End Time" Binding="{Binding EndTime}" />
                 <DataGridTextColumn Header="Repeat Time" Binding="{Binding RepeatTime}" />
                 <DataGridTextColumn Header="Days of Service" Binding="{Binding DaysOfService}" />
+                <DataGridTextColumn Header="Active" Binding="{Binding IsActive}" />
             </DataGrid.Columns>
         </DataGrid>
         <Button x:Name="btnAddRoute" Content="Add" Grid.Column="1" Grid.Row="2" Width="150px" Height="50px" Foreground="{x:Static resources:Statics.ButtonText}" Background="{x:Static resources:Statics.SecondaryColor}" />
+        <Button x:Name="btnToggleRouteActive" Content="Toggle Route" HorizontalAlignment="Right" Grid.Column="1" Grid.Row="2" Width="150px" Height="50px" Foreground="{x:Static resources:Statics.ButtonText}" Background="{x:Static resources:Statics.SecondaryColor}" Click="btnToggleRouteActive_Click" />
     </Grid>
 
 </Page>

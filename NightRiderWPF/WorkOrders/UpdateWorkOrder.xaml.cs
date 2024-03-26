@@ -122,7 +122,8 @@ namespace NightRiderWPF.WorkOrders
 
         private void Addbtn_Click(object sender, RoutedEventArgs e)
         {
-            
+            CreateWorkOrderPage createPage = new CreateWorkOrderPage();
+            NavigationService.Navigate(createPage);
         }
     }
 }

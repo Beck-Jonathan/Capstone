@@ -53,6 +53,7 @@
     <Compile Include="DependentAccessor.cs" />
     <Compile Include="Helpers\SqlDataReaderHelpers.cs" />
     <Compile Include="LoginAccessor.cs" />
+    <Compile Include="PartsRequestAccessor.cs" />
     <Compile Include="Parts_InventoryAccessor.cs" />
     <Compile Include="EmployeeAccessor.cs" />
     <Compile Include="PasswordResetAccessor.cs" />
@@ -62,9 +63,11 @@
     <Compile Include="Purchase_OrderAccessor.cs" />
     <Compile Include="RouteStopAccessor.cs" />
     <Compile Include="ServiceOrderAccessor.cs" />
+    <Compile Include="SourceAccessor.cs" />
     <Compile Include="VehicleAccessor.cs" />
     <Compile Include="RoleAccessor.cs" />
     <Compile Include="VehicleModelAccessor.cs" />
+    <Compile Include="VendorAccessor.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DataAccessInterfaces\DataAccessInterfaces.csproj">

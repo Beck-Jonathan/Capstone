@@ -85,6 +85,42 @@ namespace LogicLayer
         /// </remarks>
         int RemoveParts_Inventory(Parts_Inventory part);
 
+        /// <summary>
+        ///     Retrieves all parts compatible with a given vehicle model
+        /// </summary>
+        /// <param name="vehicleModelId">
+        ///    The ID of the vehicle model
+        /// </param>
+        /// <returns>
+        ///    <see cref="IEnumerable{Parts_Inventory}">IEnumerable<Parts_Inventory></Parts_Inventory></see>: The parts compativle with the given vehicle model
+        /// </returns>
+        /// <remarks>
+        ///    Parameters:
+        /// <br />
+        ///    <see cref="int">int</see> vehicleModelId: The ID of the vehicle model
+        /// </remarks>
+        IEnumerable<Parts_Inventory> GetPartsCompatibleWithVehicleModelID(int vehicleModelId);
+
+        /// <summary>
+        ///     Retrieves all parts compatible with a given vehicle model
+        /// </summary>
+        /// <param name="model_ID">
+        ///    The ID of the vehicle model
+        /// </param>
+        /// <param name="part_ID">
+        ///    The ID of the part
+        /// </param>
+        /// <returns>
+        ///    <see cref="Int">: 1 if the part compatibility was removed.
+        /// </returns>
+        /// <remarks>
+        ///    Parameters:
+        /// <br />
+        ///    <see cref="int">int</see> model_ID: The ID of the vehicle model
+        ///   <see cref="int">int</see> part_ID: The ID of the part
+        /// </remarks>
+
+        int PurgeModelPartCompatibility(int model_ID, int part_ID);
 
         // Reviewed By: John Beck
     }

@@ -71,4 +71,3 @@ rem server is local host
 ECHO .
 ECHO if no errors appear DB was created
 PAUSE
-

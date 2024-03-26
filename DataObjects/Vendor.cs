@@ -25,4 +25,9 @@ namespace DataObjects
         public bool Is_Active { set; get; }
 
     }
+
+    public class VendorVM : Vendor
+    {
+
+    }
 }

@@ -14,6 +14,12 @@ namespace DataAccessFakes
     /// DATE: 2024-03-05
     /// Fake Database Access for Route Unit Tests
     /// </summary>
+    /// <remarks>
+    /// UPDATER: Chris Baenziger
+    /// UPDATED: 2024-03-05
+    /// COMMENTS:
+    ///     Added Activate and deactivate route fakes.
+    /// </remarks> 
     public class RouteAccessorFakes : IRouteAccessor
     {
         List<RouteVM> routes;
@@ -118,14 +124,40 @@ namespace DataAccessFakes
 
         }
 
-        public int ActivateRoute(int routeId)
+        public int UpdateRouteByIDAsActive(int routeId)
         {
-            throw new NotImplementedException();
+            int rows = 0;
+            foreach (var route in routes)
+            {
+                if (route.RouteId == routeId)
+                {
+                    route.IsActive = true;
+                    rows++;
+                }
+            }
+            if (rows != 1)
+            {
+                throw new ArgumentException("Route not found");
+            }
+            return rows;
         }
 
-        public int DeactivateRoute(int routeId)
+        public int UpdateRouteByIDAsInactive(int routeId)
         {
-            throw new NotImplementedException();
+            int rows = 0;
+            foreach (var route in routes)
+            {
+                if (route.RouteId == routeId)
+                {
+                    route.IsActive = false;
+                    rows++;
+                }
+            }
+            if (rows != 1)
+            {
+                throw new ArgumentException("Route not found");
+            }
+            return rows;
         }
 
         public int InsertRoute(RouteVM route)

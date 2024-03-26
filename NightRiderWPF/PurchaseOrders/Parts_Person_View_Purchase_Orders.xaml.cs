@@ -289,6 +289,15 @@ namespace NightRiderWPF.PurchaseOrders
                 NavigationService.GoBack();
             }
         }
+        /// <summary>
+        /// Initial Version : Jonathan Beck 3/19/2024
+        /// Go to the add purchase order window
+        /// </summary>
+
+        private void btnAdd_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new Parts_Person_Add_Update_Delete_Purchase_Order());
+        }
     }
 
 }

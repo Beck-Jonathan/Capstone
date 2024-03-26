@@ -26,7 +26,8 @@
                 VerticalAlignment="Center"
                 Width="80"
                 Height="20"
-                Content="New Model" />
+                Content="New Model"
+                Click="btn_newVehicleModel_Click" />
         </Grid>
         <DataGrid
             x:Name="dat_vehicleModelsList"

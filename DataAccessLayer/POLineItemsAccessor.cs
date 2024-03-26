@@ -173,5 +173,68 @@ namespace DataAccessLayer
             }
             return results;
         }
+        /// <summary>
+        ///     Inserts a purchase order line item
+        /// </summary>
+        /// <param cref="POLineItem" name="lineItem">
+        ///    The line item that will be added to the order
+        /// </param>
+        /// 
+        /// <returns>
+        ///    <see cref="int">int</see>: The line number of the item inserted
+        /// </returns>
+        /// 
+        ///    Exceptions:
+        ///    <see cref="SqlException">SqlException</see>: Thrown if there is a problem accessing the DB.
+        ///    CONTRIBUTOR: Jonathan Beck
+        ///    CREATED: 2024-03-18
+        /// </remarks>
+        public int InsertPOLineItem(POLineItem _purchase_order_line_item)
+        {
+            int rows = 0;
+            // start with a connection object
+            var conn = DBConnectionProvider.GetConnection();
+            // set the command text
+            var commandText = "sp_insert_purchase_order_line_item";
+            // create the command object
+            var cmd = new SqlCommand(commandText, conn);
+            // set the command type
+            cmd.CommandType = CommandType.StoredProcedure;
+            // we need to add parameters to the command
+            cmd.Parameters.Add("@Purchase_Order_ID", SqlDbType.Int);
+            cmd.Parameters.Add("@Parts_Inventory_ID", SqlDbType.Int);
+            cmd.Parameters.Add("@Line_Number", SqlDbType.Int);
+            cmd.Parameters.Add("@Line_Item_Name", SqlDbType.NVarChar, 30);
+            cmd.Parameters.Add("@Line_Item_Qty", SqlDbType.Int);
+            cmd.Parameters.Add("@Line_Item_Price", SqlDbType.Int);
+            cmd.Parameters.Add("@Line_Item_Description", SqlDbType.NVarChar, 100);
+
+
+            //We need to set the parameter values
+            cmd.Parameters["@Purchase_Order_ID"].Value = _purchase_order_line_item.PurchaseOrderID;
+            cmd.Parameters["@Parts_Inventory_ID"].Value = _purchase_order_line_item.PartsInventoryID;
+            cmd.Parameters["@Line_Number"].Value = _purchase_order_line_item.LineNumber;
+            cmd.Parameters["@Line_Item_Name"].Value = _purchase_order_line_item.LineItemName;
+            cmd.Parameters["@Line_Item_Qty"].Value = _purchase_order_line_item.Quantity;
+            cmd.Parameters["@Line_Item_Price"].Value = _purchase_order_line_item.Price;
+            cmd.Parameters["@Line_Item_Description"].Value = _purchase_order_line_item.LineItemDescription;
+
+            try
+            {
+                //open the connection 
+                conn.Open();  //execute the command and capture result
+                rows = cmd.ExecuteNonQuery();
+            }
+
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return rows;
+        }
     }
 }

@@ -96,5 +96,29 @@ namespace LogicLayerTests
             //assert
             Assert.AreEqual(expected, actual);
         }
+
+        //Created By: Jonathan Beck
+        //Creation Date: 2024-03-18
+        [TestMethod]
+
+        public void TestInsertPurchaseOrderReturnsNumbeOfLineItems()
+        {
+            int expected = 3;
+            Purchase_OrderVM purchase_Order = new Purchase_OrderVM();
+            POLineItemVM line1 = new POLineItemVM();
+            line1.PartsInventoryID = 1;
+            POLineItemVM line2 = new POLineItemVM();
+            line2.PartsInventoryID = 2;
+            POLineItemVM line3 = new POLineItemVM();
+            line3.PartsInventoryID = 3;
+            purchase_Order.pOLineItems = new List<POLineItemVM>();
+            purchase_Order.pOLineItems.Add(line1);
+            purchase_Order.pOLineItems.Add(line2);
+            purchase_Order.pOLineItems.Add(line3);
+
+            int actual = _mgr.CreatePurchaseOrder(purchase_Order);
+            Assert.AreEqual(expected, actual);
+
+        }
     }
 }

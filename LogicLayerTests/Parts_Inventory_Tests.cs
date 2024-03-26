@@ -20,6 +20,8 @@ using DataObjects;
 using LogicLayer;
 using System.Runtime.InteropServices;
 using System.IO.Ports;
+using DataAccessInterfaces;
+using DataAccessLayer;
 
 namespace LogicLayerTests
 {
@@ -38,10 +40,15 @@ namespace LogicLayerTests
     public class Parts_Inventory_Tests
     {
         IParts_InventoryManager _mgr = null;
+        IVehicleModelManager _vehicleModelManager = null;
+        
         [TestInitialize]
         public void testSetup()
         {
             _mgr = new Parts_InventoryManager(new Parts_Inventory_Fakes());
+            VehicleManager _vmangaer = new VehicleManager(new VehicleAccessorFakes());
+            List<string> _vehicles = _vmangaer.GetVehicleModels();
+             
 
         }
 
@@ -223,6 +230,71 @@ namespace LogicLayerTests
             //act
             _mgr.RemoveParts_Inventory(part);
 
+        }
+
+        /// <summary>
+        ///     Test that retrieving parts compatible with vehicle model id returns the expected number of results
+        /// </summary>
+        /// <remarks>
+        ///    CONTRIBUTOR: Jared Hutton
+        /// <br />
+        ///    CREATED: 2024-03-22
+        /// </remarks>
+        [TestMethod]
+        public void GetPartsCompatibleWithVehicleModelID_ReturnsParts()
+        {
+            // Arrange
+            int expectedNumResults = 2;
+
+            // Act
+            var results = _mgr.GetPartsCompatibleWithVehicleModelID(1);
+
+            // Assert
+            Assert.AreEqual(expectedNumResults, results.Count());
+        }
+
+        /// <summary>
+        ///     Test that proves the Manager's delete function can delete a compatibile part
+        /// </summary>
+        /// <remarks>
+        ///    CONTRIBUTOR: Jonathan Beck
+        /// <br />
+        ///    CREATED: 2024-03-24
+        /// </remarks>
+        [TestMethod]
+        public void DeletePartCompatibilityDeletesRecord()
+        {
+            // Arrange
+            int expectedNumResults = 1;
+
+            // Act
+            int results = _mgr.PurgeModelPartCompatibility(1,1);
+
+            // Assert
+            Assert.AreEqual(expectedNumResults, results);
+        }
+
+        /// <summary>
+        ///     Test that proves the Manager's delete function will do nothing if no matching parts/Models are found
+        /// </summary>
+        /// <remarks>
+        ///    CONTRIBUTOR: Jonathan Beck
+        /// <br />
+        ///    CREATED: 2024-03-24
+        /// </remarks>
+
+        [TestMethod]
+        public void DeletePartCompatibilityFailsWithBadData()
+        {
+            // Arrange
+            int expectedNumResults = 2;
+
+            // Act
+            _mgr.PurgeModelPartCompatibility(5, 100);
+            var results = _mgr.GetPartsCompatibleWithVehicleModelID(1);
+
+            // Assert
+            Assert.AreEqual(expectedNumResults, results.Count());
         }
 
         // Reviewed By: John Beck

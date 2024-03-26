@@ -54,6 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="LoginManager_Tests.cs" />
+    <Compile Include="PartsRequestManagerTests.cs" />
     <Compile Include="PasswordHasher_Tests.cs" />
     <Compile Include="Parts_Inventory_Tests.cs" />
     <Compile Include="PasswordResetManager_Tests.cs" />
@@ -64,7 +65,9 @@
     <Compile Include="PurchaseOrderTests.cs" />
     <Compile Include="RouteStopManagerTests.cs" />
     <Compile Include="ServiceOrderManagerTests.cs" />
+    <Compile Include="SourceManagerTests.cs" />
     <Compile Include="VehicleModelManager_Tests.cs" />
+    <Compile Include="VendorManagerTests.cs" />
     <Compile Include="VerificationCodeGenerator_Tests.cs" />
     <Compile Include="VehicleManagerTests.cs" />
     <Compile Include="ClientManagerTests.cs" />
@@ -82,6 +85,10 @@
     <ProjectReference Include="..\DataAccessInterfaces\DataAccessInterfaces.csproj">
       <Project>{cc39f13c-ddc9-41bb-853c-ec5deaa13daa}</Project>
       <Name>DataAccessInterfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DataAccessLayer\DataAccessLayer.csproj">
+      <Project>{4C48ECE8-1DBC-47C5-BCAF-0EA0AD41697D}</Project>
+      <Name>DataAccessLayer</Name>
     </ProjectReference>
     <ProjectReference Include="..\DataObjects\DataObjects.csproj">
       <Project>{a9192e97-5087-4bb1-8aed-b6b9025b041d}</Project>

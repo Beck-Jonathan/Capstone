@@ -16,6 +16,12 @@ namespace LogicLayerTests
     /// DATE: 2024-03-05
     /// Tests for the RouteManager class; does not test database connections.
     /// </summary>
+    /// <remarks>
+    /// UPDATER: Chris Baenziger
+    /// UPDATED: 2024-03-05
+    /// COMMENTS:
+    ///     Added Activate and deactivate route tests.
+    /// </remarks>
     [TestClass]
     public class RouteManagerTests
     {
@@ -34,6 +40,52 @@ namespace LogicLayerTests
             actual = _routeManager.getRoutes().Count();
 
             Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void DeactivateRouteByIdReturnsCorrectValue()
+        {
+            bool expectedResult = true;
+            bool actualResult = false;
+
+            actualResult = _routeManager.DeactivateRoute(100002);
+
+            Assert.AreEqual(expectedResult, actualResult);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void DeactivateRouteByIdThrowsExceptionWithBadId()
+        {
+            bool expectedResult = false;
+            bool actualResult = false;
+
+            actualResult = _routeManager.DeactivateRoute(10);
+
+            Assert.AreEqual(expectedResult, actualResult);
+        }
+
+        [TestMethod]
+        public void ActivateRouteByIdReturnsCorrectValue()
+        {
+            bool expectedResult = true;
+            bool actualResult = false;
+
+            actualResult = _routeManager.DeactivateRoute(100002);
+
+            Assert.AreEqual(expectedResult, actualResult);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void ActivateRouteByIdThrowsExceptionWithBadId()
+        {
+            bool expectedResult = false;
+            bool actualResult = false;
+
+            actualResult = _routeManager.DeactivateRoute(10);
+
+            Assert.AreEqual(expectedResult, actualResult);
         }
 
     }

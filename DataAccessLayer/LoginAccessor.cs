@@ -3,6 +3,7 @@ using DataAccessLayer.Helpers;
 using DataObjects;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -115,7 +116,8 @@ namespace DataAccessLayer
                         Login = new Login()
                         {
                             Username = reader.GetString(13),
-                        }
+                        },
+                        DOB = reader.GetDateTime(14)
                     };
 
                     while (reader.Read())
@@ -164,7 +166,7 @@ namespace DataAccessLayer
         /// <br />
         ///    CREATED: 2024-02-01
         /// </remarks>
-       public string[] AuthenticateClientForSecurityQuestions(string username, string passwordHash)
+        public string[] AuthenticateClientForSecurityQuestions(string username, string passwordHash)
         {
             string[] securityQuestions = null;
 
@@ -523,8 +525,8 @@ namespace DataAccessLayer
 
             return employee;
         }
-
-        /// <summary>
+		
+		/// <summary>
         ///     Changes the associated user's password hash
         /// </summary>
         /// <param name="username">
@@ -626,6 +628,61 @@ namespace DataAccessLayer
                     reader.Read();
 
                     email = reader.GetString(0);
+				    }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            }
+			
+            return email;
+        }
+
+        /// <summary>
+        ///     retrieves user's security questions using a given Email.
+        /// </summary>
+        /// <param name="email">
+        ///    The email of the user who forgot their Username.
+        /// </param>
+        /// <returns>
+        ///    <see cref="string[]">string[]</see>: The security questions
+        /// </returns>
+        /// <remarks>
+        ///    Parameters:
+        /// <br /><br />
+        ///    CONTRIBUTOR: Parker Svoboda
+        /// <br />
+        ///    CREATED: 2024-02-27
+        /// </remarks>
+        public string[] VerifyUsernameRetrieval(string email)
+        {
+            string[] questions = new string[3];
+            // start with a connection object
+            var conn = DBConnectionProvider.GetConnection();
+            // set the command text
+            var commandText = "sp_get_security_questions_for_username_retrieval";
+            // create the command object
+            var cmd = new SqlCommand(commandText, conn);
+            // set the command type
+            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+
+            cmd.Parameters.AddWithValue("@Email", email);
+            try
+            {
+                //open the connection 
+                conn.Open();  //execute the command and capture result
+                var reader = cmd.ExecuteReader();
+                //process the results
+                if (reader.HasRows)
+                {
+                    reader.Read();
+                    questions[0] = reader.GetString(0);
+                    questions[1] = reader.GetString(1);
+                    questions[2] = reader.GetString(2);
                 }
             }
             catch (Exception ex)
@@ -636,8 +693,89 @@ namespace DataAccessLayer
             {
                 conn.Close();
             }
+            return questions;
+        }
 
-            return email;
-       }
+        /// <summary>
+        ///     retrieves username using given security responses and email.
+        /// </summary>
+        /// <param name="email">
+        ///    The email of the user who forgot their Username.
+        /// </param>
+        /// <param name="securityResponse1">
+        ///    The response to the first security question
+        /// </param>
+        /// <param name="securityResponse2">
+        ///    The response to the second security question
+        /// </param>
+        /// <param name="securityResponse3">
+        ///    The response to the third security question
+        /// </param>
+        /// <returns>
+        ///    <see cref="string[]">string[]</see>: The security questions
+        /// </returns>
+        /// <remarks>
+        ///    Parameters:
+        /// <br />
+        ///    <see cref="string">string</see> email: The email given by the user, which their account is registered with.
+        /// <br />
+        ///    <see cref="string">string</see> securityResponse1: The response to the first security question
+        /// <br />
+        ///    <see cref="string">string</see> securityResponse2: The response to the second security question
+        /// <br />
+        ///    <see cref="string">string</see> securityResponse3: The response to the third security question
+        /// <br /><br />
+        ///    CONTRIBUTOR: Parker Svoboda
+        /// <br />
+        ///    CREATED: 2024-02-25
+        /// </remarks>
+        /// <br /><br />
+        ///    UPDATER: Parker Svoboda
+        /// <br />
+        ///    UPDATED: 2024-03-04
+        /// <br />
+        /// Parameters changed to use Security Responses, method changed to use said Security Responses
+        /// </remarks>
+        public string RetrieveUsername(string email,
+            string securityResponse1,
+            string securityResponse2,
+            string securityResponse3)
+        {
+            string username = null;
+            // start with a connection object
+            var conn = DBConnectionProvider.GetConnection();
+            // set the command text
+            var commandText = "sp_get_username";
+            // create the command object
+            var cmd = new SqlCommand(commandText, conn);
+            // set the command type
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@Email", email);
+            cmd.Parameters.AddWithValue("@Security_Response_1", securityResponse1);
+            cmd.Parameters.AddWithValue("@Security_Response_2", securityResponse2);
+            cmd.Parameters.AddWithValue("@Security_Response_3", securityResponse3);
+
+            try
+            {
+                //open the connection 
+                conn.Open();  //execute the command and capture result
+                var reader = cmd.ExecuteReader();
+                //process the results
+                if (reader.HasRows)
+                {
+                    reader.Read();
+                    username = reader.GetString(0);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return username;
+        }
     }
 }

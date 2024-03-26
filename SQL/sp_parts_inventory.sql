@@ -145,3 +145,43 @@ AS
         SELECT      @@ROWCOUNT
     END
 GO
+
+-- AUTHOR: Jared Hutton
+print '' print '*** creating sp_select_parts_compatible_with_vehicle_model_id ***'
+GO
+CREATE PROCEDURE [dbo].[sp_select_parts_compatible_with_vehicle_model_id] (
+  @Vehicle_Model_Id [INT]
+)
+AS
+BEGIN
+  SELECT pi.[Part_Name], pi.[Part_Quantity], mc.[Parts_Inventory_ID]
+  FROM [dbo].[Parts_Inventory] pi
+  JOIN [dbo].[Model_Compatibility] mc ON pi.[Parts_Inventory_ID] = mc.[Parts_Inventory_ID]
+  WHERE mc.[Vehicle_Model_ID] = @Vehicle_Model_ID;
+END;
+GO
+
+/******************
+Create the update script for the Model_Compatibility table
+ Created By Jonathan Beck3/20/2024
+***************/
+print '' Print '***Create the Delete script for the Model_Compatibility table
+ Created By Jonathan Beck3/20/2024***' 
+ go 
+CREATE PROCEDURE [DBO].[sp_delete_Model_Compatibility]
+(@Model_Lookup_ID[int]
+,@Parts_Inventory_ID[int]
+
+)
+as
+BEGIN
+Delete 
+from Model_Compatibility
+
+WHERE
+Vehicle_Model_ID = @Model_Lookup_ID
+and Parts_Inventory_ID = @Parts_Inventory_ID
+
+return @@rowcount
+end
+go

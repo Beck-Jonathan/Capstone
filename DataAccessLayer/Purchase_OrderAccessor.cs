@@ -186,6 +186,136 @@ namespace DataAccessLayer
             }
             return output;
         }
+        /// <summary>
+        ///     Creates the purchase order
+        /// </summary>
+        /// <param cref="Purchase_OrderVM" name="purchaseOrder">
+        ///    The Purchase order to add to the database
+        /// </param>
+        /// 
+        /// <returns>
+        ///    <see cref="int">int</see>: The ID of the purchase order
+        /// </returns>
+        /// 
+        ///    Exceptions:
+        ///    <see cref="SqlException">SqlException</see>: Thrown if there is a problem accessing the DB.
+        ///    CONTRIBUTOR: Jonathan Beck
+        ///    CREATED: 2024-03-18
+        /// </remarks>
+        public int InsertPurchaseOrder(Purchase_Order _purchase_order)
+        {
+            int InsertID = 0;
+            // start with a connection object
+            var conn = DBConnectionProvider.GetConnection();
+            // set the command text
+            var commandText = "sp_insert_purchase_order";
+            // create the command object
+            var cmd = new SqlCommand(commandText, conn);
+            // set the command type
+            cmd.CommandType = CommandType.StoredProcedure;
+            // we need to add parameters to the command
+
+            cmd.Parameters.Add("@Vendor_ID", SqlDbType.Int);
+            cmd.Parameters.Add("@Purchase_Order_Date", SqlDbType.DateTime);
+            cmd.Parameters.Add("@Delivery_Address", SqlDbType.NVarChar, 50);
+            cmd.Parameters.Add("@Delivery_Address2", SqlDbType.NVarChar, 50);
+            cmd.Parameters.Add("@Delivery_City", SqlDbType.NVarChar, 20);
+            cmd.Parameters.Add("@Delivery_State", SqlDbType.NVarChar, 2);
+            cmd.Parameters.Add("@Delivery_Country", SqlDbType.NVarChar, 3);
+            cmd.Parameters.Add("@Delivery_Zip", SqlDbType.NVarChar, 9);
+
+
+            //We need to set the parameter values
+
+            cmd.Parameters["@Vendor_ID"].Value = _purchase_order.Vendor_ID;
+            cmd.Parameters["@Purchase_Order_Date"].Value = _purchase_order.Purchase_Order_Date;
+            cmd.Parameters["@Delivery_Address"].Value = _purchase_order.Delivery_Address;
+            cmd.Parameters["@Delivery_Address2"].Value = _purchase_order.Delivery_Address2;
+            cmd.Parameters["@Delivery_City"].Value = _purchase_order.Delivery_City;
+            cmd.Parameters["@Delivery_State"].Value = _purchase_order.Delivery_State;
+            cmd.Parameters["@Delivery_Country"].Value = _purchase_order.Delivery_Country;
+            cmd.Parameters["@Delivery_Zip"].Value = _purchase_order.Delivery_Zip;
+
+            try
+            {
+                //open the connection 
+                conn.Open();  //execute the command and capture result
+                InsertID = Convert.ToInt32(cmd.ExecuteScalar());
+            }
+
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return InsertID;
+        }
+        /// <summary>
+        ///     Inserts a purchase order line item
+        /// </summary>
+        /// <param cref="POLineItem" name="lineItem">
+        ///    The line item that will be added to the order
+        /// </param>
+        /// 
+        /// <returns>
+        ///    <see cref="int">int</see>: The line number of the item inserted
+        /// </returns>
+        /// 
+        ///    Exceptions:
+        ///    <see cref="SqlException">SqlException</see>: Thrown if there is a problem accessing the DB.
+        ///    CONTRIBUTOR: Jonathan Beck
+        ///    CREATED: 2024-03-18
+        /// </remarks>
+        public int InsertPOLineItem(POLineItem _purchase_order_line_item)
+        {
+            int rows = 0;
+            // start with a connection object
+            var conn = DBConnectionProvider.GetConnection();
+            // set the command text
+            var commandText = "sp_insert_purchase_order_line_item";
+            // create the command object
+            var cmd = new SqlCommand(commandText, conn);
+            // set the command type
+            cmd.CommandType = CommandType.StoredProcedure;
+            // we need to add parameters to the command
+            cmd.Parameters.Add("@Purchase_Order_ID", SqlDbType.Int);
+            cmd.Parameters.Add("@Parts_Inventory_ID", SqlDbType.Int);
+            cmd.Parameters.Add("@Line_Number", SqlDbType.Int);
+            cmd.Parameters.Add("@Line_Item_Name", SqlDbType.NVarChar, 30);
+            cmd.Parameters.Add("@Line_Item_Qty", SqlDbType.Int);
+            cmd.Parameters.Add("@Line_Item_Price", SqlDbType.Int);
+            cmd.Parameters.Add("@Line_Item_Description", SqlDbType.NVarChar, 100);
+
+
+            //We need to set the parameter values
+            cmd.Parameters["@Purchase_Order_ID"].Value = _purchase_order_line_item.PurchaseOrderID;
+            cmd.Parameters["@Parts_Inventory_ID"].Value = _purchase_order_line_item.PartsInventoryID;
+            cmd.Parameters["@Line_Number"].Value = _purchase_order_line_item.LineNumber;
+            cmd.Parameters["@Line_Item_Name"].Value = _purchase_order_line_item.LineItemName;
+            cmd.Parameters["@Line_Item_Qty"].Value = _purchase_order_line_item.Quantity;
+            cmd.Parameters["@Line_Item_Price"].Value = _purchase_order_line_item.Price;
+            cmd.Parameters["@Line_Item_Description"].Value = _purchase_order_line_item.LineItemDescription;
+
+            try
+            {
+                //open the connection 
+                conn.Open();  //execute the command and capture result
+                rows = cmd.ExecuteNonQuery();
+            }
+
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return rows;
+        }
 
 
     }

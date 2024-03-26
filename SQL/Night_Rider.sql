@@ -1465,11 +1465,24 @@ INSERT INTO [dbo].[Model_Compatibility]
     [Parts_Inventory_ID]
     )
 VALUES
-    (100001, 100000),
-    (100002, 100004),
+    (100001, 100001),
+    (100001, 100002),
+    (100001, 100003),
+    (100001, 100004),
+    (100001, 100005),
+	(100002, 100006),
+    (100002, 100007),
+    (100002, 100008),
+    (100002, 100009),
+    (100002, 100010),
+	(100003, 100011),
+    (100003, 100001),
+    (100003, 100002),
     (100003, 100003),
-    (100004, 100002),
-    (100000, 100001);
+    (100004, 100004),
+	(100004, 100005),
+    (100004, 100006);
+    
 GO
 
 /******************
@@ -1528,6 +1541,7 @@ CREATE TABLE [dbo].[Parts_Request]
     [Parts_Request_ID] [int] IDENTITY(100000,1) NOT NULL,
     [Employee_ID] [int] NOT NULL,
     [Service_Detail_ID] [int] NOT NULL,
+    [Parts_Request_Notes] [nvarchar](MAX) NULL,
     [Date_Requested] [date] NOT NULL,
     [Is_Active] [bit] DEFAULT 1 NOT NULL,
     CONSTRAINT [PK_Parts_Request] PRIMARY KEY ([Parts_Request_ID]),
@@ -1546,13 +1560,13 @@ print ''
 Print '***Insert Sample Data For The  Parts_Request table***' 
  go
 INSERT INTO [dbo].[Parts_Request]
-    ([Employee_ID], [Service_Detail_ID], [Date_Requested])
+    ([Employee_ID], [Service_Detail_ID], [Parts_Request_Notes], [Date_Requested], [Is_Active])
 VALUES
-    (100001, 100001, GETDATE()),
-    (100002, 100002, GETDATE()),
-    (100001, 100002, GETDATE()),
-    (100003, 100003, GETDATE()),
-    (100003, 100004, GETDATE())
+    (100001, 100001, "Needing part to fix issue in vehicle.", '2023-12-05', 1),
+    (100002, 100002, "This specific part will allow us to get this vehicle back on the lot.", '2023-05-16', 1),
+    (100001, 100002, "We seem to keep running out of this, maybe order more.", '2024-01-18', 1),
+    (100003, 100003, "We only need a handful more. Maybe 4 at most.", '2024-02-20', 1),
+    (100003, 100004, "Part keeps breaking and needs replaced.", '2024-01-03', 0)
 go
 
 /******************
@@ -1565,15 +1579,15 @@ Print '***Create the [dbo].[Parts_Request_Line_Items] table***'
 CREATE TABLE [dbo].[Parts_Request_Line_Items]
 (
     [Parts_Request_ID] [int] NOT NULL,
-    [Part_Inventory_ID] [int] NOT NULL,
+    [Parts_Inventory_ID] [int] NOT NULL,
     [Qty_Requested] [int] NOT NULL,
     [Active] [bit] NOT NULL DEFAULT 1,
 
     CONSTRAINT [FK_Parts_Request_Line_Items_Parts_Request_ID] FOREIGN KEY([Parts_Request_ID])
         REFERENCES [dbo].[Parts_Request]([Parts_Request_ID]),
-    CONSTRAINT [FK_Parts_Request_Line_Items_Parts_Inventory_ID] FOREIGN KEY([Part_Inventory_ID])
+    CONSTRAINT [FK_Parts_Request_Line_Items_Parts_Inventory_ID] FOREIGN KEY([Parts_Inventory_ID])
         REFERENCES [dbo].[Parts_Inventory]([Parts_Inventory_ID]),
-    CONSTRAINT [CPK_Parts_Request_Line_Items] PRIMARY KEY([Parts_Request_ID], [Part_Inventory_ID]),
+    CONSTRAINT [CPK_Parts_Request_Line_Items] PRIMARY KEY([Parts_Request_ID], [Parts_Inventory_ID]),
 )
 GO
 
@@ -1592,7 +1606,7 @@ GO
 INSERT INTO [dbo].[Parts_Request_Line_Items]
     (
     [Parts_Request_ID],
-    [Part_Inventory_ID],
+    [Parts_Inventory_ID],
     [Qty_Requested])
 VALUES
     (100000, 100000, 5),
@@ -1807,8 +1821,8 @@ INSERT INTO [dbo].[Login]
     [Security_Question_2],[Security_Response_2],
     [Security_Question_3],[Security_Response_3])
 VALUES
-    ('JoeSmith1994', 100000, 'what is your favorite animal?', 'lion', null, null, null, null),
-    ('Jacmar125', 100001, 'what is your favorite animal?', 'Ocelot', 'what is your favorite food?', 'Ramen', null, null),
+    ('JoeSmith1994', 100000, 'what is your favorite animal?', 'lion', 'what is your favorite food?', 'Ramen', 'what was your first dogs name?', 'Hoola'),
+    ('Jacmar125', 100001, 'what is your favorite animal?', 'Ocelot', 'what is your favorite food?', 'Bibimbap', 'what was your first dogs name?', 'Jeff'),
     ('Lebold2202', 100002, 'what is your favorite animal?', 'Foxes', 'what is your favorite food?', 'Spaghetti', 'what was your first dogs name?', 'Lola');
 GO
 

@@ -1,0 +1,176 @@
+﻿<Page x:Class="NightRiderWPF.VehicleModels.VehicleModelAddEditPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:NightRiderWPF.VehicleModels"
+      mc:Ignorable="d" 
+      d:DesignHeight="800"
+      d:DesignWidth="1050"
+      Title="VehicleModelAddEditPage"
+      Loaded="Page_Loaded">
+    <Grid Background="LightGray" Grid.Column="1" Height="570px" Width="800px">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="5px"></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="5px"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="180px"/>
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition Width="10px" />
+        </Grid.ColumnDefinitions>
+
+        <!--Vehicle Information-->
+        <Label x:Name="lblName"
+               Content="Model Name"
+               Grid.Row="1"
+               Grid.Column="0"
+               FontSize="20"
+               FontWeight="Bold"
+               VerticalContentAlignment="Center"
+               HorizontalContentAlignment="Right" />
+        <TextBox x:Name="txtName"
+                 Grid.Row="1"
+                 Grid.Column="1"
+                 Margin="5px 5px 30px 5px"
+                 VerticalContentAlignment="Center"
+                 Padding="10px 0px 0px 0px"
+                 Height="40px"
+                 FontSize="14"
+				 MaxLength="60" />
+        <Label x:Name="lblMake"
+               Content="Make"
+               Grid.Row="2"
+               Grid.Column="0"
+               FontSize="20"
+               FontWeight="Bold"
+               VerticalContentAlignment="Center"
+               HorizontalContentAlignment="Right" />
+        <TextBox x:Name="txtMake"
+                 Grid.Row="2"
+                 Grid.Column="1"
+                 Margin="5px 5px 30px 5px"
+                 VerticalContentAlignment="Center"
+                 Padding="10px 00px 0px 0px"
+                 Height="40px"
+                 FontSize="14"
+				 MaxLength="60" />
+        <Label x:Name="lblYear"
+               Content="Year"
+               Grid.Row="3"
+               Grid.Column="0"
+               FontSize="20"
+               FontWeight="Bold"
+               VerticalContentAlignment="Center"
+               HorizontalContentAlignment="Right" />
+        <ComboBox x:Name="cmbYear"
+                  Grid.Row="3"
+                  Grid.Column="1"
+                  Margin="5px 5px 30px 5px"
+                  VerticalContentAlignment="Center"
+                  Padding="10px 00px 0px 0px"
+                  Height="40px"
+                  FontSize="14" />
+        <Label x:Name="lblType"
+               Content="Type"
+               Grid.Row="4"
+               Grid.Column="0"
+               FontSize="20"
+               FontWeight="Bold"
+               VerticalContentAlignment="Center"
+               HorizontalContentAlignment="Right" />
+        <ComboBox x:Name="cmbType"
+                  Grid.Row="4"
+                  Grid.Column="1"
+                  Margin="5px 5px 30px 5px"
+                  Height="40px"
+                  VerticalContentAlignment="Center"
+                  Padding="10px 00px 0px 0px"
+                  FontSize="14" />
+        <Label x:Name="lblMaxPassengers"
+               Content="Max Passengers"
+               Grid.Row="5"
+               Grid.Column="0"
+               FontSize="20"
+               FontWeight="Bold"
+               VerticalContentAlignment="Center"
+               HorizontalContentAlignment="Right" />
+        <TextBox x:Name="txtMaxPassengers"
+                 Grid.Row="5"
+                 Grid.Column="1"
+                 Margin="5px 5px 30px 5px"
+                 VerticalContentAlignment="Center"
+                 Padding="10px 00px 0px 0px"
+                 Height="40px"
+                 FontSize="14"
+				 MaxLength="60" />
+
+        <DataGrid
+            x:Name="dat_compatiblePartsList"
+            Grid.Row="1"
+            Grid.RowSpan="5"
+            Grid.Column="2"
+            AutoGenerateColumns="False"
+            IsReadOnly="True">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Part" Binding="{Binding Part_Name}" />
+                <DataGridTextColumn Header="Quantity" Binding="{Binding Part_Quantity}" />
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="Remove" Width="50px" Height="30px" Click="Button_Click" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <!--Operation Buttons-->
+        <Button Grid.Row="1"
+                Grid.Column="3"
+                x:Name="btnAddCompatiblePart"
+                Content="Add Compatible Part"
+                Margin="5px"
+                FontWeight="Bold"
+                Background="Gray"
+                Foreground="AliceBlue"
+                Height="30px"
+                Width="160px"
+                FontSize="14"
+                Click="btnAdd_Click" />
+
+        <Button Grid.Row="5"
+                Grid.Column="3"
+                x:Name="btnSave"
+                Content="Save Changes"
+                Margin="5px"
+                FontWeight="Bold"
+                Background="Gray"
+                Foreground="AliceBlue"
+                Height="30px"
+                Width="160px"
+                FontSize="14"
+                Click="btnSave_Click" />
+        
+        <Button Grid.Row="4"
+        Grid.Column="3"
+        x:Name="btnCancel"
+        Content="Cancel Changes"
+        Margin="5px"
+        FontWeight="Bold"
+        Background="Gray"
+        Foreground="AliceBlue"
+        Height="30px"
+        Width="160px"
+        FontSize="14"
+        Click="btnCancel_Click" />
+
+    </Grid>
+</Page>

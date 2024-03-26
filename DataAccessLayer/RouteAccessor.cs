@@ -7,19 +7,68 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DataObjects.HelperObjects;
+using System.Data;
 
 namespace DataAccessLayer
 {
     public class RouteAccessor : IRouteAccessor
     {
-        public int ActivateRoute(int routeId)
+        public int UpdateRouteByIDAsActive(int routeId)
         {
-            throw new NotImplementedException();
+            int rows = 0;
+
+            var conn = DBConnectionProvider.GetConnection();
+            var cmdText = "sp_activate_route_by_id";
+            var cmd = new SqlCommand(cmdText, conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            cmd.Parameters.Add("@RouteID", SqlDbType.Int);
+
+            cmd.Parameters["@RouteID"].Value = routeId;
+
+            try
+            {
+                conn.Open();
+                rows = cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return rows;
         }
 
-        public int DeactivateRoute(int routeId)
+        public int UpdateRouteByIDAsInactive(int routeId)
         {
-            throw new NotImplementedException();
+            int rows = 0;
+
+            var conn = DBConnectionProvider.GetConnection();
+            var cmdText = "sp_deactivate_route_by_id";
+            var cmd = new SqlCommand(cmdText, conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            cmd.Parameters.Add("@RouteID", SqlDbType.Int);
+
+            cmd.Parameters["@RouteID"].Value = routeId;
+
+            try
+            {
+                conn.Open();
+                rows = cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return rows;
         }
 
         public int InsertRoute(RouteVM route)

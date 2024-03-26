@@ -81,3 +81,37 @@ begin
  ;
  END  
  GO
+
+ /******************
+Create the insert script for the Purchase_Order_Line_Item table
+Created By Jonathan Beck 3/1/2024
+***************/
+print '' Print '***Create the insert script for the Purchase_Order_Line_Item table***' 
+ go 
+CREATE PROCEDURE [DBO].[sp_insert_purchase_order_line_item]
+(@Purchase_Order_ID [int]
+,@Parts_Inventory_ID [int]
+,@Line_Number [int]
+,@Line_Item_Name [nvarchar](30)
+,@Line_Item_Qty [int]
+,@Line_Item_Price [money]
+,@Line_Item_Description [nvarchar](100)
+
+)as 
+ begin
+ insert into [dbo].Purchase_Order_Line_Item(
+[Purchase_Order_ID],[Parts_Inventory_ID],[Line_Number],[Line_Item_Name],[Line_Item_Qty],[Line_Item_Price],[Line_Item_Description],[Is_Active])
+ VALUES (
+@Purchase_Order_ID
+,@Parts_Inventory_ID
+,@Line_Number
+,@Line_Item_Name
+,@Line_Item_Qty
+,@Line_Item_Price
+,@Line_Item_Description
+,0
+
+)
+return @@rowcount
+end
+Go

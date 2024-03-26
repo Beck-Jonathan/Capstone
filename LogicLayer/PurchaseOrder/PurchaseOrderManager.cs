@@ -99,6 +99,45 @@ namespace LogicLayer
             }
             return purchase_orders;
         }
+
+        /// <summary>
+        ///     Creates the purchase order
+        /// </summary>
+        /// <param cref="Purchase_OrderVM" name="purchaseOrder">
+        ///    The Purchase order to add to the database
+        /// </param>
+        /// 
+        /// <returns>
+        ///    <see cref="int">int</see>: The ID of the purchase order
+        /// </returns>
+        /// 
+        ///    Exceptions:
+        ///    <see cref="SqlException">SqlException</see>: Thrown if there is a problem accessing the DB.
+        ///    CONTRIBUTOR: Jonathan Beck
+        ///    CREATED: 2024-03-18
+        /// </remarks>
+        public int CreatePurchaseOrder(Purchase_OrderVM purchaseOrder)
+        {
+            int result = 0;
+            try
+            {
+                int PurchaseOrderID = _OrderAccessor.InsertPurchaseOrder(purchaseOrder);
+                foreach (POLineItem POLine in purchaseOrder.pOLineItems)
+                {
+                    POLine.PurchaseOrderID = PurchaseOrderID;
+                    result += _pOLineItemsAccessor.InsertPOLineItem(POLine);
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+
+            return result;
+        }
     }
 
 }

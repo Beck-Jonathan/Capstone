@@ -57,7 +57,8 @@ BEGIN
         [Vehicle].[Description],
         [Vehicle].[Vehicle_License_Plate],
         [Vehicle].[Vehicle_Type_ID],
-        [Vehicle].[Rental]
+        [Vehicle].[Rental],
+        [Vehicle].[VIN]
     FROM [dbo].[Vehicle]
         LEFT JOIN [dbo].[Vehicle_Model] ON [Vehicle].[Vehicle_Model_ID] = [Vehicle_Model].[Vehicle_Model_ID]
     WHERE [Vehicle].[Is_Active] = 1

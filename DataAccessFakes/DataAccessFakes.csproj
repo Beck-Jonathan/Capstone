@@ -50,6 +50,7 @@
     <Compile Include="DependentAccessorFake.cs" />
     <Compile Include="LoginAccessorFake.cs" />
     <Compile Include="ClientAccessorFake.cs" />
+    <Compile Include="PartsRequestAccessorFake.cs" />
     <Compile Include="Parts_Inventory_Fakes.cs" />
     <Compile Include="EmployeeAccessorFake.cs" />
     <Compile Include="PasswordResetAccessorFake.cs" />
@@ -60,9 +61,11 @@
     <Compile Include="RouteStopAccessorFake.cs" />
     <Compile Include="ServiceOrderAccessorFakes.cs" />
     <Compile Include="StopAccessorFake.cs" />
+    <Compile Include="SourceAccessorFakes.cs" />
     <Compile Include="VehicleAccessorFakes.cs" />
     <Compile Include="RoleAccessorFake.cs" />
     <Compile Include="VehicleModelAccessorFake.cs" />
+    <Compile Include="VendorAccessorFakes.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DataAccessInterfaces\DataAccessInterfaces.csproj">

@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:NightRiderWPF"
         xmlns:resources="clr-namespace:NightRiderWPF.Resources"
         mc:Ignorable="d"
-        Title="Consumer Main" Height="850" Width="1050" ResizeMode="CanMinimize">
+        Title="Consumer Main" Height="850" Width="1050" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
     <Grid Background="{x:Static resources:Statics.BackgroundMain}" Height="800" Width="1000">
         <Grid.RowDefinitions>
             <RowDefinition Height="29*"/>
@@ -49,8 +49,10 @@
                                  VerticalAlignment="Center" x:Name="pwdPassword" />
                     <Button Grid.Row="2" Grid.Column="0" Content="Log In" x:Name="btnLogin"
                             Background="{x:Static resources:Statics.SecondaryColor}" Foreground="{x:Static resources:Statics.ButtonText}" Click="btnLogin_Click"/>
-                    <Button Grid.Row="2" Grid.Column="1" Content="Forgot Your Password?" x:Name="btnForgotPassword" 
+                    <Button Grid.Row="2" Grid.Column="1" Content="Forgot Your Password?" x:Name="btnForgotPassword" Height="30" Margin="0 0 0 27.5"
                             Background="{x:Static resources:Statics.SecondaryColor}" Foreground="{x:Static resources:Statics.ButtonText}"/>
+                    <Button Grid.Row="2" Grid.Column="1" Content="Forgot your username?" x:Name="btnForgotUsername" Height="30" Margin="0 27.5 0 0"
+                            Background="{x:Static resources:Statics.SecondaryColor}" Foreground="{x:Static resources:Statics.ButtonText}" Click="btnForgotUsername_Click"/>
                     <Button
                         x:Name="btn_logout"
                         Grid.Row="2"
@@ -58,6 +60,8 @@
                         Background="{x:Static resources:Statics.SecondaryColor}" Foreground="{x:Static resources:Statics.ButtonText}"
                         Content="Log Out"
                         Visibility="Hidden" Click="btn_logout_Click" />
+                    <Button x:Name="btn_profile" Grid.Row="2" Grid.Column="2" Content="View Profile" 
+                        Background="{x:Static resources:Statics.SecondaryColor}" Foreground="{x:Static resources:Statics.ButtonText}" Visibility="Hidden" Click="btn_profile_Click"/>
                 </Grid>
             </Grid>
         </Border>
@@ -74,6 +78,13 @@
                             Background="{x:Static resources:Statics.SecondaryColor}" Click="btnEmployees_Click" Visibility="Collapsed" />
                     <Button Content="Vehicles" x:Name="btnVehicles" Height="50px" Foreground="{x:Static resources:Statics.ButtonText}"
                             Background="{x:Static resources:Statics.SecondaryColor}" Click="btnVehicles_Click" Visibility="Collapsed" />
+                    <Button Content="Vehicle Models"
+                            x:Name="btnVehicleModels"
+                            Height="50px"
+                            Foreground="{x:Static resources:Statics.ButtonText}"
+                            Background="{x:Static resources:Statics.SecondaryColor}"
+                            Click="btnVehicleModels_Click"
+                            Visibility="Collapsed" />
                     <Button Content="Maintenance" x:Name="btnMaintenance" Height="50px" Foreground="{x:Static resources:Statics.ButtonText}"
                             Background="{x:Static resources:Statics.SecondaryColor}" Click="btnMaintenance_Click" Visibility="Collapsed" />
                     <Button Content="Inventory" x:Name="btnInventory" Height="50px" Foreground="{x:Static resources:Statics.ButtonText}"
@@ -83,7 +94,9 @@
                     <Button Content="Vehicle Scheduling" x:Name="btnVehicleSchedules" Height="50px" Foreground="{x:Static resources:Statics.ButtonText}"
                             Background="{x:Static resources:Statics.SecondaryColor}" Visibility="Collapsed" Click="btnVehicleSchedules_Click" />
                     <Button Content="Routes" x:Name="btnRoutes" Height="50px" Foreground="{x:Static resources:Statics.ButtonText}"
-                            Background="{x:Static resources:Statics.SecondaryColor}" Visibility="Collapsed" Click="btnRoutes_Click" />
+                            Background="{x:Static resources:Statics.SecondaryColor}" Visibility="Hidden" Click="btnRoutes_Click" />
+                    <Button Content="Parts Requests" x:Name="btnPartsRequests" Height="50px" Foreground="{x:Static resources:Statics.ButtonText}"
+                            Background="{x:Static resources:Statics.SecondaryColor}" Visibility="Hidden" Click="btnPartsRequests_Click" />
                 </StackPanel>
             </Border>
             <Border Grid.Column="1" BorderBrush="Black" BorderThickness="2px">

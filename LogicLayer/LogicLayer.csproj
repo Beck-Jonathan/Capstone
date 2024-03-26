@@ -46,6 +46,12 @@
   <ItemGroup>
     <Compile Include="Client\DependentManager.cs" />
     <Compile Include="Client\IDependentManager.cs" />
+    <Compile Include="Inventory\ISourceManager.cs" />
+    <Compile Include="Inventory\SourceManager.cs" />
+    <Compile Include="PartsRequest\IPartsRequestsManager.cs" />
+    <Compile Include="PartsRequest\PartsRequestManager.cs" />
+    <Compile Include="RouteStop\IRouteManager.cs" />
+    <Compile Include="RouteStop\RouteManager.cs" />
     <Compile Include="PasswordReset\PasswordResetManager.cs" />
     <Compile Include="PurchaseOrder\IPOLineItemsManager.cs" />
     <Compile Include="PurchaseOrder\IPurchase_OrderManager.cs" />
@@ -81,6 +87,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Role\RoleManager.cs" />
     <Compile Include="Utilities\FormValidationHelper.cs" />
+    <Compile Include="Vendor\IVendorManager.cs" />
+    <Compile Include="Vendor\VendorManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DataAccessFakes\DataAccessFakes.csproj">
