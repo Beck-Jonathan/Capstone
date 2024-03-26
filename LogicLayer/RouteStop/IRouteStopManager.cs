@@ -7,6 +7,11 @@ using System.Threading.Tasks;
 
 namespace LogicLayer.RouteStop
 {
+    /// <summary>
+    /// AUTHOR: Nathan Toothaker
+    /// DATE: 2024-03-05
+    /// Interaction Logic for Route Stop
+    /// </summary>
     public interface IRouteStopManager
     {
         IEnumerable<RouteStopVM> GetRouteStopByRouteId(int routeId);

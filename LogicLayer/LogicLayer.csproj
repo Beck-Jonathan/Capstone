@@ -57,7 +57,6 @@
     <Compile Include="PurchaseOrder\IPurchase_OrderManager.cs" />
     <Compile Include="PurchaseOrder\POLineItemsManager.cs" />
     <Compile Include="PurchaseOrder\PurchaseOrderManager.cs" />
-    <Compile Include="RouteStop\IRouteManager.cs" />
     <Compile Include="RouteStop\IRouteStopManager.cs" />
     <Compile Include="RouteStop\IStopManager.cs" />
     <Compile Include="RouteStop\RouteManager.cs" />

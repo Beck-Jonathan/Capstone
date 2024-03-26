@@ -11,6 +11,11 @@ using System.Threading.Tasks;
 
 namespace DataAccessLayer
 {
+    /// <summary>
+    /// AUTHOR: Nathan Toothaker
+    /// DATE: 2024-03-26
+    /// Handles the Database Logic for the Route Stop table.
+    /// </summary>
     public class RouteStopAccessor : IRouteStopAccessor
     {
         public int ActivateRouteStop(RouteStopVM routeStopVM)

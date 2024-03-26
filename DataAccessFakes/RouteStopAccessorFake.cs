@@ -10,6 +10,11 @@ namespace DataAccessFakes
 {
     public class RouteStopAccessorFake : IRouteStopAccessor
     {
+        /// <summary>
+        /// AUTHOR: Nathan Toothaker
+        /// DATE: 2024-03-05
+        /// Fake Data for the Route Stops table.
+        /// </summary>
         public List<RouteStopVM> _routeStops;
         public RouteStopAccessorFake()
         {

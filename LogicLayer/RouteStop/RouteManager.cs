@@ -23,6 +23,12 @@ namespace LogicLayer.RouteStop
     /// COMMENTS:
     ///     Added Activate and deactivate route.
     /// </remarks>
+    /// <remarks>
+    /// UPDATER: Nathan Toothaker
+    /// UPDATED: 2024-03-26
+    /// COMMENTS:
+    ///    Added connection to Bing Maps API
+    /// </remarks>
     public class RouteManager : IRouteManager
     {
         IRouteAccessor _routeAccessor;
