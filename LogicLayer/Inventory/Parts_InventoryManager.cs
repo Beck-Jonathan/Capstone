@@ -186,6 +186,30 @@ namespace LogicLayer
             return result;
         }
 
+        /// <summary>
+        /// Max Fare
+        /// Created: 2024-03-24
+        /// Adds a new part to inventory
+        /// </summary>
+        /// <param name="newPart">The new part to add to inventory</param>
+        /// <returns>The ID of the newly created part</returns>
+        /// <exception cref="ApplicationException">If something goes wrong in the database</exception>
+        /// <remarks>
+        /// </remarks
+        public int AddParts_Inventory(Parts_Inventory newPart)
+        {
+            int id = -1;
+            try
+            {
+                id = _parts_inventoryaccessor.InsertParts_Inventory(newPart);
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("Something went wrong", ex);
+            }
+            return id;
+        }
+
         // Reviewed By: John Beck
     }
 }

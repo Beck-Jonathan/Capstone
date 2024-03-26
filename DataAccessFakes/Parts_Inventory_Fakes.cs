@@ -100,6 +100,24 @@ namespace DataAccessFakes
             return result;
         }
 
+        public int InsertParts_Inventory(Parts_Inventory newPart)
+        {
+            if (!String.IsNullOrEmpty(newPart.Part_Name)
+                && !String.IsNullOrEmpty(newPart.Item_Description)
+                && !String.IsNullOrEmpty(newPart.Item_Specifications)
+                && !String.IsNullOrEmpty(newPart.Part_Photo_URL))
+            {
+                newPart.Parts_Inventory_ID = fakeparts[fakeparts.Count - 1].Parts_Inventory_ID + 1;
+                fakeparts.Add(newPart);
+                return newPart.Parts_Inventory_ID;
+            }
+            else
+            {
+                throw new Exception("Incomplete Object cannot be added");
+            }
+           
+        }
+
         /// <summary>
         /// Jonathan Beck
         /// Created: 2024/02/01

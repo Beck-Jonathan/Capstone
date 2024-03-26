@@ -128,7 +128,7 @@ AS
 GO
 
 /******************
-Create the update_part stored procedure
+Create the deactivate_part stored procedure
 ***************/
 -- AUTHOR: Max Fare
 print '' print '*** creating sp_deactivate_part ***'
@@ -143,5 +143,48 @@ AS
         SET         [Active] = 0
         WHERE       [Parts_Inventory_ID] = @part_id;
         SELECT      @@ROWCOUNT
+    END
+GO
+
+/******************
+Create the insert_part stored procedure
+***************/
+-- AUTHOR: Max Fare
+print '' print '*** creating sp_insert_part ***'
+GO
+CREATE PROCEDURE [dbo].[sp_insert_part]
+(
+    @Part_Name [nvarchar](30),
+    @Part_Quantity [int],
+    @Item_Description [nvarchar](100),
+    @Item_Specifications [nvarchar](MAX),
+    @Part_Photo_URL [nvarchar](255),
+    @Ordered_Qty [int],
+    @Stock_Level [int]
+)
+AS
+    BEGIN
+    DECLARE @p_Parts_Inventory_ID int;
+    INSERT INTO [dbo].[Parts_Inventory]
+    (
+        [Part_Name],
+        [Part_Quantity],
+        [Item_Description],
+        [Item_Specifications],
+        [Part_Photo_URL],
+        [Ordered_Qty],
+        [Stock_Level]
+    )
+    VALUES(
+        @Part_Name,
+        @Part_Quantity,
+        @Item_Description,
+        @Item_Specifications,
+        @Part_Photo_URL,
+        @Ordered_Qty,
+        @Stock_Level
+    )
+    SET @p_Parts_Inventory_ID = SCOPE_IDENTITY();
+    SELECT @p_Parts_Inventory_ID AS 'Parts_Inventory_ID';
     END
 GO
