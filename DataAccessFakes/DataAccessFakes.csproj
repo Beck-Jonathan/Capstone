@@ -54,6 +54,7 @@
     <Compile Include="Purchase_Order_Fakes.cs" />
     <Compile Include="ServiceOrderAccessorFakes.cs" />
     <Compile Include="SourceAccessorFakes.cs" />
+    <Compile Include="StopAccessorFakes.cs" />
     <Compile Include="VehicleAccessorFakes.cs" />
     <Compile Include="RoleAccessorFake.cs" />
     <Compile Include="VehicleModelAccessorFake.cs" />

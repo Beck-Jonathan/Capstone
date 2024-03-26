@@ -48,12 +48,14 @@
     <Compile Include="PartsRequest\IPartsRequestsManager.cs" />
     <Compile Include="PartsRequest\PartsRequestManager.cs" />
     <Compile Include="RouteStop\IRouteManager.cs" />
+    <Compile Include="RouteStop\IStopManager.cs" />
     <Compile Include="RouteStop\RouteManager.cs" />
     <Compile Include="PasswordReset\PasswordResetManager.cs" />
     <Compile Include="PurchaseOrder\IPOLineItemsManager.cs" />
     <Compile Include="PurchaseOrder\IPurchase_OrderManager.cs" />
     <Compile Include="PurchaseOrder\POLineItemsManager.cs" />
     <Compile Include="PurchaseOrder\PurchaseOrderManager.cs" />
+    <Compile Include="RouteStop\StopManager.cs" />
     <Compile Include="ServiceOrder\IServiceOrderManager.cs" />
     <Compile Include="AppData\Authentication.cs" />
     <Compile Include="Login\LoginManager.cs" />

@@ -286,6 +286,38 @@ namespace DataObjects
             }
             return result;
         }
+
+        // AUTHOR: Chris Baenziger
+        // CREATED: 2024-03-24
+        public static bool isValidLatitude(string latitude)
+        {
+            bool result = false;
+            if(latitude != null || !latitude.Equals(""))
+            {
+                Decimal lat = Decimal.Parse(latitude);
+                if(lat >= -90 && lat <= 90)
+                {
+                    result = true;
+                }
+            }
+            return result;
+        }
+
+        // AUTHOR: Chris Baenziger
+        // CREATED: 2024-03-24
+        public static bool isValidLongitude(string longitude)
+        {
+            bool result = false;
+            if (longitude != null || !longitude.Equals(""))
+            {
+                Decimal lon = Decimal.Parse(longitude);
+                if (lon >= -180 && lon <= 180)
+                {
+                    result = true;
+                }
+            }
+            return result;
+        }
     }
 }
 
