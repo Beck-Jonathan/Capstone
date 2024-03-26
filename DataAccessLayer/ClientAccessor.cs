@@ -131,13 +131,16 @@ namespace DataAccessLayer
         ///    UPDATER: Isabella Rosenbohm <br />
         ///    UPDATED: 2024-03-05 <br /><br />
         ///         Changed Parameters.AddWithValues line from @ClientID to @Client_ID as it wasn't correct
+        ///     Updater: Michael Springer <br />
+        ///     Updated 2024-03-26 <br />
+        ///         removed @ from cmdText 
         /// </remarks>
         public Client_VM SelectClientById(int id)
         {
             Client_VM clientVM = new Client_VM();
 
             var conn = DBConnectionProvider.GetConnection();
-            var cmdText = @"sp_select_client_id";
+            var cmdText = "sp_select_client_id";
             var cmd = new SqlCommand(cmdText, conn);
             cmd.CommandType = CommandType.StoredProcedure;
 
@@ -204,13 +207,16 @@ namespace DataAccessLayer
         ///    CREATED: 2024-02-19
         /// <br /><br />
         ///     Initial creation
+        ///     Updater: Michael Springer <br />
+        ///     Updated 2024-03-26 <br />
+        ///         removed @ from cmdText 
         /// </remarks>
         public Client_VM SelectClientByEmail(string email)
         {
             Client_VM clientVM = new Client_VM();
 
             var conn = DBConnectionProvider.GetConnection();
-            var cmdText = @"sp_select_client_by_email";
+            var cmdText = "sp_select_client_by_email";
             var cmd = new SqlCommand(cmdText, conn);
             cmd.CommandType = CommandType.StoredProcedure;
 

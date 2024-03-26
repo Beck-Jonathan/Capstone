@@ -7,13 +7,18 @@ using DataObjects.RouteObjects;
 
 namespace LogicLayer.RouteStop
 {
+    /// <summary>
+    /// AUTHOR: Chris Baenziger
+    /// CREATED: 2024-03-24
+    /// Interface for stop manager
+    /// </summary>
     public interface IStopManager
     {
-        Stop getStopById(int stopId);
-        List<Stop> getStops();
+        Stop GetStopByID(int stopID);
+        List<Stop> GetStops();
         int AddStop(Stop stop);
-        int EditStop(Stop oldStop, Stop newStop);
-        int DeactivateStop(int stopId);
-        int ActivateStop(int stopId);
+        bool EditStop(Stop oldStop, Stop newStop);
+        bool DeactivateStop(int stopID);
+        bool ActivateStop(int stopID);
     }
 }

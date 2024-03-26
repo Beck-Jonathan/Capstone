@@ -78,6 +78,9 @@
     <Compile Include="Clients\ClientLookupPage.xaml.cs">
       <DependentUpon>ClientLookupPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Clients\GuardianViewEditDependent.xaml.cs">
+      <DependentUpon>GuardianViewEditDependent.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Clients\ToBeReworked\ClientPersonalPage.xaml.cs">
       <DependentUpon>ClientPersonalPage.xaml</DependentUpon>
     </Compile>
@@ -105,6 +108,9 @@
     <Compile Include="PurchaseOrders\Parts_Person_Add_Update_Delete_Purchase_Order.xaml.cs">
       <DependentUpon>Parts_Person_Add_Update_Delete_Purchase_Order.xaml</DependentUpon>
     </Compile>
+    <Compile Include="RouteStop\AddStop.xaml.cs">
+      <DependentUpon>AddStop.xaml</DependentUpon>
+    </Compile>
     <Compile Include="RouteStop\RouteList.xaml.cs">
       <DependentUpon>RouteList.xaml</DependentUpon>
     </Compile>
@@ -126,6 +132,9 @@
     <Compile Include="RouteStop\ViewRoute.xaml.cs">
       <DependentUpon>ViewRoute.xaml</DependentUpon>
     </Compile>
+    <Compile Include="RouteStop\StopList.xaml.cs">
+      <DependentUpon>StopList.xaml</DependentUpon>
+    </Compile>
     <Compile Include="VehicleModels\VehicleModelAddEditPage.xaml.cs">
       <DependentUpon>VehicleModelAddEditPage.xaml</DependentUpon>
     </Compile>
@@ -144,6 +153,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Clients\ClientLookupPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Clients\GuardianViewEditDependent.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -183,6 +196,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="RouteStop\AddStop.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="RouteStop\RouteList.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -204,6 +221,7 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="RouteStop\ViewRoute.xaml">
+    <Page Include="RouteStop\StopList.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

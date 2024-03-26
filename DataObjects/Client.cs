@@ -44,5 +44,7 @@ namespace DataObjects
     {
         public string Username { get; set; }
         public IEnumerable<ClientRole> Roles { get; set; }
+
+        public IEnumerable<ClientDependentRole> ClientDependentRoles { get; set; }
     }
 }

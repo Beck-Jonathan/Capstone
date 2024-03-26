@@ -7,13 +7,18 @@ using System.Threading.Tasks;
 
 namespace DataAccessInterfaces
 {
+    /// <summary>
+    /// AUTHOR: Chris Baenziger
+    /// CREATED: 2024-03-24
+    /// Interface for stop accessor
+    /// </summary>
     public interface IStopAccessor
     {
-        Stop selectStopById(int stopId);
-        List<Stop> selectStops();
-        int InsertStop(Stop stop);
+        Stop SelectStopByID(int stopID);
+        List<Stop> SelectStops();
         int UpdateStop(Stop oldStop, Stop newStop);
-        int DeactivateStop(Stop stop);
-        int ActivateStop(Stop stop);
+        int InsertStop(Stop stop);
+        int UpdateStopByIDAsInactive(int stopID);
+        int UpdateStopByIDAsActive(int stopID);
     }
 }

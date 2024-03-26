@@ -31,11 +31,12 @@ using System.Windows.Shapes;
 
 namespace NightRiderWPF.Clients
 {
-    
+
     public partial class AddDependent : Page
     {
         private Dependent _dependent;
         private List<Accommodation> _accommodations;
+        private Client _client;
 
         // TODO private User _user;
 
@@ -43,6 +44,11 @@ namespace NightRiderWPF.Clients
         {
             _dependent = new Dependent();
             InitializeComponent();
+        }
+
+        public AddDependent(Client client)
+        {
+
         }
         /// <summary>
         /// Michael Springer
@@ -191,32 +197,32 @@ namespace NightRiderWPF.Clients
             if (validationPasses)
             {
                 string messageBoxText = "Do you want to add this dependent?";
-            string caption = "Confirm";
-            MessageBoxButton btnConfirm = MessageBoxButton.YesNo;
-            MessageBoxImage icon = MessageBoxImage.Question;
-            MessageBoxResult result;
+                string caption = "Confirm";
+                MessageBoxButton btnConfirm = MessageBoxButton.YesNo;
+                MessageBoxImage icon = MessageBoxImage.Question;
+                MessageBoxResult result;
 
-            result = MessageBox.Show(messageBoxText, caption, btnConfirm, icon, MessageBoxResult.Yes);
+                result = MessageBox.Show(messageBoxText, caption, btnConfirm, icon, MessageBoxResult.Yes);
 
-            if (result.ToString().Equals("Yes"))
-            {
-                _dependentManager.AddDependent(_dependent);
-                string messageBoxText2 = "Dependent Added";
-                string caption2 = "Success";
-                MessageBoxButton btnSuccess = MessageBoxButton.OK;
-                MessageBoxImage icon2 = MessageBoxImage.None;
+                if (result.ToString().Equals("Yes"))
+                {
+                    _dependentManager.AddDependent(_dependent);
+                    string messageBoxText2 = "Dependent Added";
+                    string caption2 = "Success";
+                    MessageBoxButton btnSuccess = MessageBoxButton.OK;
+                    MessageBoxImage icon2 = MessageBoxImage.None;
 
-                MessageBox.Show(messageBoxText2, caption2, btnSuccess, icon, MessageBoxResult.OK);
-                resetForm();
+                    MessageBox.Show(messageBoxText2, caption2, btnSuccess, icon, MessageBoxResult.OK);
+                    resetForm();
 
-            }      
+                }
             }
-            
-            
+
+
             // ADD ACCOMMODATIONS IN NEXT FEATURE
 
             // cboAccommodations
-            
+
         }
         /// <summary>
         /// Michael Springer
@@ -235,7 +241,8 @@ namespace NightRiderWPF.Clients
             cboRelationship.SelectedIndex = -1;
             txtFirstName.Text = String.Empty;
             txtLastName.Text = String.Empty;
-            if(txtMiddleName.Text != null) {
+            if (txtMiddleName.Text != null)
+            {
                 txtMiddleName.Text = String.Empty;
             }
             dtpBirthDate.DisplayDate = DateTime.MaxValue;
@@ -249,9 +256,9 @@ namespace NightRiderWPF.Clients
                 cboAccommodations.Text = String.Empty;
                 cboAccommodations.SelectedIndex = -1;
             }
-            
+
 
         }
-        
+
     }
 }

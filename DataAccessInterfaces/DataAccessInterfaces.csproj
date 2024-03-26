@@ -48,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IBingMapsAccessor.cs" />
+    <Compile Include="IClientDependentRoleAccessor.cs" />
     <Compile Include="IDependentAccessor.cs" />
     <Compile Include="IPartsRequestAccessor.cs" />
     <Compile Include="IRouteAccessor.cs" />
@@ -57,8 +58,8 @@
     <Compile Include="IRouteStopAccessor.cs" />
     <Compile Include="IServiceOrderAccessor.cs" />
     <Compile Include="ILoginAccessor.cs" />
-    <Compile Include="IStopAccessor.cs" />
     <Compile Include="ISourceAccessor.cs" />
+    <Compile Include="IStopAccessor.cs" />
     <Compile Include="IVehicleAccessor.cs" />
     <Compile Include="IClientAccessor.cs" />
     <Compile Include="IParts_InventoryAccessor.cs" />

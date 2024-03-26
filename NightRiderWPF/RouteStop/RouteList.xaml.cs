@@ -107,5 +107,10 @@ namespace NightRiderWPF.RouteStop
             }
 
         }
+
+        private void btnStopsList_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new StopList());
+        }
     }
 }
