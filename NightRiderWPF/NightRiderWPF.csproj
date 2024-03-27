@@ -35,6 +35,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.Maps.MapControl.WPF, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Maps.MapControl.WPF.1.0.0.3\lib\net40-Client\Microsoft.Maps.MapControl.WPF.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -75,6 +78,9 @@
     <Compile Include="Clients\ClientLookupPage.xaml.cs">
       <DependentUpon>ClientLookupPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Clients\GuardianViewEditDependent.xaml.cs">
+      <DependentUpon>GuardianViewEditDependent.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Clients\ToBeReworked\ClientPersonalPage.xaml.cs">
       <DependentUpon>ClientPersonalPage.xaml</DependentUpon>
     </Compile>
@@ -87,6 +93,9 @@
     <Compile Include="Login\EmployeeLoginPage.xaml.cs">
       <DependentUpon>EmployeeLoginPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="RouteStop\EditRouteStops.xaml.cs">
+      <DependentUpon>EditRouteStops.xaml</DependentUpon>
+	</Compile>
     <Compile Include="PartsRequests\ViewPartRequestDetailsPage.xaml.cs">
       <DependentUpon>ViewPartRequestDetailsPage.xaml</DependentUpon>
     </Compile>
@@ -98,6 +107,9 @@
     </Compile>
     <Compile Include="PurchaseOrders\Parts_Person_Add_Update_Delete_Purchase_Order.xaml.cs">
       <DependentUpon>Parts_Person_Add_Update_Delete_Purchase_Order.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="RouteStop\AddStop.xaml.cs">
+      <DependentUpon>AddStop.xaml</DependentUpon>
     </Compile>
     <Compile Include="RouteStop\RouteList.xaml.cs">
       <DependentUpon>RouteList.xaml</DependentUpon>
@@ -117,8 +129,15 @@
     <Compile Include="RoleViews\CreateRole.xaml.cs">
       <DependentUpon>CreateRole.xaml</DependentUpon>
     </Compile>
+
     <Compile Include="VehicleModels\AddCompatiblePartToModelPage.xaml.cs">
       <DependentUpon>AddCompatiblePartToModelPage.xaml</DependentUpon>
+	</Compile>
+    <Compile Include="RouteStop\ViewRoute.xaml.cs">
+      <DependentUpon>ViewRoute.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="RouteStop\StopList.xaml.cs">
+      <DependentUpon>StopList.xaml</DependentUpon>
     </Compile>
     <Compile Include="VehicleModels\VehicleModelAddEditPage.xaml.cs">
       <DependentUpon>VehicleModelAddEditPage.xaml</DependentUpon>
@@ -138,6 +157,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Clients\ClientLookupPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Clients\GuardianViewEditDependent.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -165,11 +188,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="RouteStop\EditRouteStops.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="PurchaseOrders\Parts_Person_Add_Update_Delete_Line_Items.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="PurchaseOrders\Parts_Person_Add_Update_Delete_Purchase_Order.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="RouteStop\AddStop.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -193,7 +224,16 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+
     <Page Include="VehicleModels\AddCompatiblePartToModelPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="RouteStop\ViewRoute.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="RouteStop\StopList.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -378,6 +418,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

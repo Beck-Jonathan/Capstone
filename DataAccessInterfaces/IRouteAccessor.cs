@@ -21,7 +21,7 @@ namespace DataAccessInterfaces
     public interface IRouteAccessor
     {
         RouteVM selectRouteById(int routeId);
-        List<RouteVM> selectRoutes();
+        IEnumerable<RouteVM> selectRoutes();
         int InsertRoute(RouteVM route);
         int UpdateRoute(RouteVM oldRoute, RouteVM newRoute);
 

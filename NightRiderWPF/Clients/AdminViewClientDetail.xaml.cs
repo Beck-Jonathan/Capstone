@@ -95,5 +95,10 @@ namespace NightRiderWPF.Clients
             clearFieldsForReload();
             populateFields();
         }
+        private void btnManageDependents_Click(object sender, RoutedEventArgs e)
+        {
+            GuardianViewDependentList guardianViewDependentList = new GuardianViewDependentList(_client);
+            this.NavigationService.Navigate(guardianViewDependentList);
+        }
     }
 }

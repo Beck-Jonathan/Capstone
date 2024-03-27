@@ -231,6 +231,45 @@ namespace LogicLayerTests
             _mgr.RemoveParts_Inventory(part);
 
         }
+        /// <summary>
+        /// Max Fare
+        /// Created: 2024-03-24
+        /// This test returns the ID field of the newly added part
+        /// </summary>
+        [TestMethod]
+        public void TestAddPartsInventoryReturnsIDField()
+        {
+            //arrange
+            Parts_Inventory toTest = new Parts_Inventory()
+            {
+                Part_Name = "test",
+                Part_Quantity = 0,
+                Item_Description = "test",
+                Item_Specifications = "test",
+                Part_Photo_URL = "test",
+                Ordered_Qty = 0,
+                Stock_Level = 0
+            };
+            int expected = 4;
+            int actual = 0;
+            //act
+            actual = _mgr.AddParts_Inventory(toTest);
+            //assert
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ApplicationException))]
+        public void TestAddPartsInventoryFailsWithIncompleteData()
+        {
+            Parts_Inventory toTest = new Parts_Inventory();
+            int expected = 4;
+            int actual = 0;
+
+            actual = _mgr.AddParts_Inventory(toTest);
+
+            
+        }
 
         /// <summary>
         ///     Test that retrieving parts compatible with vehicle model id returns the expected number of results
@@ -332,4 +371,5 @@ namespace LogicLayerTests
             int addPart = _mgr.AddModelPartCompatibility(1, 1);
         }
     }
+    // Reviewed By: John Beck
 }

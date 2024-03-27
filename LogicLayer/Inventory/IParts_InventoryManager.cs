@@ -81,11 +81,23 @@ namespace LogicLayer
         /// Created: 2024-02-23
         /// Removes a part from the active inventory
         /// </summary>
+        /// <param name="part">The part to remove from inventory</param>
         /// <remarks>
         /// </remarks>
         int RemoveParts_Inventory(Parts_Inventory part);
 
         /// <summary>
+        /// Max Fare
+        /// Created: 2024-03-24
+        /// Adds a new part to inventory
+        /// </summary>
+        /// <param name="newPart">The new part to add to inventory</param>
+        /// <returns>The ID of the newly created part</returns>
+        /// <remarks>
+        /// </remarks>
+        int AddParts_Inventory(Parts_Inventory newPart);
+
+        ///<summary>
         ///     Retrieves all parts compatible with a given vehicle model
         /// </summary>
         /// <param name="vehicleModelId">

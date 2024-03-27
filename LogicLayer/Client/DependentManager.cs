@@ -6,8 +6,8 @@
 /// </summary>
 ///
 /// <remarks>
-/// Updater Name
-/// Updated: yyyy/mm/dd
+/// Updater Michael Springer
+/// Updated: 2024-03-26
 /// </remarks>
 using DataAccessInterfaces;
 using DataAccessLayer;
@@ -74,6 +74,48 @@ namespace LogicLayer
 
 
             return dependentList;
+        }
+
+        public IEnumerable<DependentVM> GetDependentListByClientId(int id)
+        {
+            IEnumerable<DependentVM> dependentList = null;
+            try
+            {
+                dependentList = _dependentAccessor.SelectDependentsByClientId(id);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return dependentList;
+        }
+        public DependentVM GetDependentByDependentId(int dependentId)
+        {
+            DependentVM dependent = null;
+            try
+            {
+                dependent = _dependentAccessor.SelectDependentByID(dependentId);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return dependent;
+        }
+
+        public int EditDependent(DependentVM oldDependentInfo, DependentVM newDependentInfo, int clientId)
+        {
+            int rowsAffected = 0;
+            try
+            {
+                rowsAffected = _dependentAccessor.UpdateDependent(oldDependentInfo, newDependentInfo, clientId);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return rowsAffected;
         }
 
     }

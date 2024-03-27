@@ -77,6 +77,15 @@ namespace DataAccessInterfaces
         int DeactivateParts_Inventory(Parts_Inventory part);
 
         /// <summary>
+        /// Max Fare
+        /// Created: 2024-03-24
+        /// Attempts to create a new parts_inventory record in the database
+        /// </summary>
+        /// <param name="newPart">The part to add to the database</param>
+        /// <returns>The ID of the newly created record</returns>
+        int InsertParts_Inventory(Parts_Inventory newPart);
+
+        ///<summary>
         ///     Selects all parts compatible with a given vehicle model
         /// </summary>
         /// <param name="vehicleModelId">

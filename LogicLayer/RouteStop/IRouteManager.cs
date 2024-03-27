@@ -1,4 +1,6 @@
-﻿using DataObjects.RouteObjects;
+﻿using DataObjects.HelperObjects;
+using DataObjects.RouteObjects;
+using Microsoft.Maps.MapControl.WPF;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,9 +23,10 @@ namespace LogicLayer.RouteStop
     public interface IRouteManager
     {
         RouteVM getRouteById(int routeId);
-        List<RouteVM> getRoutes();
+        IEnumerable<RouteVM> getRoutes();
         int AddRoute(RouteVM route);
         int EditRoute(RouteVM oldRoute, RouteVM newRoute);
+        Task<BingMapsResponse> getRouteLine(RouteVM route);
 
         /// <summary>
         /// Method to deactivate a route

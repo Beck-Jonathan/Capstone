@@ -314,11 +314,11 @@ Print '***Insert Sample Data For The  Stop table***'
 INSERT INTO [dbo].[Stop]
     ([Street_Address], [Zip_Code], [Latitude], [Longitude])
 VALUES
-    ( '37 Hoffman Center', '52302', 36.4062241, 55.016269),
-    ( '8998 Hudson Lane', '97240', 37.105382, 116.694361),
-    ( '63 Starling Court', '97240', 45.5220648, -122.6757228),
-    ( '0468 Utah Park', '97204', 39.948572, 116.420192),
-    ( '760 Northland Terrace', '52402', 49.369115, 3.338092);
+    ( 'Lindale Mall', '52302', 42.027780, -91.629940),
+    ( 'Downtown CR', '52402', 41.978050, -91.669860),
+    ( 'Marcus Cedar Rapids Cinema', '52302', 42.032038, -91.655243),
+    ( 'Guthridge Park, Hiawatha', '52233', 42.040838, -91.681471),
+    ( 'Mount Trashmore', '52402', 41.96175086599706, -91.65086473447506);
 go
 
 
@@ -333,9 +333,9 @@ CREATE TABLE [dbo].[Route_Stop]
     [Route_ID] [int] NOT NULL,
     [Stop_ID] [int] NOT NULL,
     [Route_Stop_Number] [int] NOT NULL,
-    [Start_Offset] [int] NOT NULL,
+    [Start_Offset] [TIME] NOT NULL,
     [Is_Active] [bit] NOT NULL DEFAULT(1),
-    CONSTRAINT [PK_Route_Stop] PRIMARY KEY ([Route_ID], [Stop_ID]),
+    CONSTRAINT [PK_Route_Stop] PRIMARY KEY ([Route_ID], [Route_Stop_Number]),
     CONSTRAINT [FK_Route_Stop_Route_ID_Route_Route_ID]
     FOREIGN KEY ([Route_ID]) REFERENCES [dbo].[Route]([Route_ID]),
     CONSTRAINT [FK_Route_Stop_Stop_ID_Stop_Stop_ID]
@@ -350,13 +350,12 @@ Print '***Insert Sample Data For The  Route_Stop table***'
 INSERT INTO [dbo].[Route_Stop]
     ([Route_ID], [Stop_ID], [Route_Stop_Number], [Start_Offset])
 VALUES
-    (100000, 100000, 1, 0),
-    (100000, 100001, 2, 1),
-    (100000, 100002, 3, 2),
-    (100001, 100003, 1, 0),
-    (100001, 100004, 2, 1)
+    (100000, 100000, 1, '00:00:00.0000000'),
+    (100000, 100001, 2, '00:15:00.0000000'),
+    (100000, 100002, 3, '00:30:00.0000000'),
+    (100001, 100003, 1, '00:00:00.0000000'),
+    (100001, 100004, 2, '00:30:00.0000000')
 go
-
 
 /******************
 Create the [dbo].[Vehicle_Type] table
@@ -1987,7 +1986,7 @@ CREATE TABLE [dbo].[Dependent]
     [Gender] [nvarchar](20) NULL,
     [Emergency_Contact] [nvarchar](100) NOT NULL,
 	[Contact_Relationship] 	[nvarchar](100) 				NOT NULL,
-    [Emergency_Phone] [nvarchar](11) NOT NULL,
+    [Emergency_Phone] [nvarchar](12) NOT NULL,
     [Is_Active] [bit] NOT NULL DEFAULT 1,
     CONSTRAINT 		[pk_Dependent_ID] PRIMARY KEY ([Dependent_ID])
 )
@@ -2079,6 +2078,17 @@ Insert Sample Data For The  Client_Dependent_Role table
 
 print '' Print '***Insert Sample Data For The  Client_Dependent_Role table***' 
  go
+  go
+ INSERT INTO [dbo].[Client_Dependent_Role]
+		([Client_ID], [Dependent_ID], [Relationship], [Is_Active])
+	VALUES
+		(100000, 100000, 'Parent', 0),
+		(100000, 100001, 'Parent', 1),
+		(100000, 100002, 'Parent', 1),
+		(100003, 100002, 'Legal Custodian', 1),
+		(100004, 100003, 'Parent', 1),
+		(100002, 100003, 'Parent', 1)
+GO
 
 /******************
 Create the [dbo].[Notification] table
