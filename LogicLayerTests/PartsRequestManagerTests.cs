@@ -74,5 +74,42 @@ namespace LogicLayerTests
 
             Assert.AreEqual(expected, actual);
         }
+
+        /// <summary>
+        ///  deactivates a parts request and saves the request in the deactivated list
+        /// </summary>
+        /// <remarks>
+        ///    Exceptions:
+        /// <br />
+        ///    <see cref="Exception">Exception</see>: Thrown when error encountered
+        /// <br /><br />
+        ///    CONTRIBUTOR: Parker Svoboda
+        /// <br />
+        ///    CREATED: 2024-03-26
+        /// <br />
+        [TestMethod]
+        public void DeactivatePartsRequestSuccess()
+        {
+            Assert.IsTrue(_partsRequestManager.DeactivatePartsRequest(100002));
+        }
+
+        /// <summary>
+        ///  deactivates
+        /// </summary>
+        /// <remarks>
+        ///    Exceptions:
+        /// <br />
+        ///    <see cref="Exception">Exception</see>: Thrown when error encountered
+        /// <br /><br />
+        ///    CONTRIBUTOR: Parker Svoboda
+        /// <br />
+        ///    CREATED: 2024-03-26
+        /// <br />
+        [TestMethod]
+        [ExpectedException(typeof(NullReferenceException))]
+        public void DeactivatePartsRequestFailed()
+        {
+            _partsRequestManager.DeactivatePartsRequest(1);
+        }
     }
 }

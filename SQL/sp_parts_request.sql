@@ -66,3 +66,21 @@ AS
         WHERE @Parts_Request_Id = [Parts_Request_Line_Items].[Parts_Request_ID]
     END
 GO
+
+/***************/
+-- Initial Creator: Parker Svoboda
+-- Creation Date: 2024-03-26
+-- Last Modified: Parker Svoboda
+-- Modification Description: Initial Creation
+-- Stored Procedure Description: deactivates request effectively archiving it after approval
+print '' print '*** creating sp_deactivate_request_by_id ***'
+GO
+CREATE PROCEDURE [dbo].[sp_deactivate_request_by_id]
+(
+    @Parts_Request_Id INT
+)
+AS
+    BEGIN
+        UPDATE [dbo].[Parts_Request] SET [Is_Active] = 0 WHERE [Parts_Request_ID] = @Parts_Request_Id;    
+    END
+GO

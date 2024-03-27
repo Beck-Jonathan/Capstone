@@ -92,5 +92,28 @@ namespace NightRiderWPF.PartsRequests
                 MessageBox.Show(ex.Message);
             }
         }
+
+        /// <summary>
+        /// CONTRIBUTOR: Parker Svoboda
+        /// <br />
+        /// CREATED: 2024-03-26
+        /// <br />
+        /// Sends order to suppliers
+        /// </summary>
+        private void btnAddToOrder_Click(object sender, RoutedEventArgs e)
+        {
+            if (MessageBox.Show("Do you want to add this to order?", "Are You Sure?",MessageBoxButton.YesNo,MessageBoxImage.Question).Equals(MessageBoxResult.Yes))
+            {
+                try
+                {
+                    _partsRequestManager.DeactivatePartsRequest(parts_Request.Parts_Request_ID);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.InnerException.Message, ex.Message, MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                this.NavigationService.GoBack();
+            }
+        }
     }
 }

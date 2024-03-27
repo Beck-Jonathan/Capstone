@@ -26,7 +26,7 @@ namespace DataAccessFakes
     public class PartsRequestAccessorFake : IPartsRequestAccessor
     {
         private List<Parts_Request> _fakePartsRequest = new List<Parts_Request>();
-
+        private List<Parts_Request> _inactivefakePartsRequest = new List<Parts_Request>();
 
         /// <summary>
         ///     Constructor to setup fake parts request object/s
@@ -133,6 +133,39 @@ namespace DataAccessFakes
                 }
             }
             return null;
+        }
+
+        /// <summary>
+        ///     Deactivates a Request by Id
+        /// </summary>
+        /// <returns>
+        ///    <see cref="bool">Boolean</see>.
+        /// </returns>
+        /// <remarks>
+        ///    Exceptions:
+        /// <br />
+        ///    <see cref="ArgumentException">ArgumentException</see>: No records returned
+        /// <br /><br />
+        ///    CONTRIBUTOR: Parker Svoboda
+        /// <br />
+        ///    CREATED: 2024-03-26
+        /// </remarks>
+        public int DeactivateRequestById(int id)
+        {
+            if (_fakePartsRequest
+                .Where(partRequest => partRequest.Parts_Request_ID == id)
+                .FirstOrDefault() == null)
+            {
+                throw new NullReferenceException("part request returned null, cannot be deactivated");
+            }
+            else
+            {
+                _inactivefakePartsRequest = _fakePartsRequest
+                .Where(partRequest => partRequest.Parts_Request_ID == id)
+                .ToList();
+            }
+            _fakePartsRequest.Remove(_fakePartsRequest.Where(partRequest => partRequest.Parts_Request_ID == id).FirstOrDefault());
+            return _inactivefakePartsRequest.Count;
         }
     }
 }
