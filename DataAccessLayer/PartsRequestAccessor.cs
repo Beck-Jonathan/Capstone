@@ -199,8 +199,7 @@ namespace DataAccessLayer
             {
                 conn.Open();
                 rowsAffected = cmd.ExecuteNonQuery();
-
-            } 
+            }
             catch (Exception ex)
             {
                 throw ex;

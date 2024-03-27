@@ -3,6 +3,7 @@ using DataObjects;
 using LogicLayer;
 using LogicLayer.PartsRequest;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework.Internal;
 using System;
 
 namespace LogicLayerTests

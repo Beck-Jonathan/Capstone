@@ -29,6 +29,7 @@ namespace NightRiderWPF.Vendors
         /// </summary>
         public AddUpdateDeleteVendor(Vendor _passed)
         {
+            
             InitializeComponent();
             _vendor = _passed;
             string secondLine = "";
@@ -53,6 +54,8 @@ namespace NightRiderWPF.Vendors
             tbxVendorVendor_Zip.Text = _vendor.Vendor_Zip;
             chkVendorIs_Active.IsChecked = _vendor.Is_Active;
             chkVendorPreferred.IsChecked = _vendor.Preferred;
+            lblVendorIs_Active.Visibility = Visibility.Hidden;
+            chkVendorIs_Active.Visibility = Visibility.Hidden;
 
         }
         /// <summary>
@@ -113,6 +116,13 @@ namespace NightRiderWPF.Vendors
 
             }
 
+        }
+
+        private void btnBack_Click(object sender, RoutedEventArgs e)
+        {
+            if (NavigationService.CanGoBack) { 
+            NavigationService.GoBack();
+            }
         }
     }
 }
