@@ -168,5 +168,48 @@ namespace DataAccessLayer
             }
             return output;
         }
+
+        /// <summary>
+        ///     Deactivates a Request by Id
+        /// </summary>
+        /// <returns>
+        ///    <see cref="bool">Boolean</see>.
+        /// </returns>
+        /// <remarks>
+        ///    Exceptions:
+        /// <br />
+        ///    <see cref="ArgumentException">ArgumentException</see>: No records returned
+        /// <br /><br />
+        ///    CONTRIBUTOR: Parker Svoboda
+        /// <br />
+        ///    CREATED: 2024-03-26
+        /// </remarks>
+        public int DeactivateRequestById(int id)
+        {
+            int rowsAffected = 0;
+            var conn = DBConnectionProvider.GetConnection();
+            var commandText = "sp_deactivate_request_by_id";
+            var cmd = new SqlCommand(commandText, conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            //Add parameters
+            cmd.Parameters.AddWithValue("@Parts_Request_Id", id);
+
+            try
+            {
+                conn.Open();
+                rowsAffected = cmd.ExecuteNonQuery();
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return rowsAffected;
+        }
     }
 }

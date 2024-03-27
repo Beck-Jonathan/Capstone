@@ -44,6 +44,35 @@ namespace LogicLayer.PartsRequest
         }
 
         /// <summary>
+        ///     deactivates Parts_Request record in the database by id
+        /// </summary>
+        /// <returns>
+        ///    List of <see cref="bool">Boolean</see>
+        /// </returns>
+        /// <remarks>
+        ///    Exceptions:
+        /// <br />
+        ///    <see cref="Exception">Exception</see>: Thrown when error encountered
+        /// <br /><br />
+        ///    CONTRIBUTOR: Parker Svoboda
+        /// <br />
+        ///    CREATED: 2024-03-26
+        /// <br />
+        public bool DeactivatePartsRequest(int id)
+        {
+            int result = 0;
+            try
+            {
+                result = _partsRequestAccessor.DeactivateRequestById(id);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return result > 0;
+        }
+
+        /// <summary>
         ///     Retrieves all Parts_Request records from the database
         /// </summary>
         /// <returns>

@@ -75,5 +75,22 @@ namespace DataAccessInterfaces
         ///     Initial Creation
         /// </remarks>
         Parts_Request GetActivePartsRequestDetails(int partsRequestID);
+
+        /// <summary>
+        ///     Deactivates a Request by Id
+        /// </summary>
+        /// <returns>
+        ///    <see cref="int">int</see>.
+        /// </returns>
+        /// <remarks>
+        ///    Exceptions:
+        /// <br />
+        ///    <see cref="ArgumentException">ArgumentException</see>: No records returned
+        /// <br /><br />
+        ///    CONTRIBUTOR: Parker Svoboda
+        /// <br />
+        ///    CREATED: 2024-03-26
+        /// </remarks>
+        int DeactivateRequestById(int id);
     }
 }
