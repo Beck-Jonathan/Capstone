@@ -63,8 +63,9 @@
         <CheckBox x:Name = "chkVendorPreferred"   Grid.Column = "5" Grid.Row = "9" IsEnabled="False" />
         <Label x:Name = "lblVendorIs_Active" HorizontalAlignment="Right" Grid.Column = "1" Grid.Row = "9" Content = "Active " />
         <CheckBox x:Name = "chkVendorIs_Active"   Grid.Column = "2" Grid.Row = "9" IsEnabled="False" />
-        <Button x:Name="btnUpdateVendor" IsEnabled="false" HorizontalAlignment="Center" Grid.Column="2" Grid.Row="10" Content="Edit Vendor" Height="40px" Width="200px"/>
-        <Button x:Name="btnAddVendor" IsEnabled="false"   HorizontalAlignment="Center" Grid.Column="5" Grid.Row="10" Content="Add Vendor" Height="40px" Width="200px"/>
+        <Button x:Name="btnUpdateVendor" IsEnabled="false" HorizontalAlignment="Center" Grid.Column="2" Grid.Row="10" Content="Edit Vendor" Height="40px" Width="150"/>
+        <Button x:Name="btnAddVendor" IsEnabled="false"   HorizontalAlignment="Center" Grid.Column="5" Grid.Row="10" Content="Add Vendor" Height="40px" Width="150"/>
+        <Button x:Name="btnBack" IsEnabled="true"   HorizontalAlignment="Center" Grid.Column="1" Grid.Row="10" Content="Back" Height="40px" Width="150" Click="btnBack_Click"/>
 
     </Grid>
 </Page>
