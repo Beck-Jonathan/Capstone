@@ -95,7 +95,7 @@ namespace DataAccessLayer
             // start with a connection object
             var conn = DBConnectionProvider.GetConnection();
             // set the command text
-            var commandText = "sp_select_all_part";
+            var commandText = "sp_select_all_parts";
             // create the command object
             var cmd = new SqlCommand(commandText, conn);
             // set the command type
@@ -297,6 +297,59 @@ namespace DataAccessLayer
             }
             return rows;
         }
+        /// <summary>
+        /// Max Fare
+        /// Created: 2024-03-24
+        /// Adds a new record to the Parts_inventory table
+        /// </summary>
+        /// <param name="newPart">The new part to be added</param>
+        /// <returns><see cref="int">The ID of the newly created part record</see></returns>
+        public int InsertParts_Inventory(Parts_Inventory newPart)
+        {
+            int id = 0;
+            // start with a connection object 
+            //needs sql connection provider
+            var conn = DBConnectionProvider.GetConnection();
+
+            // set the command text
+            var commandText = "sp_insert_part";
+            // create the command object
+            var cmd = new SqlCommand(commandText, conn);
+            // set the command type
+            cmd.CommandType = CommandType.StoredProcedure;
+            // we need to add parameters to the command
+            cmd.Parameters.Add("@Part_Name", SqlDbType.NVarChar, 30);
+            cmd.Parameters.Add("@Part_Quantity", SqlDbType.Int);
+            cmd.Parameters.Add("@Item_Description", SqlDbType.NVarChar, 100);
+            cmd.Parameters.Add("@Item_Specifications", SqlDbType.NVarChar, 4000);
+            cmd.Parameters.Add("@Part_Photo_URL", SqlDbType.NVarChar, 255);
+            cmd.Parameters.Add("@Ordered_Qty", SqlDbType.Int);
+            cmd.Parameters.Add("@Stock_Level", SqlDbType.Int);
+            // give the parameter a value
+            cmd.Parameters["@Part_Name"].Value = newPart.Part_Name;
+            cmd.Parameters["@Part_Quantity"].Value = newPart.Part_Quantity;
+            cmd.Parameters["@Item_Description"].Value = newPart.Item_Description;
+            cmd.Parameters["@Item_Specifications"].Value = newPart.Item_Specifications;
+            cmd.Parameters["@Part_Photo_URL"].Value = newPart.Part_Photo_URL;
+            cmd.Parameters["@Ordered_Qty"].Value = newPart.Ordered_Qty;
+            cmd.Parameters["@Stock_Level"].Value = newPart.Stock_Level;
+
+            try
+            {
+                conn.Open();
+                id = Convert.ToInt32(cmd.ExecuteScalar());
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return id;
+        }
 
         /// <summary>
         ///     Selects all parts compatible with a given vehicle model
@@ -407,6 +460,57 @@ namespace DataAccessLayer
             catch (Exception ex)
             {
                 throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return rows;
+        }
+
+        /// <summary>
+        ///     Adds a compatible inventory part to a vehicle model
+        /// </summary>
+        /// <param name="model_ID">
+        ///    The ID of the vehicle model
+        /// </param>
+        /// <param name="part_ID">
+        ///    The ID of the part
+        /// </param>
+        /// <returns>
+        ///    <see cref="Int">Int</see>: 1 if the part compatibility was removed
+        /// </returns>
+        /// <remarks>
+        ///    Parameters:
+        /// <br />
+        ///    <see cref="int">int</see> vehicleModelId: The ID of the vehicle model
+        ///   <see cref="int">int</see> Parts_InventoryID: The ID of the part
+        ///   /// <br /><br />
+        ///    CONTRIBUTOR: James Williams
+        /// <br />
+        ///    CREATED: 2024-03-26
+        /// </remarks>
+        /// </remarks>
+        public int AddModelCompatibility(int vehicleModelID, int partsInventoryID)
+        {
+            int rows = 0;
+            
+            var conn = DBConnectionProvider.GetConnection();
+            var commandText = "sp_add_compatible_part";
+            var cmd = new SqlCommand(commandText, conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.Add("@p_Vehicle_Model_ID", SqlDbType.Int).Value = vehicleModelID;
+            cmd.Parameters.Add("@p_Part_Inventory_ID", SqlDbType.Int).Value = partsInventoryID;
+            
+
+            try
+            {
+                conn.Open();
+                rows = cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("Error executing sp_add_compatible_part",ex);
             }
             finally
             {

@@ -17,6 +17,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace DataAccessFakes
 {
@@ -35,6 +36,8 @@ namespace DataAccessFakes
         /// </remarks>
 
         private List<Parts_Inventory> _fakeparts = new List<Parts_Inventory>();
+        private List<VehicleModelVM> _fakeModels = new List<VehicleModelVM>();
+       
         public Parts_Inventory_Fakes()
         {
             Parts_Inventory part1 = new Parts_Inventory();
@@ -73,7 +76,62 @@ namespace DataAccessFakes
             part3.CompatibleVehicleModelIds = new List<int> { 1 };
             _fakeparts.Add(part3);
 
+            //created by James Williams
+            _fakeModels.Add(new VehicleModelVM
+            {
+                VehicleModelID = 1,
+                Name = "Chevy",
+                Make = "Tercel",
+                Year = 1994,
+                Compatible_Parts = new List<Parts_Inventory>() {part1}
+                
+            });
 
+            _fakeModels.Add(new VehicleModelVM
+            {
+                VehicleModelID = 2,
+                Name = "Ford",
+                Make = "F150",
+                Year = 2022,
+                Compatible_Parts = new List<Parts_Inventory>() { part2 }
+            });
+
+            _fakeModels.Add(new VehicleModelVM
+            {
+                VehicleModelID = 3,
+                Name = "Camry",
+                Make = "Toyota",
+                Year = 2010,
+                Compatible_Parts = new List<Parts_Inventory>() { part3 }
+            });
+
+        }
+
+        public int AddModelCompatibility(int vehicleModelID, int partsInventoryID)
+        {
+            int rows = 0;
+            VehicleModelVM vm = null;
+            Parts_Inventory selectedPart = null;
+            List<Parts_Inventory> compatibleParts = null;
+            
+            //grab the model from fakes
+            vm = _fakeModels.FirstOrDefault(m => m.VehicleModelID == vehicleModelID);
+            //grab the part from fakes
+            selectedPart = _fakeparts.FirstOrDefault(p => p.Parts_Inventory_ID == partsInventoryID);
+            
+            //get original list of Compatible_Parts from modelVM
+            compatibleParts = vm.Compatible_Parts.ToList();
+            //redundancy check of parts
+            Parts_Inventory partExists = vm.Compatible_Parts.FirstOrDefault(p => p.Parts_Inventory_ID == partsInventoryID);
+            if(partExists != null) 
+            {
+                throw new ApplicationException("Part already compatible");
+            }
+            //add part if not already on list
+            compatibleParts.Add(selectedPart);
+            //overwrite modelVM Compatible_Parts with new list
+            vm.Compatible_Parts = compatibleParts;
+            return ++rows;
         }
 
         /// <summary>
@@ -102,6 +160,22 @@ namespace DataAccessFakes
             return result;
         }
 
+        public int InsertParts_Inventory(Parts_Inventory newPart)
+        {
+            if (!String.IsNullOrEmpty(newPart.Part_Name)
+                && !String.IsNullOrEmpty(newPart.Item_Description)
+                && !String.IsNullOrEmpty(newPart.Item_Specifications)
+                && !String.IsNullOrEmpty(newPart.Part_Photo_URL))
+            {
+                newPart.Parts_Inventory_ID = _fakeparts[_fakeparts.Count - 1].Parts_Inventory_ID + 1;
+                _fakeparts.Add(newPart);
+                return newPart.Parts_Inventory_ID;
+            }
+            else
+            {
+                throw new Exception("Incomplete Object cannot be added");
+            }
+        }
         //Jonathan Beck March 24 2024
         public int DeleteModelCompatibility(int vehicleModelId, int Parts_InventoryID)
         {

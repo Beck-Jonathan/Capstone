@@ -12,6 +12,7 @@
 using DataAccessFakes;
 using DataObjects;
 using LogicLayer;
+using LogicLayer.AppData;
 using NightRiderWPF.PurchaseOrders;
 using System;
 using System.Collections.Generic;
@@ -65,9 +66,21 @@ namespace NightRiderWPF.Inventory
         /// <throws>Argument Exception</throws>
         /// <remarks>
         /// Updater Name: Max Fare
-        /// Updated: yyyy/mm/dd 
+        /// Updated: 2024-03-26
+        /// updated to hide the add part button based on user's role
+        /// </remarks>
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
+            if(Authentication.HasRole("Admin") 
+                || Authentication.HasRole("PartsPerson"))
+            {
+                btnAddPart.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                btnAddPart.Visibility = Visibility.Hidden;
+            }
+
             inventoryManager = new Parts_InventoryManager();
             List<dynamic> displayParts = new List<dynamic>();
             //call accessor to get all parts
@@ -148,7 +161,7 @@ namespace NightRiderWPF.Inventory
                 Parts_Inventory passed = returnPart(value);
                 if (passed != null)
                 {
-                    NavigationService.Navigate(new AddUpdateDeleteParts_Invnetory(passed));
+                    NavigationService.Navigate(new AddUpdateDeleteParts_Inventory(passed));
                 }
                 else
                 {
@@ -313,6 +326,11 @@ namespace NightRiderWPF.Inventory
         private void btnViewVendors_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.Navigate(new Vendors.ViewAllVendors());
+        }
+
+        private void btnAddPart_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new AddUpdateDeleteParts_Inventory());
         }
     }
 }

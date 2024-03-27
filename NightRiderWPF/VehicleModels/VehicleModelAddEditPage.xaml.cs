@@ -30,6 +30,7 @@ namespace NightRiderWPF.VehicleModels
         private VehicleModelVM _newVehcileModel;
         List<Parts_Inventory> oldCompatible;
         List<Parts_Inventory> newCompatible;
+        int mode;
 
         public VehicleModelAddEditPage(
             IVehicleModelManager vehicleModelManager, 
@@ -38,23 +39,38 @@ namespace NightRiderWPF.VehicleModels
             VehicleModelVM vehicleModel = null)
         {
             InitializeComponent();
+            
+            if (vehicleModel == null)
+            {
+                mode = 0;
+            }
+
+            else 
+            { 
+                mode = 1; 
+            }
 
             _vehicleModelManager = vehicleModelManager;
             _vehicleManager = vehicleManager;
             _partsInventoryManager = partsInventoryManager;
             _vehicleModel = vehicleModel;
-            _newVehcileModel = new VehicleModelVM {
-                Make = _vehicleModel.Make,
-                MaxPassengers = _vehicleModel.MaxPassengers,
+            if (_vehicleModel != null ) 
+            {
+                _newVehcileModel = new VehicleModelVM
+                {
+                    Make = _vehicleModel.Make,
+                    MaxPassengers = _vehicleModel.MaxPassengers,
 
-                
-                Name = _vehicleModel.Name,
-                VehicleModelID = _vehicleModel.VehicleModelID,
-                VehicleTypeID = _vehicleModel.VehicleTypeID,
-                Year = _vehicleModel.Year,
-                
-                IsActive = _vehicleModel.IsActive       
- };
+
+                    Name = _vehicleModel.Name,
+                    VehicleModelID = _vehicleModel.VehicleModelID,
+                    VehicleTypeID = _vehicleModel.VehicleTypeID,
+                    Year = _vehicleModel.Year,
+
+                    IsActive = _vehicleModel.IsActive
+                };
+                btnAddCompatiblePart.IsEnabled = true;
+            }
         }
 
         /// <summary>
@@ -71,7 +87,7 @@ namespace NightRiderWPF.VehicleModels
         {
             // Populate year and type combo boxes
             List<int> years = new List<int>();
-
+            btnSave.IsEnabled = true;
             for (int year = 1940; year < 2031; year++)
             {
                 years.Add(year);
@@ -93,10 +109,12 @@ namespace NightRiderWPF.VehicleModels
             if (_vehicleModel == null)
             {
                 btnSave.Content = "Add New Vehicle";
+        
             }
             else
             {
                 btnSave.Content = "Save Changes";
+                btnAddCompatiblePart.IsEnabled = true;
 
                 txtName.Text = _vehicleModel.Name;
                 txtMake.Text = _vehicleModel.Make;
@@ -120,7 +138,7 @@ namespace NightRiderWPF.VehicleModels
                 }
             }
             
-            btnAddCompatiblePart.IsEnabled = false;
+            
             btnSave.IsEnabled = false;
 
         }
@@ -232,17 +250,81 @@ namespace NightRiderWPF.VehicleModels
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-            try
+            if (mode == 1)
             {
-                _vehicleModelManager.UpdateVehicleModel(_vehicleModel, _newVehcileModel);
-            }
-            catch (Exception ex)
-            {
+                try
+                {
+                    _vehicleModelManager.UpdateVehicleModel(_vehicleModel, _newVehcileModel);
+                }
+                catch (Exception ex)
+                {
 
-                MessageBox.Show(ex.Message);
+                    MessageBox.Show(ex.Message);
+                }
+                MessageBox.Show("Updated!");
+                NavigationService.GoBack();
             }
-            MessageBox.Show("Updated!");
-            NavigationService.GoBack();
+            else
+            {
+                string name = txtName.Text;
+                string make = txtMake.Text;
+                string type = cmbType.Text;
+                int year;
+                int maxPassengers;
+
+                try
+                {
+                    year = Int32.Parse(cmbYear.Text);
+                }
+                catch (FormatException)
+                {
+                    MessageBox.Show("Please select a valid year");
+                    return;
+                }
+
+                try
+                {
+                    maxPassengers = Int32.Parse(txtMaxPassengers.Text);
+                }
+                catch (FormatException)
+                {
+                    MessageBox.Show("Please enter a valid value for max passengers");
+                    return;
+                }
+
+                if (string.IsNullOrEmpty(name))
+                {
+                    MessageBox.Show("Please enter a model name");
+                    return;
+                }
+
+                if (string.IsNullOrEmpty(make))
+                {
+                    MessageBox.Show("Please enter a make");
+                    return;
+                }
+
+                try
+                {
+                    if (_vehicleModel == null)
+                    {
+                        _vehicleModelManager.AddVehicleModel(new VehicleModel
+                        {
+                            Name = name,
+                            Make = make,
+                            Year = year,
+                            VehicleTypeID = type,
+                            MaxPassengers = maxPassengers
+                        });
+                    }
+
+                    NavigationService.GoBack();
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("An error occurred");
+                }
+            }
         }
         /// <summary>
         ///     goes to the previous page, and does not save the cnages
@@ -259,6 +341,17 @@ namespace NightRiderWPF.VehicleModels
                 NavigationService.GoBack();
 
             }
+        }
+
+        private void btnAddCompatiblePart_Click(object sender, RoutedEventArgs e)
+        {
+            if(_vehicleModel == null)
+            {
+                MessageBox.Show("Please create a new vehicle model or select one from the Vehicle Model List to proceed");
+                return;
+            }
+            NavigationService.Navigate(new AddCompatiblePartToModelPage(_vehicleManager, _vehicleModelManager, _partsInventoryManager,
+            oldCompatible, _vehicleModel));
         }
     }
 }

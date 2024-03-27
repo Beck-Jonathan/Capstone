@@ -77,6 +77,15 @@ namespace DataAccessInterfaces
         int DeactivateParts_Inventory(Parts_Inventory part);
 
         /// <summary>
+        /// Max Fare
+        /// Created: 2024-03-24
+        /// Attempts to create a new parts_inventory record in the database
+        /// </summary>
+        /// <param name="newPart">The part to add to the database</param>
+        /// <returns>The ID of the newly created record</returns>
+        int InsertParts_Inventory(Parts_Inventory newPart);
+
+        ///<summary>
         ///     Selects all parts compatible with a given vehicle model
         /// </summary>
         /// <param name="vehicleModelId">
@@ -119,6 +128,31 @@ namespace DataAccessInterfaces
         int DeleteModelCompatibility(int vehicleModelId, int Parts_InventoryID);
 
         // Reviewed By: John Beck
+
+        /// <summary>
+        ///     Adds a compatible inventory part to a vehicle model
+        /// </summary>
+        /// <param name="model_ID">
+        ///    The ID of the vehicle model
+        /// </param>
+        /// <param name="part_ID">
+        ///    The ID of the part
+        /// </param>
+        /// <returns>
+        ///    <see cref="Int">Int</see>: 1 if the part compatibility was removed
+        /// </returns>
+        /// <remarks>
+        ///    Parameters:
+        /// <br />
+        ///    <see cref="int">int</see> vehicleModelId: The ID of the vehicle model
+        ///   <see cref="int">int</see> Parts_InventoryID: The ID of the part
+        ///   /// <br /><br />
+        ///    CONTRIBUTOR: James Williams
+        /// <br />
+        ///    CREATED: 2024-03-26
+        /// </remarks>
+        /// </remarks>
+        int AddModelCompatibility(int vehicleModelID, int partsInventoryID);
     }
 
 }

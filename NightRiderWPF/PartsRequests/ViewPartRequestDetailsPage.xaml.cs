@@ -98,11 +98,11 @@ namespace NightRiderWPF.PartsRequests
         /// <br />
         /// CREATED: 2024-03-26
         /// <br />
-        /// Sends order to suppliers
+        /// rejects order
         /// </summary>
-        private void btnAddToOrder_Click(object sender, RoutedEventArgs e)
+        private void btnReject_Click(object sender, RoutedEventArgs e)
         {
-            if (MessageBox.Show("Do you want to add this to order?", "Are You Sure?",MessageBoxButton.YesNo,MessageBoxImage.Question).Equals(MessageBoxResult.Yes))
+            if (MessageBox.Show("Do you want to reject this request?", "Are You Sure?", MessageBoxButton.YesNo, MessageBoxImage.Question).Equals(MessageBoxResult.Yes))
             {
                 try
                 {

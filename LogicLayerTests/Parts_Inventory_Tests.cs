@@ -231,6 +231,45 @@ namespace LogicLayerTests
             _mgr.RemoveParts_Inventory(part);
 
         }
+        /// <summary>
+        /// Max Fare
+        /// Created: 2024-03-24
+        /// This test returns the ID field of the newly added part
+        /// </summary>
+        [TestMethod]
+        public void TestAddPartsInventoryReturnsIDField()
+        {
+            //arrange
+            Parts_Inventory toTest = new Parts_Inventory()
+            {
+                Part_Name = "test",
+                Part_Quantity = 0,
+                Item_Description = "test",
+                Item_Specifications = "test",
+                Part_Photo_URL = "test",
+                Ordered_Qty = 0,
+                Stock_Level = 0
+            };
+            int expected = 4;
+            int actual = 0;
+            //act
+            actual = _mgr.AddParts_Inventory(toTest);
+            //assert
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ApplicationException))]
+        public void TestAddPartsInventoryFailsWithIncompleteData()
+        {
+            Parts_Inventory toTest = new Parts_Inventory();
+            int expected = 4;
+            int actual = 0;
+
+            actual = _mgr.AddParts_Inventory(toTest);
+
+            
+        }
 
         /// <summary>
         ///     Test that retrieving parts compatible with vehicle model id returns the expected number of results
@@ -298,5 +337,39 @@ namespace LogicLayerTests
         }
 
         // Reviewed By: John Beck
+
+        /// <summary>
+        ///     Test for a passing adding part compatiblity to vehicle model
+        /// </summary>
+        /// <remarks>
+        ///    CONTRIBUTOR: James Williams
+        /// <br />
+        ///    CREATED: 2024-03-24
+        /// </remarks>
+
+        [TestMethod]
+        public void AddPartCompatibilityPasses()
+        {
+            int expected = 1;
+            int actual = 0;
+            actual = _mgr.AddModelPartCompatibility(1, 2);
+            Assert.AreEqual(expected, actual);
+        }
+        /// <summary>
+        ///     Test that expects an ApplicationException when a duplicate entry is added
+        /// </summary>
+        /// <remarks>
+        ///    CONTRIBUTOR: James Williams
+        /// <br />
+        ///    CREATED: 2024-03-24
+        /// </remarks>
+
+        [TestMethod]
+        [ExpectedException(typeof(ApplicationException))]
+        public void AddPartCompatibilityFailsArgumentExceptionDuplicateEntry()
+        {
+            int addPart = _mgr.AddModelPartCompatibility(1, 1);
+        }
     }
+    // Reviewed By: John Beck
 }

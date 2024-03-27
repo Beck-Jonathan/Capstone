@@ -91,7 +91,7 @@
                    HorizontalAlignment="Right" Margin="5,0,40,15" OpacityMask="Black" 
                     />
             <Button x:Name="btnAddToOrder" VerticalAlignment="Top" 
-                    Height="30" Width="175" Margin="0,20,0,0" Content="Add to Order" IsEnabled="true" Click="btnAddToOrder_Click" />
+                    Height="30" Width="175" Margin="0,20,0,0" Content="Add to Order" IsEnabled="false" />
         </Grid>
 
         <!-- Footer Buttons -->
@@ -102,7 +102,7 @@
 
             <Button x:Name="btnReject" Content="Reject" FontWeight="Bold" 
                     Width="120" Height="30" 
-                    HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,40,40" BorderThickness="1,1,2,2" IsEnabled="False"/>
+                    HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,40,40" BorderThickness="1,1,2,2" IsEnabled="true" Click="btnReject_Click"/>
         </Grid>
 
     </Grid>

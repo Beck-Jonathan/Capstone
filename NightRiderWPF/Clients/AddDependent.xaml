@@ -8,7 +8,7 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="AddDependentPage">
     <Page.Resources>
-        
+
     </Page.Resources>
 
     <Grid x:Name="grdMain" Background="LightBlue">
@@ -43,7 +43,7 @@
         <Label x:Name="lblDOB" Grid.Row="9" Grid.Column="0">Date of Birth</Label>
         <Label x:Name="lblGender" Grid.Row="11" Grid.Column="0">Gender</Label>
         <Label x:Name="lblRelationship" Grid.Row="1" Grid.Column="0">Relationship</Label>
-        
+
         <Label x:Name="lblEmergencyContact" Grid.Row="1" Grid.Column="3">Emergency Contact</Label>
         <Label x:Name="lblEmergencyRelationship" Grid.Row="3" Grid.Column="3">Contact Relationship</Label>
         <Label x:Name="lblEmergencyPhone" Grid.Row="5" Grid.Column="3">Emergency Phone</Label>
@@ -72,7 +72,7 @@
             <ComboBoxItem Content="Aide/ Caregiver"/>
             <ComboBoxItem Content="Other"/>
         </ComboBox>
-        
+
 
         <TextBox x:Name="txtEmergencyContact" Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="2" Width="175"
                 Height="25" HorizontalAlignment="Left"></TextBox>

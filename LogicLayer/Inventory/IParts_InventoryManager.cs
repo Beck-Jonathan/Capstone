@@ -81,11 +81,23 @@ namespace LogicLayer
         /// Created: 2024-02-23
         /// Removes a part from the active inventory
         /// </summary>
+        /// <param name="part">The part to remove from inventory</param>
         /// <remarks>
         /// </remarks>
         int RemoveParts_Inventory(Parts_Inventory part);
 
         /// <summary>
+        /// Max Fare
+        /// Created: 2024-03-24
+        /// Adds a new part to inventory
+        /// </summary>
+        /// <param name="newPart">The new part to add to inventory</param>
+        /// <returns>The ID of the newly created part</returns>
+        /// <remarks>
+        /// </remarks>
+        int AddParts_Inventory(Parts_Inventory newPart);
+
+        ///<summary>
         ///     Retrieves all parts compatible with a given vehicle model
         /// </summary>
         /// <param name="vehicleModelId">
@@ -123,6 +135,28 @@ namespace LogicLayer
         int PurgeModelPartCompatibility(int model_ID, int part_ID);
 
         // Reviewed By: John Beck
+
+        /// <summary>
+        ///     Adds a compatible part to a vehicle model
+        /// </summary>
+        /// <param name="model_ID">
+        ///    The ID of the vehicle model
+        /// </param>
+        /// <param name="part_ID">
+        ///    The ID of the part
+        /// </param>
+        /// <returns>
+        ///    <see cref="Int">: 1 if the part compatibility was added.
+        /// </returns>
+        /// <remarks>
+        ///    Parameters:
+        /// <br />
+        ///    <see cref="int">int</see> model_ID: The ID of the vehicle model
+        ///   <see cref="int">int</see> part_ID: The ID of the part
+        /// </remarks>
+        /// Updater Name: James Williams
+        /// Updated: 2024/03/26
+        int AddModelPartCompatibility(int modelID, int partID);
     }
 
 }

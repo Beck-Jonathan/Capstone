@@ -135,8 +135,8 @@
         <!--Operation Buttons-->
         <Button Grid.Row="1"
                 Grid.Column="3"
-                x:Name="btnAddCompatiblePart"
-                Content="Add Compatible Part"
+                x:Name="btnAdd"
+                Content="Add Model"
                 Margin="5px"
                 FontWeight="Bold"
                 Background="Gray"
@@ -145,7 +145,20 @@
                 Width="160px"
                 FontSize="14"
                 Click="btnAdd_Click" />
-
+        
+        <Button Grid.Row="2"
+                Grid.Column="3"
+                x:Name="btnAddCompatiblePart"
+                Content="Add Compatible Part"
+                Margin="5px"
+                FontWeight="Bold"
+                Background="Gray"
+                Foreground="AliceBlue"
+                Height="30px"
+                Width="160px"
+                FontSize="14" Click="btnAddCompatiblePart_Click"
+                />
+        
         <Button Grid.Row="5"
                 Grid.Column="3"
                 x:Name="btnSave"
