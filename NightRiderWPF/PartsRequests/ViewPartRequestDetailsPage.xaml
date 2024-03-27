@@ -52,7 +52,7 @@
                    FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Top" 
                    Margin="15,322,0,0" FontSize="12"/>
 
-            <Label x:Name="lblRequestFrom" Content="Request From" 
+            <Label x:Name="lblRequestFrom" Content="Employee ID" 
                    FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Top" 
                    Margin="30,367,0,0" FontSize="12"/>
         </Grid>

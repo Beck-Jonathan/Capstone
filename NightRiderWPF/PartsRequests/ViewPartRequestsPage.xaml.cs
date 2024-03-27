@@ -153,13 +153,33 @@ namespace NightRiderWPF.PartsRequests
             }
         }
 
+        /// <summary>
+        /// CONTRIBUTOR: Everett DeVaux
+        /// <br />
+        /// CREATED: 2024-03-07
+        /// <br />
+        /// navigation back button
+        /// <br /> 
+        /// UPDATED: 2024-03-27
+        /// <br /> 
+        /// UPDATER: Everett DeVaux
+        /// <br />
+        ///     Updated navigation on the back button
+        /// </summary>
         private void btnPartRequestsPage_Click(object sender, RoutedEventArgs e)
         {
             try
             {
                 Parts_Request selectedRow = (Parts_Request)datgrdPartsRequestsView.SelectedItem;
 
-                this.NavigationService.Navigate(new ViewPartRequestDetailsPage(selectedRow));
+                if (selectedRow != null)
+                {
+                    this.NavigationService.Navigate(new ViewPartRequestDetailsPage(selectedRow));
+                }
+                else
+                {
+                    MessageBox.Show("Part Request could not be found");
+                }
             }
             catch (Exception)
             {

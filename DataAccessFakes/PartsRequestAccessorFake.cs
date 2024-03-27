@@ -39,22 +39,22 @@ namespace DataAccessFakes
         /// <br />
         ///    UPDATER: Everett DeVaux
         /// <br />
-        ///     UPDATED: 2024-03-02
+        ///     UPDATED: 2024-03-27
         /// <br />
-        ///     Initial creation
+        ///     Updated Parts_Request_ID number to be 1 higher than before
         /// </remarks>
         public PartsRequestAccessorFake()
         {
             _fakePartsRequest.Add(new Parts_Request()
             {
-                Parts_Request_ID = 100000,
+                Parts_Request_ID = 100001,
                 Date_Requested = DateTime.Parse("2024-01-19"),
                 Quantity_Requested = 6,
                 Part_Name = "Spark Plug"
             });
             _fakePartsRequest.Add(new Parts_Request()
             {
-                Parts_Request_ID = 100001,
+                Parts_Request_ID = 100002,
                 Date_Requested = DateTime.Parse("2024-02-29"),
                 Quantity_Requested = 1,
                 Part_Name = "Water Pump"
@@ -62,7 +62,7 @@ namespace DataAccessFakes
 
             _fakePartsRequest.Add(new Parts_Request()
             {
-                Parts_Request_ID = 100002,
+                Parts_Request_ID = 100003,
                 Part_Name = "Part Name1",
                 Quantity_Requested = 12,
                 Vehicle_Year = "1972",
@@ -72,7 +72,6 @@ namespace DataAccessFakes
                 Date_Requested = DateTime.Parse("2024-02-28"),
                 Employee_ID = 100000
             });
-
 
 
         }
