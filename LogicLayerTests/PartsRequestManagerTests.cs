@@ -71,7 +71,7 @@ namespace LogicLayerTests
         public void TestGetPartsRequestDetailsPasses()
         {
             object expected = new Parts_Request().GetType();
-            object actual = _partsRequestManager.GetPartsRequestDetails(100000).GetType();
+            object actual = _partsRequestManager.GetPartsRequestDetails(100001).GetType();
 
             Assert.AreEqual(expected, actual);
         }
