@@ -19,8 +19,8 @@ namespace LogicLayer
     /// UPDATED: 2024-02-13
     /// <br />
     /// 
-    ///     Initial creation
-    ///     Added Vehicle Lookup List
+    ///Initial creation
+    ///Added Vehicle Lookup List
     /// </remarks>
     /// <remarks>
     /// UPDATER: Chris Baenizger
