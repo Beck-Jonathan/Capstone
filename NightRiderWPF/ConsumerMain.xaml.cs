@@ -28,6 +28,7 @@ using DataObjects;
 using NightRiderWPF.Login;
 using NightRiderWPF.RouteStop;
 using NightRiderWPF.VehicleModels;
+using NightRiderWPF.Dispatch;
 
 namespace NightRiderWPF
 {
@@ -206,6 +207,7 @@ namespace NightRiderWPF
                         btnRoutes.Visibility = Visibility.Visible;
                         btnPartsRequests.Visibility = Visibility.Visible;
                         btn_profile.Visibility = Visibility.Visible;
+                        btnDispatch.Visibility = Visibility.Visible;
                         break;
                     case "FleetAdmin":
                         btnVehicles.Visibility= Visibility.Visible;
@@ -214,6 +216,7 @@ namespace NightRiderWPF
                         btnMaintenance.Visibility= Visibility.Visible;
                         btnPartsRequests.Visibility = Visibility.Visible;
                         btn_profile.Visibility = Visibility.Visible;
+                        btnDispatch.Visibility = Visibility.Visible;
                         break;
                     case "Mechanic":
                         btnMaintenance.Visibility = Visibility.Visible;
@@ -234,6 +237,14 @@ namespace NightRiderWPF
                     // btnMySchedule.Visibility= Visibility.Visible;
                     case "Operator":
                         btnRoutes.Visibility = Visibility.Visible;
+                        btn_profile.Visibility = Visibility.Visible;
+                        break;
+                    case "Dispatch":
+                        btnVehicles.Visibility = Visibility.Visible;
+                        btnDriverSchedules.Visibility = Visibility.Visible;
+                        btnVehicleSchedules.Visibility = Visibility.Visible;
+                        btnRoutes.Visibility = Visibility.Visible;
+                        btnPartsRequests.Visibility = Visibility.Visible;
                         btn_profile.Visibility = Visibility.Visible;
                         break;
                     default: break;
@@ -410,6 +421,21 @@ namespace NightRiderWPF
                    new Parts_InventoryManager()));
            }
        }
+        private void btnDispatch_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button btn && btn.Name == "btnDispatch")
+            {
+                foreach (var child in stackMainNav.Children)
+                {
+                    if (child is Button button)
+                    {
+                        button.Background = Statics.SecondaryColor;
+                    }
+                }
+                btn.Background = Statics.PrimaryColor;
+                PageViewer.Navigate(new DispatchHome());
+            }
+        }
     }
 }
 // checked by James Williams
