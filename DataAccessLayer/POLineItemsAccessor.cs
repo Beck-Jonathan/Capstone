@@ -7,6 +7,12 @@ using System.Data.SqlClient;
 
 namespace DataAccessLayer
 {
+    /// <summary>
+    /// AUTHOR: Jonathan Beck
+    /// DATE: 2024-03-05
+    /// Database Logic for Purchase Orders Line Items
+    /// </summary>
+    /// <remarks>
     public class POLineItemsAccessor : IPOLineItemsAccessor
     {
         /// <summary>
