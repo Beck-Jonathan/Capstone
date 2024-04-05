@@ -18,3 +18,25 @@ select,
 textarea {
     max-width: 280px;
 }
+
+/* Custome CSS --- TODO move to separate file if best practice*/
+.side-bar{
+    background-color: silver;
+    height: 100%;
+}
+#logo{
+    width: 50%;
+    height: auto;
+}
+
+.nav-text{
+    font-size: 1.25rem;
+}
+
+.img-banner{
+    width: 100%;
+}
+
+.bg-night {
+    background-color: aliceblue;
+}
