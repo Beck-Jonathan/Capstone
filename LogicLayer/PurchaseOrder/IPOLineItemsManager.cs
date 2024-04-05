@@ -3,6 +3,13 @@ using System.Collections.Generic;
 
 namespace LogicLayer
 {
+    /// <summary>
+    ///    A Manager class for Purchase Orders Line Items
+    /// </summary>
+    /// <remarks>
+    ///    CONTRIBUTOR: Jonathan Beck
+    ///    CREATED: 2024-02-17
+    /// </remarks>
     public interface IPOLineItemsManager
     {
         /// <summary>

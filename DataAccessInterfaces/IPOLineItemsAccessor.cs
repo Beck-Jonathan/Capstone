@@ -3,6 +3,12 @@ using System.Collections.Generic;
 
 namespace DataAccessInterfaces
 {
+    /// <summary>
+    /// AUTHOR: Jonathan Beck
+    /// DATE: 2024-03-05
+    /// Database Logic for Purchase Orders Lin Items
+    /// </summary>
+    /// <remarks>
     public interface IPOLineItemsAccessor
     {
         /// <summary>
