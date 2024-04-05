@@ -43,3 +43,43 @@ BEGIN
     SELECT @stop_num AS 'Stop_Number';
 END
 GO
+
+/******************
+Create the update script for the Stop table
+ Created By Jonathan Beck 3/17/2023, revised4/2/2024
+***************/
+print '' Print '***Create the update script for the Stop table
+ Created By Jonathan Beck 3/17/2023, revised4/2/2024***' 
+ go 
+CREATE PROCEDURE [DBO].[sp_update_stop]
+(@oldStop_ID[int]
+,@oldStreet_Address[nvarchar](255)
+,@newStreet_Address[nvarchar](255)
+,@oldZip_Code[varchar](5)
+,@newZip_Code[varchar](5)
+,@oldLatitude[decimal](8,6)
+,@newLatitude[decimal](8,6)
+,@oldLongitude[decimal](9,6)
+,@newLongitude[decimal](9,6)
+,@oldIs_Active[bit]
+,@newIs_Active[bit]
+)
+as
+BEGIN
+UPDATE Stop
+SET
+Street_Address = @newStreet_Address
+,Zip_Code = @newZip_Code
+,Latitude = @newLatitude
+,Longitude = @newLongitude
+,Is_Active = @newIs_Active
+WHERE
+Stop_ID = @oldStop_ID
+and Street_Address = @oldStreet_Address
+and Zip_Code = @oldZip_Code
+and Latitude = @oldLatitude
+and Longitude = @oldLongitude
+and Is_Active = @oldIs_Active
+return @@rowcount
+end
+go

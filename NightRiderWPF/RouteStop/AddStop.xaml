@@ -70,6 +70,11 @@
                 Content="Add Stop" FontSize="14" FontWeight="Bold"
                 Foreground="{x:Static resources:Statics.ButtonText}" 
                 Background="{x:Static resources:Statics.SecondaryColor}" Click="btnAddStop_Click"></Button>
+        <Button x:Name="btnSaveStop" Grid.Row="8" Grid.Column="2" Margin="10px"
+        Content="Save" FontSize="14" FontWeight="Bold"
+        Foreground="{x:Static resources:Statics.ButtonText}" 
+        Background="{x:Static resources:Statics.SecondaryColor}" Click="btnSaveStop_Click"></Button>
+
         <Button x:Name="btnCancel" Grid.Row="8" Grid.Column="3" Margin="10px"
                 Content="Cancel" FontSize="14" FontWeight="Bold"
                 Foreground="{x:Static resources:Statics.ButtonText}" 

@@ -20,7 +20,7 @@
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
         <Label Grid.Column="1" Grid.Row="0" Content="Stops" Foreground="{x:Static resources:Statics.PrimaryColor}" FontSize="16pt" VerticalAlignment="Center" HorizontalAlignment="Center" />
-        <DataGrid x:Name="grdStopList" IsReadOnly="True" AutoGenerateColumns="False" Grid.Row="1" Grid.Column="1">
+        <DataGrid x:Name="grdStopList" IsReadOnly="True" AutoGenerateColumns="False" Grid.Row="1" Grid.Column="1" MouseDoubleClick="grdStopList_MouseDoubleClick">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Address" Binding="{Binding StreetAddress}" />
                 <DataGridTextColumn Header="Zip" Binding="{Binding ZIPCode}" />

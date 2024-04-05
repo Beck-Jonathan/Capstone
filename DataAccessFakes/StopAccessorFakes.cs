@@ -88,7 +88,19 @@ namespace DataAccessFakes
 
         public int UpdateStop(Stop oldStop, Stop newStop)
         {
-            throw new NotImplementedException();
+            int result = 0;
+            Stop temp = null;
+            for (int i = 0; i < _fakeStops.Count ; i++)
+            {
+                if (_fakeStops[i].StopId == oldStop.StopId) {
+                    _fakeStops[i] = newStop;
+                    result = 1;
+                    break;
+                }
+            }
+            
+
+            return result;
         }
 
         public int UpdateStopByIDAsActive(int stopID)

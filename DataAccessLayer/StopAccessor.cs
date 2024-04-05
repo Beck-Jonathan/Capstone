@@ -2,6 +2,7 @@
 using DataObjects.RouteObjects;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -122,10 +123,84 @@ namespace DataAccessLayer
 
             return stops;
         }
+        /// <summary>
+        ///     Edit a stop in the database
+        /// </summary>
+        /// <param name="_oldStop">
+        ///    The stop to be edited.
+        /// </param>
+        /// <param name="_newStop">
+        ///    The new info for the stop.
+        /// </param>
+        /// <returns>
+        ///    <see cref="int">bool</see>: The number of stops updated. Should be 1 or 0.
+        /// </returns>
+        /// <remarks>
+        ///    Parameters <br/>:
+        ///    <see cref="Stop">_oldStop</see> The stop to be edited. <br/>
+        ///    <see cref="Stop">_newStop</see>  The new info for the stop. <br/>
+        ///    Exceptions: <br/>
+        ///    <see cref="ArgumentException">ArgumentException</see>: Thrown if there is a problem writing to the DB.
+        ///    CONTRIBUTOR: Jonathan Beck
+        ///    CREATED: 2024-04-02
+        /// </remarks>
 
-        public int UpdateStop(Stop oldStop, Stop newStop)
+        public int UpdateStop(Stop _oldStop, Stop _newStop)
         {
-            throw new NotImplementedException();
+            int rows = 0;
+            // start with a connection object
+            var conn = DBConnectionProvider.GetConnection();
+            // set the command text
+            var commandText = "sp_update_stop";
+            // create the command object
+            var cmd = new SqlCommand(commandText, conn);
+            // set the command type
+            cmd.CommandType = CommandType.StoredProcedure;
+            // we need to add parameters to the command
+            cmd.Parameters.Add("@oldStop_ID", SqlDbType.Int);
+            cmd.Parameters.Add("@oldStreet_Address", SqlDbType.NVarChar, 255);
+            cmd.Parameters.Add("@newStreet_Address", SqlDbType.NVarChar, 255);
+            cmd.Parameters.Add("@oldZip_Code", SqlDbType.VarChar, 5);
+            cmd.Parameters.Add("@newZip_Code", SqlDbType.VarChar, 5);
+            cmd.Parameters.Add("@oldLatitude", SqlDbType.Decimal);
+            cmd.Parameters.Add("@newLatitude", SqlDbType.Decimal);
+            cmd.Parameters.Add("@oldLongitude", SqlDbType.Decimal);
+            cmd.Parameters.Add("@newLongitude", SqlDbType.Decimal);
+            cmd.Parameters.Add("@oldIs_Active", SqlDbType.Bit);
+            cmd.Parameters.Add("@newIs_Active", SqlDbType.Bit);
+
+            //We need to set the parameter values
+            cmd.Parameters["@oldStop_ID"].Value = _oldStop.StopId;
+            cmd.Parameters["@oldStreet_Address"].Value = _oldStop.StreetAddress;
+            cmd.Parameters["@newStreet_Address"].Value = _newStop.StreetAddress;
+            cmd.Parameters["@oldZip_Code"].Value = _oldStop.ZIPCode;
+            cmd.Parameters["@newZip_Code"].Value = _newStop.ZIPCode;
+            cmd.Parameters["@oldLatitude"].Value = _oldStop.Latitude;
+            cmd.Parameters["@newLatitude"].Value = _newStop.Latitude;
+            cmd.Parameters["@oldLongitude"].Value = _oldStop.Longitude;
+            cmd.Parameters["@newLongitude"].Value = _newStop.Longitude;
+            cmd.Parameters["@oldIs_Active"].Value = _oldStop.IsActive;
+            cmd.Parameters["@newIs_Active"].Value = _newStop.IsActive;
+            try
+            {
+                //open the connection 
+                conn.Open();  //execute the command and capture result
+                rows = cmd.ExecuteNonQuery();
+                if (rows == 0)
+                {
+                    //treat failed update as exception 
+                    throw new ArgumentException("invalid values, update failed");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return rows;
         }
 
         public int UpdateStopByIDAsActive(int stopID)

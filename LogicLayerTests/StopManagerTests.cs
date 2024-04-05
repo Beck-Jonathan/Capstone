@@ -71,5 +71,68 @@ namespace LogicLayerTests
 
             Assert.AreEqual(expected, actual);
         }
+
+        //Jonathan Beck 4/2/2024
+        [TestMethod]
+        public void TestUpdateStopCanUpdateAStop() {
+            bool expected = true;
+            bool actual = false;
+            Stop oldStop = new Stop()
+            {
+                StopId = 100003,
+                StreetAddress = "432 Test Parkway",
+                ZIPCode = "52801",
+                Latitude = 41.5236m,
+                Longitude = 90.5776m,
+                IsActive = false
+            };
+            Stop newStop = new Stop()
+            {
+                StopId = 100003,
+                StreetAddress = "433 Test Parkway",
+                ZIPCode = "52803",
+                Latitude = 41.5236m,
+                Longitude = 90.5776m,
+                IsActive = false
+            };
+            actual = _stopManager.EditStop(oldStop, newStop);
+
+
+            Assert.AreEqual(expected, actual);
+
+        }
+        //Jonathan Beck 4/2/2024
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        
+        public void TestUpdateStopFailsWithBadData()
+        {
+            bool expected = true;
+            bool actual = false;
+            Stop oldStop = new Stop()
+            {
+                StopId = 100007,
+                StreetAddress = "432 Test Parkway",
+                ZIPCode = "52801",
+                Latitude = 41.5236m,
+                Longitude = 90.5776m,
+                IsActive = false
+            };
+            Stop newStop = new Stop()
+            {
+                StopId = 100007,
+                StreetAddress = "433 Test Parkway",
+                ZIPCode = "52803",
+                Latitude = 41.5236m,
+                Longitude = 90.5776m,
+                IsActive = false
+            };
+            actual = _stopManager.EditStop(oldStop, newStop);
+
+            
+
+        }
+
+
     }
 }
