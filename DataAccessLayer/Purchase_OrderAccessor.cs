@@ -7,6 +7,12 @@ using System.Data.SqlClient;
 
 namespace DataAccessLayer
 {
+    /// <summary>
+    /// AUTHOR: Jonathan Beck
+    /// DATE: 2024-03-05
+    /// Database Logic for Purchase Orders
+    /// </summary>
+    /// <remarks>
     public class Purchase_OrderAccessor : IPurchase_OrderAccessor
     {
 

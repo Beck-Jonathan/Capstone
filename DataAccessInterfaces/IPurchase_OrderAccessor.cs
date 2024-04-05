@@ -4,6 +4,12 @@ using System.Collections.Generic;
 
 namespace DataAccessInterfaces
 {
+    /// <summary>
+    /// AUTHOR: Jonathan Beck
+    /// DATE: 2024-03-05
+    /// Database Logic for Purchase Orders
+    /// </summary>
+    /// <remarks>
     public interface IPurchase_OrderAccessor
     {
         /// <summary>

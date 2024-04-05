@@ -26,5 +26,20 @@ namespace NightRiderMVC.Controllers
 
             return View();
         }
+        public ActionResult Privacy()
+        {
+            ViewBag.Message = "NightRider Privacy Policy";
+            return View();
+        }
+        public ActionResult Terms()
+        {
+            ViewBag.Message = "NightRider Terms of Use";
+            return View();
+        }
+        public ActionResult Help()
+        {
+            ViewBag.Message = "Request Help";
+            return View();
+        }
     }
 }
