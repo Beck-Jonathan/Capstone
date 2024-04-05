@@ -20,7 +20,7 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="10"></ColumnDefinition>
             <ColumnDefinition Width="30"></ColumnDefinition>
-            <ColumnDefinition Width="45"></ColumnDefinition>
+            <ColumnDefinition Width="80"></ColumnDefinition>
             <ColumnDefinition Width="150"></ColumnDefinition>
             <ColumnDefinition Width="100"></ColumnDefinition>
             <ColumnDefinition Width="100"></ColumnDefinition>
@@ -42,13 +42,16 @@
 
             </DataGrid.Columns>
         </DataGrid>
-        <Label x:Name = "lbParts_Inventory_Search" Grid.Column = "2" Grid.Row = "1" Content = "Search" />
-        <TextBox x:Name = "tbxParts_InventorySearch" Grid.Column = "3" Grid.Row = "1" KeyUp="tbxParts_InventorySearch_KeyUp"  />
+        <Label x:Name = "lbParts_Inventory_Search" Grid.Column = "2" Grid.Row = "1" Margin="10px" Content = "Search" />
+        <TextBox x:Name = "tbxParts_InventorySearch" Grid.Column = "3" Grid.Row = "1"  Grid.ColumnSpan="1"  Margin="10px" KeyUp="tbxParts_InventorySearch_KeyUp"  />
 
-        <Label x:Name = "lblFilter" Grid.Column = "5" Grid.Row = "1" Content = "Filter" />
-        <ComboBox x:Name = "bbxFilter" Grid.Column = "6" Grid.Row = "1" />
 
-        <Button x:Name="btnAddPart" Grid.Row="1" Grid.Column="7" Margin="50 0" Content="Add New Part" Click="btnAddPart_Click"/>
+        <Label x:Name = "lblFilter" Grid.Column = "6" HorizontalAlignment="Right" Grid.Row = "1" Margin="10px" Content = "Filter" />
+        <ComboBox x:Name = "cbxFilter" Grid.Column = "6" Grid.Row = "1" Grid.ColumnSpan="2" Width="150px" HorizontalAlignment="Center" Margin="10px" SelectionChanged="cbxFilter_SelectionChanged"/>
+
+
+        <Button x:Name="btnAddPart" Grid.Row="4" Grid.Column="4" Margin=" 0" Content="Add New Part" Click="btnAddPart_Click"/>
+
 
         <Button x:Name="btnBack" Grid.Column="2" Grid.Row="4" Content="Back" Click="btnBack_Click"></Button>
         <Button x:Name="btnArchivelist" Grid.Column="6" Grid.Row="4" Content="Archive List"></Button>
