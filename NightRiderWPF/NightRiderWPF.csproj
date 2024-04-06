@@ -132,14 +132,14 @@
     <Compile Include="RoleViews\CreateRole.xaml.cs">
       <DependentUpon>CreateRole.xaml</DependentUpon>
     </Compile>
-    <Compile Include="VehicleModels\AddCompatiblePartToModelPage.xaml.cs">
-      <DependentUpon>AddCompatiblePartToModelPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="RouteStop\ViewRoute.xaml.cs">
       <DependentUpon>ViewRoute.xaml</DependentUpon>
     </Compile>
     <Compile Include="RouteStop\StopList.xaml.cs">
       <DependentUpon>StopList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="VehicleModels\AddCompatiblePartWindow.xaml.cs">
+      <DependentUpon>AddCompatiblePartWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="VehicleModels\VehicleModelAddEditPage.xaml.cs">
       <DependentUpon>VehicleModelAddEditPage.xaml</DependentUpon>
@@ -230,15 +230,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="VehicleModels\AddCompatiblePartToModelPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="RouteStop\ViewRoute.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="RouteStop\StopList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="VehicleModels\AddCompatiblePartWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
