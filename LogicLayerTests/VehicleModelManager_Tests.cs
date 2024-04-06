@@ -145,7 +145,7 @@ namespace LogicLayerTests
         public void InsertVehicleModel_InsertsVehicleCorrectly()
         {
             // Arrange
-            VehicleModel vehicle = new VehicleModel
+            VehicleModelVM vehicle = new VehicleModelVM
             {
                 Name = "TestName",
                 Make = "TestMake",

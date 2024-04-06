@@ -93,9 +93,12 @@ namespace LogicLayer
                 throw new ApplicationException("Failed to insert vehicle model");
             }
 
-            foreach (var part in vehicleModel.Compatible_Parts)
+            if (vehicleModel.Compatible_Parts != null)
             {
-                _partsManager.AddModelPartCompatibility(vehicleModelID, part.Parts_Inventory_ID);
+                foreach (var part in vehicleModel.Compatible_Parts)
+                {
+                    _partsManager.AddModelPartCompatibility(vehicleModelID, part.Parts_Inventory_ID);
+                }
             }
 
             return true;
