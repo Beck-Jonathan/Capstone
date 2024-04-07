@@ -15,7 +15,7 @@ namespace LogicLayer
     public interface IVehicleModelManager
     {
         IEnumerable<VehicleModel> GetVehicleModels();
-        bool AddVehicleModel(VehicleModel vehicleModel);
+        bool AddVehicleModel(VehicleModelVM vehicleModel);
 
         bool UpdateVehicleModel(VehicleModelVM oldModel, VehicleModelVM newModel);
     }
@@ -49,8 +49,6 @@ namespace LogicLayer
             _partsManager = partsManager;
         }
 
-
-
         /// <summary>
         ///     Retrieves all active vehicle models
         /// </summary>
@@ -79,18 +77,33 @@ namespace LogicLayer
         ///    CONTRIBUTOR: Jared Hutton
         /// <br />
         ///    CREATED: 2024-03-19
+        /// <br /><br />
+        ///    CONTRIBUTOR: Jared Hutton
+        /// <br />
+        ///    UPDATED: 2024-04-05
+        /// <br />
+        ///    Added functionality for adding part compatibilities
         /// </remarks>
-        public bool AddVehicleModel(VehicleModel vehicleModel)
+        public bool AddVehicleModel(VehicleModelVM vehicleModel)
         {
-            int rowsAffected = _vehicleModelAccessor.InsertVehicleModel(vehicleModel);
+            int vehicleModelID = _vehicleModelAccessor.InsertVehicleModel(vehicleModel);
 
-            if (rowsAffected == 0)
+            if (vehicleModelID == 0)
             {
                 throw new ApplicationException("Failed to insert vehicle model");
             }
 
+            if (vehicleModel.Compatible_Parts != null)
+            {
+                foreach (var part in vehicleModel.Compatible_Parts)
+                {
+                    _partsManager.AddModelPartCompatibility(vehicleModelID, part.Parts_Inventory_ID);
+                }
+            }
+
             return true;
         }
+
         /// <summary>
         ///     Updates a vehicle model
         /// </summary>
@@ -105,42 +118,45 @@ namespace LogicLayer
         /// <br />
         ///    <see cref="VehicleModelVM">VehicleModelVM</see> oldModel: The original version of the vehicle
         /// <br /><br />
-        /// /// <br />
-        ///    <see cref="VehicleModelVM">VehicleModelVM</see> newModel: the udpated version of the vehicle
+        ///    <see cref="VehicleModelVM">VehicleModelVM</see> newModel: the updated version of the vehicle
         /// <br /><br />
         ///    CONTRIBUTOR: Jonathan Beck
         /// <br />
         ///    CREATED: 2024-03-24
+        /// <br /><br />
+        ///    CONTRIBUTOR: Jared Hutton
+        /// <br />
+        ///    UPDATED: 2024-04-05
+        /// <br />
+        ///    Added functionality for adding part compatibilities
         /// </remarks>
 
         public bool UpdateVehicleModel(VehicleModelVM oldModel, VehicleModelVM newModel)
         {
-            
             int updates = 0;
             try
             {
-                foreach (Parts_Inventory part in oldModel.Compatible_Parts)
-                {
-                    bool delete = true;
-                    foreach (Parts_Inventory part2 in newModel.Compatible_Parts)
+                oldModel.Compatible_Parts
+                    .Where(op => !newModel.Compatible_Parts.Any(np => op.Parts_Inventory_ID == np.Parts_Inventory_ID))
+                    .ToList()
+                    .ForEach(p =>
                     {
-                        if (part2.Parts_Inventory_ID == part.Parts_Inventory_ID) {
-                            delete = false; break;
-                        }
-                    }
-                    if (delete) 
+                        _partsManager.PurgeModelPartCompatibility(oldModel.VehicleModelID, p.Parts_Inventory_ID);
+                    });
+
+                newModel.Compatible_Parts
+                    .Where(np => !oldModel.Compatible_Parts.Any(op => np.Parts_Inventory_ID == op.Parts_Inventory_ID))
+                    .ToList()
+                    .ForEach(p =>
                     {
-                        _partsManager.PurgeModelPartCompatibility(oldModel.VehicleModelID, part.Parts_Inventory_ID);
-                        updates++;
-                    }
-                }
+                        _partsManager.AddModelPartCompatibility(oldModel.VehicleModelID, p.Parts_Inventory_ID);
+                    });
             }
             catch (Exception ex)
             {
 
                 throw ex;
             }
-
 
             return (updates > 0);
         }

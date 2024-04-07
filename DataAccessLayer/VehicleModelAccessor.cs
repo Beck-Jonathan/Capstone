@@ -82,7 +82,7 @@ namespace DataAccessLayer
         ///    The VehicleModel being added
         /// </param>
         /// <returns>
-        ///    <see cref="int">bool</see>: The number of rows affected in the VehicleModel table
+        ///    <see cref="int">int</see>: The ID of the new VehicleModel row
         /// </returns>
         /// <remarks>
         ///    Parameters:
@@ -90,7 +90,7 @@ namespace DataAccessLayer
         ///    <see cref="VehicleModel">VehicleModel</see> vehicleModel: The VehicleModel being inserted
         public int InsertVehicleModel(VehicleModel vehicleModel)
         {
-            int rowsAffected = 0;
+            int id = 0;
 
             var conn = DBConnectionProvider.GetConnection();
 
@@ -115,7 +115,7 @@ namespace DataAccessLayer
             try
             {
                 conn.Open();
-                rowsAffected = cmd.ExecuteNonQuery();
+                id = (int)cmd.ExecuteScalar();
             }
             catch (Exception ex)
             {
@@ -126,7 +126,7 @@ namespace DataAccessLayer
                 conn.Close();
             }
 
-            return rowsAffected;
+            return id;
        }
     }
 }
