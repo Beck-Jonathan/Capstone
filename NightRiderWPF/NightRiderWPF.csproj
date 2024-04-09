@@ -95,7 +95,7 @@
     </Compile>
     <Compile Include="RouteStop\EditRouteStops.xaml.cs">
       <DependentUpon>EditRouteStops.xaml</DependentUpon>
-	</Compile>
+    </Compile>
     <Compile Include="PartsRequests\ViewPartRequestDetailsPage.xaml.cs">
       <DependentUpon>ViewPartRequestDetailsPage.xaml</DependentUpon>
     </Compile>
@@ -129,10 +129,9 @@
     <Compile Include="RoleViews\CreateRole.xaml.cs">
       <DependentUpon>CreateRole.xaml</DependentUpon>
     </Compile>
-
     <Compile Include="VehicleModels\AddCompatiblePartToModelPage.xaml.cs">
       <DependentUpon>AddCompatiblePartToModelPage.xaml</DependentUpon>
-	</Compile>
+    </Compile>
     <Compile Include="RouteStop\ViewRoute.xaml.cs">
       <DependentUpon>ViewRoute.xaml</DependentUpon>
     </Compile>
@@ -224,7 +223,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-
     <Page Include="VehicleModels\AddCompatiblePartToModelPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

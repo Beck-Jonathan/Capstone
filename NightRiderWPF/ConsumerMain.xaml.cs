@@ -28,6 +28,7 @@ using DataObjects;
 using NightRiderWPF.Login;
 using NightRiderWPF.RouteStop;
 using NightRiderWPF.VehicleModels;
+using NightRiderWPF.PasswordReset;
 
 namespace NightRiderWPF
 {
@@ -410,6 +411,12 @@ namespace NightRiderWPF
                    new Parts_InventoryManager()));
            }
        }
+
+        private void btnForgotPassword_Click(object sender, RoutedEventArgs e)
+        {
+            PageViewer.Navigate(new RequestAndVerifyPasswordResetCodePage(
+                new PasswordHasher(), new VerificationCodeGenerator()));
+        }
     }
 }
 // checked by James Williams

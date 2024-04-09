@@ -50,7 +50,7 @@
                     <Button Grid.Row="2" Grid.Column="0" Content="Log In" x:Name="btnLogin"
                             Background="{x:Static resources:Statics.SecondaryColor}" Foreground="{x:Static resources:Statics.ButtonText}" Click="btnLogin_Click"/>
                     <Button Grid.Row="2" Grid.Column="1" Content="Forgot Your Password?" x:Name="btnForgotPassword" Height="30" Margin="0 0 0 27.5"
-                            Background="{x:Static resources:Statics.SecondaryColor}" Foreground="{x:Static resources:Statics.ButtonText}"/>
+                            Background="{x:Static resources:Statics.SecondaryColor}" Foreground="{x:Static resources:Statics.ButtonText}" Click="btnForgotPassword_Click"/>
                     <Button Grid.Row="2" Grid.Column="1" Content="Forgot your username?" x:Name="btnForgotUsername" Height="30" Margin="0 27.5 0 0"
                             Background="{x:Static resources:Statics.SecondaryColor}" Foreground="{x:Static resources:Statics.ButtonText}" Click="btnForgotUsername_Click"/>
                     <Button
