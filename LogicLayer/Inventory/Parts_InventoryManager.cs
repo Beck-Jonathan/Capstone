@@ -302,6 +302,46 @@ namespace LogicLayer
             return rows;
         }
 
+        /// <summary>
+        ///     Updates the ordered quantity of a part
+        /// </summary>
+        /// <param cref="Int" name="PartID"> The Part ID
+        ///    
+        /// </param>
+        /// <param name="quantity" > The quantity ordered </param>
+        /// 
+        /// <returns>
+        ///    <see cref="int"/>: 1 if update was successful, 0 if not.
+        /// </returns>
+        /// 
+        /// <throws>
+        ///    <exception cref="SqlException">SqlException</exception>
+        ///    </throws>
+        ///    
+        ///    CONTRIBUTOR: Jonathan Beck
+        ///    CREATED: 4/9/2024
+        
+
+        public int AddToOrderedQuantity(int PartID, int quantity)
+        {
+            int result = 0;
+            try
+            {
+                Parts_Inventory part = _parts_inventoryaccessor.selectParts_InventoryByPrimaryKey(PartID);
+                if(part != null)
+                {
+                    part.Part_Quantity = part.Ordered_Qty + quantity;
+                    _parts_inventoryaccessor.updateQuantity(PartID, part.Part_Quantity);
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            return result;
+        }
+
         // Reviewed By: John Beck
     }
 }

@@ -157,6 +157,25 @@ namespace LogicLayer
         /// Updater Name: James Williams
         /// Updated: 2024/03/26
         int AddModelPartCompatibility(int modelID, int partID);
+        /// <summary>
+        ///     Updates the ordered quantity of a part
+        /// </summary>
+        /// <param cref="Int" name="PartID"> The Part ID
+        ///    
+        /// </param>
+        /// <param name="quantity" > The quantity ordered </param>
+        /// 
+        /// <returns>
+        ///    <see cref="int"/>: 1 if update was successful, 0 if not.
+        /// </returns>
+        /// 
+        /// <throws>
+        ///    <exception cref="SqlException">SqlException</exception>
+        ///    </throws>
+        ///    
+        ///    CONTRIBUTOR: Jonathan Beck
+        ///    CREATED: 4/9/2024
+        int AddToOrderedQuantity(int PartID, int quantity);
     }
 
 }
