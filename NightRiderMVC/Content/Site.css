@@ -18,3 +18,49 @@ select,
 textarea {
     max-width: 280px;
 }
+
+/* Custome CSS --- TODO move to separate file if best practice*/
+.side-bar{
+    background-color: silver;
+    height: 100%;
+}
+#logo{
+    width: 50%;
+    height: auto;
+}
+
+.nav-text{
+    font-size: 1.25rem;
+}
+
+.img-banner{
+    width: 100%;
+}
+
+.bg-night {
+    background-color: aliceblue;
+}
+
+.legal ol {
+    list-style: upper-roman;
+}
+.legal ol li::marker{
+    padding-left: 0px;
+    margin-left: 0px;
+    font-size: 2rem;
+}
+.legal h4, .legal h5{
+    font-size: 1.25rem;
+    font-style: normal;
+}
+
+.legal ol .lst-inner{
+    list-style: lower-roman;
+}
+.legal ol .lst-inner li::marker{
+    padding-left: 0;
+    margin-left: 0;
+    font-size: 1.25rem;
+}
+
+

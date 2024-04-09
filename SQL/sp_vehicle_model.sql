@@ -42,7 +42,7 @@ AS
 BEGIN
     INSERT INTO [dbo].[Vehicle_Model] ([Name], [Make], [Year], [Vehicle_Type_Id], [Max_Passengers])
       VALUES (@Name, @Make, @Year, @Vehicle_Type_Id, @Max_Passengers);
-    SELECT SCOPE_IDENTITY();
+    SELECT CAST( SCOPE_IDENTITY() AS int);
 END
 GO
 

@@ -1,33 +1,73 @@
-﻿@{
+﻿@*Created: 2024-03-28 ?
+* Author: Michael Springer
+* Revised: 2024-04-07 
+*@
+
+@{
     ViewBag.Title = "Home Page";
 }
 
 <main>
-    <section class="row" aria-labelledby="aspnetTitle">
-        <h1 id="title">ASP.NET</h1>
-        <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-        <p><a href="https://asp.net" class="btn btn-primary btn-md">Learn more &raquo;</a></p>
-    </section>
-
-    <div class="row">
-        <section class="col-md-4" aria-labelledby="gettingStartedTitle">
-            <h2 id="gettingStartedTitle">Getting started</h2>
-            <p>
-                ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-                enables a clean separation of concerns and gives you full control over markup
-                for enjoyable, agile development.
-            </p>
-            <p><a class="btn btn-outline-dark" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
-        </section>
-        <section class="col-md-4" aria-labelledby="librariesTitle">
-            <h2 id="librariesTitle">Get more libraries</h2>
-            <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-            <p><a class="btn btn-outline-dark" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-        </section>
-        <section class="col-md-4" aria-labelledby="hostingTitle">
-            <h2 id="hostingTitle">Web Hosting</h2>
-            <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-            <p><a class="btn btn-outline-dark" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-        </section>
+    <div class="container align-content-center">
+        <div class="row m-auto my-2">
+            <div class="card px-0">
+                <img class="card-img" src="~/Content/Images/jumbo_bus.jpg" alt="A city bus in motion" />
+                <div class="card-img-overlay text-white d-flex flex-column justify-content-center">
+                    <h1 class="display-4 ms-3">Your Fleet Service</h1>
+                    <p class="lead ms-5 img-text">Up-to-date schedules integrated with your management app</p>
+                </div>
+            </div>
+        </div>
+        <div class="row gx-4 d-flex mt-5 mx-auto">
+            <div class="col-md-4 d-inline-block ps-0 bg-light">
+                <div class="p-5 shadow rounded-3 h-100">
+                    <h2>Reach your riders</h2>
+                    <br />
+                    <p>
+                        Making changes? No problem! Update routes and service status without worrying about your website.
+                        The NightRider application makes sure your riders stay up to date with your fleet's services.
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-8 d-inline-block ps-0 bg-light">
+                <div class="p-5 shadow rounded-3 h-100">
+                    <h2>Check in from the field</h2>
+                    <br />
+                    <p>Driver application features are built right into the web portal for streamlined recordkeeping on the road.
+                    NightRider makes it easy to check drivers to check route assignments and more.'</p>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-5 d-flex mt-5 mx-auto bg-light rounded shadow">
+            <div class="row bg-light text-center m-0 p-2">
+                <h2>Automatically Generated Route Maps</h2>
+            </div>
+            <div class="row justify-content-center">
+                <img class="m-auto w-100" src="~/Content/Images/sample_map.jpg" alt="A street map"/>
+            </div>
+        </div>
     </div>
+    <div data-show-cookie-notice="@ViewBag.ShowCookieNotice"></div>
+
+
 </main>
+<!-- MODAL -->
+<div class="modal fade" id="mdl-cookie" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Cookie Policy</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>NightRider requires server-side, session cookies for basic functionality. By using the site,
+                you agree to allow the temporary collection of data necessary for the session. NightRider does not
+                use broswer-based cookies to collect persistent data.</p>
+                <p>You can review our cookie policy @Html.ActionLink("here", "Cookies", "Home").</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">I Agree</button>
+            </div>
+        </div>
+    </div>
+</div>

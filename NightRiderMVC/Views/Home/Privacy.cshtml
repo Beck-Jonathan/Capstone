@@ -1,0 +1,186 @@
+﻿@*Created: 2024-03-28 ?
+    * Author: Michael Springer
+    * Revised: 2024-04-06
+*@
+@{
+    ViewBag.Title = "Privacy";
+}
+<main aria-labelledby="title">
+    <div class="container">
+        <div class="row d-flex align-content-center">
+            <div class="col col-xl-8 p-4 m-auto">
+                <h2 id="title">@ViewBag.Message</h2>
+                <div class="mt-3 px-0 mx-0 legal">
+                    <p>
+                        Nightrider is committed to maintaining robust privacy
+                        protections for its users. &nbsp;Our Privacy Policy (“Privacy
+                        Policy”) is designed to help you understand how we collect, use and
+                        safeguard the information you provide to us and to assist you in
+                        making informed decisions when using our Service. &nbsp;
+                    </p>
+                    <p>
+                        For
+                        purposes of this Agreement, “Site” refers to the Organization's
+                        website, which can be accessed @Html.ActionLink("Here", "Index", "Home").
+                        "Service” refers to the Company’s services accessed via the Site. The
+                        terms “we,” “us,” and “our” refer to the Company. "You”
+                        refers to you, as a user of our Site or our Service.
+                    </p>
+                    <p>
+                        By
+                        accessing our Site or our Service, you accept our Privacy Policy and
+                        Terms of Use (found here: @Html.ActionLink("Terms of Service", "Terms", "Home"),
+                        and you consent to our collection, storage, use and disclosure of
+                        your Personal Information as described in this Privacy Policy.
+                    </p>
+                    <ol>
+                        <li>
+                            <h3>Information We Collect</h3>
+                            <p>
+                                We collect “Non-Personal Information” and “Personal Information.”
+                                <strong>Non-Personal Information</strong> includes information that cannot be used to personally identify you,
+                                such as anonymous usage data, general demographic information we may
+                                collect, referring/exit pages and URLs, platform types, preferences
+                                you submit and preferences that are generated based on the data you
+                                submit and number of clicks. <strong>Personal Information</strong> includes your email and
+                                other information submitted to create your account as well as any data associated with
+                                ride requests and other interactions with the application. Additionally, NightRider uses
+                                session data to track and manage your interactions while navigating the application.
+                            </p>
+                            <ol class="lst-inner">
+                                <li>
+                                    <h4>Information collected via technology</h4>
+                                    <p>
+                                        Some features of the service, e.g. ride request, require registration via your email address and
+                                        personal identifying information such as name, phone, and address. Additional personal information may
+                                        be required to activate specific featurs such as ride requests or guardian-dependent management. NightRider does not
+                                        use client-side cookies to track persistent user data, but does use server-side session cookies to facilitate navigation of the application, and
+                                        stores any necessary account information in a database. Features of the application that do not require log-in (viewing routes,
+                                        contacting the organization, etc.) do not collect any form of persistent identifying data for users, but may collect
+                                        anonymized data on page views, time spent on the platform, and other activities related to navigating the application.
+                                        You can review our cookie policy in full @Html.ActionLink("here", "Cookies", "Home").
+                                    </p>
+                                </li>
+                                <li>
+                                    <h4>Information you provide us by registering for an account</h4>
+                                    <p>
+                                        As detailed in section I.i, access to some features requires registration of an account. NightRider will collect necessary identifying
+                                        information associated with the user account.
+                                    </p>
+                                </li>
+                                <li>
+                                    <h4>Child privacy</h4>
+                                    <p>
+                                        The Site and the Service are not directed to anyone under the age of 13.
+                                        The Site does not knowingly collect or solicit information from
+                                        anyone under the age of 13, or allow anyone under the age of 13 to
+                                        sign up for the Service. In the event that we learn that we have
+                                        collected personal information from anyone under the age of 13 without
+                                        the consent of a parent or guardian, we will delete that information
+                                        as soon as possible. If you believe we have collected such
+                                        information, please @Html.ActionLink("contact us", "Contact", "Home").
+                                    </p>
+                                </li>
+                            </ol>
+                        </li>
+                        <li>
+                            <h3>How We Use and Share Information</h3>
+                            <p class="fst-italic">Personal Information</p>
+                            <p>
+                                Except as otherwise stated in this Privacy Policy, we do not sell, trade,
+                                rent or otherwise share for marketing purposes your Personal
+                                Information with third parties. We do share
+                                Personal Information with vendors who are performing services for the
+                                Company, such as the servers for our email communications who are
+                                provided access to user’s email address for purposes of sending
+                                emails from us. Those vendors use your Personal Information only at
+                                our direction and in accordance with our Privacy Policy.
+                            </p>
+                            <p>
+                                In general, the Personal Information you provide to us is used to help
+                                us communicate with you. For example, we use Personal Information to
+                                contact users in response to questions, solicit feedback from users, and
+                                provide technical support.
+                            </p>
+                            <p class="fst-italic">Non-Personal Information</p>
+                            <p>
+                                In general, we use Non-Personal Information to help us improve the
+                                Service and customize the user experience. We also aggregate
+                                Non-Personal Information in order to track trends and analyze use
+                                patterns on the Site.
+                            </p>
+                        </li>
+                        <li>
+                            <h3>How We Protect information</h3>
+                            <p>
+                                We implement security measures designed to protect your information from
+                                unauthorized access. Your account is protected by your account
+                                password and we urge you to take steps to keep your personal
+                                information safe by not disclosing your password and by logging out
+                                of your account after each use. We further protect your information
+                                from potential security breaches by implementing certain
+                                technological security measures including encryption, firewalls and
+                                secure socket layer technology. However, these measures do not
+                                guarantee that your information will not be accessed, disclosed,
+                                altered or destroyed by breach of such firewalls and secure server
+                                software. By using our Service, you acknowledge that you understand
+                                and agree to assume these risks.
+                            </p>
+                        </li>
+                        <li>
+                            <h3>Your Rights Regarding the Use of Your Personal Information</h3>
+                            <p>
+                                NightRider does not send marketing emails. We do reserve the right to send administrative emails
+                                including, for example, periodic updates to our privacy policy. Users who no longer agree to receiving
+                                such communications may remove themselves from our communication system by deactivating their account.
+                            </p>
+                        </li>
+                        <li>
+                            <h3>Links to Other Websites</h3>
+                            <p>
+                                As part of the Service, we may provide links to or compatibility with
+                                other websites or applications. However, we are not responsible for
+                                the privacy practices employed by those websites or the information
+                                or content they contain. This Privacy Policy applies solely to
+                                information collected by us through the Site and the Service.
+                                Therefore, this Privacy Policy does not apply to your use of a third
+                                party website accessed by selecting a link on our Site or via our
+                                Service. To the extent that you access or use the Service through or
+                                on another website or application, then the privacy policy of that
+                                other website or application will apply to your access or use of that
+                                site or application. We encourage our users to read the privacy
+                                statements of other websites before proceeding to use them.
+                            </p>
+                        </li>
+                        <li>
+                            <h3>Changes to Our Privacy Policy</h3>
+                            <p>
+                                The Company reserves the right to change this policy and our Terms of
+                                Service at any time. &nbsp;We will notify you of significant changes
+                                to our Privacy Policy by sending a notice to the primary email
+                                address specified in your account or by placing a prominent notice on
+                                our site. Significant changes will go into effect 30 days following
+                                such notification. Non-material changes or clarifications will take
+                                effect immediately. You should periodically check the Site and this
+                                privacy page for updates.
+                            </p>
+                        </li>
+                        <li>
+                            <h3>Contact Us</h3>
+                            <p>
+                                If you have any questions regarding this privacy policy or the practices of this Site, please
+                                @Html.ActionLink("Contact Us", "Contact", "Home") for assistance.
+                            </p>
+                        </li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+</main>
+

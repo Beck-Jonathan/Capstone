@@ -17,6 +17,7 @@ using NightRiderWPF.PurchaseOrders;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics.Tracing;
 using System.Linq;
 using System.Runtime.Remoting.Messaging;
 using System.Text;
@@ -38,20 +39,42 @@ namespace NightRiderWPF.Inventory
     /// </summary>
     public partial class PartsInventoryPage : Page
     {
+        //create the list for all parts inventory, the manager
+        // a list of dynamics which will be used to store the parts in a user readable form
+        //a dictionary to link the id from the dictionary to the part id in the main list of parts
+        // and a boolean "loaded" that allows me to delay certain functions from running before the page is ready
+        //updated by Jonathan Beck 4/1/2023
         List<Parts_Inventory> all_parts;
         Parts_InventoryManager inventoryManager = null;
-        static List<dynamic> displayParts;
+        List<dynamic> displayParts = new List<dynamic>(); // TEST THIS static
+        Dictionary<int, Parts_Inventory> IDNamePairs = new Dictionary<int, Parts_Inventory>();  // TEST THIS static
+        bool loaded;
+
         public PartsInventoryPage()
         {
+            displayParts = new List<dynamic>();
+            IDNamePairs = new Dictionary<int, Parts_Inventory>();
+            loaded = false;
             InitializeComponent();
+            List<String> options = new List<String> {
+                    "Show all",
+                    "On Hand = 0",
+                    "On Hand > 0",
+                    "# Ordered = 0",
+                    "# Ordered > 0",
+                    "Stock Level = 0",
+                    "Stock Level > 0"
+         };
+            cbxFilter.ItemsSource = options;
+            cbxFilter.SelectedIndex = 0;
         }
 
         /// <summary>
         /// Jonathan Beck
         /// Created: 2024/02/25
         /// 
-        /// NAviate to the view purchase orders page
-        
+        /// Naviate to the view purchase orders page
+
         private void btnOrders_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.Navigate(new Parts_Person_View_Purchase_Orders());
@@ -71,6 +94,9 @@ namespace NightRiderWPF.Inventory
         /// </remarks>
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
+
+            loaded = false;
+
             if(Authentication.HasRole("Admin") 
                 || Authentication.HasRole("PartsPerson"))
             {
@@ -81,12 +107,14 @@ namespace NightRiderWPF.Inventory
                 btnAddPart.Visibility = Visibility.Hidden;
             }
 
+
             inventoryManager = new Parts_InventoryManager();
-            List<dynamic> displayParts = new List<dynamic>();
+            
             //call accessor to get all parts
             try
             {
                 all_parts = inventoryManager.GetActiveParts_Inventory();
+                loaded = true;
             }
             catch (Exception ex)
             {
@@ -95,45 +123,15 @@ namespace NightRiderWPF.Inventory
             //create a list of dynamic objects to display in the datagrid
             if (all_parts != null)
             {
-                foreach (Parts_Inventory _part in all_parts)
-                {
-                    string partname = _part.Part_Name;
-                    string partnumber = _part.Parts_Inventory_ID.ToString();
-                    string onHand = _part.Part_Quantity.ToString();
-                    string noOrdered = _part.Ordered_Qty.ToString();
-                    string stockLevel = _part.Stock_Level.ToString();
-                    dynamic part = new
-                    {
-                        PropertyOne = partname,
-                        PropertyTwo = partnumber,
-                        PropertyThree = onHand,
-                        PropertyFour = noOrdered,
-                        PropertyFive = stockLevel
-                    };
-
-                    displayParts.Add(part);
-
-
-                }
+                searchParts();
                 if (displayParts.Count > 0)
                 {
-                    datParts_Inventory.ItemsSource = displayParts;
-                    datParts_Inventory.Columns[0].DisplayIndex = 5;
-
-                    datParts_Inventory.Columns[1].Header = "Part Name";
-                    datParts_Inventory.Columns[2].Header = "Part Number";
-                    datParts_Inventory.Columns[3].Header = "On Hand Quantity";
-                    datParts_Inventory.Columns[4].Header = "# Ordered";
-                    datParts_Inventory.Columns[5].Header = "Stock Level";
-                    datParts_Inventory.Columns[0].Header = "Audit";
+                    fixDataGrid();
                 }
-
             }
             else { NavigationService.StopLoading();
                 tbxParts_InventorySearch.IsEnabled = false;
             }
-
-
         }
         /// <summary>
         /// Jonathan Beck
@@ -194,9 +192,6 @@ namespace NightRiderWPF.Inventory
         {
             if (datParts_Inventory.SelectedItems.Count != 0)
             {
-
-
-
                 var _part = datParts_Inventory.SelectedItem;
                 var nameOfProperty = "PropertyTwo";
                 var propertyInfo = _part.GetType().GetProperty(nameOfProperty);
@@ -206,8 +201,6 @@ namespace NightRiderWPF.Inventory
                 {
                     //Link to Max's InventoryAudit Page
                     this.NavigationService.Navigate(new InventoryAudit(passed));
-
-
                 }
                 else
                 {
@@ -228,11 +221,8 @@ namespace NightRiderWPF.Inventory
         /// Updated: yyyy/mm/dd 
         private Parts_Inventory returnPart(int partid)
         {
-            foreach (Parts_Inventory Part in all_parts)
-            {
-                if (Part.Parts_Inventory_ID == partid) return Part;
-            }
-            return null;
+            
+            return IDNamePairs[partid];
         }
 
         /// <summary>
@@ -248,84 +238,240 @@ namespace NightRiderWPF.Inventory
 
         private void tbxParts_InventorySearch_KeyUp(object sender, KeyEventArgs e)
         {
-            if (tbxParts_InventorySearch.Text == "")
+
+            applyComboBox();
+            
+        }
+
+        //navigate ot hte view vendors page
+        private void btnViewVendors_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new Vendors.ViewAllVendors());
+        }
+        // Fixes the headers of the data grid
+        private void fixDataGrid() {
+
+            if (displayParts.Count > 0)
             {
-                //remake the list same as above
-                List<dynamic> displayParts = new List<dynamic>();
-                foreach (Parts_Inventory _part in all_parts)
-                {
-                    string partname = _part.Part_Name;
-                    string partnumber = _part.Parts_Inventory_ID.ToString();
-                    string onHand = _part.Part_Quantity.ToString();
-                    string noOrdered = _part.Ordered_Qty.ToString();
-                    string stockLevel = _part.Stock_Level.ToString();
-                    dynamic part = new
-                    {
-                        PropertyOne = partname,
-                        PropertyTwo = partnumber,
-                        PropertyThree = onHand,
-                        PropertyFour = noOrdered,
-                        PropertyFive = stockLevel
-                    };
-
-                    displayParts.Add(part);
-
-
-                }
                 datParts_Inventory.ItemsSource = displayParts;
                 datParts_Inventory.Columns[0].DisplayIndex = 5;
-                
                 datParts_Inventory.Columns[1].Header = "Part Name";
                 datParts_Inventory.Columns[2].Header = "Part Number";
                 datParts_Inventory.Columns[3].Header = "On Hand Quantity";
                 datParts_Inventory.Columns[4].Header = "# Ordered";
                 datParts_Inventory.Columns[5].Header = "Stock Level";
-
-            }
-            else
-            {
-                //make a new list based the search box
-                List<dynamic> displayParts = new List<dynamic>();
-                foreach (Parts_Inventory _part in all_parts)
-
-                {
-                    if (_part.Part_Name.ToLower().Contains(tbxParts_InventorySearch.Text.ToLower()))
-                    {
-                        string partname = _part.Part_Name;
-                        string partnumber = _part.Parts_Inventory_ID.ToString();
-                        string onHand = _part.Part_Quantity.ToString();
-                        string noOrdered = _part.Ordered_Qty.ToString();
-                        string stockLevel = _part.Stock_Level.ToString();
-                        dynamic part = new
-                        {
-                            PropertyOne = partname,
-                            PropertyTwo = partnumber,
-                            PropertyThree = onHand,
-                            PropertyFour = noOrdered,
-                            PropertyFive = stockLevel
-                        };
-
-                        displayParts.Add(part);
-                    }
-
-                }
-                datParts_Inventory.ItemsSource = displayParts;
-                if (displayParts.Count > 0)
-                {
-                    datParts_Inventory.ItemsSource = displayParts;
-                    datParts_Inventory.Columns[0].DisplayIndex = 5;
-                    datParts_Inventory.Columns[1].Header = "Part Name";
-                    datParts_Inventory.Columns[2].Header = "Part Number";
-                    datParts_Inventory.Columns[3].Header = "On Hand Quantity";
-                    datParts_Inventory.Columns[4].Header = "# Ordered";
-                    datParts_Inventory.Columns[5].Header = "Stock Level";
-                    datParts_Inventory.Columns[0].Header = "Audit";
-                }
+                datParts_Inventory.Columns[0].Header = "Audit";
             }
         }
-        private void btnViewVendors_Click(object sender, RoutedEventArgs e)
+
+        //when the combo box is changed, runs the apply combo box method to filter
+        private void cbxFilter_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            NavigationService.Navigate(new Vendors.ViewAllVendors());
+            applyComboBox();
+        }
+
+        //searches the parts name nad id number for the entered field in the search box
+        //Jonathan Beck 4/1/2023
+        public void searchParts()
+        {
+            if (loaded)
+            {
+                if (tbxParts_InventorySearch.Text == "")
+                {
+                    displayParts.Clear();
+                    foreach (Parts_Inventory _part in all_parts)
+                    {
+                        IDNamePairs[_part.Parts_Inventory_ID] = _part;
+                        dynamic part = new
+                        {
+                            PropertyOne = _part.Part_Name,
+                            PropertyTwo = _part.Parts_Inventory_ID.ToString(),
+                            PropertyThree = _part.Part_Quantity.ToString(),
+                            PropertyFour = _part.Ordered_Qty.ToString(),
+                            PropertyFive = _part.Stock_Level.ToString()
+                        };
+                        displayParts.Add(part);
+                    }
+                }
+                else {
+                    displayParts.Clear();
+                    foreach (Parts_Inventory _part in all_parts)
+                    {
+                        if ((_part.Part_Name.ToLower().Contains(tbxParts_InventorySearch.Text.ToLower()) || _part.Parts_Inventory_ID.ToString().Contains(tbxParts_InventorySearch.Text.ToLower())))
+                        {
+                            IDNamePairs[_part.Parts_Inventory_ID] = _part;
+                            dynamic part = new
+                            {
+                                PropertyOne = _part.Part_Name,
+                                PropertyTwo = _part.Parts_Inventory_ID.ToString(),
+                                PropertyThree = _part.Part_Quantity.ToString(),
+                                PropertyFour = _part.Ordered_Qty.ToString(),
+                                PropertyFive = _part.Stock_Level.ToString()
+                            };
+                            displayParts.Add(part);
+                        }
+                    }
+                }
+                    datParts_Inventory.ItemsSource = null;
+                    datParts_Inventory.ItemsSource = displayParts;
+                    fixDataGrid();
+                }
+            
+        }
+
+        //Filters by on hand. 
+        // Parameter int x - 0 if we are searching for stuff with 0 on hand, or 1 if we
+        //are loking for stuff with 1 or more on hand
+        //Jonathan Beck, 4/1/2023
+        private void filterOnHand(int x)
+        {
+            displayParts.Clear();
+            foreach (Parts_Inventory _part in all_parts)
+                if (x == 0)
+                {
+                    {
+                        if ((_part.Part_Name.ToLower().Contains(tbxParts_InventorySearch.Text.ToLower()) || _part.Parts_Inventory_ID.ToString().Contains(tbxParts_InventorySearch.Text.ToLower())) && _part.Part_Quantity == 0)
+                        {
+                            dynamic part = new
+                            {
+                                PropertyOne = _part.Part_Name,
+                                PropertyTwo = _part.Parts_Inventory_ID.ToString(),
+                                PropertyThree = _part.Part_Quantity.ToString(),
+                                PropertyFour = _part.Ordered_Qty.ToString(),
+                                PropertyFive = _part.Stock_Level.ToString()
+                            };
+                            displayParts.Add(part);
+                        }
+                    }
+                }
+                else { 
+                    
+                        if ((_part.Part_Name.ToLower().Contains(tbxParts_InventorySearch.Text.ToLower()) || _part.Parts_Inventory_ID.ToString().Contains(tbxParts_InventorySearch.Text.ToLower())) && _part.Part_Quantity > 0)
+                        {
+                            dynamic part = new
+                            {
+                                PropertyOne = _part.Part_Name,
+                                PropertyTwo = _part.Parts_Inventory_ID.ToString(),
+                                PropertyThree = _part.Part_Quantity.ToString(),
+                                PropertyFour = _part.Ordered_Qty.ToString(),
+                                PropertyFive = _part.Stock_Level.ToString()
+                            };
+                            displayParts.Add(part);
+                        }
+                    
+                }
+            datParts_Inventory.ItemsSource = null;
+            datParts_Inventory.ItemsSource = displayParts;
+            fixDataGrid();
+        }
+        //Filters by ordered. 
+        // Parameter int x - 0 if we are searching for stuff with 0 ordered, or 1 if we
+        //are loking for stuff with 1 or more ordered
+        //Jonathan Beck, 4/1/2023
+        private void filterOrdered(int x)
+        {
+            displayParts.Clear();
+            foreach (Parts_Inventory _part in all_parts)
+                if (x == 0)
+                {
+                    {
+                        if ((_part.Part_Name.ToLower().Contains(tbxParts_InventorySearch.Text.ToLower()) || _part.Parts_Inventory_ID.ToString().Contains(tbxParts_InventorySearch.Text.ToLower())) && _part.Ordered_Qty == 0)
+                        {
+                            dynamic part = new
+                            {
+                                PropertyOne = _part.Part_Name,
+                                PropertyTwo = _part.Parts_Inventory_ID.ToString(),
+                                PropertyThree = _part.Part_Quantity.ToString(),
+                                PropertyFour = _part.Ordered_Qty.ToString(),
+                                PropertyFive = _part.Stock_Level.ToString()
+                            };
+                            displayParts.Add(part);
+                        }
+                    }
+                }
+                else
+                {
+                    {
+                        if ((_part.Part_Name.ToLower().Contains(tbxParts_InventorySearch.Text.ToLower()) || _part.Parts_Inventory_ID.ToString().Contains(tbxParts_InventorySearch.Text.ToLower())) && _part.Ordered_Qty > 0)
+                        {
+                            dynamic part = new
+                            {
+                                PropertyOne = _part.Part_Name,
+                                PropertyTwo = _part.Parts_Inventory_ID.ToString(),
+                                PropertyThree = _part.Part_Quantity.ToString(),
+                                PropertyFour = _part.Ordered_Qty.ToString(),
+                                PropertyFive = _part.Stock_Level.ToString()
+                            };
+                            displayParts.Add(part);
+                        }
+                    }
+                }
+            datParts_Inventory.ItemsSource = null;
+            datParts_Inventory.ItemsSource = displayParts;
+            fixDataGrid();
+        }
+        //Filters by in stock. 
+        // Parameter int x - 0 if we are searching for stuff with 0 in stock, or 1 if we
+        //are loking for stuff with 1 or more in stock
+        //Jonathan Beck, 4/1/2023
+        private void filterStock(int x)
+        {
+            displayParts.Clear();
+            foreach (Parts_Inventory _part in all_parts)
+                if (x == 0)
+                {
+                    {
+                        if ((_part.Part_Name.ToLower().Contains(tbxParts_InventorySearch.Text.ToLower()) || _part.Parts_Inventory_ID.ToString().Contains(tbxParts_InventorySearch.Text.ToLower())) && _part.Stock_Level == 0)
+                        {
+
+                            dynamic part = new
+                            {
+                                PropertyOne = _part.Part_Name,
+                                PropertyTwo = _part.Parts_Inventory_ID.ToString(),
+                                PropertyThree = _part.Part_Quantity.ToString(),
+                                PropertyFour = _part.Ordered_Qty.ToString(),
+                                PropertyFive = _part.Stock_Level.ToString()
+                            };
+                            displayParts.Add(part);
+                        }
+                    }
+                }
+                else
+                {
+                    {
+                        if ((_part.Part_Name.ToLower().Contains(tbxParts_InventorySearch.Text.ToLower()) || _part.Parts_Inventory_ID.ToString().Contains(tbxParts_InventorySearch.Text.ToLower())) && _part.Stock_Level > 0)
+                        {
+                            dynamic part = new
+                            {
+                                PropertyOne = _part.Part_Name,
+                                PropertyTwo = _part.Parts_Inventory_ID.ToString(),
+                                PropertyThree = _part.Part_Quantity.ToString(),
+                                PropertyFour = _part.Ordered_Qty.ToString(),
+                                PropertyFive = _part.Stock_Level.ToString()
+                            };
+                            displayParts.Add(part);
+                        }
+                    }
+                }
+            datParts_Inventory.ItemsSource = null;
+            datParts_Inventory.ItemsSource = displayParts;
+            fixDataGrid();
+        }
+
+        //Reads the combo box value and runs the appropriate combo box filter
+        //fires on change of combo box.
+        public void applyComboBox() {
+            String choice = cbxFilter.SelectedItem as String;
+            switch (choice)
+            {
+                case "Show all": searchParts(); fixDataGrid(); break;
+                case "On Hand = 0": filterOnHand(0); break;
+                case "On Hand > 0": filterOnHand(1); break;
+                case "# Ordered = 0": filterOrdered(0); break;
+                case "# Ordered > 0": filterOrdered(1); break;
+                case "Stock Level = 0": filterStock(0); break;
+                case "Stock Level > 0": filterStock(1); break; 
+            }
         }
 
         private void btnAddPart_Click(object sender, RoutedEventArgs e)

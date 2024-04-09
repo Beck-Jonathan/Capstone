@@ -27,7 +27,7 @@ namespace DataAccessInterfaces
         ///    The VehicleModel being added
         /// </param>
         /// <returns>
-        ///    <see cref="int">bool</see>: The number of rows affected in the VehicleModel table
+        ///    <see cref="int">int</see>: The ID of the new VehicleModel row
         /// </returns>
         /// <remarks>
         ///    Parameters:

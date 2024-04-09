@@ -10,8 +10,26 @@ using System.Data;
 
 namespace DataAccessLayer
 {
-    /// <inheritdoc/>
-
+    /// <summary>
+    /// AUTHOR: Chris Baenziger, Everett DeVaux
+    /// CREATED: 2024-02-01
+    ///     Data access interface for accessing vehicle information from the database.
+    /// </summary>
+    /// <remarks>
+    /// UPDATER: Everett DeVaux
+    /// UPDATED: 2024-02-13
+    /// <br />
+    /// </remarks>
+    /// <remarks>
+    /// UPDATER: Chris Baenizger
+    /// UPDATED: 2024-02-23
+    /// Added method for deactivate vehicle.
+    /// </remarks>
+    /// <remarks>
+    /// UPDATER: Jacob Rohr
+    /// UPDATED: 2024-04-01
+    /// Removed inheritdoc and migrated Interface file comments. 
+    /// </remarks>
     public class VehicleAccessor : IVehicleAccessor
     {
 

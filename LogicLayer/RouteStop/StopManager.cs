@@ -75,9 +75,43 @@ namespace LogicLayer.RouteStop
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        ///     Edit a stop in the database
+        /// </summary>
+        /// <param name="oldStop">
+        ///    The stop to be edited.
+        /// </param>
+        /// <param name="newStop">
+        ///    The new info for the stop.
+        /// </param>
+        /// <returns>
+        ///    <see cref="bool">bool</see>: True/false, was a stop updated
+        /// </returns>
+        /// <remarks>
+        ///    Parameters <br/>:
+        ///    <see cref="Stop">oldStop</see> The stop to be edited. <br/>
+        ///    <see cref="Stop">newStop</see>  The new info for the stop. <br/>
+        ///    Exceptions: <br/>
+        ///    <see cref="ArgumentException">ArgumentException</see>: Thrown if there is a problem writing to the DB.
+        ///    CONTRIBUTOR: Jonathan Beck
+        ///    CREATED: 2024-04-02
+        /// </remarks>
         public bool EditStop(Stop oldStop, Stop newStop)
         {
-            throw new NotImplementedException();
+            bool result = false;
+            try
+            {
+                result=(1== _stopAccessor.UpdateStop(oldStop, newStop));
+                if (!result)
+                {
+                    throw new ArgumentException("Unable to update Stop");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return result;
         }
 
         public Stop GetStopByID(int stopID)

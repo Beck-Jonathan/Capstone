@@ -9,8 +9,35 @@ using System.Threading.Tasks;
 
 namespace LogicLayer
 {
-    /// <inheritdoc/>
-  
+
+    /// <summary>
+    /// AUTHOR: Chris Baenziger
+    /// CREATED: 2024-02-01
+    ///     Logic manager for working with vehicle data.
+    /// </summary>
+    /// 
+    /// <remarks>
+    /// UPDATER: Everett DeVaux
+    /// <br />
+    /// UPDATED: 2024-02-13
+    /// <br />
+    /// 
+    /// 
+    ///     Initial creation
+    ///     Added Vehicle Lookup List
+    /// </remarks>
+    /// <remarks>
+    /// UPDATER: Chris Baenizger
+    /// UPDATED: 2024-02-23
+    /// Added method for deactivate vehicle.
+    /// </remarks>
+    ///
+    /// <remarks>
+    /// UPDATER: Jacob Rohr
+    /// UPDATED: 2024-04-01
+    /// Removed inheritdoc and migrated Interface file comments.
+    /// </remarks>
+
     public class VehicleManager : IVehicleManager
     {
         IVehicleAccessor _vehicleLookupListAccessor = null;

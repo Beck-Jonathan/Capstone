@@ -71,5 +71,19 @@ namespace NightRiderWPF.RouteStop
         {
             refreshStopList();
         }
+        /// <summary>
+        /// AUTHOR:Jonathan Beck
+        /// CREATED: 2024-04-03
+        /// </summary>
+        private void grdStopList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (grdStopList.SelectedItems.Count == 0) {
+                MessageBox.Show("Please pick a stop to edit");
+            }
+            else {
+                Stop passed = grdStopList.SelectedItem as Stop;
+                NavigationService.Navigate(new AddStop(passed));
+            }
+        }
     }
 }
