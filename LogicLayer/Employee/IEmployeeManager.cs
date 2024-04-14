@@ -158,6 +158,29 @@ namespace LogicLayer
         /// <br />
         ///    CREATED: 2024-02-22
         int ReactivateEmployeeByID(int employeeID);
+        /// <summary>
+        ///   retrieves an employee by Email
+        /// </summary>
+        /// <param>
+        ///    Employee_ID
+        /// </param>
+        /// <returns>
+        ///     <see cref="Employee_VM"/>: returns an employee.
+        /// </returns>
+        /// <remarks>
+        ///    Parameters: Email
+        /// <br />
+        /// <br /><br />
+        ///    Exceptions:None
+        /// <br />
+        /// <br /><br />
+        ///    CONTRIBUTOR: Jacob Rohr
+        /// <br />
+        ///    CREATED: 2024-04-09
+        /// 
+        /// </remarks>
+        Employee_VM GetEmployeeByEmail(string email);
+        
     }
 }
 // Checked by Nathan Toothaker

@@ -8,8 +8,6 @@ using System.Threading.Tasks;
 
 namespace LogicLayer
 {
-    ///<inheritdoc/>
-
     /// <summary>
     /// AUTHOR: James Williams
     /// <br />
@@ -305,6 +303,26 @@ namespace LogicLayer
             }
             return rows;
         }
+
+        public Employee_VM GetEmployeeByEmail(string email)
+        {
+            Employee_VM result = null;
+            try
+            {
+                result = _employeeAccessor.GetEmployeeByEmail(email);
+                if (result == null)
+                {
+                    throw new ArgumentException("Employee not found in the database.");
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            return result;
+        }
     }
+    
 }
 // Checked by Nathan Toothaker

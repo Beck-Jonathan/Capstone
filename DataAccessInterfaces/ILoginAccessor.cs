@@ -237,5 +237,82 @@ namespace DataAccessInterfaces
             string securityResponse1,
             string securityResponse2,
             string securityResponse3);
+        /// <summary>
+        ///     retrieves all client ids in the login table
+        /// </summary>
+        /// <returns>
+        ///    List of Ints
+        /// </returns>
+        /// <remarks>
+        ///    CONTRIBUTOR: Jacob Rohr
+        ///    CREATED: 2024-04-10
+        /// </remarks>
+        List<int?> GetAllClientIdFromLogin();
+        /// <summary>
+        ///     retrieves all employee ids in the login table
+        /// </summary>
+        /// <returns>
+        ///    List of Ints
+        /// </returns>
+        /// <remarks>
+        ///    CONTRIBUTOR: Jacob Rohr
+        ///    CREATED: 2024-04-10
+        /// </remarks>
+        List<int?> GetAllEmployeeIdFromLogin();
+
+        /// <summary>
+        ///     retrieves employee username from email.
+        /// </summary>
+        /// <param name="email">
+        ///    The email of the user 
+        /// </param>
+        /// <returns>
+        ///    string username
+        /// </returns>
+        /// <remarks>
+        ///    CONTRIBUTOR: Jacob Rohr
+        ///    CREATED: 2024-04-12
+        /// </remarks>
+        String GetEmployeeUserNameByEmail(string email);
+
+        /// <summary>
+        ///     retrieves client username from email.
+        /// </summary>
+        /// <param name="email">
+        ///    The email of the user 
+        /// </param>
+        /// <returns>
+        ///    string username
+        /// </returns>
+        /// <remarks>
+        ///    CONTRIBUTOR: Jacob Rohr
+        ///    CREATED: 2024-04-12
+        /// </remarks>
+        String GetClientUserNameByEmail(string email);
+
+        /// <summary>
+        ///     Authenticates given username and password hash and retrieves the authenticated client data
+        /// </summary>
+        /// <param name="username">
+        ///    The username of the user attempting to login
+        /// </param>
+        /// <param name="passwordHash">
+        ///    The password hash of the user attempting to login
+        /// </param>
+        /// <returns>
+        ///    <see cref="Client_VM">Client_VM</see>: The authenticated client
+        /// </returns>
+        /// <remarks>
+        ///    Parameters:
+        /// <br />
+        ///    <see cref="string">string</see> username: The username given by the user
+        /// <br />
+        ///    <see cref="string">string</see> passwordHash: The password hash generated on the password given by the user
+        /// </remarks>
+        ///<remarks>
+        ///    CONTRIBUTOR: Jacob Rohr
+        ///    CREATED: 2024-04-12
+        /// </remarks>
+        Client_VM AuthenticateClient(string username, string passwordHash);
     }
 }

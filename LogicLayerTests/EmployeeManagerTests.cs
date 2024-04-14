@@ -279,6 +279,29 @@ namespace LogicLayerTests
             int employeeID = 100008;
             int rows = _employeeManager.ReactivateEmployeeByID(employeeID);
         }
+
+        [TestMethod]
+        public void TestGetEmployeeByEmailReturnsIncorrectEmployeeThrowsArgumentException()
+        {
+            
+            string badEmail = "badExample@company.com"; // email that doesn't exist 
+
+             
+            Assert.ThrowsException<ArgumentException>(() => _employeeManager.GetEmployeeByEmail(badEmail));
+        }
+        [TestMethod]
+        public void TestGetEmployeeByEmailReturnsCorrectEmployee()
+        {
+            
+            string goodEmail = "tess@company.com"; // Email should exist
+
+            
+            var correctEmployee = _employeeManager.GetEmployeeByEmail(goodEmail);
+
+            
+            Assert.IsNotNull(correctEmployee, "Correct employee should be found");
+            Assert.AreEqual(goodEmail, correctEmployee.Email, "Employee IDs should match");
+        }
     }
 }
 // Checked by Nathan Toothaker

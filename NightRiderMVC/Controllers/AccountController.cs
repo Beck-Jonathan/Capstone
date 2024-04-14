@@ -149,26 +149,113 @@ namespace NightRiderMVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
+            //JACOBS NOTES FOR PERSONAL COMPREHENSION TO PREVENT INSANSITY
+
+            //If an id exists, that means a login exists for it. 
+            //If a login exists need to make sure the username and password match
+            //thus call authenticate employee if employee authenticates good create
+            //if employee doesnt authenticate dont let it happen...
+            // only allow admin to edit Employees
+
+
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
-                var result = await UserManager.CreateAsync(user, model.Password);
-                if (result.Succeeded)
+                //check to see if this user is in the existing database
+                LogicLayer.Utilities.IPasswordHasher passwordHasher = new LogicLayer.Utilities.PasswordHasher();
+                LogicLayer.EmployeeManager employeeMgr = new LogicLayer.EmployeeManager();
+                LogicLayer.ClientManager clientMgr = new LogicLayer.ClientManager();
+                LogicLayer.LoginManager loginMgr = new LogicLayer.LoginManager(passwordHasher);
+                try
                 {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
-                    // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
-                    // Send an email with this link
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                    //checks for employee email in the employee table, if it is null goes
+                    //else if statement for client below
+                    if (employeeMgr.GetEmployeeByEmail(model.Email).Employee_ID >= 100000)
+                    {
+                        //this requires the user to use the same password as the one in the internal database
+                        //                                          TEMPORARY VALUE CHANGE IT
+                        var oldUser = loginMgr.AuthenticateEmployee(loginMgr.GetEmployeeUserNameByEmail(model.Email), model.Password);
+                        var user = new ApplicationUser
+                        {
+                            //populate these fields with existing data from olduser
+                            GivenName = oldUser.Given_Name,
+                            FamilyName = oldUser.Family_Name,
+                            EmployeeID = oldUser.Employee_ID,
 
-                    return RedirectToAction("Index", "Home");
+                            //populate these fields normally
+                            UserName = model.Email,
+                            Email = model.Email
+                        };
+                        //create the user with the identity system UserManager Normally
+                        var result = await UserManager.CreateAsync(user, model.Password);
+                        if (result.Succeeded)
+                        {
+                            //use the oldUser.Roles list to add internally assigned roles to the user
+                            foreach (var role in oldUser.Roles)
+                            {
+                                UserManager.AddToRole(user.Id, role.RoleID);
+                            }
+                            await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                            return RedirectToAction("Index", "Home");
+                        }
+                        AddErrors(result);
+                    }
+                    else if (clientMgr.GetClientByEmail(model.Email).ClientID >= 100000)
+                    {
+                        var placeholderUsername = loginMgr.GetClientUserNameByEmail(model.Email);
+                        var oldUser = loginMgr.AuthenticateClient(placeholderUsername, model.Password);
+                        var user = new ApplicationUser
+                        {
+                            //populate these fields with existing data from olduser
+                            GivenName = oldUser.GivenName,
+                            FamilyName = oldUser.FamilyName,
+                            ClientID = oldUser.ClientID,
+
+                            //populate these fields normally
+                            UserName = model.Email,
+                            Email = model.Email
+                        };
+                        //create the user with the identity system UserManager Normally
+                        var result = await UserManager.CreateAsync(user, model.Password);
+                        if (result.Succeeded)
+                        {
+                            //use the oldUser.Roles list to add internally assigned roles to the user
+                            //Commented out because Clients dont really have implemented roles.
+                            //foreach (var role in oldUser.Roles)
+                            //{
+                            //    UserManager.AddToRole(user.Id, role.ClientRoleID);
+                            //}
+                            await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                            return RedirectToAction("Index", "Home");
+                        }
+                        AddErrors(result);
+                    }
+                    else // if not existing user create a user without roles
+                    {
+                        var user = new ApplicationUser
+                        {
+                            //we will uncomment the following two lines of code later once our view model
+                            // and our view are updated to ask for them:
+                            //GivenName = model.GivenName,
+                            //FamilyName = model.FamilyName,
+                            UserName = model.Email,
+                            Email = model.Email
+                        };
+                        var result = await UserManager.CreateAsync(user, model.Password);
+                        if (result.Succeeded)
+                        {
+                            await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                            return RedirectToAction("Index", "Home");
+                        }
+                        AddErrors(result);
+                    }
                 }
-                AddErrors(result);
+                catch (Exception ex)
+                {
+                    //creating old user failed probably because authenticate user failed
+                    return View(model);
+                }
+                //modelstate was not valid
             }
-
-            // If we got this far, something failed, redisplay form
             return View(model);
         }
 
