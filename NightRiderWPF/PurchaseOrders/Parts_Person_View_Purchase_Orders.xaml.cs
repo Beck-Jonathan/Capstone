@@ -1,5 +1,6 @@
 ﻿using DataObjects;
 using LogicLayer;
+using NightRiderWPF.Inventory;
 using NightRiderWPF.PurchsaeOrders;
 using System;
 using System.Collections.Generic;
@@ -41,7 +42,7 @@ namespace NightRiderWPF.PurchaseOrders
             loaded = false;
             pending = false;
             InitializeComponent();
-            dpkEndDate.SelectedDate = DateTime.Now;
+            dpkEndDate.SelectedDate = DateTime.Now.AddDays(1);
             dpkStartDate.SelectedDate = new DateTime(2021, 01, 01);
 
         }
@@ -286,7 +287,7 @@ namespace NightRiderWPF.PurchaseOrders
         {
             if (NavigationService.CanGoBack)
             {
-                NavigationService.GoBack();
+                NavigationService.Navigate(new PartsInventoryPage()); 
             }
         }
         /// <summary>

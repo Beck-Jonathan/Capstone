@@ -3,6 +3,7 @@ using DataAccessLayer;
 using DataObjects;
 using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 
 namespace LogicLayer
 {
@@ -17,17 +18,20 @@ namespace LogicLayer
     {
         private IPurchase_OrderAccessor _OrderAccessor = null;
         private IPOLineItemsAccessor _pOLineItemsAccessor = null;
+        private IParts_InventoryAccessor _inventoryAccessor = null;
         public PurchaseOrderManager()
         {
 
             _OrderAccessor = new Purchase_OrderAccessor(); //use the database
             _pOLineItemsAccessor = new POLineItemsAccessor();
+            _inventoryAccessor = new Parts_InventoryAccessor();
         }
 
-        public PurchaseOrderManager(IPurchase_OrderAccessor purchase_OrderAccessor, IPOLineItemsAccessor pOLineItemsAccessor)
+        public PurchaseOrderManager(IPurchase_OrderAccessor purchase_OrderAccessor, IPOLineItemsAccessor pOLineItemsAccessor,IParts_InventoryAccessor _InventoryAccessor)
         {
             _OrderAccessor = purchase_OrderAccessor; //use data access fakes
             _pOLineItemsAccessor = pOLineItemsAccessor;
+            _inventoryAccessor = _InventoryAccessor;
         }
         /// <summary>
         ///     Retreive a purchase order VM from the database
@@ -118,15 +122,18 @@ namespace LogicLayer
         /// </remarks>
         public int CreatePurchaseOrder(Purchase_OrderVM purchaseOrder)
         {
-            int result = 0;
+            int PurchaseOrderID = 0;
             try
-            {
-                int PurchaseOrderID = _OrderAccessor.InsertPurchaseOrder(purchaseOrder);
+            { int result = 0;
+                PurchaseOrderID = _OrderAccessor.InsertPurchaseOrder(purchaseOrder);
                 foreach (POLineItem POLine in purchaseOrder.pOLineItems)
                 {
                     POLine.PurchaseOrderID = PurchaseOrderID;
+                    result+=_inventoryAccessor.updateQuantity(POLine.PartsInventoryID, POLine.Quantity);
+
                     result += _pOLineItemsAccessor.InsertPOLineItem(POLine);
                 }
+                if (result%2!=0) { throw new Exception("error adding line items"); }
 
             }
             catch (Exception ex)
@@ -136,7 +143,7 @@ namespace LogicLayer
             }
 
 
-            return result;
+            return PurchaseOrderID ;
         }
     }
 

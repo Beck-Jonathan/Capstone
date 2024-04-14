@@ -13,7 +13,7 @@ namespace LogicLayerTests
         [TestInitialize]
         public void testSetup()
         {
-            _mgr = new PurchaseOrderManager(new Purchase_Order_Fakes(), new POLineItems_Fakes());
+            _mgr = new PurchaseOrderManager(new Purchase_Order_Fakes(), new POLineItems_Fakes(),new Parts_Inventory_Fakes());
 
         }
         [TestMethod]
@@ -101,15 +101,19 @@ namespace LogicLayerTests
         //Creation Date: 2024-03-18
         [TestMethod]
 
-        public void TestInsertPurchaseOrderReturnsNumbeOfLineItems()
+        public void TestInsertPurchaseOrderReturnsCorrectPOAndUpdatesQauntity()
         {
-            int expected = 3;
+            int expected = 4;
+            
             Purchase_OrderVM purchase_Order = new Purchase_OrderVM();
             POLineItemVM line1 = new POLineItemVM();
+            line1.Quantity = 1;
             line1.PartsInventoryID = 1;
             POLineItemVM line2 = new POLineItemVM();
+            line2.Quantity = 3;
             line2.PartsInventoryID = 2;
             POLineItemVM line3 = new POLineItemVM();
+            line3.Quantity = 5;
             line3.PartsInventoryID = 3;
             purchase_Order.pOLineItems = new List<POLineItemVM>();
             purchase_Order.pOLineItems.Add(line1);
@@ -117,6 +121,7 @@ namespace LogicLayerTests
             purchase_Order.pOLineItems.Add(line3);
 
             int actual = _mgr.CreatePurchaseOrder(purchase_Order);
+            
             Assert.AreEqual(expected, actual);
 
         }

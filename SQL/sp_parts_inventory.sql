@@ -228,3 +228,26 @@ and Parts_Inventory_ID = @Parts_Inventory_ID
 return @@rowcount
 end
 go
+
+/******************
+Create the update Quantity proceudre for the parts_inventory table
+ Created By Jonathan Beck3/20/2024
+***************/
+print '' Print '***Create the update ordered Quantity proceudre for the parts_inventory table***'
+ go 
+CREATE PROCEDURE [DBO].[sp_update_parts_inventory_ordered_quantity]
+(@Parts_Inventory_ID[int]
+,@New_Ordered_Qty[int]
+
+)
+as
+BEGIN
+update 
+parts_inventory
+set Ordered_Qty = @New_Ordered_Qty
+
+WHERE
+Parts_Inventory_ID = @Parts_Inventory_ID
+return @@rowcount
+end
+go

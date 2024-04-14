@@ -110,10 +110,7 @@ namespace NightRiderWPF.PurchaseOrders
 
         private void btnBack_Click(object sender, RoutedEventArgs e)
         {
-            if (NavigationService.CanGoBack)
-            {
-                NavigationService.GoBack();
-            }
+            NavigationService.Navigate(new Parts_Person_View_Purchase_Orders());
         }
     }
 }

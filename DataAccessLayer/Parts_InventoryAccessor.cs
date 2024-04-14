@@ -518,6 +518,51 @@ namespace DataAccessLayer
             }
             return rows;
         }
+        /// <summary>
+        ///     Updates the ordered quantity of a part
+        /// </summary>
+        /// <param cref="Int" name="PartID"> The Part ID
+        ///    
+        /// </param>
+        /// <param name="quantity" > The quantity ordered </param>
+        /// 
+        /// <returns>
+        ///    <see cref="int"/>: 1 if update was successful, 0 if not.
+        /// </returns>
+        /// 
+        /// <throws>
+        ///    <exception cref="SqlException">SqlException</exception>
+        ///    </throws>
+        ///    
+        ///    CONTRIBUTOR: Jonathan Beck
+        ///    CREATED: 4/9/2024
+        public int updateQuantity(int partsInventoryID, int quantity)
+        {
+            int rows = 0;
+
+            var conn = DBConnectionProvider.GetConnection();
+            var commandText = "sp_update_parts_inventory_ordered_quantity";
+            var cmd = new SqlCommand(commandText, conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.Add("@Parts_Inventory_ID", SqlDbType.Int).Value = partsInventoryID;
+            cmd.Parameters.Add("@New_Ordered_Qty", SqlDbType.Int).Value = quantity;
+
+
+            try
+            {
+                conn.Open();
+                rows = cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("Error updating Quantity", ex);
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return rows;
+        }
 
         // Reviewed By: John Beck
     }
