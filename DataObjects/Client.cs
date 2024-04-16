@@ -18,9 +18,16 @@ namespace DataObjects
     /// UPDATER: Isabella Rosenbohm
     /// <br />
     /// UPDATED: 2024-02-13
+    /// Changed Client_VM property from "username" to "Username"
+    /// <br />
+    ///     /// UPDATER: Jacob Rohr
+    /// <br />
+    /// UPDATED: 2024-04-12
+    /// Added login property to client_vm
+    /// 
     /// <br />
     /// 
-    ///     Changed Client_VM property from "username" to "Username"
+    ///     
     /// </remarks>
     public class Client
     {
@@ -45,6 +52,7 @@ namespace DataObjects
         public string Username { get; set; }
         public IEnumerable<ClientRole> Roles { get; set; }
 
+        public Login Login { get; set; }
         public IEnumerable<ClientDependentRole> ClientDependentRoles { get; set; }
     }
 }

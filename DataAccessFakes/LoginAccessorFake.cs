@@ -433,6 +433,7 @@ namespace DataAccessFakes
                 .FirstOrDefault() :
                 throw new ArgumentException("1 or more answers are wrong!");
         }
+
         /// <summary>
         ///     retrieves a list of all usernames
         /// </summary>
@@ -485,6 +486,123 @@ namespace DataAccessFakes
 
             return original ? 1 : 0;
             
+        }
+
+        /// <summary>
+        ///   retrieves a list of client ids
+        /// </summary>
+        /// <param>
+        ///    None
+        /// </param>
+        /// <returns>
+        ///     <see cref="List{int}"/>: Returns the list of client ids
+        /// </returns>
+        /// <remarks>
+        ///    Parameters:None
+        /// <br />
+        /// <br /><br />
+        ///    CREATOR: Jacob Rohr
+        /// <br />
+        ///    CREATED: 2024-04-10
+        /// </remarks>
+        public List<int?> GetAllClientIdFromLogin()
+        {
+            List<int?> ids = new List<int?>();
+            foreach (var row in _fakeLoginData)
+            {
+                ids.Add(row.ClientID);
+            }
+            return ids;
+        }
+
+
+        /// <summary>
+        ///   retrieves a list of Employee ids
+        /// </summary>
+        /// <param>
+        ///    None
+        /// </param>
+        /// <returns>
+        ///     <see cref="List{int}"/>: Returns the list of employee ids
+        /// </returns>
+        /// <remarks>
+        ///    Parameters:None
+        /// <br />
+        /// <br /><br />
+        ///    CREATOR: Jacob Rohr
+        /// <br />
+        ///    CREATED: 2024-04-10
+        /// </remarks>
+        public List<int?> GetAllEmployeeIdFromLogin()
+        {
+            List<int?> ids = new List<int?>();
+            foreach(var row in _fakeLoginData)
+            {
+                ids.Add(row.EmployeeID);
+            }
+            return ids;
+        }
+        /// <summary>
+        ///     retrieves employee username from email.
+        /// </summary>
+        /// <param name="email">
+        ///    The email of the user 
+        /// </param>
+        /// <returns>
+        ///    string username
+        /// </returns>
+        /// <remarks>
+        ///    CONTRIBUTOR: Jacob Rohr
+        ///    CREATED: 2024-04-12
+        /// </remarks>
+
+        public string GetEmployeeUserNameByEmail(string email)
+        {
+            string userName = null;
+            foreach (var row in _fakeLoginData)
+            {
+                if (row.Employee.Email.Equals(email))
+                {
+                    userName = row.Username;
+                    break;
+                }
+            }
+            return userName;
+        }
+        /// <summary>
+        ///     retrieves client username from email.
+        /// </summary>
+        /// <param name="email">
+        ///    The email of the user 
+        /// </param>
+        /// <returns>
+        ///    string username
+        /// </returns>
+        /// <remarks>
+        ///    CONTRIBUTOR: Jacob Rohr
+        ///    CREATED: 2024-04-12
+        /// </remarks>
+        public string GetClientUserNameByEmail(string email)
+        {
+            string userName = null;
+            foreach (var row in _fakeLoginData)
+            {
+                if (row.Client.Email.Equals(email))
+                {
+                    userName = row.Username;
+                    break;
+                }
+            }
+            return userName;
+        }
+
+        public Client_VM AuthenticateClient(string username, string passwordHash)
+        {
+            return
+                _fakeLoginData
+                .Where(login => login.Username == username && login.PasswordHash == passwordHash)
+                .FirstOrDefault()
+                .Client;
         }
     }
 }
