@@ -588,7 +588,8 @@ GO
 	('FleetAdmin', 'Manages the fleet'),
 	('Mechanic', 'Fixes the vehicles'),
 	('Maintenance', 'Routine maintenance work that doesnt require mechanic'),
-	('PartsPerson', 'An invetory specialist, that is the go to for any parts for vehicles')
+	('PartsPerson', 'An invetory specialist, that is the go to for any parts for vehicles'),
+    ('Dispatcher', 'The controller of the fleet. Assigns tasks, routes drivers, and ensures services run smoothly.')
 GO
 
 
@@ -623,7 +624,9 @@ INSERT INTO [dbo].[Employee_Role]
     ([Employee_ID], [Role_ID])
 VALUES
     (100000, 'Admin'),
+    (100000, 'Dispatcher'),
     (100001, 'FleetAdmin'),
+    (100001, 'Dispatcher'),
     (100002, 'Mechanic'),
     (100003, 'Maintenance'),
     (100004, 'PartsPerson'),
@@ -718,11 +721,11 @@ CREATE TABLE [dbo].[Schedule]
 (
     [Schedule_ID] [nvarchar](50) NOT NULL,
     [Driver_ID] [int] NOT NULL,
-    [Week_Days] [char](7) NOT NULL DEFAULT '0000000' ,
-    [Start_Time] [time] NOT NULL,
-    [End_Time] [time] NOT NULL,
-    [Start_Date] [date] NOT NULL,
-    [End_Date] [date] NULL,
+    [Week_Days] [nvarchar](7) NOT NULL DEFAULT '0000000' ,
+    [Start_Time] [datetime] NOT NULL,
+    [End_Time] [datetime] NOT NULL,
+    [Start_Date] [datetime] NOT NULL,
+    [End_Date] [datetime] NULL,
     [Notes] [nvarchar](255) NULL,
     [Is_Active] [bit] NOT NULL DEFAULT 1,
     CONSTRAINT [PK_Schedule] PRIMARY KEY ([Schedule_ID]),

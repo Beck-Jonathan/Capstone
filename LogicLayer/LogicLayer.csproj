@@ -48,6 +48,8 @@
     <Compile Include="Client\DependentManager.cs" />
     <Compile Include="Client\IClientDependentRoleManager.cs" />
     <Compile Include="Client\IDependentManager.cs" />
+    <Compile Include="Dispatch\DriverScheduleManager.cs" />
+    <Compile Include="Dispatch\IDriverScheduleManager.cs" />
     <Compile Include="Inventory\ISourceManager.cs" />
     <Compile Include="Inventory\SourceManager.cs" />
     <Compile Include="PartsRequest\IPartsRequestsManager.cs" />
