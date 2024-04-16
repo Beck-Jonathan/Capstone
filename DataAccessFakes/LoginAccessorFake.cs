@@ -1,6 +1,8 @@
 ﻿using DataAccessInterfaces;
 using DataObjects;
+using Microsoft.Win32;
 using System;
+using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -430,6 +432,59 @@ namespace DataAccessFakes
                 .Select(login => login.Username)
                 .FirstOrDefault() :
                 throw new ArgumentException("1 or more answers are wrong!");
+        }
+        /// <summary>
+        ///     retrieves a list of all usernames
+        /// </summary>
+        /// <returns>
+        ///    <see cref="IEnumerable{string}">string[]</see>: preexisting usernames
+        /// <br /><br />
+        ///    CONTRIBUTOR: Michael Springer
+        /// <br />
+        ///    CREATED: 2024-04-12
+        /// </remarks>
+        public IEnumerable<string> SelectAllUserNames()
+        {
+            List<string> results = new List<string>();
+            // get the user names
+            foreach(var login  in fakeLoginData) { results.Add(login.Username); }
+            
+            return results;
+        }
+        /// <summary>
+        ///  Creates new entry for employee login data
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="employeeID"></param>
+        /// <returns> int="rowsAffected" </returns>
+        /// <remarks>
+        /// <br />
+        ///     CONTRIBUTOR: Michael Springer
+        /// <br />
+        ///     CREATED: 2024-04-13
+        /// </remarks>
+        public int InsertEmployeeLogin(string username, int employeeID)
+        {
+            bool original = true;
+            foreach(var user in fakeLoginData)
+            {
+                if(user.Username.ToLower().Equals(username.ToLower())) {
+                    original = false;
+                    break;
+                }
+                if(user.EmployeeID == employeeID)
+                {
+                    original = false;
+                    break;
+                }
+            }
+            Login_VM newLogin = new Login_VM();
+            newLogin.Username = username;
+            newLogin.EmployeeID = employeeID;
+            fakeLoginData.Add(newLogin);
+
+            return original ? 1 : 0;
+            
         }
     }
 }

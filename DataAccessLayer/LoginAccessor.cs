@@ -777,5 +777,98 @@ namespace DataAccessLayer
             }
             return username;
         }
+
+        /// <summary>
+        ///     retrieves a list of all user names
+        /// <returns>
+        ///    <see cref="IEnumerable{string}">string[]</see>: Usernames
+        /// </returns>
+        /// <remarks>
+        /// <br /><br />
+        ///    CONTRIBUTOR: Michael Springer
+        /// <br />
+        ///    CREATED: 2024-04-12
+        /// </remarks>
+        public IEnumerable<string> SelectAllUserNames()
+        {
+           List<string> usernames = new List<string>();
+
+            var conn = DBConnectionProvider.GetConnection();
+            var cmdText = "sp_select_all_usernames";
+            var cmd = new SqlCommand(cmdText, conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            try
+            {
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    string username = reader.GetString(0);
+                    usernames.Add(username);
+                }
+
+                if (usernames.Count == 0)
+                {
+                    throw new ArgumentException("Username not found");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return usernames;
+        }
+        /// <summary>
+        ///    Adds employee login informationb
+        /// <returns>
+        ///    <see cref="int">string[]</see>: rowsaffected
+        /// </returns>
+        /// <remarks>
+        /// <br /><br />
+        ///    CONTRIBUTOR: Michael Springer
+        /// <br />
+        ///    CREATED: 2024-04-13
+        /// </remarks>
+        /// 
+        public int InsertEmployeeLogin(string username, int employeeID)
+        {
+            // usernames are not case-sensitive
+            username = username.ToLower();
+            int rowsAffected = 0;
+            var conn = DBConnectionProvider.GetConnection();
+            var cmdText = "sp_insert_employee_login";
+            var cmd = new SqlCommand(cmdText, conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            cmd.Parameters.Add("@P_Username", SqlDbType.NVarChar, 100);
+            cmd.Parameters.Add("@P_Employee_ID", SqlDbType.Int);
+
+            cmd.Parameters["@P_Username"].Value = username;
+            cmd.Parameters["@P_Employee_ID"].Value = employeeID;
+
+            try
+            {
+                conn.Open();
+                rowsAffected = cmd.ExecuteNonQuery();
+                if(rowsAffected == 0)
+                {
+                    throw new ArgumentException("Error inserting login record");
+                }
+            }catch(Exception ex)
+            {
+                throw new ApplicationException("Error executing command to insert new login record", ex);
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return rowsAffected;
+        }
     }
 }

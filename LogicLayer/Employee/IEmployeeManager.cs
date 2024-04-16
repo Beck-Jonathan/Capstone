@@ -10,8 +10,20 @@ namespace LogicLayer
 
     public interface IEmployeeManager
     {
+       
         List<Employee_VM> GetEmployees();
-        bool AddEmployee(Employee_VM newEmployee);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="newEmployee"></param>
+        /// <returns int="newID"></returns>
+        /// <remarks>
+        /// UPDATER: Michael Springer
+        /// <br />
+        /// UPDATED: 2024-04-13
+        /// Changed return type from bool to integer
+        /// </remarks>
+        int AddEmployee(Employee_VM newEmployee);
         /// <summary>
         ///   retrieves a list of employees
         /// </summary>

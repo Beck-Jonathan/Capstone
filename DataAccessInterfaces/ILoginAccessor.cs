@@ -237,5 +237,33 @@ namespace DataAccessInterfaces
             string securityResponse1,
             string securityResponse2,
             string securityResponse3);
+
+        /// <summary>
+        ///     retrieves username using a given security responses and email.
+        /// </summary>
+        /// 
+        /// <returns>
+        ///    <see cref="List{string}"></see>: list of usernames
+		/// </returns>
+        /// <remarks>
+        /// <br /><br />
+        ///    CONTRIBUTOR: Michael Springer
+        /// <br />
+        ///    CREATED: 2024-04-09
+        /// </remarks>
+        IEnumerable<string> SelectAllUserNames();
+
+
+        /// <summary>
+        ///     Inserts a new login entry
+        /// </summary>
+        /// 
+        /// <remarks>
+        /// <br /><br />
+        ///    CONTRIBUTOR: Michael Springer
+        /// <br />
+        ///    CREATED: 2024-04-13
+        /// </remarks>
+        int InsertEmployeeLogin(string username, int employeeID);
     }
 }

@@ -158,3 +158,46 @@ BEGIN
     AND (l.[Security_Response_3] IS NULL OR l.[Security_Response_3] = @Security_Response_3);
 END;
 GO
+
+-- Initial Creator: Michael Springer
+-- Creation Date: 2024-04-09
+-- Last Modified: 
+-- Modification Description: Initial Creation
+-- Stored Procedure Description: Retrieves a list of registered usernames
+print '***Creating [dbo].[sp_select_all_usernames]***' 
+GO
+CREATE PROCEDURE [dbo].[sp_select_all_usernames]
+AS
+BEGIN
+  SELECT
+      [Username]
+  FROM [dbo].[Login]
+  WHERE [Active] = 1;
+END;
+GO
+
+-- Initial Creator: Michael Springer
+-- Creation Date: 2024-04-12
+-- Last Modified: 
+-- Modification Description: Initial Creation
+-- Stored Procedure Description: Inserts a login entry for employee
+print '***Creating [dbo].[sp_insert_employee_login]***'
+GO
+CREATE PROCEDURE [dbo].[sp_insert_employee_login](
+  @P_Username     [nvarchar](100),
+  @P_Employee_ID  [int]
+)
+AS
+BEGIN
+  INSERT INTO [dbo].[Login](
+    [UserName],
+    [Employee_ID]
+  )
+  VALUES (
+    @P_Username,
+    @P_Employee_ID
+  );
+  END
+  GO
+
+

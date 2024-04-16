@@ -754,5 +754,117 @@ namespace LogicLayerTests
             //Assert
             Assert.AreEqual(expectedUsername, username);
         }
+
+
+        [TestMethod]
+        public void GetAllUsername_Success()
+        {
+            // Arrange
+            List<string> failTestNames = new List<string> { "Rando", "Brando", "Sando", "Mando", "Kevin" };
+            List<string> actualFakesTestNames = new List<string>();
+            EmployeeAccessorFake employeeAccessorFake = new EmployeeAccessorFake();
+            List<Employee_VM> fakeEmployees = (List<Employee_VM>)employeeAccessorFake.GetAllEmployees();
+            foreach (var employee in fakeEmployees)
+            {
+                // This concatination is how usernames were generated in the login accessor fake
+                string username = (employee.Given_Name + employee.Family_Name + employee.Zip).ToLower();
+                actualFakesTestNames.Add(username);
+            }
+            foreach(var name in actualFakesTestNames)
+            {
+                Console.WriteLine(name);
+            }
+            LoginAccessorFake loginAccessor = new LoginAccessorFake();
+            _loginManager = new LoginManager(_passwordHasher, loginAccessor);
+
+            // ACT
+            List<string> results = (List<string>)_loginManager.GetAllUserNames();
+            //foreach (var result in results)
+            //{
+            //    Console.WriteLine(result);
+            //}
+
+            // ASSERT
+            Assert.AreEqual(results.Count, actualFakesTestNames.Count);
+            foreach(var result in results)
+            {
+                Assert.IsTrue(actualFakesTestNames.Contains(result));
+            }
+        }
+        /// <summary>
+        /// tests if a valid data creates a new Login record
+        /// </summary>
+        /// <remarks>
+        ///     CONTRIBUTOR: Michael Springer
+        ///     <br>
+        ///     UPDATED: 2024-04-12
+        ///     Initial Creation
+        ///     </br>
+        /// </remarks>
+        [TestMethod]
+        public void AddUserLogin_Success()
+        {
+            // ARRANGE
+            _loginManager = new LoginManager(new PasswordHasher(), new LoginAccessorFake());
+            string unusedName = "bartleby";
+            int unusedID = 22;
+            int rowsAffectd = 0;
+
+            // ACT
+            rowsAffectd = _loginManager.AddEmployeeLogin(unusedName, unusedID);
+
+            // ASSERT
+            Assert.IsTrue(rowsAffectd == 1);
+
+        }
+        /// <summary>
+        /// tests if invalid data (existing username-case insensitive and employee_id) fail to create
+        /// a new record
+        /// </summary>
+        /// <remarks>
+        ///     CONTRIBUTOR: Michael Springer
+        ///     <br>
+        ///     UPDATED: 2024-04-13
+        ///     Initial Creation
+        ///     </br>
+        /// </remarks>
+        [TestMethod] 
+        public void InvalidData_AddUserLogin_Fail()
+        {
+            // ARRANGE
+            _loginManager = new LoginManager(new PasswordHasher(), new LoginAccessorFake());
+            string unusedName = "bartleby";
+            int unusedID = 22;
+            int rowsAffected = 0;
+
+            string usedName = "bartleby";
+            int unusedID2 = 23;
+
+            string usedNameCase = "Bartleby";
+            int unusedID3 = 24;
+
+            string unusedName2 = "UltimateDriver";
+            int usedID = 22;
+
+
+            // ACT
+            // add a valid entry to the list to check against.
+            _loginManager.AddEmployeeLogin(unusedName, unusedID); // doesn't add to count
+            // try to add each type of invalid case
+            rowsAffected =  _loginManager.AddEmployeeLogin(usedName, unusedID2);
+            rowsAffected += _loginManager.AddEmployeeLogin(usedNameCase, unusedID3);
+            rowsAffected += _loginManager.AddEmployeeLogin(unusedName2, usedID);
+
+            // ASSSERT -- is the count still 0?
+            Assert.IsTrue(rowsAffected == 0);
+
+
+
+
+
+            
+        }
+
+            
     }
 }

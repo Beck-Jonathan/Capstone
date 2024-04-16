@@ -64,13 +64,13 @@ namespace LogicLayer
         /// <br />
         ///    CREATED: 2024-02-01
         /// <br /><br />
-        ///    UPDATER: updater_name
+        ///    UPDATER: Michael Springer
         /// <br />
-        ///    UPDATED: yyyy-MM-dd
+        ///    UPDATED: 2024-04-13
         /// <br />
-        ///     Initial Creation
+        ///     Changed output from bool to an int representing the assigned employeeID
         /// </remarks>
-        public bool AddEmployee(Employee_VM newEmployee)
+        public int AddEmployee(Employee_VM newEmployee)
         {
             //new Employee_ID after insert
             int newID = 0;
@@ -95,7 +95,8 @@ namespace LogicLayer
             {
                 throw new ApplicationException("Error entering new employee record", ex);
             }
-            return (0 != newID);
+            //return (0 != newID);
+            return newID;
         }
 
         /// <summary>

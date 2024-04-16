@@ -14,7 +14,15 @@ namespace LogicLayer
     /// <summary>
     ///     Manages and performs operations on login objects
     /// </summary>
-   public interface ILoginManager
+    /// <remarks>
+    /// UPDATED: 2024-04-09
+    /// <br />
+    /// UPDATER: Michael Springer
+    /// Added functionality for retrieving a list of usernames for validation purposes
+    /// Added functionality for adding employee login
+    /// </remarks>
+    ///     
+    public interface ILoginManager
     {
         Employee_VM AuthenticateEmployee(string username, string password);
         string[] AuthenticateClientForSecurityQuestions(string username, string password);
@@ -38,6 +46,9 @@ namespace LogicLayer
             string securityResponse1,
             string securityResponse2,
             string securityResponse3);
+        IEnumerable<string> GetAllUserNames();
+        int AddEmployeeLogin(string username, int employeeID);
+        
     }
 
     /// <summary>
@@ -135,6 +146,28 @@ namespace LogicLayer
         /// <br />
         ///    CREATED: 2024-02-17
         /// </remarks>
+        /// 
+
+
+        /// <summary>
+        ///     Instantiates a LoginManager
+        /// </summary>
+        /// <returns>
+        ///    <see cref="LoginManager">LoginManager</see>: A LoginManager object
+        /// </returns>
+        /// <remarks>
+        ///   Default constructor initializes a LoginAccessor
+        /// <br />
+        ///    CONTRIBUTOR: Michael Springer
+        /// <br />
+        ///    CREATED: 2024-04-12
+        /// </remarks>
+        public LoginManager()
+        {
+            _loginAccessor = new LoginAccessor();
+        }
+
+
         public Employee_VM AuthenticateEmployee(string username, string password)
         {
             string passwordHash = _passwordHasher.HashPassword(password);
@@ -471,6 +504,44 @@ namespace LogicLayer
             {
                 throw ex;
             }
+        }
+        /// <summary>
+        /// Retrieves all active userNames for validation
+        /// </summary>
+        /// <returns>
+        /// a list of all usernames
+        /// </returns>
+        /// <exception cref="NotImplementedException"></exception>
+        /// <br />
+        /// CONTRIBUTOR: Michael Springer
+        /// <br />
+        /// Created 2024-04-09
+        /// 
+        public IEnumerable<string> GetAllUserNames()
+        {
+            IEnumerable<string> usernames = new List<string>();
+            try
+            {
+                usernames = _loginAccessor.SelectAllUserNames();
+            }
+            catch(Exception ex) {
+
+                throw new ApplicationException(ex.Message);
+            }
+            return usernames;
+        }
+
+        public int AddEmployeeLogin(string username, int employeeID)
+        {
+            int rowsAffected = 0;
+            try
+            {
+                rowsAffected = _loginAccessor.InsertEmployeeLogin(username, employeeID);
+            }catch(Exception ex)
+            {
+                throw ex;
+            }
+            return rowsAffected;
         }
     }
 }
