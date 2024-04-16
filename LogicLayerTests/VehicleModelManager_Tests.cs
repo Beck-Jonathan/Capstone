@@ -192,5 +192,7 @@ namespace LogicLayerTests
                 x.Year == y.Year &&
                 x.IsActive == y.IsActive;
         }
+
+
     }
 }

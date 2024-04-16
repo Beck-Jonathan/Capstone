@@ -53,17 +53,26 @@ namespace NightRiderWPF.WorkOrders
             }
         }
 
+        public ViewWorkOrderList(List<ServiceOrder_VM> orders) {
+            _serviceOrders = orders;
+            InitializeComponent();
+        
+        }
+
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            try
+            if (_serviceOrders == null)
             {
-                _serviceOrderManager = new ServiceOrderManager();
-                _serviceOrders = new List<ServiceOrder_VM>(_serviceOrderManager.GetALlServiceOrders());
+                try
+                {
+                    _serviceOrderManager = new ServiceOrderManager();
+                    _serviceOrders = new List<ServiceOrder_VM>(_serviceOrderManager.GetALlServiceOrders());
 
-            }
-            catch (Exception ex)
-            {
-                throw ex;
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
             }
             List<dynamic> dataObjects = new List<dynamic>();
             foreach (ServiceOrder_VM serviceOrder in _serviceOrders)

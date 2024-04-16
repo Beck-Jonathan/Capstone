@@ -504,6 +504,76 @@ namespace DataAccessLayer
             }
             return rows;
         }
+        /// <summary>
+        ///     Get all service orders for a specificed vehicle
+        /// </summary>
+        /// <param name="VIN">
+        ///    The VIN to get associated service orders for..
+        /// </param>
+        /// 
+        /// <returns>
+        ///    <see cref="ServiceOrder_VM">List:ServiceOrder_VM</see>: a list of service orders related to the vehicle
+        /// </returns>
+        /// <remarks>
+        ///    Exceptions:
+        ///    <see cref="ArgumentException">ArgumentException</see>: Thrown if there is a problem updating the vehicle.
+        ///    CONTRIBUTOR: Jonathan Beck
+        ///    CREATED: 2024-04-13
+        /// </remarks>
+        public List<ServiceOrder_VM> SelectServiceOrdersByVin(String VIN)
+        {
+            List<ServiceOrder_VM> output = new List<ServiceOrder_VM>();
+            // start with a connection object
+            var conn = DBConnectionProvider.GetConnection();
+            // set the command text
+            var commandText = "sp_retreive_by_VIN_Service_Order";
+            // create the command object
+            var cmd = new SqlCommand(commandText, conn);
+            // set the command type
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            // parameters
+            cmd.Parameters.Add("@VIN", SqlDbType.NVarChar,17);
+
+
+            // values
+            cmd.Parameters["@VIN"].Value = VIN;
+
+
+            try
+            {
+                //open the connection 
+                conn.Open();  //execute the command and capture result
+                var reader = cmd.ExecuteReader();
+                //process the results
+                if (reader.HasRows)
+                    while (reader.Read())
+                    {
+                        ServiceOrder_VM _Service_Order = new ServiceOrder_VM();
+                        _Service_Order.Service_Order_ID = reader.GetInt32(0);
+                        _Service_Order.Service_Order_Version = reader.GetInt32(1);
+                        _Service_Order.VIN = reader.GetString(2);
+                        _Service_Order.Service_Line_Item_ID = reader.IsDBNull(3) ? 0 : reader.GetInt32(3);
+                        _Service_Order.Service_Type_ID = reader.IsDBNull(4) ? "" : reader.GetString(4);
+                        _Service_Order.Created_By_Employee_ID = reader.GetInt32(5);
+                        _Service_Order.Serviced_By_Employee_ID = reader.IsDBNull(6) ? 0 : reader.GetInt32(6);
+                        _Service_Order.Date_Started = reader.GetDateTime(7);
+                        _Service_Order.Date_Finished = reader.GetDateTime(8);
+                        _Service_Order.Is_Active = reader.GetBoolean(9);
+                        _Service_Order.Critical_Issue = reader.GetBoolean(10);
+                        output.Add(_Service_Order);
+                    }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return output;
+        }
 
     }
 }

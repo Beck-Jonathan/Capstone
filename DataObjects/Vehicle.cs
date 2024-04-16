@@ -12,7 +12,7 @@ namespace DataObjects
     ///     Vehicle data object for storing vehicle information.
     /// </summary>
     /// <remarks>
-    /// 
+    /// Updated 2024-04-13 Jonathan Beck
     /// </remarks>
     public class Vehicle
     {
@@ -29,5 +29,11 @@ namespace DataObjects
         public string VehicleMake { get; set; }
         public int VehicleYear { get; set; }
         public int MaxPassengers { get; set; }
+    }
+    
+    public class Vehicle_CM : Vehicle { 
+        //added Jonathan Beck 4/13/2024
+    public List<ServiceOrder_VM> ServiceOrders { get; set; }
+    
     }
 }

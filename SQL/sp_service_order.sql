@@ -161,3 +161,33 @@ BEGIN
 
 END
 GO
+
+/******************
+Create the retreive by key script for the Service_Order table
+ Created By Jonathan Beck 4/10/2024
+***************/
+print '' Print '***Create the retreive by key script for the Service_Order table' 
+ go 
+CREATE PROCEDURE [DBO].[sp_retreive_by_VIN_Service_Order]
+(@VIN [nvarchar](17)
+)
+as
+ Begin 
+ select 
+[Service_Order_ID] 
+,[Service_Order_Version] 
+,[VIN] 
+,[Service_Line_Item_ID] 
+,[Service_Type_ID] 
+,[Created_By_Employee_ID] 
+,[Serviced_By_Employee_ID] 
+,[Date_Started] 
+,[Date_Finished] 
+,[Is_Active] 
+,[Critical_Issue] 
+
+ FROM Service_Order
+where [VIN]=@VIN
+
+ END 
+ GO
