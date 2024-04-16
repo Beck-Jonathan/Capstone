@@ -22,6 +22,11 @@ namespace DataObjects
     /// UPDATED: 2024-03-05
     /// <br />
     /// Added IsValidCity for checking if a city name is valid.
+    /// <br />
+    /// UPDATER: Michael Springer
+    /// <br />
+    /// UPDATED: 2024-04-09
+    /// Added isValidUserName validation
     /// </remarks>
     public static class FormValidationHelper
     {
@@ -71,6 +76,7 @@ namespace DataObjects
             // Regular expression pattern for validating US ZIP codes
             string zipPattern = @"^\d{5}(-\d{4})?$";
             return Regex.IsMatch(zipCode, zipPattern);
+            return Regex.IsMatch(zipCode, zipPattern);
         }
 
         /// <summary>
@@ -87,6 +93,19 @@ namespace DataObjects
             // Regex from https://stackoverflow.com/a/25677072
             string cityPattern = @"^([a-zA-Z\u0080-\u024F]+(?:. |-| |'))*[a-zA-Z\u0080-\u024F]*$";
             return Regex.IsMatch(city, cityPattern);
+        }
+        /// <summary>
+        ///     Validates a userName to meet DB NVARCHAR(50) req
+        /// </summary>
+        /// <param name="userName">
+        ///   The userName to Validate
+        /// </param>
+        /// <returns>
+        ///    <see cref="bool">true</see> if the userName is valid; otherwise, <see cref="bool">false</see>.
+        /// </returns>
+        public static bool isValidUserName(string userName)
+        {
+            return (userName.Length <= 50 && userName.isNotEmptyOrNull());
         }
     }
 }

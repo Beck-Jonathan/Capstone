@@ -179,6 +179,23 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202404092302545_InitialCreate.cs" />
+    <Compile Include="Migrations\202404092302545_InitialCreate.designer.cs">
+      <DependentUpon>202404092302545_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202404092308569_Added First and Last Name Fields to User.cs" />
+    <Compile Include="Migrations\202404092308569_Added First and Last Name Fields to User.designer.cs">
+      <DependentUpon>202404092308569_Added First and Last Name Fields to User.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202404100015538_EmployeeID.cs" />
+    <Compile Include="Migrations\202404100015538_EmployeeID.designer.cs">
+      <DependentUpon>202404100015538_EmployeeID.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202404121940137_ClientID.cs" />
+    <Compile Include="Migrations\202404121940137_ClientID.designer.cs">
+      <DependentUpon>202404121940137_ClientID.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -315,6 +332,20 @@
       <Project>{6164dffe-01a5-4076-86b0-98506883dbf2}</Project>
       <Name>LogicLayer</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202404092302545_InitialCreate.resx">
+      <DependentUpon>202404092302545_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202404092308569_Added First and Last Name Fields to User.resx">
+      <DependentUpon>202404092308569_Added First and Last Name Fields to User.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202404100015538_EmployeeID.resx">
+      <DependentUpon>202404100015538_EmployeeID.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202404121940137_ClientID.resx">
+      <DependentUpon>202404121940137_ClientID.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

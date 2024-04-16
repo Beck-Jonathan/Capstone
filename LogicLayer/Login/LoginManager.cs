@@ -14,7 +14,15 @@ namespace LogicLayer
     /// <summary>
     ///     Manages and performs operations on login objects
     /// </summary>
-   public interface ILoginManager
+    /// <remarks>
+    /// UPDATED: 2024-04-09
+    /// <br />
+    /// UPDATER: Michael Springer
+    /// Added functionality for retrieving a list of usernames for validation purposes
+    /// Added functionality for adding employee login
+    /// </remarks>
+    ///     
+    public interface ILoginManager
     {
         Employee_VM AuthenticateEmployee(string username, string password);
         string[] AuthenticateClientForSecurityQuestions(string username, string password);
@@ -38,6 +46,17 @@ namespace LogicLayer
             string securityResponse1,
             string securityResponse2,
             string securityResponse3);
+
+        IEnumerable<string> GetAllUserNames();
+        int AddEmployeeLogin(string username, int employeeID);
+        
+        List<int?> GetAllClientIdFromLogin();
+        List<int?> GetAllEmployeeIdFromLogin();
+
+        String GetEmployeeUserNameByEmail(string email);
+        String GetClientUserNameByEmail(string email);
+        Client_VM AuthenticateClient(string username, string password);
+
     }
 
     /// <summary>
@@ -58,6 +77,7 @@ namespace LogicLayer
     {
         private ILoginAccessor _loginAccessor;
         private IPasswordHasher _passwordHasher;
+
 
         /// <summary>
         ///     Instantiates a LoginManager
@@ -135,6 +155,28 @@ namespace LogicLayer
         /// <br />
         ///    CREATED: 2024-02-17
         /// </remarks>
+        /// 
+
+
+        /// <summary>
+        ///     Instantiates a LoginManager
+        /// </summary>
+        /// <returns>
+        ///    <see cref="LoginManager">LoginManager</see>: A LoginManager object
+        /// </returns>
+        /// <remarks>
+        ///   Default constructor initializes a LoginAccessor
+        /// <br />
+        ///    CONTRIBUTOR: Michael Springer
+        /// <br />
+        ///    CREATED: 2024-04-12
+        /// </remarks>
+        public LoginManager()
+        {
+            _loginAccessor = new LoginAccessor();
+        }
+
+
         public Employee_VM AuthenticateEmployee(string username, string password)
         {
             string passwordHash = _passwordHasher.HashPassword(password);
@@ -471,6 +513,204 @@ namespace LogicLayer
             {
                 throw ex;
             }
+        }
+
+        /// <summary>
+        /// Retrieves all active userNames for validation
+        /// </summary>
+        /// <returns>
+        /// a list of all usernames
+        /// </returns>
+        /// <exception cref="NotImplementedException"></exception>
+        /// <br />
+        /// CONTRIBUTOR: Michael Springer
+        /// <br />
+        /// Created 2024-04-09
+        /// 
+        public IEnumerable<string> GetAllUserNames()
+        {
+            IEnumerable<string> usernames = new List<string>();
+            try
+            {
+                usernames = _loginAccessor.SelectAllUserNames();
+            }
+            catch(Exception ex) {
+
+                throw new ApplicationException(ex.Message);
+            }
+            return usernames;
+        }
+
+        public int AddEmployeeLogin(string username, int employeeID)
+        {
+            int rowsAffected = 0;
+            try
+            {
+                rowsAffected = _loginAccessor.InsertEmployeeLogin(username, employeeID);
+            }catch(Exception ex)
+            {
+                throw ex;
+            }
+            return rowsAffected;
+        }
+
+
+
+        /// <summary>
+        ///   retrieves a list of client ids
+        /// </summary>
+        /// <param>
+        ///    None
+        /// </param>
+        /// <returns>
+        ///     <see cref="List{int}"/>: Returns the list of client ids
+        /// </returns>
+        /// <remarks>
+        ///    Parameters:None
+        /// <br />
+        /// <br /><br />
+        ///    CREATOR: Jacob Rohr
+        /// <br />
+        ///    CREATED: 2024-04-10
+        /// </remarks>
+        public List<int?> GetAllClientIdFromLogin()
+        {
+            List<int?> clientIds = new List<int?>();
+            try
+            {
+                clientIds = _loginAccessor.GetAllClientIdFromLogin();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+
+            return clientIds;
+        }
+        /// <summary>
+        ///   retrieves a list of employee ids
+        /// </summary>
+        /// <param>
+        ///    None
+        /// </param>
+        /// <returns>
+        ///     <see cref="List{int}"/>: Returns the list of employee ids
+        /// </returns>
+        /// <remarks>
+        ///    Parameters:None
+        /// <br />
+        /// <br /><br />
+        ///    CREATOR: Jacob Rohr
+        /// <br />
+        ///    CREATED: 2024-04-10
+        /// </remarks>
+        public List<int?> GetAllEmployeeIdFromLogin()
+        {
+            List<int?> employeeIds = new List<int?>();
+            try
+            {
+                employeeIds = _loginAccessor.GetAllEmployeeIdFromLogin();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+
+            return employeeIds;
+        }
+
+        /// <summary>
+        ///     Authenticates given username and password hash and retrieves the authenticated client data
+        /// </summary>
+        /// <param name="username">
+        ///    The username of the user attempting to login
+        /// </param>
+        /// <param name="passwordHash">
+        ///    The password hash of the user attempting to login
+        /// </param>
+        /// <returns>
+        ///    <see cref="Client_VM">Client_VM</see>: The authenticated client
+        /// </returns>
+        /// <remarks>
+        ///    Parameters:
+        /// <br />
+        ///    <see cref="string">string</see> username: The username given by the user
+        /// <br />
+        ///    <see cref="string">string</see> passwordHash: The password hash generated on the password given by the user
+        /// </remarks>
+        ///<remarks>
+        ///    CONTRIBUTOR: Jacob Rohr
+        ///    CREATED: 2024-04-12
+        /// </remarks>
+
+        public Client_VM AuthenticateClient(string username, string password)
+        {
+            string passwordHash = _passwordHasher.HashPassword(password);
+
+            var authenticatedClient = _loginAccessor.AuthenticateClient(username, passwordHash);
+
+            if (authenticatedClient == null)
+            {
+                throw new ArgumentException("Could not authenticate client");
+            }
+
+            return authenticatedClient;
+        }
+
+        /// <summary>
+        ///     retrieves employee username from email.
+        /// </summary>
+        /// <param name="email">
+        ///    The email of the user 
+        /// </param>
+        /// <returns>
+        ///    string username
+        /// </returns>
+        /// <remarks>
+        ///    CONTRIBUTOR: Jacob Rohr
+        ///    CREATED: 2024-04-12
+        /// </remarks>
+
+        public string GetEmployeeUserNameByEmail(string email)
+        {
+            string userName = null;
+            try
+            {
+               userName = _loginAccessor.GetEmployeeUserNameByEmail(email);
+            }catch(Exception ex)
+            {
+                throw ex;
+            }
+            return userName;
+        }
+
+        /// <summary>
+        ///     retrieves client username from email.
+        /// </summary>
+        /// <param name="email">
+        ///    The email of the user 
+        /// </param>
+        /// <returns>
+        ///    string username
+        /// </returns>
+        /// <remarks>
+        ///    CONTRIBUTOR: Jacob Rohr
+        ///    CREATED: 2024-04-12
+        /// </remarks>
+        public string GetClientUserNameByEmail(string email)
+        {
+            string userName = null;
+            try
+            {
+                userName = _loginAccessor.GetClientUserNameByEmail(email);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return userName;
         }
     }
 }

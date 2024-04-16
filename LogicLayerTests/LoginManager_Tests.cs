@@ -754,5 +754,815 @@ namespace LogicLayerTests
             //Assert
             Assert.AreEqual(expectedUsername, username);
         }
+
+        [TestMethod]
+        public void GetAllUsername_Success()
+        {
+            // Arrange
+            List<string> failTestNames = new List<string> { "Rando", "Brando", "Sando", "Mando", "Kevin" };
+            List<string> actualFakesTestNames = new List<string>();
+            EmployeeAccessorFake employeeAccessorFake = new EmployeeAccessorFake();
+            List<Employee_VM> fakeEmployees = (List<Employee_VM>)employeeAccessorFake.GetAllEmployees();
+            foreach (var employee in fakeEmployees)
+            {
+                // This concatination is how usernames were generated in the login accessor fake
+                string username = (employee.Given_Name + employee.Family_Name + employee.Zip).ToLower();
+                actualFakesTestNames.Add(username);
+            }
+            foreach(var name in actualFakesTestNames)
+            {
+                Console.WriteLine(name);
+            }
+            LoginAccessorFake loginAccessor = new LoginAccessorFake();
+            _loginManager = new LoginManager(_passwordHasher, loginAccessor);
+
+            // ACT
+            List<string> results = (List<string>)_loginManager.GetAllUserNames();
+            //foreach (var result in results)
+            //{
+            //    Console.WriteLine(result);
+            //}
+
+            // ASSERT
+            Assert.AreEqual(results.Count, actualFakesTestNames.Count);
+            foreach(var result in results)
+            {
+                Assert.IsTrue(actualFakesTestNames.Contains(result));
+            }
+        }
+        /// <summary>
+        /// tests if a valid data creates a new Login record
+        /// </summary>
+        /// <remarks>
+        ///     CONTRIBUTOR: Michael Springer
+        ///     <br>
+        ///     UPDATED: 2024-04-12
+        ///     Initial Creation
+        ///     </br>
+        /// </remarks>
+        [TestMethod]
+        public void AddUserLogin_Success()
+        {
+            // ARRANGE
+            _loginManager = new LoginManager(new PasswordHasher(), new LoginAccessorFake());
+            string unusedName = "bartleby";
+            int unusedID = 22;
+            int rowsAffectd = 0;
+
+            // ACT
+            rowsAffectd = _loginManager.AddEmployeeLogin(unusedName, unusedID);
+
+            // ASSERT
+            Assert.IsTrue(rowsAffectd == 1);
+
+        }
+        /// <summary>
+        /// tests if invalid data (existing username-case insensitive and employee_id) fail to create
+        /// a new record
+        /// </summary>
+        /// <remarks>
+        ///     CONTRIBUTOR: Michael Springer
+        ///     <br>
+        ///     UPDATED: 2024-04-13
+        ///     Initial Creation
+        ///     </br>
+        /// </remarks>
+        [TestMethod] 
+        public void InvalidData_AddUserLogin_Fail()
+        {
+            // ARRANGE
+            _loginManager = new LoginManager(new PasswordHasher(), new LoginAccessorFake());
+            string unusedName = "bartleby";
+            int unusedID = 22;
+            int rowsAffected = 0;
+
+            string usedName = "bartleby";
+            int unusedID2 = 23;
+
+            string usedNameCase = "Bartleby";
+            int unusedID3 = 24;
+
+            string unusedName2 = "UltimateDriver";
+            int usedID = 22;
+
+
+            // ACT
+            // add a valid entry to the list to check against.
+            _loginManager.AddEmployeeLogin(unusedName, unusedID); // doesn't add to count
+            // try to add each type of invalid case
+            rowsAffected =  _loginManager.AddEmployeeLogin(usedName, unusedID2);
+            rowsAffected += _loginManager.AddEmployeeLogin(usedNameCase, unusedID3);
+            rowsAffected += _loginManager.AddEmployeeLogin(unusedName2, usedID);
+
+            // ASSSERT -- is the count still 0?
+            Assert.IsTrue(rowsAffected == 0);
+
+ 
+        }
+
+
+        [TestMethod]
+        public void GetAllEmployeeIDPassesCorrectAmountOfValues()
+        {
+            // Arrange
+            List<int?> expectedEmployeeIds = new List<int?>
+            {
+                100082,null,100083,100086
+            };
+            List<int?> actualEmployeeIds = new List<int?>();
+
+
+
+            List<Login_VM> testLoginData = new List<Login_VM>
+            {
+                new Login_VM
+                {
+                    Username = "NA1",
+                    PasswordHash = "eba4ae33f54ae0f96bed25bfc13abd887ae157380330cd3fd3f0a4d054ce3a3f",
+                    EmployeeID = 100082,
+                    SecurityResponse1 = "NA",
+                    SecurityResponse2 = "NA",
+                    SecurityResponse3 = "NA",
+                    Employee = new Employee_VM
+                    {
+                        Employee_ID = 100082
+                    }
+                },
+                new Login_VM
+                {
+                    Username = "NA2",
+                    PasswordHash = "eba4ae33f54ae0f96bed25bfc13abd887ae157380330cd3fd3f0a4d054ce3a3f",
+                    EmployeeID = null,
+                    ClientID = 100031,
+                    SecurityResponse1 = "NA",
+                    SecurityResponse2 = "NA",
+                    SecurityResponse3 = "NA",
+                    Client = new Client_VM
+                    {
+                        ClientID = 100031,
+                    }
+                },
+                new Login_VM
+                {
+                    Username = "NA3",
+                    PasswordHash = "eba4ae33f54ae0f96bed25bfc13abd887ae157380330cd3fd3f0a4d054ce3a3f",
+                    EmployeeID = 100083,
+                    SecurityResponse1 = "NA",
+                    SecurityResponse2 = "NA",
+                    SecurityResponse3 = "NA",
+                    Employee = new Employee_VM
+                    {
+                        Employee_ID = 100083
+                    }
+                },
+                new Login_VM
+                {
+                    Username = "NA4",
+                    PasswordHash = "eba4ae33f54ae0f96bed25bfc13abd887ae157380330cd3fd3f0a4d054ce3a3f",
+                    EmployeeID = 100086,
+                    SecurityResponse1 = "NA",
+                    SecurityResponse2 = "NA",
+                    SecurityResponse3 = "NA",
+                    Employee = new Employee_VM
+                    {
+                        Employee_ID = 100086
+                    }
+                }
+            };
+            var loginAccessor = new LoginAccessorFake(testLoginData);
+            _loginManager = new LoginManager(_passwordHasher, loginAccessor);
+
+            actualEmployeeIds = _loginManager.GetAllEmployeeIdFromLogin();
+
+            Assert.AreEqual(expectedEmployeeIds.Count, actualEmployeeIds.Count);
+        }
+        [TestMethod]
+        public void GetAllEmployeeIDPassesSameValues()
+        {
+            // Arrange
+            List<int?> expectedEmployeeIds = new List<int?>
+            {
+                100082,null,100083,100086
+            };
+            List<int?> actualEmployeeIds = new List<int?>();
+
+
+
+            List<Login_VM> testLoginData = new List<Login_VM>
+            {
+                new Login_VM
+                {
+                    Username = "NA1",
+                    PasswordHash = "eba4ae33f54ae0f96bed25bfc13abd887ae157380330cd3fd3f0a4d054ce3a3f",
+                    EmployeeID = 100082,
+                    SecurityResponse1 = "NA",
+                    SecurityResponse2 = "NA",
+                    SecurityResponse3 = "NA",
+                    Employee = new Employee_VM
+                    {
+                        Employee_ID = 100082
+                    }
+                },
+                new Login_VM
+                {
+                    Username = "NA2",
+                    PasswordHash = "eba4ae33f54ae0f96bed25bfc13abd887ae157380330cd3fd3f0a4d054ce3a3f",
+                    EmployeeID = null,
+                    ClientID = 100031,
+                    SecurityResponse1 = "NA",
+                    SecurityResponse2 = "NA",
+                    SecurityResponse3 = "NA",
+                    Client = new Client_VM
+                    {
+                        ClientID = 100031,
+                    }
+                },
+                new Login_VM
+                {
+                    Username = "NA3",
+                    PasswordHash = "eba4ae33f54ae0f96bed25bfc13abd887ae157380330cd3fd3f0a4d054ce3a3f",
+                    EmployeeID = 100083,
+                    SecurityResponse1 = "NA",
+                    SecurityResponse2 = "NA",
+                    SecurityResponse3 = "NA",
+                    Employee = new Employee_VM
+                    {
+                        Employee_ID = 100083
+                    }
+                },
+                new Login_VM
+                {
+                    Username = "NA4",
+                    PasswordHash = "eba4ae33f54ae0f96bed25bfc13abd887ae157380330cd3fd3f0a4d054ce3a3f",
+                    EmployeeID = 100086,
+                    SecurityResponse1 = "NA",
+                    SecurityResponse2 = "NA",
+                    SecurityResponse3 = "NA",
+                    Employee = new Employee_VM
+                    {
+                        Employee_ID = 100086
+                    }
+                }
+            };
+            var loginAccessor = new LoginAccessorFake(testLoginData);
+            _loginManager = new LoginManager(_passwordHasher, loginAccessor);
+
+            actualEmployeeIds = _loginManager.GetAllEmployeeIdFromLogin();
+
+            Assert.AreEqual(expectedEmployeeIds[0], actualEmployeeIds[0]);
+            Assert.AreEqual(expectedEmployeeIds[1], actualEmployeeIds[1]);
+            Assert.AreEqual(expectedEmployeeIds[2], actualEmployeeIds[2]);
+            Assert.AreEqual(expectedEmployeeIds[3], actualEmployeeIds[3]);
+        }
+
+        [TestMethod]
+        public void GetAllEmployeeIDReturnsNullOnClientIDEntry()
+        {
+            // Arrange
+            List<int?> expectedEmployeeIds = new List<int?>
+            {
+                100082,null,100083,100086
+            };
+            List<int?> actualEmployeeIds = new List<int?>();
+
+
+
+            List<Login_VM> testLoginData = new List<Login_VM>
+            {
+                new Login_VM
+                {
+                    Username = "NA1",
+                    PasswordHash = "eba4ae33f54ae0f96bed25bfc13abd887ae157380330cd3fd3f0a4d054ce3a3f",
+                    EmployeeID = 100082,
+                    SecurityResponse1 = "NA",
+                    SecurityResponse2 = "NA",
+                    SecurityResponse3 = "NA",
+                    Employee = new Employee_VM
+                    {
+                        Employee_ID = 100082
+                    }
+                },
+                new Login_VM
+                {
+                    Username = "NA2",
+                    PasswordHash = "eba4ae33f54ae0f96bed25bfc13abd887ae157380330cd3fd3f0a4d054ce3a3f",
+                    EmployeeID = null,
+                    ClientID = 100031,
+                    SecurityResponse1 = "NA",
+                    SecurityResponse2 = "NA",
+                    SecurityResponse3 = "NA",
+                    Client = new Client_VM
+                    {
+                        ClientID = 100031,
+                    }
+                },
+                new Login_VM
+                {
+                    Username = "NA3",
+                    PasswordHash = "eba4ae33f54ae0f96bed25bfc13abd887ae157380330cd3fd3f0a4d054ce3a3f",
+                    EmployeeID = 100083,
+                    SecurityResponse1 = "NA",
+                    SecurityResponse2 = "NA",
+                    SecurityResponse3 = "NA",
+                    Employee = new Employee_VM
+                    {
+                        Employee_ID = 100083
+                    }
+                },
+                new Login_VM
+                {
+                    Username = "NA4",
+                    PasswordHash = "eba4ae33f54ae0f96bed25bfc13abd887ae157380330cd3fd3f0a4d054ce3a3f",
+                    EmployeeID = 100086,
+                    SecurityResponse1 = "NA",
+                    SecurityResponse2 = "NA",
+                    SecurityResponse3 = "NA",
+                    Employee = new Employee_VM
+                    {
+                        Employee_ID = 100086
+                    }
+                }
+            };
+            var loginAccessor = new LoginAccessorFake(testLoginData);
+            _loginManager = new LoginManager(_passwordHasher, loginAccessor);
+
+            actualEmployeeIds = _loginManager.GetAllEmployeeIdFromLogin();
+
+            Assert.AreEqual(null, actualEmployeeIds[1]);
+        }
+        [TestMethod]
+        public void GetAllClientIDPassesCorrectAmountOfValues()
+        {
+            // Arrange
+            List<int?> expectedClientIds = new List<int?>
+            {
+                100082,100031,null,null
+            };
+            List<int?> actualClientIds = new List<int?>();
+
+
+
+            List<Login_VM> testLoginData = new List<Login_VM>
+            {
+                new Login_VM
+                {
+                    Username = "NA1",
+                    PasswordHash = "eba4ae33f54ae0f96bed25bfc13abd887ae157380330cd3fd3f0a4d054ce3a3f",
+                    ClientID = 100082,
+                    SecurityResponse1 = "NA",
+                    SecurityResponse2 = "NA",
+                    SecurityResponse3 = "NA",
+                    Client = new Client_VM
+                    {
+                        ClientID = 100082
+                    }
+                },
+                new Login_VM
+                {
+                    Username = "NA2",
+                    PasswordHash = "eba4ae33f54ae0f96bed25bfc13abd887ae157380330cd3fd3f0a4d054ce3a3f",
+                    EmployeeID = null,
+                    ClientID = 100031,
+                    SecurityResponse1 = "NA",
+                    SecurityResponse2 = "NA",
+                    SecurityResponse3 = "NA",
+                    Client = new Client_VM
+                    {
+                        ClientID = 100031,
+                    }
+                },
+                new Login_VM
+                {
+                    Username = "NA3",
+                    PasswordHash = "eba4ae33f54ae0f96bed25bfc13abd887ae157380330cd3fd3f0a4d054ce3a3f",
+                    EmployeeID = 100083,
+                    SecurityResponse1 = "NA",
+                    SecurityResponse2 = "NA",
+                    SecurityResponse3 = "NA",
+                    Employee = new Employee_VM
+                    {
+                        Employee_ID = 100083
+                    }
+                },
+                new Login_VM
+                {
+                    Username = "NA4",
+                    PasswordHash = "eba4ae33f54ae0f96bed25bfc13abd887ae157380330cd3fd3f0a4d054ce3a3f",
+                    EmployeeID = 100086,
+                    SecurityResponse1 = "NA",
+                    SecurityResponse2 = "NA",
+                    SecurityResponse3 = "NA",
+                    Employee = new Employee_VM
+                    {
+                        Employee_ID = 100086
+                    }
+                }
+            };
+            var loginAccessor = new LoginAccessorFake(testLoginData);
+            _loginManager = new LoginManager(_passwordHasher, loginAccessor);
+
+            actualClientIds = _loginManager.GetAllClientIdFromLogin();
+
+            Assert.AreEqual(expectedClientIds.Count, actualClientIds.Count);
+        }
+        [TestMethod]
+        public void GetAllClientIDPassesSameValues()
+        {
+            // Arrange
+            List<int?> expectedClientIds = new List<int?>
+            {
+                100082,100031,null,null
+            };
+            List<int?> actualClientIds = new List<int?>();
+
+
+
+            List<Login_VM> testLoginData = new List<Login_VM>
+            {
+                new Login_VM
+                {
+                    Username = "NA1",
+                    PasswordHash = "eba4ae33f54ae0f96bed25bfc13abd887ae157380330cd3fd3f0a4d054ce3a3f",
+                    ClientID = 100082,
+                    SecurityResponse1 = "NA",
+                    SecurityResponse2 = "NA",
+                    SecurityResponse3 = "NA",
+                    Client = new Client_VM
+                    {
+                        ClientID = 100082
+                    }
+                },
+                new Login_VM
+                {
+                    Username = "NA2",
+                    PasswordHash = "eba4ae33f54ae0f96bed25bfc13abd887ae157380330cd3fd3f0a4d054ce3a3f",
+                    EmployeeID = null,
+                    ClientID = 100031,
+                    SecurityResponse1 = "NA",
+                    SecurityResponse2 = "NA",
+                    SecurityResponse3 = "NA",
+                    Client = new Client_VM
+                    {
+                        ClientID = 100031,
+                    }
+                },
+                new Login_VM
+                {
+                    Username = "NA3",
+                    PasswordHash = "eba4ae33f54ae0f96bed25bfc13abd887ae157380330cd3fd3f0a4d054ce3a3f",
+                    EmployeeID = 100083,
+                    SecurityResponse1 = "NA",
+                    SecurityResponse2 = "NA",
+                    SecurityResponse3 = "NA",
+                    Employee = new Employee_VM
+                    {
+                        Employee_ID = 100083
+                    }
+                },
+                new Login_VM
+                {
+                    Username = "NA4",
+                    PasswordHash = "eba4ae33f54ae0f96bed25bfc13abd887ae157380330cd3fd3f0a4d054ce3a3f",
+                    EmployeeID = 100086,
+                    SecurityResponse1 = "NA",
+                    SecurityResponse2 = "NA",
+                    SecurityResponse3 = "NA",
+                    Employee = new Employee_VM
+                    {
+                        Employee_ID = 100086
+                    }
+                }
+            };
+            var loginAccessor = new LoginAccessorFake(testLoginData);
+            _loginManager = new LoginManager(_passwordHasher, loginAccessor);
+
+            actualClientIds = _loginManager.GetAllClientIdFromLogin();
+
+            Assert.AreEqual(expectedClientIds[0], actualClientIds[0]);
+            Assert.AreEqual(expectedClientIds[1], actualClientIds[1]);
+            Assert.AreEqual(expectedClientIds[2], actualClientIds[2]);
+            Assert.AreEqual(expectedClientIds[3], actualClientIds[3]);
+        }
+
+        [TestMethod]
+        public void GetAllClientIDReturnsNullOnEmployeeIDEntry()
+        {
+            // Arrange
+            List<int?> expectedClientIds = new List<int?>
+            {
+                100082,100031,null,null
+            };
+            List<int?> actualClientIds = new List<int?>();
+
+
+
+            List<Login_VM> testLoginData = new List<Login_VM>
+            {
+                new Login_VM
+                {
+                    Username = "NA1",
+                    PasswordHash = "eba4ae33f54ae0f96bed25bfc13abd887ae157380330cd3fd3f0a4d054ce3a3f",
+                    ClientID = 100082,
+                    SecurityResponse1 = "NA",
+                    SecurityResponse2 = "NA",
+                    SecurityResponse3 = "NA",
+                    Client = new Client_VM
+                    {
+                        ClientID = 100082
+                    }
+                },
+                new Login_VM
+                {
+                    Username = "NA2",
+                    PasswordHash = "eba4ae33f54ae0f96bed25bfc13abd887ae157380330cd3fd3f0a4d054ce3a3f",
+                    EmployeeID = null,
+                    ClientID = 100031,
+                    SecurityResponse1 = "NA",
+                    SecurityResponse2 = "NA",
+                    SecurityResponse3 = "NA",
+                    Client = new Client_VM
+                    {
+                        ClientID = 100031,
+                    }
+                },
+                new Login_VM
+                {
+                    Username = "NA3",
+                    PasswordHash = "eba4ae33f54ae0f96bed25bfc13abd887ae157380330cd3fd3f0a4d054ce3a3f",
+                    EmployeeID = 100083,
+                    SecurityResponse1 = "NA",
+                    SecurityResponse2 = "NA",
+                    SecurityResponse3 = "NA",
+                    Employee = new Employee_VM
+                    {
+                        Employee_ID = 100083
+                    }
+                },
+                new Login_VM
+                {
+                    Username = "NA4",
+                    PasswordHash = "eba4ae33f54ae0f96bed25bfc13abd887ae157380330cd3fd3f0a4d054ce3a3f",
+                    EmployeeID = 100086,
+                    SecurityResponse1 = "NA",
+                    SecurityResponse2 = "NA",
+                    SecurityResponse3 = "NA",
+                    Employee = new Employee_VM
+                    {
+                        Employee_ID = 100086
+                    }
+                }
+            };
+            var loginAccessor = new LoginAccessorFake(testLoginData);
+            _loginManager = new LoginManager(_passwordHasher, loginAccessor);
+
+            actualClientIds = _loginManager.GetAllClientIdFromLogin();
+
+            Assert.AreEqual(null, actualClientIds[2]);
+            Assert.AreEqual(null, actualClientIds[3]);
+        }
+
+
+
+        [TestMethod]
+        public void GetEmployeeUsernameFromEmailReturnsCorrectUsername()
+        {
+            // Arrange
+            string expectedUsername = "jackrussel49";
+            string email = "correctemail@right.com";
+
+            List<Login_VM> testLoginData = new List<Login_VM>
+            {
+                new Login_VM
+                {
+                    Username = "jackrussel49",
+                    Employee = new Employee_VM
+                    {
+                        Email = "correctemail@right.com"
+                    }
+                }, new Login_VM
+                {
+                    Username = "wrong one hahaha",
+                    Employee = new Employee_VM
+                    {
+                        Email = "wrongemail"
+                    }
+                }
+            };
+
+            var loginAccessor = new LoginAccessorFake(testLoginData);
+
+            _loginManager = new LoginManager(_passwordHasher, loginAccessor);
+
+            // Act
+            string actualUsername = _loginManager.GetEmployeeUserNameByEmail(email);
+
+            // Assert
+            Assert.AreEqual(expectedUsername, actualUsername);
+        }
+        [TestMethod]
+        public void GetEmployeeUsernameFromEmailReturnsNullWhenGivenBadEmail()
+        {
+            // Arrange
+            string expectedUsername = null;
+            string bademail = "blarglesnack@nonsense.com";
+
+            List<Login_VM> testLoginData = new List<Login_VM>
+            {
+                new Login_VM
+                {
+                    Username = "jackrussel49",
+                    Employee = new Employee_VM
+                    {
+                        Email = "correctemail@right.com"
+                    }
+                }, new Login_VM
+                {
+                    Username = "wrong one hahaha",
+                    Employee = new Employee_VM
+                    {
+                        Email = "wrongemail"
+                    }
+                }
+            };
+
+            var loginAccessor = new LoginAccessorFake(testLoginData);
+
+            _loginManager = new LoginManager(_passwordHasher, loginAccessor);
+
+            // Act
+            string actualUsername = _loginManager.GetEmployeeUserNameByEmail(bademail);
+
+            // Assert
+            Assert.AreEqual(expectedUsername, actualUsername);
+        }
+
+
+
+
+        [TestMethod]
+        public void GetClientUsernameFromEmailReturnsCorrectUsername()
+        {
+            // Arrange
+            string expectedUsername = "jackrussel49";
+            string email = "correctemail@right.com";
+
+            List<Login_VM> testLoginData = new List<Login_VM>
+            {
+                new Login_VM
+                {
+                    Username = "jackrussel49",
+                    Client = new Client_VM
+                    {
+                        Email = "correctemail@right.com"
+                    }
+                }, new Login_VM
+                {
+                    Username = "wrong one hahaha",
+                    Client = new Client_VM
+                    {
+                        Email = "wrongemail"
+                    }
+                }
+            };
+
+            var loginAccessor = new LoginAccessorFake(testLoginData);
+
+            _loginManager = new LoginManager(_passwordHasher, loginAccessor);
+
+            // Act
+            string actualUsername = _loginManager.GetClientUserNameByEmail(email);
+
+            // Assert
+            Assert.AreEqual(expectedUsername, actualUsername);
+        }
+        [TestMethod]
+        public void GetClientUsernameFromEmailReturnsNullWhenGivenBadEmail()
+        {
+            // Arrange
+            string expectedUsername = null;
+            string bademail = "blarglesnack@nonsense.com";
+
+            List<Login_VM> testLoginData = new List<Login_VM>
+            {
+                new Login_VM
+                {
+                    Username = "jackrussel49",
+                    Client = new Client_VM
+                    {
+                        Email = "correctemail@right.com"
+                    }
+                }, new Login_VM
+                {
+                    Username = "wrong one hahaha",
+                    Client = new Client_VM
+                    {
+                        Email = "wrongemail"
+                    }
+                }
+            };
+
+            var loginAccessor = new LoginAccessorFake(testLoginData);
+
+            _loginManager = new LoginManager(_passwordHasher, loginAccessor);
+
+            // Act
+            string actualUsername = _loginManager.GetClientUserNameByEmail(bademail);
+
+            // Assert
+            Assert.AreEqual(expectedUsername, actualUsername);
+        }
+
+
+
+        /// <summary>
+        ///     Test that authenticating an client's username and password returns the correct employee when
+        ///     the username and password are found
+        /// </summary>
+        /// <remarks>
+        ///    CONTRIBUTOR: Jacob Rohr
+        /// <br />
+        ///    CREATED: 2024-04-12
+        /// </remarks>
+        [TestMethod]
+        public void AuthenticateClientReturnsCorrectClient()
+        {
+            // Arrange
+            string username = "jackrussel49";
+            string password = "galaxy";
+
+            int expectedClientId = 100082;
+
+            List<Login_VM> testLoginData = new List<Login_VM>
+            {
+                new Login_VM
+                {
+                    Username = username,
+                    PasswordHash = "eba4ae33f54ae0f96bed25bfc13abd887ae157380330cd3fd3f0a4d054ce3a3f",
+                    ClientID = expectedClientId,
+                    Client = new Client_VM
+                    {
+                        ClientID = expectedClientId
+                    }
+                }, new Login_VM
+                {
+                    Username = "incorrect",
+                    PasswordHash = "invalidpasswordhash",
+                    ClientID = 100000,
+                    Client = new Client_VM
+                    {
+                        ClientID = 100000
+                    }
+                }
+            };
+
+            _loginManager = new LoginManager(_passwordHasher, new LoginAccessorFake(testLoginData));
+
+            // Action
+            Client_VM actualClient = _loginManager.AuthenticateClient(username, password);
+
+            // Assert
+            Assert.AreEqual(expectedClientId, actualClient.ClientID);
+        }
+
+        /// <summary>
+        ///     Test that authenticating an Client's username and password fails when the username and password are not found
+        /// </summary>
+        /// <remarks>
+        ///    CONTRIBUTOR: Jacob Rohr
+        /// <br />
+        ///    CREATED: 2024-04-12
+        /// </remarks>
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void AuthenticateClient_FailsOnInvalidLogin()
+        {
+            // Arrange
+            string username = "jackrussel49";
+            string password = "galaxy";
+
+            int expectedClientId = 100082;
+
+            List<Login_VM> testLoginData = new List<Login_VM>
+            {
+                new Login_VM
+                {
+                    Username = username,
+                    PasswordHash = "eba4ae33f54ae0f96bed25bfc13abd887ae157380330cd3fd3f0a4d054ce3a3f",
+                    ClientID = expectedClientId
+                }, new Login_VM
+                {
+                    Username = "incorrect",
+                    PasswordHash = "invalidpasswordhash",
+                    ClientID = 100000
+                }
+            };
+
+            _loginManager = new LoginManager(_passwordHasher, new LoginAccessorFake(testLoginData));
+
+            // Act
+            _loginManager.AuthenticateClient(username, password);
+        }
+
     }
+
 }
