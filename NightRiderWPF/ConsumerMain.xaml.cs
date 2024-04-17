@@ -29,7 +29,7 @@ using NightRiderWPF.Login;
 using NightRiderWPF.RouteStop;
 using NightRiderWPF.VehicleModels;
 using NightRiderWPF.PasswordReset;
-using NightRiderWPF.Dispatch;
+using NightRiderWPF;
 using System.Configuration;
 
 namespace NightRiderWPF

@@ -212,5 +212,29 @@ namespace DataAccessInterfaces
         /// <br />
         ///    CREATED: 2024-02-22
         int ActivateEmployeeByID(int employeeID);
+
+        /// <summary>
+        ///   retrieves an employee by Email
+        /// </summary>
+        /// <param>
+        ///    Email
+        /// </param>
+        /// <returns>
+        ///     <see cref="Employee_VM"/>: returns an employee
+        /// </returns>
+        /// <remarks>
+        ///    Parameters: Email
+        /// <br />
+        /// <br /><br />
+        ///    Exceptions:None
+        /// <br />
+        /// <br /><br />
+        ///    CONTRIBUTOR: Jacob Rohr
+        /// <br />
+        ///    CREATED: 2024-04-09
+        /// <br /><br />
+        /// </remarks>
+        Employee_VM GetEmployeeByEmail(string email);
+
     }
 }

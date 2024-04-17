@@ -23,13 +23,20 @@ namespace NightRiderWPF.Employees
     /// UPDATED: 2024-02-01
     /// <br />
     /// Initial Creation
+    /// <br />
+    /// UPDATED BY: Michael Springer
+    /// <br />
+    /// UPDATED 2024-04-09
+    /// Added userName handling and added creation of Login table data
     /// </remarks>
     public partial class AdminCreateNewEmployee : Page
     {
         RoleManager _roleManager = null;
         EmployeeManager _employeeManager = null;
+        LoginManager _loginManager = null;
         IEnumerable<Role> _roleList = null;
         List<string> _roles = null;
+        bool _userDataAlreadyExists = false;
 
         public AdminCreateNewEmployee()
         {
@@ -39,6 +46,7 @@ namespace NightRiderWPF.Employees
 
                 _roleManager = new RoleManager();
                 _employeeManager = new EmployeeManager();
+                _loginManager = new LoginManager();
                 _roles = new List<string>();
                 //Sets the parameters of the datepicker to auto select current date and not allow for selections past current date
                 dateDOB.SelectedDate = DateTime.Now;
@@ -71,6 +79,8 @@ namespace NightRiderWPF.Employees
         //Form submission
         private void btnCreateEmployee_Click(object sender, RoutedEventArgs e)
         {
+            // reset this flag on each click
+            _userDataAlreadyExists = false;
 
             string givenName = txtGivenName.Text;
             string familyName = txtFamilyName.Text;
@@ -88,6 +98,8 @@ namespace NightRiderWPF.Employees
             string phone = txtPhone.Text;
             string email = txtEmail.Text;
             string position = txtPosition.Text;
+            // updated - M. Springer
+            string userName = txtUserName.Text;
 
             // Input validation checks
             if (!FormValidationHelper.IsValidEmail(email))
@@ -101,6 +113,12 @@ namespace NightRiderWPF.Employees
                 MessageBox.Show("Please enter a valid telephone number");
                 return;
             }
+            if (!FormValidationHelper.isValidUserName(userName))
+            {
+                MessageBox.Show("Please enter a username of less than 50 characters");
+                return;
+            }
+            
 
             //Checks required form inputs to ensure they are not empty or null
             if (string.IsNullOrWhiteSpace(givenName) ||
@@ -111,65 +129,96 @@ namespace NightRiderWPF.Employees
                 string.IsNullOrWhiteSpace(zip) ||
                 string.IsNullOrWhiteSpace(phone) ||
                 string.IsNullOrWhiteSpace(email) ||
-                string.IsNullOrWhiteSpace(position))
+                string.IsNullOrWhiteSpace(position) ||
+                string.IsNullOrWhiteSpace(userName))
             {
                 MessageBox.Show("Please fill in all required fields.");
                 return;
             }
+
+            // Uses a pair of bools before create methods to prevent creation of employee without
+            // creation of login
             IEnumerable<Employee> employees = _employeeManager.GetAllEmployees();
             foreach (var employee in employees)
             {
                 if (txtEmail.Text == employee.Email)
                 {
+                    _userDataAlreadyExists = true;
                     MessageBox.Show("An employee with that email already exists");
                     return;
                 }
             }
-
-
-            Employee_VM newEmployee = new Employee_VM()
+            List<string> usernames = (List<string>)_loginManager.GetAllUserNames();
+            foreach (var username in usernames)
             {
-
-                Given_Name = givenName,
-                Family_Name = familyName,
-                DOB = dob,
-                Address = address1,
-                Address2 = address2,
-                City = city,
-                State = state,
-                Country = country,
-                Zip = zip,
-                Phone_Number = phone,
-                Email = email,
-                Position = position
-            };
-
-
-            //Adds role(s) selected from presentation list and adds them to the Employee_VM object.
-            List<Role> employeeRoles = new List<Role>();
-            foreach (var selectedItem in lstRoles.SelectedItems)
-            {
-                employeeRoles.Add(new Role() { RoleID = selectedItem.ToString() });
+                if(txtUserName.Text == username)
+                {
+                    _userDataAlreadyExists = true;
+                    MessageBox.Show("That username already exists");
+                    return;
+                }
             }
-            if (employeeRoles.Count == 0)
+            // Only activates if both an employee and a login can be created
+            if (!_userDataAlreadyExists)
             {
-                MessageBox.Show("Please select at least one employee role");
-                return;
-            }
+                Employee_VM newEmployee = new Employee_VM()
+                {
 
-            newEmployee.Roles = employeeRoles;
+                    Given_Name = givenName,
+                    Family_Name = familyName,
+                    DOB = dob,
+                    Address = address1,
+                    Address2 = address2,
+                    City = city,
+                    State = state,
+                    Country = country,
+                    Zip = zip,
+                    Phone_Number = phone,
+                    Email = email,
+                    Position = position
+                };
 
-            //Inserts new Employee database record
-            try
-            {
-                _employeeManager.AddEmployee(newEmployee);
-                MessageBox.Show("Employee added successfully");
-                clearInputFields();
+
+                //Adds role(s) selected from presentation list and adds them to the Employee_VM object.
+                List<Role> employeeRoles = new List<Role>();
+                foreach (var selectedItem in lstRoles.SelectedItems)
+                {
+                    employeeRoles.Add(new Role() { RoleID = selectedItem.ToString() });
+                }
+                if (employeeRoles.Count == 0)
+                {
+                    MessageBox.Show("Please select at least one employee role");
+                    return;
+                }
+
+                newEmployee.Roles = employeeRoles;
+                int newEmployeeID = 0;
+                //Inserts new Employee database record
+                try
+                {
+                    newEmployeeID = _employeeManager.AddEmployee(newEmployee);
+
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message);
+                }
+                //Inserts new Employee login data record
+                if (newEmployeeID != 0)
+                {
+                    try
+                    {
+                        _loginManager.AddEmployeeLogin(userName, newEmployeeID);
+                        MessageBox.Show("Employee added successfully");
+                        clearInputFields();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Username alrady exists");
+                    }
+                }
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message + "\n\n" + ex.InnerException.Message);
-            }
+            
         }
 
         //Clears form input fields
@@ -177,6 +226,7 @@ namespace NightRiderWPF.Employees
         {
             txtGivenName.Text = "";
             txtFamilyName.Text = "";
+            txtUserName.Text = "";
             txtAddress1.Text = "";
             dateDOB.SelectedDate = DateTime.Now;
             txtAddress2.Text = "";

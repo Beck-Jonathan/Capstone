@@ -8,8 +8,6 @@ using System.Threading.Tasks;
 
 namespace LogicLayer
 {
-    ///<inheritdoc/>
-
     /// <summary>
     /// AUTHOR: James Williams
     /// <br />
@@ -64,13 +62,13 @@ namespace LogicLayer
         /// <br />
         ///    CREATED: 2024-02-01
         /// <br /><br />
-        ///    UPDATER: updater_name
+        ///    UPDATER: Michael Springer
         /// <br />
-        ///    UPDATED: yyyy-MM-dd
+        ///    UPDATED: 2024-04-13
         /// <br />
-        ///     Initial Creation
+        ///     Changed output from bool to an int representing the assigned employeeID
         /// </remarks>
-        public bool AddEmployee(Employee_VM newEmployee)
+        public int AddEmployee(Employee_VM newEmployee)
         {
             //new Employee_ID after insert
             int newID = 0;
@@ -95,7 +93,8 @@ namespace LogicLayer
             {
                 throw new ApplicationException("Error entering new employee record", ex);
             }
-            return (0 != newID);
+            //return (0 != newID);
+            return newID;
         }
 
         /// <summary>
@@ -305,6 +304,26 @@ namespace LogicLayer
             }
             return rows;
         }
+
+        public Employee_VM GetEmployeeByEmail(string email)
+        {
+            Employee_VM result = null;
+            try
+            {
+                result = _employeeAccessor.GetEmployeeByEmail(email);
+                if (result == null)
+                {
+                    throw new ArgumentException("Employee not found in the database.");
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            return result;
+        }
     }
+    
 }
 // Checked by Nathan Toothaker

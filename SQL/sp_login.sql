@@ -158,3 +158,161 @@ BEGIN
     AND (l.[Security_Response_3] IS NULL OR l.[Security_Response_3] = @Security_Response_3);
 END;
 GO
+
+-- Initial Creator: Michael Springer
+-- Creation Date: 2024-04-09
+-- Last Modified: 
+-- Modification Description: Initial Creation
+-- Stored Procedure Description: Retrieves a list of registered usernames
+print '***Creating [dbo].[sp_select_all_usernames]***' 
+GO
+CREATE PROCEDURE [dbo].[sp_select_all_usernames]
+AS
+BEGIN
+  SELECT
+      [Username]
+  FROM [dbo].[Login]
+  WHERE [Active] = 1;
+END;
+GO
+
+-- Initial Creator: Michael Springer
+-- Creation Date: 2024-04-12
+-- Last Modified: 
+-- Modification Description: Initial Creation
+-- Stored Procedure Description: Inserts a login entry for employee
+print '***Creating [dbo].[sp_insert_employee_login]***'
+GO
+CREATE PROCEDURE [dbo].[sp_insert_employee_login](
+  @P_Username     [nvarchar](100),
+  @P_Employee_ID  [int]
+)
+AS
+BEGIN
+  INSERT INTO [dbo].[Login](
+    [UserName],
+    [Employee_ID]
+  )
+  VALUES (
+    @P_Username,
+    @P_Employee_ID
+  );
+  END
+  GO
+
+
+
+-- Initial Creator: Jacob Rohr
+-- Creation Date: 2024-04-10
+-- Modification Description: Initial Creation
+-- Stored Procedure Description: Retrieves all client ids in a the login table to cross reference elsewhere
+Print '***Creating [dbo].[sp_get_all_client_id]***' 
+GO
+CREATE PROCEDURE [dbo].[sp_select_all_client_id_from_login]
+AS
+BEGIN
+	SELECT 
+	[Client_ID]
+	FROM [Login]
+END;
+GO
+
+-- Initial Creator: Jacob Rohr
+-- Creation Date: 2024-04-10
+-- Modification Description: Initial Creation
+-- Stored Procedure Description: Retrieves all Employee ids in a the login table to cross reference elsewhere
+Print '***Creating [dbo].[sp_get_all_employee_id]***' 
+GO
+CREATE PROCEDURE [dbo].[sp_select_all_employee_id_from_login]
+AS
+BEGIN
+	SELECT 
+	[Employee_ID]
+	FROM [Login]
+END;
+GO
+
+
+-- Initial Creator: Jacob Rohr
+-- Creation Date: 2024-04-10
+-- Modification Description: Initial Creation
+-- Stored Procedure Description: gets a employee username by email without security questions
+Print '***Creating [dbo].[sp_get_employee_username_MVC]***' 
+GO
+CREATE PROCEDURE [dbo].[sp_get_employee_username_MVC] (
+  @Email [nvarchar](50)
+)
+AS
+BEGIN
+  SELECT
+	[Login].[Username]
+  FROM [dbo].[Login]
+  JOIN [dbo].[Employee] ON [Employee].[Employee_ID] = [Login].[Employee_ID]
+  WHERE [Employee].[Email] = @Email
+  
+ 
+END;
+GO
+
+-- Initial Creator: Jacob Rohr
+-- Creation Date: 2024-04-12
+-- Modification Description: Initial Creation
+-- Stored Procedure Description: gets a client username by email without security questions
+Print '***Creating [dbo].[sp_get_client_username_MVC]***' 
+GO
+CREATE PROCEDURE [dbo].[sp_get_client_username_MVC] (
+  @Email [nvarchar](50)
+)
+AS
+BEGIN
+  SELECT
+	[Login].[Username]
+  FROM [dbo].[Login]
+  JOIN [dbo].[Client] ON [Client].[Client_ID] = [Login].[Client_ID]
+  WHERE [Client].[Email] = @Email
+  
+ 
+END;
+GO
+
+
+-- Initial Creator: Jacob Rohr
+-- Creation Date: 2024-04-12
+-- Modification Description: Initial Creation
+-- Stored Procedure Description: Ability to authenticate client in the same way as employee
+Print '*** creating sp_authenticate_client ***'
+GO
+CREATE PROCEDURE [dbo].[sp_authenticate_client] (
+  @Username [nvarchar](50),
+  @Password_Hash [nvarchar](100)
+)
+AS
+BEGIN
+  SELECT
+	ccr.[Client_Role_ID],
+	c.[Client_ID],
+	c.[Given_Name],
+	c.[Family_Name], 
+	c.[Middle_Name] ,
+	c.[DOB], 
+	c.[Email], 
+	c.[Postal_Code], 
+	c.[City],
+	c.[Region],
+	c.[Address],
+	c.[Text_Number], 
+	c.[Voice_Number],
+	c.[Is_Active],
+	l.[username]
+
+  FROM [dbo].[Client] c
+  JOIN [dbo].[Client_Client_Role] ccr ON c.[Client_ID] = ccr.[Client_ID]
+  JOIN [dbo].[Login] l ON c.[Client_ID] = l.[Client_ID]
+  WHERE
+    l.[Active] = 1
+    AND c.[Is_Active] = 1
+    AND l.[Username] = @Username
+    AND l.[Password_Hash] = @Password_Hash
+END;
+GO
+

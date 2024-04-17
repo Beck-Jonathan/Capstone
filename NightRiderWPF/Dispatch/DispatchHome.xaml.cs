@@ -1,4 +1,7 @@
-﻿using System;
+﻿using DataObjects;
+using LogicLayer;
+using LogicLayer.PartsRequest;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +17,8 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 
-namespace NightRiderWPF.Dispatch
+
+namespace NightRiderWPF
 {
     /// <summary>
     /// Interaction logic for DispatchHome.xaml
@@ -22,6 +26,8 @@ namespace NightRiderWPF.Dispatch
     public partial class DispatchHome : Page
     {
         string _selectedModel = null;
+        IDriverScheduleManager _driverScheduleManager = null;
+        List<Dispatch> _driverSchedule = null;
         public DispatchHome()
         {
             InitializeComponent();
@@ -167,6 +173,25 @@ namespace NightRiderWPF.Dispatch
         {
             cboService.ItemsSource = items;
         }
-    }
 
+        private void gridDriverSchedules_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (gridDriverSchedules.Visibility == Visibility.Visible)
+            {
+                try
+                {
+                    _driverScheduleManager = new DriverScheduleManager();
+                    _driverSchedule = _driverScheduleManager.GetDriverScheduleList();
+
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("No driver schedules found. " + ex);
+                }
+
+                dataGridDriverSchedule.ItemsSource = _driverSchedule;
+            }
+
+        }
+    }
 }

@@ -50,6 +50,7 @@
     <Compile Include="IBingMapsAccessor.cs" />
     <Compile Include="IClientDependentRoleAccessor.cs" />
     <Compile Include="IDependentAccessor.cs" />
+    <Compile Include="IDispatchAccessor.cs" />
     <Compile Include="IPartsRequestAccessor.cs" />
     <Compile Include="IRouteAccessor.cs" />
     <Compile Include="IPasswordResetAccessor.cs" />
