@@ -176,5 +176,18 @@ namespace NightRiderWPF.RouteStop
         {
 
         }
+
+        private void btnEditRoute_Click(object sender, RoutedEventArgs e)
+        {
+            new AddEditRouteDetail(_route, _routeManager).ShowDialog();
+        }
+
+        private void btnBackToRouteList_Click(object sender, RoutedEventArgs e)
+        {
+            if (NavigationService.CanGoBack)
+            {
+                NavigationService.GoBack();
+            }
+        }
     }
 }

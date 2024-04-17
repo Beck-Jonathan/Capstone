@@ -19,7 +19,7 @@
             <RowDefinition />
             <RowDefinition Height="5*" />
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0" Grid.ColumnSpan="2" Background="{x:Static resources:Statics.BackgroundItem}">
+        <Grid Grid.Row="0" Grid.Column="1" Background="{x:Static resources:Statics.BackgroundItem}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition />
@@ -48,21 +48,27 @@
                    Foreground="{x:Static resources:Statics.SecondaryColor}" />
             <Label Grid.Row="1" Grid.Column="3" x:Name="lblDaysOfService" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" />
         </Grid>
-        <Grid Grid.Row="1" Grid.Column="0">
+        <Grid Grid.Row="0" Grid.RowSpan="2" Grid.Column="0">
             <Grid.RowDefinitions>
                 <RowDefinition />
                 <RowDefinition />
                 <RowDefinition />
+                <RowDefinition Height="100px" />
+                <RowDefinition />
             </Grid.RowDefinitions>
             <Button Margin="20px" x:Name="btnEditStop" Content="Change Stops" 
-                    Height="80px" Background="{x:Static resources:Statics.SecondaryColor}" 
+                    Height="50px" Background="{x:Static resources:Statics.SecondaryColor}" 
                     Foreground="{x:Static resources:Statics.ButtonText}" Grid.Row="0" />
             <Button Margin="20px" x:Name="btnEditRoute" Content="Edit Route" 
-                    Height="80px" Background="{x:Static resources:Statics.SecondaryColor}" 
-                    Foreground="{x:Static resources:Statics.ButtonText}" Grid.Row="1" />
+                    Height="50px" Background="{x:Static resources:Statics.SecondaryColor}" 
+                    Foreground="{x:Static resources:Statics.ButtonText}" Grid.Row="1" Click="btnEditRoute_Click" />
             <Button Margin="20px" x:Name="btnAssignVehicleAndDriver" Content="Create Assignment" 
-                    Height="80px" Background="{x:Static resources:Statics.SecondaryColor}" 
+                    Height="50px" Background="{x:Static resources:Statics.SecondaryColor}" 
                     Foreground="{x:Static resources:Statics.ButtonText}" Grid.Row="2" />
+            <Button Margin="20px" Height="50px" x:Name="btnBackToRouteList"
+                    Content="Back to Route List" Grid.Row="4" 
+                    Foreground="{x:Static resources:Statics.ButtonText}"
+                    Background="{x:Static resources:Statics.SecondaryColor}" Click="btnBackToRouteList_Click"/>
         </Grid>
         <Maps:Map x:Name="mapRoute" Grid.Column="1" Grid.Row="1" ZoomLevel="10" />
 

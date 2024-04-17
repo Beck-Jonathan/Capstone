@@ -32,6 +32,16 @@ namespace DataObjects.RouteObjects
             result = DaysOfService.isActiveOnDay(day.ToString("ddd"));
             return result;
         }
+        public bool isActiveOnDay(DayOfWeek day)
+        {
+            bool result = false;
+            result = DaysOfService.isActiveOnDay(day.ToString("d"));
+            return result;
+        }
+        public bool isActiveOnDay(string day)
+        {
+            return DaysOfService.isActiveOnDay(day);
+        }
 
     }
 

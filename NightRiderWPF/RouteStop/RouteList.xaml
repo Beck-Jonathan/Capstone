@@ -30,7 +30,7 @@
                 <DataGridTextColumn Header="Active" Binding="{Binding IsActive}" />
             </DataGrid.Columns>
         </DataGrid>
-        <Button x:Name="btnAddRoute" Content="Add" Grid.Column="1" Grid.Row="2" Width="150px" Height="50px" Foreground="{x:Static resources:Statics.ButtonText}" Background="{x:Static resources:Statics.SecondaryColor}" />
+        <Button x:Name="btnAddRoute" Content="Add" Grid.Column="1" Grid.Row="2" Width="150px" Height="50px" Foreground="{x:Static resources:Statics.ButtonText}" Background="{x:Static resources:Statics.SecondaryColor}" Click="btnAddRoute_Click" />
         <Button x:Name="btnToggleRouteActive" Content="Toggle Route" HorizontalAlignment="Right" Grid.Column="1" Grid.Row="2" Width="150px" Height="50px" Foreground="{x:Static resources:Statics.ButtonText}" Background="{x:Static resources:Statics.SecondaryColor}" Click="btnToggleRouteActive_Click" />
         <Button x:Name="btnStopsList" Content="Stops Lists" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="2" Width="150px" Height="50px" Foreground="{x:Static resources:Statics.ButtonText}" Background="{x:Static resources:Statics.SecondaryColor}" Click="btnStopsList_Click" />
     </Grid>

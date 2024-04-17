@@ -112,5 +112,17 @@ namespace NightRiderWPF.RouteStop
         {
             NavigationService.Navigate(new StopList());
         }
+
+        private void btnAddRoute_Click(object sender, RoutedEventArgs e)
+        {
+            AddEditRouteDetail adder = new AddEditRouteDetail(_routeManager);
+            adder.Closed += Adder_Closed;
+            adder.ShowDialog();
+        }
+
+        private void Adder_Closed(object sender, EventArgs e)
+        {
+            refreshRouteList();
+        }
     }
 }

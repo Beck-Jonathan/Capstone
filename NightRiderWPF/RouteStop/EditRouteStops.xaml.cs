@@ -16,6 +16,7 @@ using System.Windows.Shapes;
 namespace NightRiderWPF.RouteStop
 {
     /// <summary>
+    /// AUTHOR: Nathan Toothaker
     /// Interaction logic for EditRouteStops.xaml
     /// </summary>
     public partial class EditRouteStops : Page

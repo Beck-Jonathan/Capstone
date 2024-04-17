@@ -191,24 +191,19 @@ namespace DataAccessFakes
         public int UpdateRoute(RouteVM oldRoute, RouteVM newRoute)
         {
             int result = 0;
-            if (oldRoute.RouteId == newRoute.RouteId)
+            for (int i = 0;  i < routes.Count; i++)
             {
-                for (int i = 0;  i < routes.Count; i++)
+                if (routes[i].RouteId == oldRoute.RouteId)
                 {
-                    if (routes[i].RouteId == oldRoute.RouteId)
-                    {
-                        routes[i] = newRoute;
-                        result = i;
-                        break;
-                    } else if (i == routes.Count - 1)
-                    {
-                        throw new Exception("Old route not in dataset");
-                    }
+                    routes[i] = newRoute;
+                    result = 1;
+                    break;
+                } else if (i == routes.Count - 1)
+                {
+                    throw new Exception("Old route not in dataset");
                 }
-            } else
-            {
-                throw new ArgumentException("Route doesn't match.");
             }
+            
             return result;
         }
     }
