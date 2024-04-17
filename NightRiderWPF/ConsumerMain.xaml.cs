@@ -29,6 +29,8 @@ using NightRiderWPF.Login;
 using NightRiderWPF.RouteStop;
 using NightRiderWPF.VehicleModels;
 using NightRiderWPF.PasswordReset;
+using NightRiderWPF;
+using System.Configuration;
 
 namespace NightRiderWPF
 {
@@ -46,6 +48,12 @@ namespace NightRiderWPF
             _passwordHasher = new PasswordHasher();
             _loginManager = new LoginManager(_passwordHasher);
             InitializeComponent();
+
+            try
+            {
+                EmailClientData.ConnectionString = ConfigurationManager.ConnectionStrings["azureComm"]?.ToString();
+                EmailClientData.Sender = ConfigurationManager.ConnectionStrings["azureCommSender"]?.ToString();
+            } catch (ConfigurationException) { }
         }
 
         private void btnClients_Click(object sender, RoutedEventArgs e)
@@ -308,7 +316,10 @@ namespace NightRiderWPF
             {
                 PageViewer.RemoveBackEntry();
             }
+
+            PageViewer.Navigate(new Page());
         }
+
 
         private void btnDriverSchedules_Click(object sender, RoutedEventArgs e)
         {

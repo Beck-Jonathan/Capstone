@@ -1,5 +1,6 @@
 ﻿using DataAccessInterfaces;
 using DataAccessLayer;
+using LogicLayer.AppData;
 using LogicLayer.Utilities;
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,7 @@ namespace LogicLayer
     /// </summary>
     public interface IPasswordResetManager
     {
-        void BeginPasswordReset(string username);
+        string BeginPasswordReset(string username);
         bool VerifyPasswordReset(string username, string email, string verificationCode);
     }
 
@@ -122,11 +123,20 @@ namespace LogicLayer
         /// <br />
         ///    CREATED: 2024-02-24
         /// </remarks>
-        public void BeginPasswordReset(string username)
+        public string BeginPasswordReset(string username)
         {
             string verificationCode = _verificationCodeGenerator.GenerateCode();
 
-            _passwordResetAccessor.InsertPasswordReset(username, verificationCode);
+            try
+            {
+                _passwordResetAccessor.InsertPasswordReset(username, verificationCode);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("There was an error beginning the password reset", ex);
+            }
+
+            return verificationCode;
         }
 
         /// <summary>
@@ -159,11 +169,18 @@ namespace LogicLayer
         /// </remarks>
         public bool VerifyPasswordReset(string username, string email, string verificationCode)
         {
-            return _passwordResetAccessor.VerifyPasswordReset(
-                username,
-                email,
-                verificationCode,
-                _secondsBeforePasswordResetExpiry);
+            try
+            {
+                return _passwordResetAccessor.VerifyPasswordReset(
+                    username,
+                    email,
+                    verificationCode,
+                    _secondsBeforePasswordResetExpiry);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("There was an error verifying the password reset", ex);
+            }
         }
     }
 }

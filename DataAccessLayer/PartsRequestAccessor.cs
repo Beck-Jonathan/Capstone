@@ -210,5 +210,39 @@ namespace DataAccessLayer
             }
             return rowsAffected;
         }
+
+        public int approveRequest(int partRequestID, int vendorid, int lineNumber)
+        {
+            //TODO: add enum price values for now use random
+            Random random = new Random();
+            int unitPrice = random.Next(10, 50);
+
+
+            int index;
+            var conn = DBConnectionProvider.GetConnection();
+            var commandText = "sp_approve_request";
+            var cmd = new SqlCommand(commandText, conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            cmd.Parameters.AddWithValue("@Parts_Request_ID", partRequestID);
+            cmd.Parameters.AddWithValue("@LineNumber", lineNumber);
+            cmd.Parameters.AddWithValue("@Vendor_ID", vendorid);
+            cmd.Parameters.AddWithValue("@Price", unitPrice);
+
+            try
+            {
+                conn.Open();
+                index = Convert.ToInt32(cmd.ExecuteScalar());
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally 
+            { 
+                conn.Close(); 
+            }
+            return index;
+        }
     }
 }

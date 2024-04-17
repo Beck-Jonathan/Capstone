@@ -1,4 +1,5 @@
-﻿using LogicLayer;
+﻿using Azure;
+using LogicLayer;
 using LogicLayer.AppData;
 using LogicLayer.Utilities;
 using System;
@@ -15,6 +16,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Azure;
+using Azure.Communication.Email;
 
 namespace NightRiderWPF.PasswordReset
 {
@@ -113,7 +116,20 @@ namespace NightRiderWPF.PasswordReset
         /// </remarks>
         private void BeginPasswordResetProcess()
         {
-            _passwordResetManager.BeginPasswordReset(_username);
+            string verificationCode = _passwordResetManager.BeginPasswordReset(_username);
+
+        var client = new EmailClient(EmailClientData.ConnectionString);
+
+        client.Send(
+            WaitUntil.Started,
+            senderAddress: EmailClientData.Sender,
+            recipientAddress: _email,
+            subject: "Password Reset Code",
+            htmlContent: $@"
+<h2>A password reset has been requested on your account</h2>
+<h4>If you did not request this reset, please ignore this email</h2>
+<p>Your password reset code is <b>{verificationCode}</b></p>
+");
         }
 
         /// <summary>
