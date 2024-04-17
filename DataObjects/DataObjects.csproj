@@ -58,6 +58,7 @@
     <Compile Include="Parts_Request.cs" />
     <Compile Include="PasswordReset.cs" />
     <Compile Include="POLineItem.cs" />
+    <Compile Include="PRLineItems.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RouteObjects\Route.cs" />
     <Compile Include="RouteObjects\RouteStop.cs" />

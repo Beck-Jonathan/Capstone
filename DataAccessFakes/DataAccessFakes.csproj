@@ -56,6 +56,7 @@
     <Compile Include="EmployeeAccessorFake.cs" />
     <Compile Include="PasswordResetAccessorFake.cs" />
     <Compile Include="POLineItems_Fakes.cs" />
+    <Compile Include="PRLineItems_Fakes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RouteAccessorFakes.cs" />
     <Compile Include="Purchase_Order_Fakes.cs" />

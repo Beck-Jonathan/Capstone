@@ -31,8 +31,16 @@ namespace DataAccessFakes
         /// </summary>
         ///
         /// <remarks>
-        /// Jonsthan Beck
+        /// Updater: Jonsthan Beck
         /// Updated: 2024/02/06
+        /// <br /><br />
+        /// 
+        /// 
+        /// Updater: Parker Svoboda
+        /// <br />
+        /// Updated 2024/04/09
+        /// <br />
+        ///     added parts that match with Parts request
         /// </remarks>
 
         private List<Parts_Inventory> _fakeparts = new List<Parts_Inventory>();
@@ -75,6 +83,18 @@ namespace DataAccessFakes
             part3.Is_Active = true;
             part3.CompatibleVehicleModelIds = new List<int> { 1 };
             _fakeparts.Add(part3);
+
+            Parts_Inventory part4 = new Parts_Inventory();
+            part4.Parts_Inventory_ID = 4;
+            part4.Part_Quantity = 1;
+            part4.Part_Photo_URL = "www.kirkwood.edu";
+            part4.Part_Name = "Spark Plug";
+            part4.Ordered_Qty = 5;
+            part4.Item_Description = "Mr. Fred's";
+            part4.Item_Specifications = "That's Sparkn' alright!";
+            part4.Stock_Level = 0;
+            part4.Is_Active = true;
+            _fakeparts.Add(part4);
 
             //created by James Williams
             _fakeModels.Add(new VehicleModelVM
