@@ -20,7 +20,12 @@ namespace DataAccessInterfaces
     /// <remarks>
     /// UPDATER: Chris Baenizger
     /// UPDATED: 2024-02-23
+    /// <br />
+    /// UPDATER: Ben Collins
+    /// UPDATED: 2024-03-24
+    /// <br />
     /// Added method for deactivate vehicle.
+    /// Added SelectVehicleByVIN(string VIN).
     /// </remarks>
 
     public interface IVehicleAccessor
@@ -220,5 +225,29 @@ namespace DataAccessInterfaces
         ///    CREATED: 2024-04-13
         /// </remarks>
         List<ServiceOrder_VM> SelectServiceOrdersByVin(String VIN);
+
+        /// <summary>
+        ///     Retrieves a Vehicle record by the VIN from the database
+        /// </summary>
+        /// <returns>
+        ///    A <see cref="Vehicle">Vehicle</see> object otherwise, <see cref="Exception">execption</see>.
+        /// </returns>
+        /// <remarks>
+        ///    Exceptions:
+        /// <br />
+        ///    <see cref="SqlException">SqlException</see>: No records returned
+        /// <br /><br />
+        ///    CONTRIBUTOR: Ben Collins
+        /// <br />
+        ///    CREATED: 2024-03-24
+        /// <br />
+        /// <br />
+        ///    UPDATER: [Updater's Name]
+        /// <br />
+        ///    UPDATED: yyyy-MM-dd
+        /// <br />
+        ///     Initial Creation
+        /// </remarks>
+        Vehicle SelectVehicleByVIN(string VIN);
     }
 }

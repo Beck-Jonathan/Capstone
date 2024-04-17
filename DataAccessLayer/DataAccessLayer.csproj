@@ -65,6 +65,7 @@
     <Compile Include="Purchase_OrderAccessor.cs" />
     <Compile Include="RouteStopAccessor.cs" />
     <Compile Include="ServiceOrderAccessor.cs" />
+    <Compile Include="ServiceOrderLineItemsAccessor.cs" />
     <Compile Include="SourceAccessor.cs" />
     <Compile Include="StopAccessor.cs" />
     <Compile Include="VehicleAccessor.cs" />

@@ -148,6 +148,7 @@ CREATE TABLE [dbo].[Parts_Inventory]
     [Parts_Inventory_ID] [int] IDENTITY(100000,1) NOT NULL,
     [Part_Name] [nvarchar] (30) NOT NULL,
     [Part_Quantity] [int] NOT NULL DEFAULT 0,
+    [Part_Unit_Type] [nvarchar] (50) NOT NULL,
     [Item_Description] [nvarchar] (100) NOT NULL,
     [Item_Specifications] [nvarchar] (MAX) NOT NULL,
     [Part_Photo_URL] [nvarchar] (255) NOT NULL,
@@ -169,25 +170,26 @@ Print '***Insert Sample Data For The  Parts_Inventory table***'
  INSERT INTO [dbo].[Parts_Inventory] (
     
     [Part_Name], 
+    [Part_Unit_Type],
     [Item_Description], 
     [Item_Specifications], 
     [Part_Photo_URL]
 )
 VALUES
-    ( 'Fastner A', 'Standard widget', 'Dimensions: 5cm x 3cm x 2cm, Material: Steel', 'https://4.imimg.com/data4/EN/PJ/MY-7251967/hex-head-bolts-500x500.jpg'),
-    ( 'Bolt B', 'Heavy-duty bolt', 'Thread size: M10, Length: 50mm, Material: Stainless steel', 'https://www.iqsdirectory.com/articles/bolts/types-of-bolts/bolts.jpg'),
-    ( 'Grommet C', 'Rubber grommet for wire protection', 'Diameter: 10mm, Material: Rubber', 'https://images.thdstatic.com/productImages/b2da35ad-9c9b-4f63-87ee-f2f920303f18/svn/everbilt-grommets-812038-64_600.jpg'),
-    ( 'Cable D', 'Power cable with 3-prong plug', 'Length: 2 meters, Gauge: 18 AWG', 'https://images.thdstatic.com/productImages/345abf4e-1320-4c4d-bf13-812bf6b841d0/svn/syston-cable-technology-data-cables-1588-sb-bk-100-64_1000.jpg'),
-    ( 'Frame E', 'Aluminum mounting frame', 'Dimensions: 30cm x 20cm, Material: Aluminum', 'https://spn-sta.spinny.com/blog/20220228141808/ezgif.com-gif-maker-90-1.jpg?compress=true&quality=80&w=1200&dpr=2.6'),
-    ( 'Washer B', '1/8 washer', ' Material: Stainless steel', 'https://images.thdstatic.com/productImages/cddb3606-9a40-4149-a4bb-a23fe749a2f4/svn/everbilt-flat-washers-842348-64_1000.jpg'),
-    ( 'Screw C', 'Metal Screws', 'Diameter: 10mm, Material: Steel', 'https://m.media-amazon.com/images/I/61tO5ExJfxL.jpg'),
-    ( 'Wire Stripper D', 'Wire Stripper', 'Length: 2 meters', 'https://m.media-amazon.com/images/I/61C-UqAIndL.jpg'),
-    ( 'Nails E', 'Wood Nails', 'Dimensions: 30cm x 20cm, Material: Aluminum', 'https://m.media-amazon.com/images/I/81RoBbXE7RL._AC_UF894,1000_QL80_.jpg'),
-	 ( 'Tires A', 'Sedan Tires', 'Dimensions: 5cm x 3cm x 2cm, Material: rubber', 'https://m.media-amazon.com/images/I/81bkWoDhtKL.jpg'),
-    ( 'Tires B', 'Bus Tires', 'Thread size: M10, Length: 50mm, Material: Rubber', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTtNwGpQYMQ9m0EIw1ZKM0IcwAwh17TznAv1Rtysc-nc5r7JGEc3h3IW7vf14jQIr0VGxA&usqp=CAU'),
-    ( 'Axel A', 'Mazda 3 Rear Axel', 'Diameter: 10mm, Material: Steel', 'https://m.media-amazon.com/images/I/51Q6MN6ArnL._AC_UF894,1000_QL80_.jpg'),
-    ( 'Struts', 'VW Bug front strut', 'Length: 2 meters, Gauge: 18 AWG', 'https://m.media-amazon.com/images/I/71XlY5CA3AL.jpg'),
-    ( 'Hubcaps ', 'Sedan Hubcap', 'Dimensions: 30cm x 20cm, Material: Aluminum', 'https://m.media-amazon.com/images/I/613dx6sjZyL._AC_UF894,1000_QL80_.jpg');
+    ( 'Fastner A', 'Pieces', 'Standard widget', 'Dimensions: 5cm x 3cm x 2cm, Material: Steel', 'https://4.imimg.com/data4/EN/PJ/MY-7251967/hex-head-bolts-500x500.jpg'),
+    ( 'Bolt B', 'Pieces', 'Heavy-duty bolt', 'Thread size: M10, Length: 50mm, Material: Stainless steel', 'https://www.iqsdirectory.com/articles/bolts/types-of-bolts/bolts.jpg'),
+    ( 'Grommet C', 'Pieces', 'Rubber grommet for wire protection', 'Diameter: 10mm, Material: Rubber', 'https://images.thdstatic.com/productImages/b2da35ad-9c9b-4f63-87ee-f2f920303f18/svn/everbilt-grommets-812038-64_600.jpg'),
+    ( 'Cable D', 'Cord', 'Power cable with 3-prong plug', 'Length: 2 meters, Gauge: 18 AWG', 'https://images.thdstatic.com/productImages/345abf4e-1320-4c4d-bf13-812bf6b841d0/svn/syston-cable-technology-data-cables-1588-sb-bk-100-64_1000.jpg'),
+    ( 'Frame E', 'Quarts', 'Aluminum mounting frame', 'Dimensions: 30cm x 20cm, Material: Aluminum', 'https://spn-sta.spinny.com/blog/20220228141808/ezgif.com-gif-maker-90-1.jpg?compress=true&quality=80&w=1200&dpr=2.6'),
+    ( 'Washer B', 'Pieces', '1/8 washer', ' Material: Stainless steel', 'https://images.thdstatic.com/productImages/cddb3606-9a40-4149-a4bb-a23fe749a2f4/svn/everbilt-flat-washers-842348-64_1000.jpg'),
+    ( 'Screw C', 'Pieces', 'Metal Screws', 'Diameter: 10mm, Material: Steel', 'https://m.media-amazon.com/images/I/61tO5ExJfxL.jpg'),
+    ( 'Wire Stripper D', 'Unit', 'Wire Stripper', 'Length: 2 meters', 'https://m.media-amazon.com/images/I/61C-UqAIndL.jpg'),
+    ( 'Nails E', 'Pounds', 'Wood Nails', 'Dimensions: 30cm x 20cm, Material: Aluminum', 'https://m.media-amazon.com/images/I/81RoBbXE7RL._AC_UF894,1000_QL80_.jpg'),
+	( 'Tires A', 'Unit', 'Sedan Tires', 'Dimensions: 5cm x 3cm x 2cm, Material: rubber', 'https://m.media-amazon.com/images/I/81bkWoDhtKL.jpg'),
+    ( 'Tires B', 'Unit', 'Bus Tires', 'Thread size: M10, Length: 50mm, Material: Rubber', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTtNwGpQYMQ9m0EIw1ZKM0IcwAwh17TznAv1Rtysc-nc5r7JGEc3h3IW7vf14jQIr0VGxA&usqp=CAU'),
+    ( 'Axel A', 'Unit', 'Mazda 3 Rear Axel', 'Diameter: 10mm, Material: Steel', 'https://m.media-amazon.com/images/I/51Q6MN6ArnL._AC_UF894,1000_QL80_.jpg'),
+    ( 'Struts', 'Unit', 'VW Bug front strut', 'Length: 2 meters, Gauge: 18 AWG', 'https://m.media-amazon.com/images/I/71XlY5CA3AL.jpg'),
+    ( 'Hubcaps ', 'Unit', 'Sedan Hubcap', 'Dimensions: 30cm x 20cm, Material: Aluminum', 'https://m.media-amazon.com/images/I/613dx6sjZyL._AC_UF894,1000_QL80_.jpg');
 GO
 
 go
@@ -448,6 +450,7 @@ CREATE TABLE [dbo].[Vehicle]
     [Vehicle_Type_ID] [nvarchar](50) NOT NULL,
     [Date_Entered] [date] NOT NULL,
     [Description] [nvarchar](256) NOT NULL,
+    [Maintenance_Notes] [nvarchar](MAX),
     [Rental] [bit] NOT NULL DEFAULT 0,
     [Is_Active] [bit] NOT NULL DEFAULT 1,
     CONSTRAINT [PK_Vehicle] PRIMARY KEY ([VIN]),
@@ -471,14 +474,14 @@ Print '***Insert Sample Data For The  Vehicle table***'
 
 INSERT INTO [dbo].[Vehicle]
     ([VIN], [Vehicle_Number], [Vehicle_Mileage], [Vehicle_License_Plate],
-    [Vehicle_Model_ID], [Vehicle_Type_ID], [Date_Entered], [Description], [Rental], [Is_Active]
+    [Vehicle_Model_ID], [Vehicle_Type_ID], [Date_Entered], [Description], [Maintenance_Notes], [Rental], [Is_Active]
     )
 VALUES
-    ('1HGCM82633A123456', 'VH123', 50000, 'ABC123', 100000, 'City Bus', '2024-01-15', 'Description', 0, 1),
-    ('5XYZH4AG4JH123456', 'VH456', 60000, 'XYZ789', 100001, 'School Bus', '2024-02-15', 'Description', 1, 1),
-    ('JM1BK32F781234567', 'VH789', 75000, 'MJK456', 100002, 'Van', '2024-03-15', 'Description', 0, 3),
-    ('WAUZZZ4G6BN123456', 'VH101', 40000, 'WAU789', 100003, 'Truck', '2024-04-15', 'Description', 1, 4),
-    ('1C4RJFAG5FC123456', 'VH202', 55000, 'JFA567', 100004, 'City Bus', '2024-05-15', 'Description', 1, 1); 
+    ('1HGCM82633A123456', 'VH123', 50000, 'ABC123', 100000, 'City Bus', '2024-01-15', 'Description', 'Last oil change at 44,250 miles.', 0, 1),
+    ('5XYZH4AG4JH123456', 'VH456', 60000, 'XYZ789', 100001, 'School Bus', '2024-02-15', 'Description', 'The tires were replaced at 55,028 miles', 1, 1),
+    ('JM1BK32F781234567', 'VH789', 75000, 'MJK456', 100002, 'Van', '2024-03-15', 'Description', 'New rear shocks at 74,000 miles', 0, 3),
+    ('WAUZZZ4G6BN123456', 'VH101', 40000, 'WAU789', 100003, 'Truck', '2024-04-15', 'Description', 'New dashboard cluster at 40,000 miles', 1, 4),
+    ('1C4RJFAG5FC123456', 'VH202', 55000, 'JFA567', 100004, 'City Bus', '2024-05-15', 'Description', 'The driver side headlight is scratched up, should be replaced soon.', 1, 1); 
 GO
 
 
@@ -904,9 +907,7 @@ Create the [dbo].[Service_Type] table
 ***************/
 print ''
 Print '***Create the [dbo].[Service_Type] table***' 
- go
-
-
+GO
 CREATE TABLE [dbo].[Service_Type]
 (
     [Service_Type_ID] [nvarchar] (256) NOT NULL,
@@ -917,26 +918,26 @@ CREATE TABLE [dbo].[Service_Type]
 )
 GO
 
+
 /******************
 Insert Sample Data For The  Service_Type table
 ***************/
 print ''
 Print '***Insert Sample Data For The  Service_Type table***' 
- go
-
-
+go
 print ''
 Print '***Create the [dbo].[Service_Type] table***' 
- go
+go
 INSERT INTO [dbo].[Service_Type]
     ([Service_Type_ID], [Service_Description])
 VALUES
-    ('ST001', 'General Maintenance'),
-    ('ST002', 'Repair'),
-    ('ST003', 'Installation'),
-    ('ST004', 'Upgrade'),
-    ('ST005', 'Troubleshooting')
+    ('Oil Change', 'Change the vehicles oil per the manufacturers specification.'),
+    ('All Tire Change', 'Change all tires on the vehicle.'),
+    ('Tire Rotation', 'Rotate all tires per the manufacturers instructions.'),
+    ('Windshield Replacement', 'Replace the windshield with OEM or better per the manufacturers specification.'),
+    ('Troubleshooting', 'Troubleshoot the issue described in the Service Notes.')
 GO
+
 
 /******************
 Create the [dbo].[Maintenance_Schedule] table
@@ -980,50 +981,11 @@ INSERT INTO [dbo].[Maintenance_Schedule]
     [Active]
     )
 VALUES
-    (100001, 100001, 'ST001', 6, 5000, 0, 1),
-    (100002, 100001, 'ST002', 12, 10000, 1, 1),
-    (100003, 100002, 'ST003', 18, NULL, 0, 1),
-    (100004, 100003, 'ST004', 12, NULL, 0, 1),
-    (100005, 100002, 'ST005', 6, NULL, 1, 1);
-GO
-
-
-
-/******************
-Create the [dbo].[Service_Line_Item] table
-***************/
-print ''
-Print '***Create the [dbo].[Service_Line_Item] table***' 
- go
-
-
-CREATE TABLE [dbo].[Service_Line_Item]
-(
-    [Service_Line_Item_ID] [int] NOT NULL,
-    [Parts_Inventory_ID] [int] NOT NULL,
-    [Quantity] [int] NOT NULL,
-    CONSTRAINT [FK_Service_Line_Item_Parts_Inventory_ID] FOREIGN KEY([Parts_Inventory_ID])
-        REFERENCES [dbo].[Parts_Inventory] ([Parts_Inventory_ID]),
-    CONSTRAINT [PK_Service_Line_Item] PRIMARY KEY([Service_Line_Item_ID]),
-    CONSTRAINT [Service_Line_Item_ID] UNIQUE([Service_Line_Item_ID])
-)
-GO
-
-
-/******************
-Insert Sample Data For The  Service_Line_Item table
-***************/
-print ''
-Print '***Insert Sample Data For The  Service_Line_Item table***' 
- go
-INSERT INTO [dbo].[Service_Line_Item]
-    ([Service_Line_Item_ID], [Parts_Inventory_ID], [Quantity])
-VALUES
-    (100000, 100000, 2),
-    (100001, 100001, 3),
-    (100002, 100002, 1),
-    (100003, 100003, 4),
-    (100004, 100004, 5)
+    (100001, 100001, 'Oil Change', 6, 5000, 0, 1),
+    (100002, 100001, 'All Tire Change', 12, 10000, 1, 1),
+    (100003, 100002, 'Tire Rotation', 18, NULL, 0, 1),
+    (100004, 100003, 'Windshield Replacement', 12, NULL, 0, 1),
+    (100005, 100002, 'Troubleshooting', 6, NULL, 1, 1);
 GO
 
 
@@ -1032,15 +994,12 @@ Create the [dbo].[Service_Order] table
 ***************/
 print ''
 Print '***Create the [dbo].[Service_Order] table***' 
- go
-
-
+GO
 CREATE TABLE [dbo].[Service_Order]
 (
     [Service_Order_ID] [int] NOT NULL,
     [Service_Order_Version] [int] NOT NULL,
     [VIN] [nvarchar] (17) NOT NULL,
-    [Service_Line_Item_ID] [int],
     [Service_Type_ID] [nvarchar] (256) NOT NULL,
     [Created_By_Employee_ID] [int] NOT NULL,
     [Serviced_By_Employee_ID] [int],
@@ -1050,8 +1009,6 @@ CREATE TABLE [dbo].[Service_Order]
     [Critical_Issue] [bit] NOT NULL DEFAULT 0,
     CONSTRAINT [FK_Service_Order_Vehicle] FOREIGN KEY([VIN])
         REFERENCES [dbo].[Vehicle] ([VIN]),
-    CONSTRAINT [FK_Service_Order_Service_Line_Item] FOREIGN KEY([Service_Line_Item_ID])
-        REFERENCES [dbo].[Service_Line_Item] ([Service_Line_Item_ID]),
     CONSTRAINT [FK_Service_Order_Service_Type] FOREIGN KEY([Service_Type_ID])
         REFERENCES [dbo].[Service_Type] ([Service_Type_ID]) ON UPDATE CASCADE,
     CONSTRAINT [FK_Service_Order_Employee] FOREIGN KEY([Created_By_Employee_ID])
@@ -1071,12 +1028,53 @@ Print '***Insert Sample Data For The  Service_Order table***'
 INSERT INTO [dbo].[Service_Order]
     ([Service_Order_ID], [Service_Order_Version], [VIN], [Service_Type_ID], [Created_By_Employee_ID], [Date_Started], [Date_Finished])
 VALUES
-    (100000, 1, '1HGCM82633A123456', 'ST001', 100001, '2024-01-25 10:00:00', '2024-01-25 12:00:00'),
-    (100001, 1, '5XYZH4AG4JH123456', 'ST002', 100002, '2024-01-24 14:30:00', '2024-01-24 16:45:00'),
-    (100002, 1, 'JM1BK32F781234567', 'ST003', 100003, '2024-01-23 09:15:00', '2024-01-23 11:00:00'),
-    (100003, 1, 'WAUZZZ4G6BN123456', 'ST004', 100004, '2024-01-22 15:00:00', '2024-01-22 17:30:00'),
-    (100004, 1, '1C4RJFAG5FC123456', 'ST005', 100005, '2024-01-21 08:45:00', '2024-01-21 10:15:00')
+    (100000, 1, '1HGCM82633A123456', 'Oil Change', 100001, '2024-01-25 10:00:00', '2024-01-25 12:00:00'),
+    (100001, 2, '5XYZH4AG4JH123456', 'All Tire Change', 100002, '2024-01-24 14:30:00', '2024-01-24 16:45:00'),
+    (100002, 1, 'JM1BK32F781234567', 'Tire Rotation', 100003, '2024-01-23 09:15:00', '2024-01-23 11:00:00'),
+    (100003, 3, 'WAUZZZ4G6BN123456', 'Windshield Replacement', 100004, '2024-01-22 15:00:00', '2024-01-22 17:30:00'),
+    (100004, 2, '1C4RJFAG5FC123456', 'Troubleshooting', 100005, '2024-01-21 08:45:00', '2024-01-21 10:15:00')
 GO
+
+
+/******************
+Create the [dbo].[Service_Line_Item] table
+***************/
+print ''
+Print '***Create the [dbo].[Service_Line_Item] table***' 
+ go
+
+
+CREATE TABLE [dbo].[Service_Line_Item]
+(
+    [Service_Order_ID]            [int]         NOT NULL,
+    [Service_Order_Version]       [int]         NOT NULL,
+    [Parts_Inventory_ID]          [int]         NOT NULL,
+    [Quantity]                    [int]         NOT NULL,
+    CONSTRAINT [FK_Service_Line_Item_Parts_Inventory_ID] FOREIGN KEY([Parts_Inventory_ID])
+        REFERENCES [dbo].[Parts_Inventory] ([Parts_Inventory_ID]),
+    CONSTRAINT [FK_Service_Line_Item_Service_Order_ID] FOREIGN KEY([Service_Order_ID], [Service_Order_Version])
+        REFERENCES [dbo].[Service_Order] ([Service_Order_ID], [Service_Order_Version]),
+    CONSTRAINT [CPK_Service_Line_Item] PRIMARY KEY([Service_Order_ID], [Parts_Inventory_ID])
+)
+GO
+
+
+/******************
+Insert Sample Data For The  Service_Line_Item table
+***************/
+print '' Print '***Insert Sample Data For The  Service_Line_Item table***' 
+ go 
+ INSERT INTO [dbo].[Service_Line_Item] 
+    ([Service_Order_ID], [Service_Order_Version], [Parts_Inventory_ID], [Quantity])
+VALUES
+    (100000, 1, 100000, 2),
+    (100001, 2, 100001, 3),
+    (100002, 1, 100002, 1),
+    (100003, 3, 100003, 4),
+    (100004, 2, 100004, 5)
+GO
+
+
 
 
 /******************
@@ -1100,7 +1098,7 @@ CREATE TABLE [dbo].[Service_Line]
     CONSTRAINT [AK_Service_Line_Item_ID1] UNIQUE([Service_Line_Item_ID])
 /*,CONSTRAINT [fk_Service_Line_Service_Order0] foreign key ([Service_Line_ID]) references [Service_Order]([Service_Order_ID])*/
 ,
-    CONSTRAINT [fk_Service_Line_Service_Line_Item1] foreign key ([Service_Line_Item_ID]) references [Service_Line_Item]([Service_Line_Item_ID])
+    -- CONSTRAINT [fk_Service_Line_Service_Line_Item1] foreign key ([Service_Line_Item_ID]) references [Service_Line_Item]([Service_Line_Item_ID])
 
 )
 go
@@ -1122,23 +1120,15 @@ Print '***Create the [dbo].[Special_Service_Order] table***'
 
 CREATE TABLE [dbo].[Special_Service_Order]
 (
-
-
-    [Special_Service_Order_ID] [int] IDENTITY(100000,1) not null	
-,
-    [Service_Order_ID] [int] not null	
-,
-    [Service_Order_Version] [int] not null	
-,
-    [Event_Description] [nvarchar](500) not null	
-,
-    [Priority] [nvarchar](500) not null	
-,
-    [Is_Active] [bit] not null	
-,
-    CONSTRAINT [PK_Special_Service_Order] PRIMARY KEY ([Special_Service_Order_ID])
-,
-    CONSTRAINT [fk_Special_Service_Order_Service_order0] foreign key ([Service_order_id],[Service_Order_Version]) references [Service_order]([Service_order_id],[Service_Order_Version])
+    [Special_Service_Order_ID] [int] IDENTITY(100000,1) NOT NULL,
+    [Service_Order_ID] [int] NOT NULL,
+    [Service_Order_Version] [int] NOT NULL,
+    [Event_Description] [nvarchar](500) NOT NULL,
+    [Priority] [nvarchar](500) NOT NULL,
+    [Is_Active] [bit] NOT NULL,
+    CONSTRAINT [PK_Special_Service_Order] PRIMARY KEY ([Special_Service_Order_ID]),
+    CONSTRAINT [fk_Special_Service_Order_Service_order] FOREIGN KEY ([Service_Order_ID],[Service_Order_Version]) 
+        REFERENCES [dbo].[Service_order]([Service_Order_ID],[Service_Order_Version])
 )
 go
 
@@ -1151,13 +1141,17 @@ Print '***Insert Sample Data For The  Special_Service_Order table***'
 
 
 INSERT INTO [dbo].[Special_Service_Order]
-    ([Service_Order_ID], [Service_Order_Version],[Event_Description],
-    [Priority],[Is_Active]
+    (
+        [Service_Order_ID], 
+        [Service_Order_Version],
+        [Event_Description],
+        [Priority],
+        [Is_Active]
     )
 VALUES
-    ('100000', 1, 'Hit a Tree', 0, 1),
-    ('100001', 1, 'Hit a Bus', 1, 1)
-Go
+    (100000, 1, 'Hit a Tree', "0", 1),
+    (100001, 2, 'Hit a Bus', "1", 1)
+GO
 
 /******************
 Create the [dbo].[Special_Inspection] table
@@ -1487,14 +1481,13 @@ VALUES
     
 GO
 
+
 /******************
 Create the [dbo].[Service_Detail] table
 ***************/
 print ''
 Print '***Create the [dbo].[Service_Detail] table***' 
- go
-
-
+GO
 CREATE TABLE [dbo].[Service_Detail]
 (
     [Service_Detail_ID] [int] IDENTITY(100000,1) NOT NULL,
@@ -1513,9 +1506,6 @@ CREATE TABLE [dbo].[Service_Detail]
 GO
 
 
-
-
-
 /******************
 Insert Sample Data For The  Service_Detail table
 ***************/
@@ -1525,11 +1515,11 @@ Print '***Insert Sample Data For The  Service_Detail table***'
 INSERT INTO [dbo].[Service_Detail]
     ([Service_Order_ID],[Service_Order_Version],[Service_Type_ID],[Employee_ID])
 VALUES
-    (100000, 1, 'ST001', 100000),
-    (100001, 1, 'ST001', 100001),
-    (100002, 1, 'ST001', 100002),
-    (100003, 1, 'ST001', 100003),
-    (100004, 1, 'ST001', 100004);
+    (100000, 1, 'Oil Change', 100000),
+    (100001, 2, 'Oil Change', 100001),
+    (100002, 1, 'Oil Change', 100002),
+    (100003, 3, 'Oil Change', 100003),
+    (100004, 2, 'Oil Change', 100004);
 GO
 
 /******************
@@ -1642,7 +1632,7 @@ CREATE TABLE [dbo].[Inspection_Report]
     [Windshield_Washer_Fluid] [nvarchar](4) NULL,
     [Problem_Description] [nvarchar](256) NULL,
     [Is_Active] [bit] NOT NULL DEFAULT 1
-        CONSTRAINT [fk_Inspection_Report_Employee_ID] FOREIGN KEY ([Employee_ID])
+    CONSTRAINT [fk_Inspection_Report_Employee_ID] FOREIGN KEY ([Employee_ID])
         REFERENCES [dbo].[Driver] ([Employee_ID]),
     CONSTRAINT [fk_Inspection_Report_VIN] FOREIGN KEY ([VIN])
         REFERENCES [dbo].[Vehicle] ([VIN]),
@@ -1678,13 +1668,13 @@ INSERT INTO [dbo].[Inspection_Report]
 VALUES
     (100000, '1HGCM82633A123456', 100000, 1, 'Full',
         35, 1, 1, 1, 1, 1, 1, 'Full', NULL, 1),
-    (100001, '5XYZH4AG4JH123456', 100001, 1, 'Low', 30, 0, 1,
+    (100001, '5XYZH4AG4JH123456', 100001, 2, 'Low', 30, 0, 1,
         1, 0, 1, 0, 'Low', 'Right rear turn signal not working.', 1),
     (100002, 'JM1BK32F781234567', 100002, 1, 'OK', 32, 1,
         1, 1, 1, 0, 1, 'OK', 'Left brake light faulty.', 1),
-    (100003, 'WAUZZZ4G6BN123456', 100003, 1, 'Full', 28, 1, 1, 0, 1,
+    (100003, 'WAUZZZ4G6BN123456', 100003, 3, 'Full', 28, 1, 1, 0, 1,
         1, 1, 'Full', 'Rear left turn signal not operational.', 1),
-    (100004, '1C4RJFAG5FC123456', 100004, 1, 'OK', 33,
+    (100004, '1C4RJFAG5FC123456', 100004, 2, 'OK', 33,
         1, 0, 1, 1, 1, 1, 'OK', 'Front right turn signal malfunctioning.', 1)
 GO
 

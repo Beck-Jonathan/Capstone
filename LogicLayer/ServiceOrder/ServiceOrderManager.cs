@@ -19,11 +19,17 @@ namespace LogicLayer
     /// </summary>
     /// 
     /// <remarks>
-    /// UPDATER: [Updater's Name]
+    /// UPDATER: Steven Sanchez
     /// <br />
-    /// UPDATED: yyyy-MM-dd
+    /// UPDATED: 2024-02-18
+    /// <br />
+    /// UPDATER: Ben Collins
+    /// <br />
+    /// UPDATED: 2024-03-19
     /// <br />
     ///     Initial creation
+    ///     Added UpdateServiceOrder(ServiceOrder serviceOrder)
+    ///     Added SelectServiceOrderByServiceOrderID()
     /// </remarks>
     public class ServiceOrderManager : IServiceOrderManager
     {
@@ -155,6 +161,55 @@ namespace LogicLayer
                 throw new ApplicationException("Service Order not added", ex);
             }
             return result;
+        }
+
+        /// <summary>
+        ///     Retrieves all ServiceOrder_VM records from the ServiceOrderAccessor and,
+        ///     <br/>
+        ///     the Vehicle, ServiceOrderLineItems, and Parts_Inventory from their 
+        ///     <br/>
+        ///     respective managers
+        /// </summary>
+        /// <returns>
+        ///    <see cref="ServiceOrder_VM">ServiceOrder_VM</see> ServiceOrder_VM object
+        /// </returns>
+        /// <remarks>
+        ///    Exceptions:
+        /// <br />
+        ///    <see cref="Exception">Exception</see>: Thrown when error encountered
+        /// <br /><br />
+        ///    CONTRIBUTOR: Ben Collins
+        /// <br />
+        ///    CREATED: 2024-02-10
+        /// <br />
+        /// <br />
+        ///    UPDATER: [Updater's Name]
+        /// <br />
+        ///    UPDATED: yyyy-MM-dd
+        /// <br />
+        ///     Initial Creation
+        /// </remarks>
+        public ServiceOrder_VM SelectServiceOrderByServiceOrderID(int serviceOrderID)
+        {
+            // use other objects managers existing Managers methods to populate the data.
+
+            ServiceOrder_VM serviceOrder = new ServiceOrder_VM();
+            IVehicleManager vehicleManager = new VehicleManager();
+            IServiceOrderLineItemsManager LineItemManager = new ServiceOrderLineItemsManager();
+
+
+            try
+            {
+                serviceOrder = _serviceOrderAccessor.SelectServiceOrderByServiceOrderID(serviceOrderID);
+                serviceOrder.serviceOrderLineItems = LineItemManager.GetServiceOrderLineItems();
+                serviceOrder.vehicle = vehicleManager.GetVehicleByVIN(serviceOrder.VIN);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return serviceOrder;
         }
     }
 }

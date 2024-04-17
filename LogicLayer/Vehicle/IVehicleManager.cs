@@ -21,11 +21,15 @@ namespace LogicLayer
     /// 
     ///Initial creation
     ///Added Vehicle Lookup List
-    /// </remarks>
-    /// <remarks>
+    /// <br />
     /// UPDATER: Chris Baenizger
     /// UPDATED: 2024-02-23
+    /// <br />
+    /// UPDATER: Ben Collins
+    /// UPDATED: 2024-03-24
+    /// <br />
     /// Added method for deactivate vehicle.
+    /// Added method for getting a vehicle by its VIN
     /// </remarks>
 
     public interface IVehicleManager
@@ -216,5 +220,30 @@ namespace LogicLayer
         /// </remarks>
 
         List<ServiceOrder_VM> getAllService_OrderByVIN(string VIN);
+
+
+        /// <summary>
+        ///     Retrives a Vehicle from the database by its VIN using a data accessor method
+        /// </summary>
+        /// <returns>
+        ///    <see cref="Vehicle">Vehicle</see> object
+        /// </returns>
+        /// <remarks>
+        ///    Exceptions:
+        /// <br />
+        ///    <see cref="Exception">Exception</see>: Thrown when error encountered
+        /// <br /><br />
+        ///    CONTRIBUTOR: Ben Collins
+        /// <br />
+        ///    CREATED: 2024-03-24
+        /// <br />
+        /// <br />
+        ///    UPDATER: [Updater's Name]
+        /// <br />
+        ///    UPDATED: yyyy-MM-dd
+        /// <br />
+        ///     Initial Creation
+        /// </remarks>
+        Vehicle GetVehicleByVIN(string VIN);
     }
 }

@@ -553,14 +553,13 @@ namespace DataAccessLayer
                         _Service_Order.Service_Order_ID = reader.GetInt32(0);
                         _Service_Order.Service_Order_Version = reader.GetInt32(1);
                         _Service_Order.VIN = reader.GetString(2);
-                        _Service_Order.Service_Line_Item_ID = reader.IsDBNull(3) ? 0 : reader.GetInt32(3);
-                        _Service_Order.Service_Type_ID = reader.IsDBNull(4) ? "" : reader.GetString(4);
-                        _Service_Order.Created_By_Employee_ID = reader.GetInt32(5);
-                        _Service_Order.Serviced_By_Employee_ID = reader.IsDBNull(6) ? 0 : reader.GetInt32(6);
-                        _Service_Order.Date_Started = reader.GetDateTime(7);
-                        _Service_Order.Date_Finished = reader.GetDateTime(8);
-                        _Service_Order.Is_Active = reader.GetBoolean(9);
-                        _Service_Order.Critical_Issue = reader.GetBoolean(10);
+                        _Service_Order.Service_Type_ID = reader.IsDBNull(3) ? "" : reader.GetString(3);
+                        _Service_Order.Created_By_Employee_ID = reader.GetInt32(4);
+                        _Service_Order.Serviced_By_Employee_ID = reader.IsDBNull(5) ? 0 : reader.GetInt32(5);
+                        _Service_Order.Date_Started = reader.GetDateTime(6);
+                        _Service_Order.Date_Finished = reader.GetDateTime(7);
+                        _Service_Order.Is_Active = reader.GetBoolean(8);
+                        _Service_Order.Critical_Issue = reader.GetBoolean(9);
                         output.Add(_Service_Order);
                     }
             }
@@ -575,5 +574,75 @@ namespace DataAccessLayer
             return output;
         }
 
+        /// <summary>
+        ///     Retrieves a Vehicle record by the VIN from the database
+        /// </summary>
+        /// <returns>
+        ///    A <see cref="Vehicle">Vehicle</see> object otherwise, <see cref="Exception">execption</see>.
+        /// </returns>
+        /// <remarks>
+        ///    Exceptions:
+        /// <br />
+        ///    <see cref="SqlException">SqlException</see>: No records returned
+        /// <br /><br />
+        ///    CONTRIBUTOR: Ben Collins
+        /// <br />
+        ///    CREATED: 2024-03-24
+        /// <br />
+        /// <br />
+        ///    UPDATER: [Updater's Name]
+        /// <br />
+        ///    UPDATED: yyyy-MM-dd
+        /// <br />
+        ///     Initial Creation
+        /// </remarks>
+        public Vehicle SelectVehicleByVIN(string VIN)
+        {
+            Vehicle returnVehicle = new Vehicle();
+
+            var conn = DBConnectionProvider.GetConnection();
+            var cmdText = "sp_select_vehicle_by_vin";
+            var cmd = new SqlCommand(cmdText, conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            cmd.Parameters.AddWithValue("@VIN", VIN);
+
+            try
+            {
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    Vehicle vehicle = new Vehicle()
+                    {
+                        VehicleNumber = reader.GetString(0),
+                        VehicleMileage = reader.GetInt32(1),
+                        VehicleLicensePlate = reader.GetString(2),
+                        VehicleModelID = reader.GetInt32(3),
+                        VehicleType = reader.GetString(4),
+                        DateEntered = reader.GetDateTime(5),
+                        VehicleDescription = reader.GetString(6),
+                        MaintenanceNotes = reader.GetString(7),
+                        Rental = reader.GetBoolean(8),
+                        Is_Active = reader.GetBoolean(9)
+                    };
+                    returnVehicle = vehicle;
+                }
+
+                if (returnVehicle == null)
+                {
+                    throw new ArgumentException("No vehicle record found");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return returnVehicle;
+        }
     }
 }

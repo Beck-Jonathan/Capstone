@@ -1,0 +1,81 @@
+﻿<Page x:Class="NightRiderWPF.DeveloperView.CompleteWorkOrderPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:NightRiderWPF.DeveloperView"
+      mc:Ignorable="d" 
+      d:DesignHeight="500" d:DesignWidth="800"
+      Title="CompleteWorkOrderPage" Background="AliceBlue" Loaded="Page_Loaded">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="500"/>
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+
+
+        <!-- Labels -->
+        <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="1">
+            <Label x:Name="mntcVehicleDetailsLbl" Content="Complete Work Order" 
+                   FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Top" 
+                   Margin="15,0,0,0" FontSize="14" />
+        </Grid>
+
+        <Grid Grid.Row="1" Grid.Column="0">
+            <Label x:Name="productUsedLbl" Content="Product(s) Used" HorizontalAlignment="Right" Height="35" VerticalAlignment="Top"/>
+            <Label x:Name="productLbl" Content="Product" HorizontalAlignment="Right" Height="30" VerticalAlignment="Center" Margin="0,0,0,125"/>
+            <Label x:Name="quantityLbl" Content="Quantity" HorizontalAlignment="Right" Height="30" VerticalAlignment="Center" Margin="0,0,0,55"/>
+            <Label x:Name="requestDescriptionLbl" Content="Request Description" HorizontalAlignment="Right" Height="30" VerticalAlignment="Center" Margin="0,160,0,0"/>
+            <Label x:Name="mtncNotesLbl" Content="Maintenance Notes" HorizontalAlignment="Right" Height="30" VerticalAlignment="Center" Margin="0,300,0,0"/>
+        </Grid>
+
+        <Grid Grid.Row="1" Grid.Column="1">
+            <Label x:Name="unitLbl" Content="Unit" HorizontalAlignment="Center" Height="30" VerticalAlignment="Center" Margin="165,0,0,55"/>
+            <Label x:Name="serviceTypeLbl" Content="Service Type" HorizontalAlignment="Left" Height="30" VerticalAlignment="Center" Margin="170,100,0,0"/>
+        </Grid>
+        
+        
+        
+        <!-- Data Grid -->
+        <Grid Grid.Row="2" Grid.Column="1">
+            <DataGrid x:Name="productUsedDataGrid" Width="500" Height="175" VerticalAlignment="Top" IsReadOnly="True" />
+        </Grid>
+        
+        
+       <!-- Drop boxes / text boxes / radio button *from top to bottom* -->
+        <Grid Grid.Row="1" Grid.Column="1">
+            <ComboBox x:Name="productCmbBox" Height="20" VerticalAlignment="Center" Margin="0,0,0,125" DropDownClosed="productCmbBox_DropDownClosed" />
+            <TextBox x:Name="quantityTxtBox" Height="20" Width="150" HorizontalAlignment="Left" Margin="0,0,0,60" PreviewTextInput="NumberValidationTextBox" />
+            <Button x:Name="updateProductListBtn" Width="175" Height="20" HorizontalAlignment="Left" BorderThickness="1,1,2,2" Margin="0,55,0,55" Content="Update Product List" Click="updateProductListBtn_Click"/>
+            <TextBox x:Name="unitTxtBox" Width="150" Height="20" HorizontalAlignment="Right" Margin="0,0,0,60" IsReadOnly="True" />
+            <TextBox x:Name="serviceTypeTxtBox" VerticalAlignment="Center" Width="250" HorizontalAlignment="Right" Height="20" Margin="0,100,0,0" />
+            <TextBox x:Name="requestDescriptionTxtBox" VerticalAlignment="Center" Width="500" Margin="0,200,0,0" HorizontalAlignment="Center" Height="65" />
+            <TextBox x:Name="mntcNotesTxtBox" VerticalAlignment="Center" Width="500" Margin="0,340,0,0" HorizontalAlignment="Center" Height="65" />
+            <Button x:Name="confirmCompletionBtn" Width="175" Height="20" HorizontalAlignment="Left" BorderThickness="1,1,2,2" VerticalAlignment="Center" Content="Confirm Completion" Margin="0,435,0,0" Click="confirmCompletionBtn_Click"/>
+            <Button x:Name="cancelCompletionBtn" Width="75" Height="20" HorizontalAlignment="Right" BorderThickness="1,1,2,2" VerticalAlignment="Center" Content="Cancel" Margin="0,435,0,0" Click="cancelCompletionBtn_Click" />
+
+        </Grid>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+    </Grid>
+
+</Page>

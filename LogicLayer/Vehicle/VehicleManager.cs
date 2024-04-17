@@ -248,5 +248,44 @@ namespace LogicLayer
             }
             return results;
         }
+
+
+        /// <summary>
+        ///     Retrives a Vehicle from the database by its VIN using a data accessor method
+        /// </summary>
+        /// <returns>
+        ///    <see cref="Vehicle">Vehicle</see> object
+        /// </returns>
+        /// <remarks>
+        ///    Exceptions:
+        /// <br />
+        ///    <see cref="Exception">Exception</see>: Thrown when error encountered
+        /// <br /><br />
+        ///    CONTRIBUTOR: Ben Collins
+        /// <br />
+        ///    CREATED: 2024-03-24
+        /// <br />
+        /// <br />
+        ///    UPDATER: [Updater's Name]
+        /// <br />
+        ///    UPDATED: yyyy-MM-dd
+        /// <br />
+        ///     Initial Creation
+        /// </remarks>
+        public Vehicle GetVehicleByVIN(string VIN)
+        {
+            Vehicle vehicle = new Vehicle();
+
+            try
+            {
+                vehicle = _vehicleAccessor.SelectVehicleByVIN(VIN);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return vehicle;
+        }
     }
 }

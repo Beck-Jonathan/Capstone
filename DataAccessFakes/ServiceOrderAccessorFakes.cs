@@ -26,7 +26,9 @@ namespace DataAccessFakes
     public class ServiceOrderAccessorFakes : IServiceOrderAccessor
     {
         private List<ServiceOrder_VM> _fakeServiceOrders = new List<ServiceOrder_VM>();
+        private ServiceOrder_VM _fakeCompleteServiceOrders = new ServiceOrder_VM();
         private List<ServiceOrder> _updatedServiceOrders = new List<ServiceOrder>();
+        private Parts_Inventory_Fakes _fakePartsInventory = new Parts_Inventory_Fakes();
 
         public ServiceOrderAccessorFakes()
         {
@@ -46,6 +48,16 @@ namespace DataAccessFakes
                 Service_Type_ID = "Brake Pad Replacement",
                 Service_Description = "Replace the brake pads with OEM pads"
             });
+            _fakeCompleteServiceOrders = new ServiceOrder_VM()
+            {
+                VIN = "JTLZE4FEXB1123437",
+                Service_Order_ID = 100000,
+                Critical_Issue = true,
+                Service_Type_ID = "Windshield Wiper Replacement",
+                Service_Description = "Replace the windshield wipers with OEM wipers",
+                //vehicle = _fakeVehicle.SelectVehicleForLookupList(),
+                //partsInventory = _fakePartsInventory.selectAllParts_Inventory()
+            };
         }
         
 
@@ -161,6 +173,46 @@ namespace DataAccessFakes
 
             _fakeServiceOrders.Add(serviceOrder);
             return 1;
+        }
+
+        /// <summary>
+        ///     Returns all fake ServiceOrder_VM records
+        /// </summary>
+
+        /// <returns>
+        ///    <see cref="List{ServiceOrder_VM}">ServiceOrder_VM</see> The list of all fake ServiceOrder_VM objects.
+        /// </returns>
+        /// <remarks>
+        ///
+        ///    CONTRIBUTOR: Ben Collins
+        /// <br />
+        ///    CREATED: 2024-02-10
+        /// <br /><br />
+        ///    UPDATER: updater_name
+        /// <br />
+        ///    UPDATED: yyyy-MM-dd
+        /// <br />
+        ///    Initial Creation 
+        /// </remarks>
+        public ServiceOrder_VM SelectServiceOrderByServiceOrderID(int serviceOrderID)
+        {
+            try
+            {
+                if (serviceOrderID == _fakeCompleteServiceOrders.Service_Order_ID)
+                {
+                    return _fakeCompleteServiceOrders;
+                }
+                else
+                {
+                    throw new ArgumentException("No record with that ID found.");
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
         }
     }
 }

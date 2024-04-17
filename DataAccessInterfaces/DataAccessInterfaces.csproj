@@ -59,6 +59,7 @@
     <Compile Include="IRouteStopAccessor.cs" />
     <Compile Include="IServiceOrderAccessor.cs" />
     <Compile Include="ILoginAccessor.cs" />
+    <Compile Include="IServiceOrderLineItemsAccessor.cs" />
     <Compile Include="ISourceAccessor.cs" />
     <Compile Include="IStopAccessor.cs" />
     <Compile Include="IVehicleAccessor.cs" />

@@ -41,6 +41,7 @@ namespace DataAccessFakes
         List<string> fakeVehicleMakes = new List<string>();
         List<string> fakeVehicleModels = new List<string>();
         List<Vehicle> _fakeVehicleLookupList = new List<Vehicle>();
+        Vehicle fakeVehicle = new Vehicle();
         List<ServiceOrder_VM> _fakeServiceOrders = new List<ServiceOrder_VM>();
 
         public VehicleAccessorFakes() 
@@ -115,6 +116,8 @@ namespace DataAccessFakes
 
             fakeVehicleModels.Add("");
             fakeVehicleModels.Add("");
+
+            fakeVehicle = vehicle;
         }
 
         public int AddVehicle(Vehicle vehicle)
@@ -258,6 +261,37 @@ namespace DataAccessFakes
 
             return results;
 
+        }
+
+        /// <summary>
+        ///     Retrieves a Vehicle record by the VIN from the database
+        /// </summary>
+        /// <returns>
+        ///    A <see cref="Vehicle">Vehicle</see> object otherwise, <see cref="Exception">execption</see>.
+        /// </returns>
+        /// <remarks>
+        ///    Exceptions:
+        /// <br />
+        ///    <see cref="SqlException">SqlException</see>: No records returned
+        /// <br /><br />
+        ///    CONTRIBUTOR: Ben Collins
+        /// <br />
+        ///    CREATED: 2024-03-24
+        /// <br />
+        /// <br />
+        ///    UPDATER: [Updater's Name]
+        /// <br />
+        ///    UPDATED: yyyy-MM-dd
+        /// <br />
+        ///     Initial Creation
+        /// </remarks>
+        public Vehicle SelectVehicleByVIN(string VIN)
+        {
+            if (VIN == fakeVehicle.VIN)
+            {
+                return fakeVehicle;
+            }
+            return null;
         }
     }
 }

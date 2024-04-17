@@ -21,6 +21,7 @@ as
 ,[Ordered_Qty] 
 ,[Stock_Level] 
 ,[Active] 
+,[Part_Unit_Type]
 
  FROM [dbo].[Parts_Inventory]
 where [Parts_Inventory_ID]=@Parts_Inventory_ID 
@@ -72,6 +73,7 @@ begin
 ,[Ordered_Qty]
 ,[Stock_Level]
 ,[Active]
+,[Part_Unit_Type]
  FROM Parts_Inventory
  WHERE [Active] = 1
  ;

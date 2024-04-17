@@ -20,11 +20,17 @@ namespace DataAccessLayer
     /// </summary>
     /// 
     /// <remarks>
-    /// UPDATER: [Updater's Name]
+    /// UPDATER: Steven Sanchez
     /// <br />
-    /// UPDATED: yyyy-MM-dd
+    /// UPDATED: 2024-02-18
+    /// <br />
+    /// UPDATER: Ben Collins
+    /// <br />
+    /// UPDATED: 2024-03-19
     /// <br />
     ///     Initial creation
+    ///     Added UpdateServiceOrder(ServiceOrder serviceOrder)
+    ///     Added SelectServiceOrderByServiceOrderID method to complete a WO.
     /// </remarks>
     public class ServiceOrderAccessor : IServiceOrderAccessor
     {
@@ -223,6 +229,97 @@ namespace DataAccessLayer
                 conn.Close();
             }
             return rows;
+        }
+
+        /// <summary>
+        ///     Retrieves all ServiceOrder records from the database
+        /// </summary>
+        /// <returns>
+        ///    <see cref="ServiceOrder_VM">ServiceOrder_VM</see> ServiceOrder_VM object otherwise, <see cref="Exception">execption</see>.
+        /// </returns>
+        /// <remarks>
+        ///    Exceptions:
+        /// <br />
+        ///    <see cref="ArgumentException">ArgumentException</see>: No records returned
+        /// <br /><br />
+        ///    CONTRIBUTOR: Ben Collins
+        /// <br />
+        ///    CREATED: 2024-03-19
+        /// <br />
+        /// <br />
+        ///    UPDATER: [Updater's Name]
+        /// <br />
+        ///    UPDATED: yyyy-MM-dd
+        /// <br />
+        ///     Initial Creation
+        /// </remarks>
+        public ServiceOrder_VM SelectServiceOrderByServiceOrderID(int serviceOrderID)
+        {
+            ServiceOrder_VM completeServiceOrder = new ServiceOrder_VM();
+
+            var conn = DBConnectionProvider.GetConnection();
+            var cmdText = "sp_select_service_order_by_service_order_id";
+            var cmd = new SqlCommand(cmdText, conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            cmd.Parameters.AddWithValue("@Service_Order_ID", serviceOrderID);
+
+            try
+            {
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    if (!reader.IsDBNull(5))
+                    {
+                        ServiceOrder_VM serviceOrder = new ServiceOrder_VM()
+                        {
+                            Service_Order_ID = reader.GetInt32(0),
+                            Service_Order_Version = reader.GetInt32(1),
+                            VIN = reader.GetString(2),
+                            Service_Type_ID = reader.GetString(3),
+                            Created_By_Employee_ID = reader.GetInt32(4),
+                            Serviced_By_Employee_ID = reader.GetInt32(5),
+                            Date_Started = reader.GetDateTime(6),
+                            Date_Finished = reader.GetDateTime(7),
+                            Is_Active = reader.GetBoolean(8),
+                            Critical_Issue = reader.GetBoolean(9)
+                        };
+                        completeServiceOrder = serviceOrder;
+                    }
+                    else
+                    {
+                        ServiceOrder_VM serviceOrder = new ServiceOrder_VM()
+                        {
+                            Service_Order_ID = reader.GetInt32(0),
+                            Service_Order_Version = reader.GetInt32(1),
+                            VIN = reader.GetString(2),
+                            Service_Type_ID = reader.GetString(3),
+                            Created_By_Employee_ID = reader.GetInt32(4),
+                            Date_Started = reader.GetDateTime(6),
+                            Date_Finished = reader.GetDateTime(7),
+                            Is_Active = reader.GetBoolean(8),
+                            Critical_Issue = reader.GetBoolean(9),
+                            Service_Description = reader.GetString(10),
+                        };
+                        completeServiceOrder = serviceOrder;
+                    }
+                }
+
+                if (completeServiceOrder == null)
+                {
+                    throw new ArgumentException("No service order record found");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return completeServiceOrder;
         }
     }
 }

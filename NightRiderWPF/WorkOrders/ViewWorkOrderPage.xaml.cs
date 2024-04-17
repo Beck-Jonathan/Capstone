@@ -1,5 +1,6 @@
 ﻿using DataObjects;
 using LogicLayer;
+using NightRiderWPF.DeveloperView;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -71,7 +72,7 @@ namespace NightRiderWPF.WorkOrders
                 }
                 catch (Exception ex)
                 {
-                    throw ex;
+                    MessageBox.Show("Error Occured: " + ex.Message);
                 }
             }
             List<dynamic> dataObjects = new List<dynamic>();
@@ -301,13 +302,34 @@ namespace NightRiderWPF.WorkOrders
         private void mntcViewWorkOrderCompleteBtn_Click(object sender, RoutedEventArgs e)
         {
             // Action for complete work order
-            MessageBox.Show("This button's 'mntcViewWorkOrderCompleteBtn_Click()' method is not implemented");
+            try
+            {
+                dynamic selectedRow = mntcViewWorkOrderPendingDg.SelectedItem;
+                int serviceOrderID = selectedRow.PropertySix;
+                ServiceOrder_VM selectedServiceOrder = new ServiceOrder_VM
+                {
+                    Service_Order_ID = serviceOrderID,
+                };
+                CompleteWorkOrderPage completePage = new CompleteWorkOrderPage(selectedServiceOrder);
+                NavigationService.Navigate(completePage);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error Occurred: " + ex.Message);
+            }
         }
 
         private void mntcViewWorkOrderCloseBtn_Click(object sender, RoutedEventArgs e)
         {
             // Action to reurn to the previous page
-            MessageBox.Show("This button's 'mntcViewWorkOrderCloseBtn_Click()' method is not implemented");
+            try
+            {
+                this.NavigationService.GoBack();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("No page to navigate back too.");
+            }
         }
     }
 }

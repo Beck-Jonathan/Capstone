@@ -145,7 +145,6 @@ namespace LogicLayerTests
             {
                 VIN = "1HGCM82633A987654",
                 Service_Order_Version = 1,
-                Service_Line_Item_ID = 100000,
                 Service_Type_ID = "Engine Tune-up",
                 Created_By_Employee_ID = 100001,
                 Serviced_By_Employee_ID = 100002,
@@ -191,7 +190,6 @@ namespace LogicLayerTests
                 Service_Order_ID = 100000, // Existing ID in the fakes
                 VIN = "1HGCM82633A987654",
                 Service_Order_Version = 1,
-                Service_Line_Item_ID = 100000,
                 Service_Type_ID = "Engine Tune-up",
                 Created_By_Employee_ID = 100001,
                 Serviced_By_Employee_ID = 100002,
@@ -206,6 +204,25 @@ namespace LogicLayerTests
 
             // Assert
             Assert.AreEqual(false, rowsAffected);
+        }
+
+        [TestMethod]
+        public void TestSelectServiceOrderByServiceOrderIDReturnsAServiceOrder()
+        {
+            var expected = new ServiceOrder_VM()
+            {
+                VIN = "JTLZE4FEXB1123437"
+            };
+            var actual = _serviceOrderManager.SelectServiceOrderByServiceOrderID(100000);
+
+            Assert.AreEqual(expected.VIN, actual.VIN);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void TestSelectServiceOrderByServiceOrderIDReturnsAVehicle()
+        {
+            var actual = _serviceOrderManager.SelectServiceOrderByServiceOrderID(100010);
         }
     }
 }

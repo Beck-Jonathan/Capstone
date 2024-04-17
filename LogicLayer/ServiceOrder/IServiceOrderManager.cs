@@ -7,9 +7,50 @@ using System.Threading.Tasks;
 
 namespace LogicLayer
 {
+    /// <summary>
+    /// AUTHOR: Ben Collins, Steven Sanchez
+    /// <br />
+    /// CREATED: 2024-02-10
+    /// <br />
+    /// 
+    ///     Manager class for ServiceOrder that handles database access.
+    /// </summary>
+    /// 
+    /// <remarks>
+    /// UPDATER: Ben Collins
+    /// <br />
+    /// UPDATED: 2024-2-20
+    /// <br />
+    ///     Initial creation
+    ///     <br/>
+    ///     Added SelectServiceOrderByServiceOrderID to populate the CompleteWorkOrderPage with options.
+    /// </remarks>
     public interface IServiceOrderManager
     {
+        /// <summary>
+        ///     Retrieves all ServiceOrder_VM records from the database
+        /// </summary>
+        /// <returns>
+        ///    <see cref="List{ServiceOrder_VM}">ServiceOrder_VM</see> List of ServiceOrder_VM objects
+        /// </returns>
+        /// <remarks>
+        ///    Exceptions:
+        /// <br />
+        ///    <see cref="Exception">Exception</see>: Thrown when error encountered
+        /// <br /><br />
+        ///    CONTRIBUTOR: Ben Collins
+        /// <br />
+        ///    CREATED: 2024-02-10
+        /// <br />
+        /// <br />
+        ///    UPDATER: [Updater's Name]
+        /// <br />
+        ///    UPDATED: yyyy-MM-dd
+        /// <br />
+        ///     Initial Creation
+        /// </remarks>
         List<ServiceOrder_VM> GetALlServiceOrders();
+
         /// <summary>
         /// Updates a service order with the provided details.
         /// </summary>
@@ -63,5 +104,33 @@ namespace LogicLayer
         /// </remarks>
         /// </update>
         bool CreateServiceOrder(ServiceOrder_VM serviceOrder);
+
+        /// <summary>
+        ///     Retrieves all ServiceOrder_VM records from the ServiceOrderAccessor and,
+        ///     <br/>
+        ///     the Vehicle, ServiceOrderLineItems, and Parts_Inventory from their 
+        ///     <br/>
+        ///     respective managers
+        /// </summary>
+        /// <returns>
+        ///    <see cref="ServiceOrder_VM">ServiceOrder_VM</see> ServiceOrder_VM object
+        /// </returns>
+        /// <remarks>
+        ///    Exceptions:
+        /// <br />
+        ///    <see cref="Exception">Exception</see>: Thrown when error encountered
+        /// <br /><br />
+        ///    CONTRIBUTOR: Ben Collins
+        /// <br />
+        ///    CREATED: 2024-02-10
+        /// <br />
+        /// <br />
+        ///    UPDATER: [Updater's Name]
+        /// <br />
+        ///    UPDATED: yyyy-MM-dd
+        /// <br />
+        ///     Initial Creation
+        /// </remarks>
+        ServiceOrder_VM SelectServiceOrderByServiceOrderID(int serviceOrderID);
     }
 }

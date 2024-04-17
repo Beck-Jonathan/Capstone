@@ -67,6 +67,8 @@
     <Compile Include="RouteStop\RouteManager.cs" />
     <Compile Include="RouteStop\RouteStopManager.cs" />
     <Compile Include="RouteStop\StopManager.cs" />
+    <Compile Include="ServiceOrderLineItems\IServiceOrderLineItemsManager.cs" />
+    <Compile Include="ServiceOrderLineItems\ServiceOrderLineItemsManager.cs" />
     <Compile Include="ServiceOrder\IServiceOrderManager.cs" />
     <Compile Include="AppData\Authentication.cs" />
     <Compile Include="Login\LoginManager.cs" />

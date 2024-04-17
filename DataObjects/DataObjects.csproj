@@ -67,6 +67,7 @@
     <Compile Include="Purchase_Order.cs" />
     <Compile Include="ServiceOrder.cs" />
     <Compile Include="HelperObjects\Time.cs" />
+    <Compile Include="ServiceOrderLineItems.cs" />
     <Compile Include="Source.cs" />
     <Compile Include="ValidationHelpers.cs" />
     <Compile Include="Vehicle.cs" />
