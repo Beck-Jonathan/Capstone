@@ -312,6 +312,7 @@ namespace NightRiderWPF
             PageViewer.Navigate(new Page());
         }
 
+
         private void btnDriverSchedules_Click(object sender, RoutedEventArgs e)
         {
             if (sender is Button btn && btn.Name == "btnDriverSchedules")
