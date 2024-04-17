@@ -588,7 +588,8 @@ GO
 	('FleetAdmin', 'Manages the fleet'),
 	('Mechanic', 'Fixes the vehicles'),
 	('Maintenance', 'Routine maintenance work that doesnt require mechanic'),
-	('PartsPerson', 'An invetory specialist, that is the go to for any parts for vehicles')
+	('PartsPerson', 'An invetory specialist, that is the go to for any parts for vehicles'),
+    ('Dispatcher', 'The controller of the fleet. Assigns tasks, routes drivers, and ensures services run smoothly.')
 GO
 
 
@@ -623,7 +624,9 @@ INSERT INTO [dbo].[Employee_Role]
     ([Employee_ID], [Role_ID])
 VALUES
     (100000, 'Admin'),
+    (100000, 'Dispatcher'),
     (100001, 'FleetAdmin'),
+    (100001, 'Dispatcher'),
     (100002, 'Mechanic'),
     (100003, 'Maintenance'),
     (100004, 'PartsPerson'),
@@ -718,11 +721,11 @@ CREATE TABLE [dbo].[Schedule]
 (
     [Schedule_ID] [nvarchar](50) NOT NULL,
     [Driver_ID] [int] NOT NULL,
-    [Week_Days] [char](7) NOT NULL DEFAULT '0000000' ,
-    [Start_Time] [time] NOT NULL,
-    [End_Time] [time] NOT NULL,
-    [Start_Date] [date] NOT NULL,
-    [End_Date] [date] NULL,
+    [Week_Days] [nvarchar](7) NOT NULL DEFAULT '0000000' ,
+    [Start_Time] [datetime] NOT NULL,
+    [End_Time] [datetime] NOT NULL,
+    [Start_Date] [datetime] NOT NULL,
+    [End_Date] [datetime] NULL,
     [Notes] [nvarchar](255) NULL,
     [Is_Active] [bit] NOT NULL DEFAULT 1,
     CONSTRAINT [PK_Schedule] PRIMARY KEY ([Schedule_ID]),
@@ -1815,14 +1818,15 @@ Print '***Insert Sample Data For The  Login table***'
  go
 
 INSERT INTO [dbo].[Login]
-    ([Username], [Employee_ID],
+    ([Username], [Employee_ID], [Client_ID],
     [Security_Question_1],[Security_Response_1],
     [Security_Question_2],[Security_Response_2],
     [Security_Question_3],[Security_Response_3])
 VALUES
-    ('JoeSmith1994', 100000, 'what is your favorite animal?', 'lion', 'what is your favorite food?', 'Ramen', 'what was your first dogs name?', 'Hoola'),
-    ('Jacmar125', 100001, 'what is your favorite animal?', 'Ocelot', 'what is your favorite food?', 'Bibimbap', 'what was your first dogs name?', 'Jeff'),
-    ('Lebold2202', 100002, 'what is your favorite animal?', 'Foxes', 'what is your favorite food?', 'Spaghetti', 'what was your first dogs name?', 'Lola');
+    ('JoeSmith1994', 100000, NULL, 'what is your favorite animal?', 'lion', 'what is your favorite food?', 'Ramen', 'what was your first dogs name?', 'Hoola'),
+    ('Jacmar125', 100001, NULL, 'what is your favorite animal?', 'Ocelot', 'what is your favorite food?', 'Bibimbap', 'what was your first dogs name?', 'Jeff'),
+    ('Lebold2202', 100002, NULL, 'what is your favorite animal?', 'Foxes', 'what is your favorite food?', 'Spaghetti', 'what was your first dogs name?', 'Lola'),
+	('Krystal2023', NULL, 100000, 'what is your favorite animal?', 'Foxes', 'what is your favorite food?', 'Spaghetti', 'what was your first dogs name?', 'Lola')
 GO
 
 /******************

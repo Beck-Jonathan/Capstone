@@ -491,6 +491,53 @@ namespace DataAccessInterfaces
             }
             return rows;
         }
+
+        public Employee_VM GetEmployeeByEmail(string email)
+        {
+            Employee_VM employee = new Employee_VM();
+            // start with a connection object
+            var conn = DBConnectionProvider.GetConnection();
+            // set the command text
+            var commandText = "sp_select_employee_by_email";
+            // create the command object
+            var cmd = new SqlCommand(commandText, conn);
+            // set the command type
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@p_email", email);
+            try
+            {
+                //open the connection 
+                conn.Open();  //execute the command and capture result
+                var reader = cmd.ExecuteReader();
+                //process the results
+                if (reader.HasRows)
+                    while (reader.Read())
+                    {
+                        employee.Employee_ID = reader.GetInt32(0);
+                        employee.Given_Name = reader.GetString(1);
+                        employee.Family_Name = reader.GetString(2);
+                        employee.DOB = reader.GetDateTime(3).Date;
+                        employee.Address = reader.GetString(4);
+                        employee.Address2 = reader.IsDBNull(5) ? null : reader.GetString(4);
+                        employee.City = reader.GetString(6);
+                        employee.State = reader.GetString(7);
+                        employee.Country = reader.GetString(8);
+                        employee.Zip = reader.GetString(9);
+                        employee.Phone_Number = reader.GetString(10);
+                        employee.Position = reader.GetString(11);
+                        employee.Is_Active = reader.GetBoolean(12);
+                    }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return employee;
+        }
     }
 }
 // Checked by Nathan Toothaker

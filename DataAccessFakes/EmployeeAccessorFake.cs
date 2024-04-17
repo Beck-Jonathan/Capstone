@@ -473,6 +473,36 @@ namespace DataAccessFakes
             }
             return rows;
         }
+
+        /// <summary>
+        ///   Return an employee by email
+        /// </summary>
+        /// <param>
+        ///   string email
+        /// </param>
+        /// <returns>
+        ///     <see cref="Employee_VM"/>: Employee_VM
+        /// </returns>
+        /// <remarks>
+        ///    Parameters: String Email
+        /// <br />
+        /// <br /><br />
+        ///    CONTRIBUTOR: Jacob Rohr
+        /// <br />
+        ///    CREATED: 2024-04-11
+        public Employee_VM GetEmployeeByEmail(string email)
+        {
+            Employee_VM tempEmployee = null;
+            foreach(var employee in _fakeEmployees)
+            {
+                if (email.Equals(employee.Email))
+                {
+                    tempEmployee = employee;
+                    break;
+                } 
+            }
+            return tempEmployee;
+        }
     }
 }
 // Checked by Nathan Toothaker

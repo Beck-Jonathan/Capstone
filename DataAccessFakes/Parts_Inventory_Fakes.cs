@@ -53,7 +53,7 @@ namespace DataAccessFakes
             part1.Part_Quantity = 1;
             part1.Part_Photo_URL = "www.google.com";
             part1.Part_Name = "Sprocket";
-            part1.Ordered_Qty = 5;
+            part1.Ordered_Qty = 4;
             part1.Item_Description = "Mr. Spacely's";
             part1.Item_Specifications = "Tight as can be!";
             part1.Stock_Level = 20;
@@ -76,7 +76,7 @@ namespace DataAccessFakes
             part3.Part_Quantity = 1;
             part3.Part_Photo_URL = "www.kirkwood.edu";
             part3.Part_Name = "Wire Spool";
-            part3.Ordered_Qty = 5;
+            part3.Ordered_Qty = 6;
             part3.Item_Description = "Mr. Beely's";
             part3.Item_Specifications = "Yep, that's wire!";
             part3.Stock_Level = 20;
@@ -345,6 +345,23 @@ namespace DataAccessFakes
                     }
                 }
             }
+            return result;
+        }
+
+        public int updateQuantity(int partsInventoryID, int quantity)
+        {
+            int result = 0;
+            foreach (Parts_Inventory part in _fakeparts)
+            {
+                if (part.Parts_Inventory_ID == partsInventoryID)
+                {
+                    part.Ordered_Qty = quantity;
+                    result++;
+                    break;
+                }
+            }
+
+
             return result;
         }
 

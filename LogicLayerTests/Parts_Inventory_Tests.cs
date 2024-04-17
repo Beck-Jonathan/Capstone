@@ -387,6 +387,27 @@ namespace LogicLayerTests
         {
             int addPart = _mgr.AddModelPartCompatibility(1, 1);
         }
+        /// <summary>
+        ///     Test that expects an ApplicationException when a duplicate entry is added
+        /// </summary>
+        /// <remarks>
+        ///    CONTRIBUTOR: Jonathan Beck
+        /// <br />
+        ///    CREATED: 2024-04-09
+        /// </remarks>
+        [TestMethod]
+
+        public void TestUpdateOrderedQuantityUpdatesOrderedQuantity() {
+            int actual = 0;
+            int expected = 9;
+
+            _mgr.AddToOrderedQuantity(1, 5);
+            actual = _mgr.GetParts_InventoryByID(1).Ordered_Qty;
+            Assert.AreEqual(expected, actual);
+
+        
+        
+        }
     }
     // Reviewed By: John Beck
 }

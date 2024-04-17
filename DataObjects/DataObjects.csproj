@@ -50,6 +50,7 @@
     <Compile Include="Dependent.cs" />
     <Compile Include="Client.cs" />
     <Compile Include="ClientRole.cs" />
+    <Compile Include="Dispatch.cs" />
     <Compile Include="HelperObjects\ActivityWeek.cs" />
     <Compile Include="HelperObjects\BingMapsResponse.cs" />
     <Compile Include="Login.cs" />

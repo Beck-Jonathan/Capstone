@@ -34,6 +34,9 @@ namespace NightRiderWPF.Vehicles
     /// UPDATER: Jared Hutton
     /// UPDATED: 2024-03-03
     /// Implement correct vehicle model functionality
+    /// /// UPDATER: Jonathan Beck
+    /// UPDATED: 2024-04-13
+    /// Implement added btnWorkOrders and it's click event.
     /// </remarks>
 
     public partial class AddUpdateDeleteVehicle : Page
@@ -580,6 +583,22 @@ namespace NightRiderWPF.Vehicles
                 cmbVehicleYear.IsEnabled = false;
                 cmbVehicleYear.SelectedIndex = 0;
             }
+        }
+        //Jonathan Beck 2024-04-13
+        //Get all service orders and load a new "ViewWorkOrderList" window
+        private void btnWorkOrders_Click(object sender, RoutedEventArgs e)
+        {
+            List<ServiceOrder_VM> orders = new List<ServiceOrder_VM>();
+            try
+            {
+                orders=_vehicleManager.getAllService_OrderByVIN(_vehicle.VIN);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            NavigationService.Navigate(new WorkOrders.ViewWorkOrderList(orders));
         }
     }
 }

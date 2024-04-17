@@ -777,5 +777,409 @@ namespace DataAccessLayer
             }
             return username;
         }
+
+        /// <summary>
+        ///     retrieves a list of all user names
+        /// <returns>
+        ///    <see cref="IEnumerable{string}">string[]</see>: Usernames
+        /// </returns>
+        /// <remarks>
+        /// <br /><br />
+        ///    CONTRIBUTOR: Michael Springer
+        /// <br />
+        ///    CREATED: 2024-04-12
+        /// </remarks>
+        public IEnumerable<string> SelectAllUserNames()
+        {
+           List<string> usernames = new List<string>();
+
+            var conn = DBConnectionProvider.GetConnection();
+            var cmdText = "sp_select_all_usernames";
+            var cmd = new SqlCommand(cmdText, conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            try
+            {
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    string username = reader.GetString(0);
+                    usernames.Add(username);
+                }
+
+                if (usernames.Count == 0)
+                {
+                    throw new ArgumentException("Username not found");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return usernames;
+        }
+        /// <summary>
+        ///    Adds employee login informationb
+        /// <returns>
+        ///    <see cref="int">string[]</see>: rowsaffected
+        /// </returns>
+        /// <remarks>
+        /// <br /><br />
+        ///    CONTRIBUTOR: Michael Springer
+        /// <br />
+        ///    CREATED: 2024-04-13
+        /// </remarks>
+        /// 
+        public int InsertEmployeeLogin(string username, int employeeID)
+        {
+            // usernames are not case-sensitive
+            username = username.ToLower();
+            int rowsAffected = 0;
+            var conn = DBConnectionProvider.GetConnection();
+            var cmdText = "sp_insert_employee_login";
+            var cmd = new SqlCommand(cmdText, conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            cmd.Parameters.Add("@P_Username", SqlDbType.NVarChar, 100);
+            cmd.Parameters.Add("@P_Employee_ID", SqlDbType.Int);
+
+            cmd.Parameters["@P_Username"].Value = username;
+            cmd.Parameters["@P_Employee_ID"].Value = employeeID;
+
+            try
+            {
+                conn.Open();
+                rowsAffected = cmd.ExecuteNonQuery();
+                if(rowsAffected == 0)
+                {
+                    throw new ArgumentException("Error inserting login record");
+                }
+            }catch(Exception ex)
+            {
+                throw new ApplicationException("Error executing command to insert new login record", ex);
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return rowsAffected;
+        }
+
+        /// <summary>
+        ///   retrieves a list of client ids
+        /// </summary>
+        /// <param>
+        ///    None
+        /// </param>
+        /// <returns>
+        ///     <see cref="List{int}"/>: Returns the list of client ids
+        /// </returns>
+        /// <remarks>
+        ///    Parameters:None
+        /// <br />
+        /// <br /><br />
+        ///    CREATOR: Jacob Rohr
+        /// <br />
+        ///    CREATED: 2024-04-10
+        /// </remarks>
+        public List<int?> GetAllClientIdFromLogin()
+        {
+            List<int?> clientIDs = new List<int?>();
+
+            var conn = DBConnectionProvider.GetConnection();
+            var cmdText = "sp_select_all_client_id_from_login";
+            var cmd = new SqlCommand(cmdText, conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            try
+            {
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    clientIDs.Add(reader.GetInt32Nullable(0));
+                }
+
+                if (clientIDs.Count == 0)
+                {
+                    throw new ArgumentException("No client records found");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return clientIDs;
+        }
+        /// <summary>
+        ///   retrieves a list of employee ids
+        /// </summary>
+        /// <param>
+        ///    None
+        /// </param>
+        /// <returns>
+        ///     <see cref="List{int}"/>: Returns the list of employee ids
+        /// </returns>
+        /// <remarks>
+        ///    Parameters:None
+        /// <br />
+        /// <br /><br />
+        ///    CREATOR: Jacob Rohr
+        /// <br />
+        ///    CREATED: 2024-04-10
+        /// </remarks>
+        public List<int?> GetAllEmployeeIdFromLogin()
+        {
+            List<int?> employeeIDs = new List<int?>();
+
+            var conn = DBConnectionProvider.GetConnection();
+            var cmdText = "sp_select_all_employee_id_from_login";
+            var cmd = new SqlCommand(cmdText, conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            try
+            {
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    employeeIDs.Add(reader.GetInt32Nullable(0));
+                }
+
+                if (employeeIDs.Count == 0)
+                {
+                    throw new ArgumentException("No employee records found");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return employeeIDs;
+        }
+        /// <summary>
+        ///     retrieves employee username from email.
+        /// </summary>
+        /// <param name="email">
+        ///    The email of the user 
+        /// </param>
+        /// <returns>
+        ///    string username
+        /// </returns>
+        /// <remarks>
+        ///    CONTRIBUTOR: Jacob Rohr
+        ///    CREATED: 2024-04-12
+        /// </remarks>
+        public string GetEmployeeUserNameByEmail(string email)
+        {
+            string userName = null;
+
+            var conn = DBConnectionProvider.GetConnection();
+
+            var cmdText = "sp_get_employee_username_MVC";
+
+            var cmd = new SqlCommand(cmdText, conn);
+
+            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+
+            cmd.Parameters.Add("@Email", System.Data.SqlDbType.NVarChar);
+
+            cmd.Parameters["@Email"].Value = email;
+
+            try
+            {
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                if (reader.HasRows)
+                {
+                    reader.Read();
+
+                    userName = reader.GetString(0);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            return userName;
+        }
+        /// <summary>
+        ///     retrieves client username from email.
+        /// </summary>
+        /// <param name="email">
+        ///    The email of the user 
+        /// </param>
+        /// <returns>
+        ///    string username
+        /// </returns>
+        /// <remarks>
+        ///    CONTRIBUTOR: Jacob Rohr
+        ///    CREATED: 2024-04-12
+        /// </remarks>
+        public string GetClientUserNameByEmail(string email)
+        {
+            string userName = null;
+
+            var conn = DBConnectionProvider.GetConnection();
+
+            var cmdText = "sp_get_client_username_MVC";
+
+            var cmd = new SqlCommand(cmdText, conn);
+
+            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+
+            cmd.Parameters.Add("@Email", System.Data.SqlDbType.NVarChar);
+
+            cmd.Parameters["@Email"].Value = email;
+
+            try
+            {
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                if (reader.HasRows)
+                {
+                    reader.Read();
+
+                    userName = reader.GetString(0);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            return userName;
+        }
+
+
+        /// <summary>
+        ///     Authenticates given username and password hash and retrieves the authenticated client data
+        /// </summary>
+        /// <param name="username">
+        ///    The username of the user attempting to login
+        /// </param>
+        /// <param name="passwordHash">
+        ///    The password hash of the user attempting to login
+        /// </param>
+        /// <returns>
+        ///    <see cref="Client_VM">Client_VM</see>: The authenticated client
+        /// </returns>
+        /// <remarks>
+        ///    Parameters:
+        /// <br />
+        ///    <see cref="string">string</see> username: The username given by the user
+        /// <br />
+        ///    <see cref="string">string</see> passwordHash: The password hash generated on the password given by the user
+        /// </remarks>
+        ///<remarks>
+        ///    CONTRIBUTOR: Jacob Rohr
+        ///    CREATED: 2024-04-12
+        /// </remarks>
+        public Client_VM AuthenticateClient(string username, string passwordHash)
+        {
+            Client_VM client = null;
+            List<ClientRole_VM> roles = new List<ClientRole_VM>();
+
+            var conn = DBConnectionProvider.GetConnection();
+
+            var cmdText = "sp_authenticate_client";
+
+            var cmd = new SqlCommand(cmdText, conn);
+
+            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+
+            cmd.Parameters.Add("@Username", System.Data.SqlDbType.NVarChar);
+            cmd.Parameters.Add("@Password_Hash", System.Data.SqlDbType.NVarChar);
+
+            cmd.Parameters["@Username"].Value = username;
+            cmd.Parameters["@Password_Hash"].Value = passwordHash;
+
+            try
+            {
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                if (reader.HasRows)
+                {
+                    reader.Read();
+
+                    if (!reader.IsDBNull(0))
+                    {
+                        roles.Add(new ClientRole_VM
+                        {
+                            ClientRoleID = reader.GetString(0)
+                        });
+                    }
+
+                    client = new Client_VM
+                    {
+                        ClientID = reader.GetInt32(1),
+                        GivenName = reader.GetString(2),
+                        FamilyName = reader.GetString(3),
+                        MiddleName = reader.GetString(4),
+                        DOB = reader.GetDateTime(5),
+                        Email = reader.GetString(6),
+                        PostalCode = reader.GetString(7),
+                        City = reader.GetString(8),
+                        Region = reader.GetString(9),
+                        Address = reader.GetString(10),
+                        TextNumber = reader.GetString(11),
+                        VoiceNumber = reader.GetString(12),
+                        IsActive = reader.GetBoolean(13),
+                        Login = new Login()
+                        {
+                            Username = reader.GetString(14),
+                        }
+                    };
+
+                    while (reader.Read())
+                    {
+                        roles.Add(new ClientRole_VM
+                        {
+                            ClientRoleID = reader.GetString(0)
+                        });
+                    }
+
+                    client.Roles = roles;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            return client;
+        }
     }
 }

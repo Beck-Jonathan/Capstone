@@ -1,5 +1,6 @@
 ﻿using DataObjects;
 using LogicLayer;
+using NightRiderWPF.PurchaseOrders;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -104,7 +105,7 @@ namespace NightRiderWPF.PurchsaeOrders
         /// </summary>
         private void btnBack_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.GoBack();
+            NavigationService.Navigate(new Parts_Person_View_Purchase_Orders());
         }
     }
 }

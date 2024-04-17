@@ -1,4 +1,9 @@
-﻿@{
+﻿@*Created: 2024-03-28 ?
+* Author: Michael Springer
+* Revised: 2024-04-07 
+*@
+
+@{
     ViewBag.Title = "Home Page";
 }
 
@@ -42,4 +47,27 @@
             </div>
         </div>
     </div>
+    <div data-show-cookie-notice="@ViewBag.ShowCookieNotice"></div>
+
+
 </main>
+<!-- MODAL -->
+<div class="modal fade" id="mdl-cookie" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Cookie Policy</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>NightRider requires server-side, session cookies for basic functionality. By using the site,
+                you agree to allow the temporary collection of data necessary for the session. NightRider does not
+                use broswer-based cookies to collect persistent data.</p>
+                <p>You can review our cookie policy @Html.ActionLink("here", "Cookies", "Home").</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">I Agree</button>
+            </div>
+        </div>
+    </div>
+</div>

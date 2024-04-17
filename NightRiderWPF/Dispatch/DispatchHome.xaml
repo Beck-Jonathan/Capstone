@@ -1,9 +1,9 @@
-﻿<Page x:Class="NightRiderWPF.Dispatch.DispatchHome"
+﻿<Page x:Class="NightRiderWPF.DispatchHome"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:NightRiderWPF.Dispatch"
+      xmlns:local="clr-namespace:NightRiderWPF"
       mc:Ignorable="d" 
       d:DesignHeight="570" d:DesignWidth="800"
       Title="DispatchHome">
@@ -64,8 +64,8 @@
         <!-- Vehicle Grid End -->
 
         <!-- Driver Grid Begin -->
-        <Grid x:Name="gridDriverSchedules" Grid.Row="1" Grid.ColumnSpan="3" Height="470" Visibility="Collapsed">
-            <Label>Driver Schedules</Label>
+        <Grid x:Name="gridDriverSchedules" Grid.Row="1" Grid.ColumnSpan="3" Height="470" Visibility="Collapsed" IsVisibleChanged="gridDriverSchedules_IsVisibleChanged">
+            <DataGrid x:Name="dataGridDriverSchedule" IsReadOnly="True"></DataGrid>
         </Grid>
 
         <Grid x:Name="gridDriverAvailability" Grid.Row="1" Grid.ColumnSpan="3" Height="470" Visibility="Collapsed">

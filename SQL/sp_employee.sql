@@ -280,3 +280,32 @@ AS
 		WHERE @p_Employee_ID = [Employee_ID]
 	END
 GO
+
+--Created By: Jacob Rohr
+--Date: 2024-04-24
+-- Select Employee By Email
+ CREATE PROCEDURE [dbo].[sp_select_employee_by_email]
+ (
+    @p_Email 				[nvarchar](50)
+ )
+ AS
+BEGIN
+    SELECT 
+		[Employee_ID],
+        [Given_Name],
+        [Family_Name],
+		[DOB],
+        [Address],
+        [Address2],
+        [City],
+        [State],
+        [Country],
+        [Zip],
+        [Phone_Number],
+        [Position],
+        [Is_Active]
+    FROM
+        [Employee]
+    WHERE [Email] = @p_Email;
+END;
+GO

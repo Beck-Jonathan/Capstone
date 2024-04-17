@@ -153,6 +153,25 @@ namespace DataAccessInterfaces
         /// </remarks>
         /// </remarks>
         int AddModelCompatibility(int vehicleModelID, int partsInventoryID);
+        /// <summary>
+        ///     Updates the ordered quantity of a part
+        /// </summary>
+        /// <param cref="Int" name="PartID"> The Part ID
+        ///    
+        /// </param>
+        /// <param name="quantity" > The quantity ordered </param>
+        /// 
+        /// <returns>
+        ///    <see cref="int"/>: 1 if update was successful, 0 if not.
+        /// </returns>
+        /// 
+        /// <throws>
+        ///    <exception cref="SqlException">SqlException</exception>
+        ///    </throws>
+        ///    
+        ///    CONTRIBUTOR: Jonathan Beck
+        ///    CREATED: 4/9/2024
+        int updateQuantity (int partsInventoryID, int quantity);
     }
 
 }

@@ -15,10 +15,11 @@ namespace DataObjects
     /// </summary>
     /// 
     /// <remarks>
-    /// UPDATER: Ben Collins
+    /// UPDATER: Ben Collins, Jonathan Beck
     /// <br />
-    /// UPDATED: 2024-02-10
+    /// UPDATED: 2024-02-10, 2024-04-13
     /// <br />
+    /// 
     /// 
     ///     Initial creation
     /// </remarks>
@@ -48,6 +49,7 @@ namespace DataObjects
 
     public class ServiceOrder_VM : ServiceOrder
     {
-
+        Employee_VM created_by_Employee_VM { get; set; }
+        Employee_VM serviced_by_Employee_VM { get; set; }
     }
 }
