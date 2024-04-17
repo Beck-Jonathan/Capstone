@@ -1,6 +1,7 @@
 ﻿using DataObjects;
 using LogicLayer;
 using LogicLayer.PartsRequest;
+using LogicLayer.Vendor;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,6 +42,7 @@ namespace NightRiderWPF.PartsRequests
     {
         IPartsRequestsManager _partsRequestManager = null;
         Parts_Request parts_Request = null;
+        IVendorManager _vendorManager = null;
 
         /// <summary>
         /// AUTHOR: Everett DeVaux
@@ -49,11 +51,19 @@ namespace NightRiderWPF.PartsRequests
         /// <br />
         /// Populates the parts request details on the parts request details page 
         /// </summary>
+        /// <remarks>
+        /// Updater: Parker Svoboda
+        /// <br />
+        /// Updated: 2024-04-13
+        /// <br />
+        /// added Vendor Select
+        /// </remarks>
         public ViewPartRequestDetailsPage(Parts_Request selectedPartsRequestDetails)
         {
             try
             {
                 InitializeComponent();
+                _vendorManager = new VendorManager();
                 _partsRequestManager = new PartsRequestManager();
                 parts_Request = new Parts_Request();
                 parts_Request = _partsRequestManager.GetPartsRequestDetails(selectedPartsRequestDetails.Parts_Request_ID);
@@ -64,6 +74,7 @@ namespace NightRiderWPF.PartsRequests
                 txtbxNotes.Text = parts_Request.Parts_Request_Notes;
                 txtbxDateRequested.Text = parts_Request.Date_Requested.ToString();
                 txtbxRequestFrom.Text = parts_Request.Employee_ID.ToString();
+                cmbVendors.ItemsSource = _vendorManager.getAllVendors().Select(vendor => vendor.Vendor_Name);
             }
             catch (Exception ex)
             {
@@ -93,6 +104,7 @@ namespace NightRiderWPF.PartsRequests
             }
         }
 
+
         /// <summary>
         /// CONTRIBUTOR: Parker Svoboda
         /// <br />
@@ -107,6 +119,41 @@ namespace NightRiderWPF.PartsRequests
                 try
                 {
                     _partsRequestManager.DeactivatePartsRequest(parts_Request.Parts_Request_ID);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.InnerException.Message, ex.Message, MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                this.NavigationService.GoBack();
+            }
+        }
+
+
+        /// <summary>
+        /// CONTRIBUTOR: Parker Svoboda
+        /// <br />
+        /// CREATED: 2024-04-13
+        /// <br />
+        /// approves order
+        /// </summary>
+        private void btnAddToOrder_Click(object sender, RoutedEventArgs e)
+        {
+            if (cmbVendors.SelectedIndex == -1)
+            {
+                MessageBox.Show("no vendors are selected", "No Vendors", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+            else if (txtLineNumber.Text == null)
+            {
+                MessageBox.Show("No Line Number Was Provided", "No Line Number", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+            else
+            {
+                try
+                {
+                    MessageBox.Show("The Purchase Order ID is " + _partsRequestManager.PushToPOLine(parts_Request.Parts_Request_ID, cmbVendors.SelectedIndex + 100000, Convert.ToInt32(txtLineNumber.Text))
+                    , "Order Sent.", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
                 catch (Exception ex)
                 {

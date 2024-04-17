@@ -1,6 +1,7 @@
 ﻿using DataAccessInterfaces;
 using DataObjects;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -165,6 +166,62 @@ namespace DataAccessFakes
             }
             _fakePartsRequest.Remove(_fakePartsRequest.Where(partRequest => partRequest.Parts_Request_ID == id).FirstOrDefault());
             return _inactivefakePartsRequest.Count;
+        }
+
+        /// <summary>
+        ///     sends request to POLineItems
+        /// </summary>
+        /// <returns>
+        ///    <see cref="int">new Purchase order id</see>.
+        /// </returns>
+        /// <remarks>
+        ///    Exceptions:
+        /// <br />
+        ///    <see cref="ArgumentException">ArgumentException</see>: request was not sent
+        /// <br /><br />
+        ///    CONTRIBUTOR: Parker Svoboda
+        /// <br />
+        ///    CREATED: 2024-04-02
+        /// </remarks>
+
+        public int approveRequest(int partRequestID, int vendorid, int lineNumber)
+        {
+            //initializing variables to match the stored procedure
+            Parts_Inventory_Fakes pinv = new Parts_Inventory_Fakes();
+            PRLineItems_Fakes prli = new PRLineItems_Fakes();
+            Purchase_Order_Fakes purchase_Order_Fakes = new Purchase_Order_Fakes();
+            POLineItems_Fakes poli = new POLineItems_Fakes();
+            VendorAccessorFakes vendfakes = new VendorAccessorFakes();
+
+            Parts_Request request = GetActivePartsRequestDetails(partRequestID);
+            Vendor vendor = vendfakes.selectVendorByVendorID(vendorid);
+
+            // starting the real method
+
+
+            // first query of transaction
+            var query = from part in pinv.selectAllParts_Inventory() 
+                        join therequestlineitem in prli.GetAllPRLineItems() on part.Parts_Inventory_ID equals therequestlineitem.Parts_Inventory_ID 
+                        select new { partsinvID = therequestlineitem.Parts_Inventory_ID, Desc = part.Item_Description };
+
+            // second query
+            Parts_Inventory oldpart = pinv.selectParts_InventoryByPrimaryKey(query.FirstOrDefault().partsinvID);
+            Parts_Inventory newpart = oldpart;
+            newpart.Ordered_Qty += request.Quantity_Requested;
+            pinv.UpdateParts_Inventory(oldpart, newpart);
+
+            // third query
+            Purchase_Order po = new Purchase_Order() { Vendor_ID = vendor.Vendor_ID };
+            int poid = purchase_Order_Fakes.InsertPurchaseOrder(po);
+
+            // forth query
+            DeactivateRequestById(request.Parts_Request_ID);
+
+            //final query
+            POLineItem pOLineItem = new POLineItem() { PartsInventoryID = query.FirstOrDefault().partsinvID, LineItemDescription = query.FirstOrDefault().Desc, Price = (decimal)3.00*request.Quantity_Requested, LineNumber = lineNumber, LineItemName = request.Part_Name, Quantity = request.Quantity_Requested };
+            poli.InsertPOLineItem(pOLineItem);
+
+            return poid;
         }
     }
 }

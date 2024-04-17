@@ -1467,7 +1467,7 @@ INSERT INTO [dbo].[Model_Compatibility]
     [Parts_Inventory_ID]
     )
 VALUES
-    (100001, 100001),
+    (100001, 100000),
     (100001, 100002),
     (100001, 100003),
     (100001, 100004),

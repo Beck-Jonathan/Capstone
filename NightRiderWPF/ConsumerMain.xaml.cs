@@ -316,7 +316,10 @@ namespace NightRiderWPF
             {
                 PageViewer.RemoveBackEntry();
             }
+
+            PageViewer.Navigate(new Page());
         }
+
 
         private void btnDriverSchedules_Click(object sender, RoutedEventArgs e)
         {
