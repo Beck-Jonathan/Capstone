@@ -592,7 +592,9 @@ GO
 	('Mechanic', 'Fixes the vehicles'),
 	('Maintenance', 'Routine maintenance work that doesnt require mechanic'),
 	('PartsPerson', 'An invetory specialist, that is the go to for any parts for vehicles'),
-    ('Dispatcher', 'The controller of the fleet. Assigns tasks, routes drivers, and ensures services run smoothly.')
+    ('Dispatcher', 'The controller of the fleet. Assigns tasks, routes drivers, and ensures services run smoothly.'),
+	('Operator', 'Manages the routes'),
+	('Driver', 'Drives the vehicles')
 GO
 
 
@@ -635,9 +637,9 @@ VALUES
     (100004, 'PartsPerson'),
     (100005, 'Mechanic'),
     (100006, 'Maintenance'),
-    (100007, 'PartsPerson'),
-    (100008, 'Mechanic'),
-    (100009, 'Maintenance')
+    (100007, 'Driver'),
+    (100008, 'Dispatcher'),
+    (100009, 'Operator')
 GO
 
 
@@ -1816,7 +1818,14 @@ VALUES
     ('JoeSmith1994', 100000, NULL, 'what is your favorite animal?', 'lion', 'what is your favorite food?', 'Ramen', 'what was your first dogs name?', 'Hoola'),
     ('Jacmar125', 100001, NULL, 'what is your favorite animal?', 'Ocelot', 'what is your favorite food?', 'Bibimbap', 'what was your first dogs name?', 'Jeff'),
     ('Lebold2202', 100002, NULL, 'what is your favorite animal?', 'Foxes', 'what is your favorite food?', 'Spaghetti', 'what was your first dogs name?', 'Lola'),
-	('Krystal2023', NULL, 100000, 'what is your favorite animal?', 'Foxes', 'what is your favorite food?', 'Spaghetti', 'what was your first dogs name?', 'Lola')
+	('Krystal2023', NULL, 100000, 'what is your favorite animal?', 'Foxes', 'what is your favorite food?', 'Spaghetti', 'what was your first dogs name?', 'Lola'),
+    ('JaneDoe303', 100003, NULL, 'what is your favorite animal?', 'Iguana', 'what is your favorite food?', 'Ham', 'what was your first dogs name?', 'Winger'),
+    ('ButterScotch404', 100004, NULL, 'what is your favorite animal?', 'Cheetah', 'what is your favorite food?', 'Chips', 'what was your first dogs name?', 'Britta'),
+    ('AmyMarasco505', 100005, NULL, 'what is your favorite animal?', 'Rhino', 'what is your favorite food?', 'Fish', 'what was your first dogs name?', 'Shirley'),
+    ('OwenMarsh606', 100006, NULL, 'what is your favorite animal?', 'Monkey', 'what is your favorite food?', 'Bacon', 'what was your first dogs name?', 'Annie'),
+    ('RandyMills707', 100007, NULL, 'what is your favorite animal?', 'Caterpillar', 'what is your favorite food?', 'Pancakes', 'what was your first dogs name?', 'Pierce'),
+    ('MattStone808', 100008, NULL, 'what is your favorite animal?', 'Spider', 'what is your favorite food?', 'Sandwich', 'what was your first dogs name?', 'Abed'),
+    ('LizaBells909', 100009, NULL, 'what is your favorite animal?', 'Butterfly', 'what is your favorite food?', 'Sushi', 'what was your first dogs name?', 'Troy')
 GO
 
 /******************

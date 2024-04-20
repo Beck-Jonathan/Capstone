@@ -247,7 +247,7 @@ namespace NightRiderWPF
                         btnRoutes.Visibility = Visibility.Visible;
                         btn_profile.Visibility = Visibility.Visible;
                         break;
-                    case "Dispatch":
+                    case "Dispatcher":
                         btnVehicles.Visibility = Visibility.Visible;
                         btnDriverSchedules.Visibility = Visibility.Visible;
                         btnVehicleSchedules.Visibility = Visibility.Visible;
