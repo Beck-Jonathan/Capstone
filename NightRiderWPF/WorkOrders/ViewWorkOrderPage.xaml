@@ -38,7 +38,20 @@
             <Grid Grid.Column="1">
                 <Button x:Name="mntcViewWorkOrdersSearchBtn" Content="Search" HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center" FontSize="14" Margin="5,10,5,10" Width="55" />
             </Grid>
-            
+
+            <Grid Grid.Column="2">
+                <Label x:Name="Filterlbl" HorizontalAlignment="Right" VerticalAlignment="Center" FontSize="14">Filter:</Label>
+            </Grid>
+
+            <Grid Grid.Column="3">
+
+                <ComboBox x:Name="mntcFilterCbo" HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center" FontSize="14" Margin="10,10,5,10" Width="140" SelectionChanged="mntcFilterCbo_SelectionChanged">
+                    <ComboBoxItem>All</ComboBoxItem>
+                    <ComboBoxItem>Complete</ComboBoxItem>
+                    <ComboBoxItem>Incomplete</ComboBoxItem>
+                </ComboBox>
+            </Grid>
+
         </Grid>
         
         <!-- Content Row -->

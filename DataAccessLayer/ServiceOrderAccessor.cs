@@ -321,5 +321,115 @@ namespace DataAccessLayer
             }
             return completeServiceOrder;
         }
+
+        /// <summary>
+        ///     A method that returns sevice orders that are complete
+        /// </summary>
+        /// <returns>
+        ///    <see cref="List{ServiceOrder_VM}">ServiceOrder_VM</see>: The list of all complete service orders.
+        /// </returns>
+        ///    CONTRIBUTOR: Jared Roberts
+        /// <br />
+        ///    CREATED: 2024-03-05
+        /// <br />
+        ///    Initial Creation
+        /// </remarks>
+        public List<ServiceOrder_VM> GetAllCompleteServiceOrders()
+        {
+            List<ServiceOrder_VM> serviceOrders = new List<ServiceOrder_VM>();
+
+            var conn = DBConnectionProvider.GetConnection();
+            var cmdText = "sp_select_complete_service_orders";
+            var cmd = new SqlCommand(cmdText, conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            try
+            {
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    ServiceOrder_VM serviceOrder = new ServiceOrder_VM()
+                    {
+                        VIN = reader.GetString(0),
+                        Service_Order_ID = reader.GetInt32(1),
+                        Critical_Issue = reader.GetBoolean(2),
+                        Service_Type_ID = reader.GetString(3),
+                        Service_Description = reader.GetString(4)
+                    };
+                    serviceOrders.Add(serviceOrder);
+                }
+
+                if (serviceOrders.Count == 0)
+                {
+                    throw new ArgumentException("No service order records found");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return serviceOrders;
+        }
+
+        /// <summary>
+        ///     A method that returns sevice orders that are incomplete
+        /// </summary>
+        /// <returns>
+        ///    <see cref="List{ServiceOrder_VM}">ServiceOrder_VM</see>: The list of all incomplete service orders.
+        /// </returns>
+        ///    CONTRIBUTOR: Jared Roberts
+        /// <br />
+        ///    CREATED: 2024-03-05
+        /// <br />
+        ///    Initial Creation
+        /// </remarks>
+        public List<ServiceOrder_VM> GetAllIncompleteServiceOrders()
+        {
+            List<ServiceOrder_VM> serviceOrders = new List<ServiceOrder_VM>();
+
+            var conn = DBConnectionProvider.GetConnection();
+            var cmdText = "sp_select_incomplete_service_orders";
+            var cmd = new SqlCommand(cmdText, conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            try
+            {
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    ServiceOrder_VM serviceOrder = new ServiceOrder_VM()
+                    {
+                        VIN = reader.GetString(0),
+                        Service_Order_ID = reader.GetInt32(1),
+                        Critical_Issue = reader.GetBoolean(2),
+                        Service_Type_ID = reader.GetString(3),
+                        Service_Description = reader.GetString(4)
+                    };
+                    serviceOrders.Add(serviceOrder);
+                }
+
+                if (serviceOrders.Count == 0)
+                {
+                    throw new ArgumentException("No service order records found");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return serviceOrders;
+        }
     }
 }

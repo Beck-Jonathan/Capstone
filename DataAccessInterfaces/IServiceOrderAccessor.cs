@@ -133,5 +133,33 @@ namespace DataAccessInterfaces
         ///     Initial Creation
         /// </remarks>
         ServiceOrder_VM SelectServiceOrderByServiceOrderID(int serviceOrderID);
+
+        /// <summary>
+        ///     A method that returns sevice orders that are complete
+        /// </summary>
+        /// <returns>
+        ///    <see cref="List{ServiceOrder_VM}">ServiceOrder_VM</see>: The list of all complete service orders.
+        /// </returns>
+        ///    CONTRIBUTOR: Jared Roberts
+        /// <br />
+        ///    CREATED: 2024-03-05
+        /// <br />
+        ///    Initial Creation
+        /// </remarks>
+        List<ServiceOrder_VM> GetAllCompleteServiceOrders();
+
+        /// <summary>
+        ///     A method that returns sevice orders that are incomplete
+        /// </summary>
+        /// <returns>
+        ///    <see cref="List{ServiceOrder_VM}">ServiceOrder_VM</see>: The list of all incomplete service orders.
+        /// </returns>
+        ///    CONTRIBUTOR: Jared Roberts
+        /// <br />
+        ///    CREATED: 2024-03-05
+        /// <br />
+        ///    Initial Creation
+        /// </remarks>
+        List<ServiceOrder_VM> GetAllIncompleteServiceOrders();
     }
 }

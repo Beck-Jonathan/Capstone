@@ -20,7 +20,7 @@ namespace LogicLayerTests
         [TestMethod]
         public void TestGetAllServiceOrderCountPasses()
         {
-            int expected = 2;
+            int expected = 3;
             int actual = _serviceOrderManager.GetALlServiceOrders().Count;
 
             Assert.AreEqual(expected, actual);
@@ -223,6 +223,42 @@ namespace LogicLayerTests
         public void TestSelectServiceOrderByServiceOrderIDReturnsAVehicle()
         {
             var actual = _serviceOrderManager.SelectServiceOrderByServiceOrderID(100010);
+        }
+
+        /// <summary>
+        /// Tests that the GetAllCompleteServiceOrders method works.
+        /// </summary>
+        /// <remarks>
+        ///    CONTRIBUTOR: Jared Roberts
+        /// <br />
+        ///    CREATED: 2024-03-05
+        /// <br />
+        /// </remarks>
+        [TestMethod]
+        public void TestGetAllCompleteServiceOrdersReturnsCorrectCount()
+        {
+            int expected = 2;
+            int actual = _serviceOrderManager.GetAllCompleteServiceOrders().Count;
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        /// <summary>
+        /// Tests that the GetAllInCompleteServiceOrders method works.
+        /// </summary>
+        /// <remarks>
+        ///    CONTRIBUTOR: Jared Roberts
+        /// <br />
+        ///    CREATED: 2024-03-05
+        /// <br />
+        /// </remarks>
+        [TestMethod]
+        public void TestGetAllIncompleteServiceOrdersReturnsCorrectCount()
+        {
+            int expected = 1;
+            int actual = _serviceOrderManager.GetAllIncompleteServiceOrders().Count;
+
+            Assert.AreEqual(expected, actual);
         }
     }
 }

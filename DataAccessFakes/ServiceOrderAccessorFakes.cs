@@ -38,7 +38,9 @@ namespace DataAccessFakes
                 Service_Order_ID = 100000,
                 Critical_Issue = true,
                 Service_Type_ID = "Windshield Wiper Replacement",
-                Service_Description = "Replace the windshield wipers with OEM wipers"
+                Service_Description = "Replace the windshield wipers with OEM wipers",
+                Date_Started = new DateTime(2024, 02, 10),
+                Date_Finished = new DateTime(2024, 02, 11)
             });            
             _fakeServiceOrders.Add(new ServiceOrder_VM()
             {
@@ -46,7 +48,8 @@ namespace DataAccessFakes
                 Service_Order_ID = 100001,
                 Critical_Issue = false,
                 Service_Type_ID = "Brake Pad Replacement",
-                Service_Description = "Replace the brake pads with OEM pads"
+                Service_Description = "Replace the brake pads with OEM pads",
+                Date_Started = new DateTime(2024, 02, 10)
             });
             _fakeCompleteServiceOrders = new ServiceOrder_VM()
             {
@@ -58,6 +61,16 @@ namespace DataAccessFakes
                 //vehicle = _fakeVehicle.SelectVehicleForLookupList(),
                 //partsInventory = _fakePartsInventory.selectAllParts_Inventory()
             };
+            _fakeServiceOrders.Add(new ServiceOrder_VM()
+            {
+                VIN = "JTLZE4FEXB1123437",
+                Service_Order_ID = 100002,
+                Critical_Issue = false,
+                Service_Type_ID = "Brake Pad ",
+                Service_Description = "brake pads with OEM pads",
+                Date_Started = new DateTime(2022, 02, 10),
+                Date_Finished = new DateTime(2023, 01, 14)
+            });
         }
         
 
@@ -213,6 +226,41 @@ namespace DataAccessFakes
                 throw ex;
             }
 
+        }
+
+        /// <summary>
+        ///     A method that returns sevice orders that are complete
+        /// </summary>
+        /// <returns>
+        ///    <see cref="List{ServiceOrder_VM}">ServiceOrder_VM</see>: The list of all complete service orders.
+        /// </returns>
+        ///    CONTRIBUTOR: Jared Roberts
+        /// <br />
+        ///    CREATED: 2024-03-05
+        /// <br />
+        ///    Initial Creation
+        /// </remarks>
+        public List<ServiceOrder_VM> GetAllCompleteServiceOrders()
+        {
+            List<ServiceOrder_VM> completeServiceOrders = _fakeServiceOrders.Where(serviceOrder => serviceOrder.Date_Finished > serviceOrder.Date_Started).ToList();
+            return completeServiceOrders;
+        }
+        /// <summary>
+        ///     A method that returns sevice orders that are incomplete
+        /// </summary>
+        /// <returns>
+        ///    <see cref="List{ServiceOrder_VM}">ServiceOrder_VM</see>: The list of all incomplete service orders.
+        /// </returns>
+        ///    CONTRIBUTOR: Jared Roberts
+        /// <br />
+        ///    CREATED: 2024-03-05
+        /// <br />
+        ///    Initial Creation
+        /// </remarks>
+        public List<ServiceOrder_VM> GetAllIncompleteServiceOrders()
+        {
+            List<ServiceOrder_VM> incompleteServiceOrders = _fakeServiceOrders.Where(serviceOrder => serviceOrder.Date_Finished < serviceOrder.Date_Started).ToList();
+            return incompleteServiceOrders;
         }
     }
 }

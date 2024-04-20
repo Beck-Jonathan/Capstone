@@ -1004,7 +1004,7 @@ CREATE TABLE [dbo].[Service_Order]
     [Created_By_Employee_ID] [int] NOT NULL,
     [Serviced_By_Employee_ID] [int],
     [Date_Started] [datetime] NOT NULL,
-    [Date_Finished] [datetime] NOT NULL,
+    [Date_Finished] [datetime] NULL,
     [Is_Active] [bit] NOT NULL DEFAULT 1,
     [Critical_Issue] [bit] NOT NULL DEFAULT 0,
     CONSTRAINT [FK_Service_Order_Vehicle] FOREIGN KEY([VIN])
@@ -1032,7 +1032,7 @@ VALUES
     (100001, 2, '5XYZH4AG4JH123456', 'All Tire Change', 100002, '2024-01-24 14:30:00', '2024-01-24 16:45:00'),
     (100002, 1, 'JM1BK32F781234567', 'Tire Rotation', 100003, '2024-01-23 09:15:00', '2024-01-23 11:00:00'),
     (100003, 3, 'WAUZZZ4G6BN123456', 'Windshield Replacement', 100004, '2024-01-22 15:00:00', '2024-01-22 17:30:00'),
-    (100004, 2, '1C4RJFAG5FC123456', 'Troubleshooting', 100005, '2024-01-21 08:45:00', '2024-01-21 10:15:00')
+    (100004, 2, '1C4RJFAG5FC123456', 'Troubleshooting', 100005, '2024-01-21 08:45:00', null)
 GO
 
 

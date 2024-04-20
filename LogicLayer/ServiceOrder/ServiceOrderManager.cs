@@ -211,5 +211,61 @@ namespace LogicLayer
 
             return serviceOrder;
         }
+
+        /// <summary>
+        ///     A method that returns sevice orders that are complete
+        /// </summary>
+        /// <returns>
+        ///    <see cref="List{ServiceOrder_VM}">ServiceOrder_VM</see>: The list of all complete service orders.
+        /// </returns>
+        ///    CONTRIBUTOR: Jared Roberts
+        /// <br />
+        ///    CREATED: 2024-03-05
+        /// <br />
+        ///    Initial Creation
+        /// </remarks>
+        public List<ServiceOrder_VM> GetAllCompleteServiceOrders()
+        {
+            List<ServiceOrder_VM> serviceOrders = null;
+
+            try
+            {
+                serviceOrders = _serviceOrderAccessor.GetAllCompleteServiceOrders();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return serviceOrders;
+        }
+
+        /// <summary>
+        ///     A method that returns sevice orders that are incomplete
+        /// </summary>
+        /// <returns>
+        ///    <see cref="List{ServiceOrder_VM}">ServiceOrder_VM</see>: The list of all incomplete service orders.
+        /// </returns>
+        ///    CONTRIBUTOR: Jared Roberts
+        /// <br />
+        ///    CREATED: 2024-03-05
+        /// <br />
+        ///    Initial Creation
+        /// </remarks>
+        public List<ServiceOrder_VM> GetAllIncompleteServiceOrders()
+        {
+            List<ServiceOrder_VM> serviceOrders = null;
+
+            try
+            {
+                serviceOrders = _serviceOrderAccessor.GetAllIncompleteServiceOrders();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return serviceOrders;
+        }
     }
 }
