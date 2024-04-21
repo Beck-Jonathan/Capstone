@@ -26,7 +26,8 @@ namespace DataObjects.RouteObjects
         public int Route_ID { get; set; }
         public string VIN_Number { get; set; }
         public DateTime Date_Assignment_Started { get; set; }
-        public DateTime Date_Assignment_Ended { get; set; }
+        public DateTime? Date_Assignment_Ended { get; set; }
+        public bool IsActive { get; set; }
     }
     /// <summary>
     /// AUTHOR: Steven Sanchez

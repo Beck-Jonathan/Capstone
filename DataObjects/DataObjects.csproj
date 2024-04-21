@@ -46,6 +46,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Accommodation.cs" />
+    <Compile Include="Assignment\Driver.cs" />
+    <Compile Include="Assignment\DriverUnavailability.cs" />
+    <Compile Include="Assignment\VehicleAssignment.cs" />
+    <Compile Include="Assignment\VehicleUnavailability.cs" />
     <Compile Include="ClientDependentRole.cs" />
     <Compile Include="Dependent.cs" />
     <Compile Include="Client.cs" />
