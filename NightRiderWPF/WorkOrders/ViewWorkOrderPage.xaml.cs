@@ -331,6 +331,21 @@ namespace NightRiderWPF.WorkOrders
                 MessageBox.Show("No page to navigate back too.");
             }
         }
+
+        private void Addbtn_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                CreateWorkOrderPage createPage = new CreateWorkOrderPage();
+                NavigationService.Navigate(createPage);
+            }
+            catch(Exception)
+            {
+                MessageBox.Show("Error loading Create Work Order page.");
+
+            }
+        }
+
         /// <summary>
         ///  FIlters work orders that are complete, incomplete, or all
         /// </summary>

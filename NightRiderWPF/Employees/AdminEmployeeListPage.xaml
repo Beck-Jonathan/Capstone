@@ -12,7 +12,7 @@
             <Grid.RowDefinitions>
                 <!-- Create Grid Rows as needed, but try to keep rows consistent between related pages -->
                 <RowDefinition Height="100"></RowDefinition>
-                <RowDefinition Height="135"></RowDefinition>
+                <RowDefinition Height="350"></RowDefinition>
                 <RowDefinition></RowDefinition>
                 <RowDefinition></RowDefinition>
             </Grid.RowDefinitions>

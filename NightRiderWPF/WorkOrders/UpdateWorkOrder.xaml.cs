@@ -41,14 +41,18 @@ namespace NightRiderWPF.WorkOrders
         /// </remarks>
         public ServiceOrder_VM SelectedWorkOrder { get; private set; }
         private int serviceOrderID;
-
+        ServiceOrderManager _serviceOrderManager;
 
         public UpdateWorkOrderPage(ServiceOrder_VM selectedWorkOrder)
         {
             InitializeComponent();
+            _serviceOrderManager = new ServiceOrderManager();
+            List<ServiceOrder_VM> serviceType = _serviceOrderManager.GetAllServiceTypes();
             SelectedWorkOrder = selectedWorkOrder;
-            CurrentServiceTypetxt.Text = selectedWorkOrder.Service_Type_ID;
-            RequestDescriptiontxt.Text = selectedWorkOrder.Service_Description;
+            var serviceTypeIds = serviceType.Select(st => st.Service_Type_ID);
+            ServiceTypecbo.ItemsSource = serviceTypeIds;
+            ServiceTypecbo.SelectedItem = selectedWorkOrder.Service_Type_ID;
+            Descriptiontxt.Text = selectedWorkOrder.Service_Description;
             serviceOrderID = selectedWorkOrder.Service_Order_ID;
             if (SelectedWorkOrder != null && SelectedWorkOrder.Critical_Issue)
             {
@@ -69,31 +73,9 @@ namespace NightRiderWPF.WorkOrders
             {
                 IServiceOrderManager serviceOrderManager = new ServiceOrderManager();
 
-                // Get the old and new Service Type IDs
-                string oldServiceTypeID = SelectedWorkOrder.Service_Type_ID;
-                string newServiceTypeID = NewServiceTypetxt.Text;
-
-                // Check if newServiceTypeID is null or empty
-                if (string.IsNullOrWhiteSpace(newServiceTypeID))
-                {
-                    MessageBox.Show("New Service Type cannot be null or empty.");
-                    return;
-                }
-
-                // Get the new Service Description
-                string newServiceDescription = RequestDescriptiontxt.Text;
-
-                // Check if newServiceDescription is null or empty
-                if (string.IsNullOrWhiteSpace(newServiceDescription))
-                {
-                    MessageBox.Show("Service Description cannot be null or empty.");
-                    return;
-                }
-
                 // Update the properties of the SelectedWorkOrder
                 SelectedWorkOrder.Service_Order_ID = serviceOrderID;
-                SelectedWorkOrder.Service_Type_ID = newServiceTypeID;
-                SelectedWorkOrder.Service_Description = newServiceDescription;
+                SelectedWorkOrder.Service_Type_ID = ServiceTypecbo.SelectedItem?.ToString();
                 if (Yesrbtn.IsChecked == true)
                 {
                     SelectedWorkOrder.Critical_Issue = true;
@@ -109,8 +91,8 @@ namespace NightRiderWPF.WorkOrders
                 // Show a success message
                 MessageBox.Show("Service order updated successfully!");
 
-                // Navigate back to the previous page 
-                NavigationService?.GoBack();
+                ViewWorkOrderList viewPage = new ViewWorkOrderList();
+                NavigationService.Navigate(viewPage);
             }
             catch (Exception ex)
             {
@@ -119,11 +101,31 @@ namespace NightRiderWPF.WorkOrders
             }
         }
 
-
-        private void Addbtn_Click(object sender, RoutedEventArgs e)
+        private void ServiceTypecbo_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            CreateWorkOrderPage createPage = new CreateWorkOrderPage();
-            NavigationService.Navigate(createPage);
+            // Get the selected Service_Type_ID
+            string selectedServiceTypeID = ServiceTypecbo.SelectedItem as string;
+
+
+            ServiceOrder_VM selectedServiceType = _serviceOrderManager
+                .GetAllServiceTypes()
+                .FirstOrDefault(st => st.Service_Type_ID == selectedServiceTypeID);
+
+            // Update the Descriptiontxt TextBox with the Service_Description
+            if (selectedServiceType != null)
+            {
+                Descriptiontxt.Text = selectedServiceType.Service_Description;
+            }
+        }
+
+        private void Cancelbtn_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult result = MessageBox.Show("Are you sure you want to cancel updating the Service Order?", "Cancel Service Order Update", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+            if (result == MessageBoxResult.Yes)
+            {
+                NavigationService.GoBack();
+            }
         }
     }
 }

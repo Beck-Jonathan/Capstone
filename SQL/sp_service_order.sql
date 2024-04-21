@@ -72,24 +72,15 @@ GO
 CREATE PROCEDURE sp_update_service_order
     @Service_Order_ID INT,
     @Critical_Issue BIT,
-    @New_Service_Type_ID NVARCHAR(256),
-    @Service_Description NVARCHAR(256)
+    @Service_Type_ID [nvarchar] (256)
 AS
 BEGIN
-    SET NOCOUNT ON;
-
     -- Update the Service_Order table
     UPDATE Service_Order
     SET 
-        Critical_Issue = @Critical_Issue
+        Critical_Issue = @Critical_Issue,
+        Service_Type_ID = @Service_Type_ID
     WHERE Service_Order_ID = @Service_Order_ID;
-
-    -- Update the Service_Type entry with new Service_Type_ID
-    UPDATE Service_Type
-    SET 
-        Service_Type_ID = @New_Service_Type_ID,
-        Service_Description = @Service_Description
-    WHERE Service_Type_ID = (SELECT Service_Type_ID FROM Service_Order WHERE Service_Order_ID = @Service_Order_ID);
 END
 
 GO

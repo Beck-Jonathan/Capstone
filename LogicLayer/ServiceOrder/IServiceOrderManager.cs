@@ -104,6 +104,8 @@ namespace LogicLayer
         /// </remarks>
         /// </update>
         bool CreateServiceOrder(ServiceOrder_VM serviceOrder);
+        List<ServiceOrder_VM> GetAllServiceTypes();
+
 
         /// <summary>
         ///     Retrieves all ServiceOrder_VM records from the ServiceOrderAccessor and,

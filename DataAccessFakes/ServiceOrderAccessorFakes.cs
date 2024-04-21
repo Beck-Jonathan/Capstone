@@ -188,6 +188,28 @@ namespace DataAccessFakes
             return 1;
         }
 
+        public List<ServiceOrder_VM> GetAllServiceTypes()
+        {
+            List<ServiceOrder_VM> fakeServiceTypes = new List<ServiceOrder_VM>
+            {
+                new ServiceOrder_VM
+                {
+                    Service_Type_ID = "Service_Type_1",
+                    Service_Description = "Service Type 1 Description",
+                    Is_Active = true
+                },
+                new ServiceOrder_VM
+                {
+                    Service_Type_ID = "Service_Type_2",
+                    Service_Description = "Service Type 2 Description",
+                    Is_Active = true
+                },
+
+            };
+
+            return fakeServiceTypes;
+        }
+
         /// <summary>
         ///     Returns all fake ServiceOrder_VM records
         /// </summary>

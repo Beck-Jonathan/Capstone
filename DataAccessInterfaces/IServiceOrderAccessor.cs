@@ -109,6 +109,7 @@ namespace DataAccessInterfaces
         /// </remarks>
         /// </update>
         int CreateServiceOrder(ServiceOrder_VM serviceOrder);
+        List<ServiceOrder_VM> GetAllServiceTypes();
 
         /// <summary>
         ///     Retrieves all ServiceOrder records from the database

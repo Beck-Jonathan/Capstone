@@ -260,5 +260,31 @@ namespace LogicLayerTests
 
             Assert.AreEqual(expected, actual);
         }
+
+        [TestMethod]
+        public void TestGetAllServiceTypesCountPasses()
+        {
+            // Arrange
+            int expected = 2;
+
+            // Act
+            int actual = _serviceOrderManager.GetAllServiceTypes().Count;
+
+            // Assert
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void TestGetAllServiceTypesCountFails()
+        {
+            // Arrange
+            int expected = 3;
+
+            // Act
+            int actual = _serviceOrderManager.GetAllServiceTypes().Count;
+
+            // Assert
+            Assert.AreNotEqual(expected, actual);
+        }
     }
 }

@@ -163,6 +163,22 @@ namespace LogicLayer
             return result;
         }
 
+        public List<ServiceOrder_VM> GetAllServiceTypes()
+        {
+            List<ServiceOrder_VM> serviceTypes = null;
+
+            try
+            {
+                serviceTypes = _serviceOrderAccessor.GetAllServiceTypes();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return serviceTypes;
+        }
+
         /// <summary>
         ///     Retrieves all ServiceOrder_VM records from the ServiceOrderAccessor and,
         ///     <br/>

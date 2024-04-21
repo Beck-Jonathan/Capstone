@@ -140,8 +140,8 @@ namespace DataAccessLayer
             // Add parameters
             cmd.Parameters.AddWithValue("@Service_Order_ID", serviceOrder.Service_Order_ID);
             cmd.Parameters.AddWithValue("@Critical_Issue", Convert.ToInt32(serviceOrder.Critical_Issue));
-            cmd.Parameters.AddWithValue("@New_Service_Type_ID", serviceOrder.Service_Type_ID);
-            cmd.Parameters.AddWithValue("@Service_Description", serviceOrder.Service_Description);
+            cmd.Parameters.AddWithValue("@Service_Type_ID", serviceOrder.Service_Type_ID);
+
 
             try
             {
@@ -229,6 +229,47 @@ namespace DataAccessLayer
                 conn.Close();
             }
             return rows;
+        }
+
+        public List<ServiceOrder_VM> GetAllServiceTypes()
+        {
+            List<ServiceOrder_VM> serviceTypes = new List<ServiceOrder_VM>();
+
+            var conn = DBConnectionProvider.GetConnection();
+            var cmdText = "sp_select_all_service_type";
+            var cmd = new SqlCommand(cmdText, conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            try
+            {
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    ServiceOrder_VM serviceType = new ServiceOrder_VM()
+                    {
+                        Service_Type_ID = reader.GetString(0),
+                        Service_Description = reader.GetString(1),
+                        Is_Active = reader.GetBoolean(2),
+                    };
+                    serviceTypes.Add(serviceType);
+                }
+
+                if (serviceTypes.Count == 0)
+                {
+                    throw new ArgumentException("No service order records found");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return serviceTypes;
         }
 
         /// <summary>
