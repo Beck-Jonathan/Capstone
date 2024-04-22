@@ -214,7 +214,7 @@ namespace NightRiderWPF.PurchaseOrders
 
                 MessageBox.Show(ex.Message);
             }
-            MessageBox.Show("Purchase Order Added With " + result.ToString() + " Line Items");
+            MessageBox.Show("Purchase Order # " + result.ToString() + " Added");
             NavigationService.Navigate(new Parts_Person_View_Purchase_Orders());
         }
     }

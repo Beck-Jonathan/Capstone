@@ -147,5 +147,32 @@ namespace LogicLayer.PartsRequest
             }
             return partsRequestsdetails;
         }
+
+        /// <summary>
+        ///     pushes request to purchase order line items after approval
+        /// </summary>
+        /// <returns>
+        ///    List of <see cref="int">index of the purchase order line item</see>
+        /// </returns>
+        /// <remarks>
+        ///    Exceptions:
+        /// <br />
+        ///    <see cref="Exception">Exception</see>: Thrown when error encountered
+        /// <br /><br />
+        ///    CONTRIBUTOR: Parker Svoboda
+        /// <br />
+        ///    CREATED: 2024-04-13
+        /// <br />
+        public int PushToPOLine(int partRequestID, int vendorid, int lineNumber)
+        {
+            try
+            {
+                return _partsRequestAccessor.approveRequest(partRequestID, vendorid, lineNumber);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

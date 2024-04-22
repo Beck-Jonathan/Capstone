@@ -1,5 +1,6 @@
 ﻿using DataObjects;
 using LogicLayer;
+using NightRiderWPF.DeveloperView;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -53,17 +54,26 @@ namespace NightRiderWPF.WorkOrders
             }
         }
 
+        public ViewWorkOrderList(List<ServiceOrder_VM> orders) {
+            _serviceOrders = orders;
+            InitializeComponent();
+        
+        }
+
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            try
+            if (_serviceOrders == null)
             {
-                _serviceOrderManager = new ServiceOrderManager();
-                _serviceOrders = new List<ServiceOrder_VM>(_serviceOrderManager.GetALlServiceOrders());
+                try
+                {
+                    _serviceOrderManager = new ServiceOrderManager();
+                    _serviceOrders = new List<ServiceOrder_VM>(_serviceOrderManager.GetALlServiceOrders());
 
-            }
-            catch (Exception ex)
-            {
-                throw ex;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error Occured: " + ex.Message);
+                }
             }
             List<dynamic> dataObjects = new List<dynamic>();
             foreach (ServiceOrder_VM serviceOrder in _serviceOrders)
@@ -292,13 +302,260 @@ namespace NightRiderWPF.WorkOrders
         private void mntcViewWorkOrderCompleteBtn_Click(object sender, RoutedEventArgs e)
         {
             // Action for complete work order
-            MessageBox.Show("This button's 'mntcViewWorkOrderCompleteBtn_Click()' method is not implemented");
+            try
+            {
+                dynamic selectedRow = mntcViewWorkOrderPendingDg.SelectedItem;
+                int serviceOrderID = selectedRow.PropertySix;
+                ServiceOrder_VM selectedServiceOrder = new ServiceOrder_VM
+                {
+                    Service_Order_ID = serviceOrderID,
+                };
+                CompleteWorkOrderPage completePage = new CompleteWorkOrderPage(selectedServiceOrder);
+                NavigationService.Navigate(completePage);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error Occurred: " + ex.Message);
+            }
         }
 
         private void mntcViewWorkOrderCloseBtn_Click(object sender, RoutedEventArgs e)
         {
             // Action to reurn to the previous page
-            MessageBox.Show("This button's 'mntcViewWorkOrderCloseBtn_Click()' method is not implemented");
+            try
+            {
+                this.NavigationService.GoBack();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("No page to navigate back too.");
+            }
+        }
+
+        private void Addbtn_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                CreateWorkOrderPage createPage = new CreateWorkOrderPage();
+                NavigationService.Navigate(createPage);
+            }
+            catch(Exception)
+            {
+                MessageBox.Show("Error loading Create Work Order page.");
+
+            }
+        }
+
+        /// <summary>
+        ///  FIlters work orders that are complete, incomplete, or all
+        /// </summary>
+        /// <remarks>
+        ///    Exceptions:
+        /// <br />
+        ///    CONTRIBUTOR: Jared Roberts
+        /// <br />
+        ///    CREATED: 2024-03-05
+        /// <br />
+        /// <br />
+        ///    UPDATER: [Updater's Name]
+        /// <br />
+        ///    UPDATED: yyyy-MM-dd
+        /// <br />
+        ///     Initial Creation
+        /// </remarks>
+
+
+        private void mntcFilterCbo_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            string selectedValue = (mntcFilterCbo.SelectedItem as ComboBoxItem)?.Content?.ToString();
+            if (selectedValue == "Complete")
+            {
+                try
+                {
+                    _serviceOrderManager = new ServiceOrderManager();
+                    _serviceOrders = new List<ServiceOrder_VM>(_serviceOrderManager.GetAllCompleteServiceOrders());
+
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+                List<dynamic> dataObjects = new List<dynamic>();
+                foreach (ServiceOrder_VM serviceOrder in _serviceOrders)
+                {
+                    bool criticalIssue = serviceOrder.Critical_Issue;
+                    string serviceType_ID = serviceOrder.Service_Type_ID;
+                    string serviceDescription = serviceOrder.Service_Description;
+                    int serviceOrderID = serviceOrder.Service_Order_ID;
+                    Button updateButton = new Button();
+                    updateButton.Height = 30;
+                    updateButton.Width = 80;
+                    updateButton.Content = "Update";
+                    Button completeButton = new Button();
+                    completeButton.Height = 30;
+                    completeButton.Width = 80;
+                    completeButton.Content = "Complete";
+
+                    dynamic myDynamic = new
+                    {
+                        PropertyOne = criticalIssue,
+                        PropertyTwo = serviceType_ID,
+                        PropertyThree = serviceDescription,
+                        PropertyFour = updateButton,
+                        PropertyFive = completeButton,
+                        PropertySix = serviceOrderID
+                    };
+                    dataObjects.Add(myDynamic);
+                }
+
+                mntcViewWorkOrderPendingDg.ItemsSource = dataObjects;
+                mntcViewWorkOrderPendingDg.Columns[0].DisplayIndex = 4;
+                mntcViewWorkOrderPendingDg.Columns[1].DisplayIndex = 4;
+                mntcViewWorkOrderPendingDg.Columns[0].Header = "";
+                mntcViewWorkOrderPendingDg.Columns[0].Width = 120;
+                mntcViewWorkOrderPendingDg.Columns[0].CanUserReorder = false;
+                mntcViewWorkOrderPendingDg.Columns[0].IsReadOnly = true;
+                mntcViewWorkOrderPendingDg.Columns[1].Header = "";
+                mntcViewWorkOrderPendingDg.Columns[1].Width = 127;
+                mntcViewWorkOrderPendingDg.Columns[1].CanUserReorder = false;
+                mntcViewWorkOrderPendingDg.Columns[1].IsReadOnly = true;
+                mntcViewWorkOrderPendingDg.Columns[2].Header = "High Priority";
+                mntcViewWorkOrderPendingDg.Columns[2].Width = 76;
+                mntcViewWorkOrderPendingDg.Columns[2].CanUserReorder = false;
+                mntcViewWorkOrderPendingDg.Columns[2].IsReadOnly = true;
+                mntcViewWorkOrderPendingDg.Columns[3].Header = "Service Type";
+                mntcViewWorkOrderPendingDg.Columns[3].Width = 150;
+                mntcViewWorkOrderPendingDg.Columns[3].CanUserReorder = false;
+                mntcViewWorkOrderPendingDg.Columns[4].Header = "Service Description";
+                mntcViewWorkOrderPendingDg.Columns[4].Width = 236;
+                mntcViewWorkOrderPendingDg.Columns[4].CanUserReorder = false;
+
+            }
+            else if (selectedValue == "Incomplete")
+            {
+                try
+                {
+                    _serviceOrderManager = new ServiceOrderManager();
+                    _serviceOrders = new List<ServiceOrder_VM>(_serviceOrderManager.GetAllIncompleteServiceOrders());
+
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+                List<dynamic> dataObjects = new List<dynamic>();
+                foreach (ServiceOrder_VM serviceOrder in _serviceOrders)
+                {
+                    bool criticalIssue = serviceOrder.Critical_Issue;
+                    string serviceType_ID = serviceOrder.Service_Type_ID;
+                    string serviceDescription = serviceOrder.Service_Description;
+                    int serviceOrderID = serviceOrder.Service_Order_ID;
+                    Button updateButton = new Button();
+                    updateButton.Height = 30;
+                    updateButton.Width = 80;
+                    updateButton.Content = "Update";
+                    Button completeButton = new Button();
+                    completeButton.Height = 30;
+                    completeButton.Width = 80;
+                    completeButton.Content = "Complete";
+
+                    dynamic myDynamic = new
+                    {
+                        PropertyOne = criticalIssue,
+                        PropertyTwo = serviceType_ID,
+                        PropertyThree = serviceDescription,
+                        PropertyFour = updateButton,
+                        PropertyFive = completeButton,
+                        PropertySix = serviceOrderID
+                    };
+                    dataObjects.Add(myDynamic);
+                }
+
+                mntcViewWorkOrderPendingDg.ItemsSource = dataObjects;
+                mntcViewWorkOrderPendingDg.Columns[0].DisplayIndex = 4;
+                mntcViewWorkOrderPendingDg.Columns[1].DisplayIndex = 4;
+                mntcViewWorkOrderPendingDg.Columns[0].Header = "";
+                mntcViewWorkOrderPendingDg.Columns[0].Width = 120;
+                mntcViewWorkOrderPendingDg.Columns[0].CanUserReorder = false;
+                mntcViewWorkOrderPendingDg.Columns[0].IsReadOnly = true;
+                mntcViewWorkOrderPendingDg.Columns[1].Header = "";
+                mntcViewWorkOrderPendingDg.Columns[1].Width = 127;
+                mntcViewWorkOrderPendingDg.Columns[1].CanUserReorder = false;
+                mntcViewWorkOrderPendingDg.Columns[1].IsReadOnly = true;
+                mntcViewWorkOrderPendingDg.Columns[2].Header = "High Priority";
+                mntcViewWorkOrderPendingDg.Columns[2].Width = 76;
+                mntcViewWorkOrderPendingDg.Columns[2].CanUserReorder = false;
+                mntcViewWorkOrderPendingDg.Columns[2].IsReadOnly = true;
+                mntcViewWorkOrderPendingDg.Columns[3].Header = "Service Type";
+                mntcViewWorkOrderPendingDg.Columns[3].Width = 150;
+                mntcViewWorkOrderPendingDg.Columns[3].CanUserReorder = false;
+                mntcViewWorkOrderPendingDg.Columns[4].Header = "Service Description";
+                mntcViewWorkOrderPendingDg.Columns[4].Width = 236;
+                mntcViewWorkOrderPendingDg.Columns[4].CanUserReorder = false;
+            }
+            else
+            {
+                try
+                {
+                    _serviceOrderManager = new ServiceOrderManager();
+                    _serviceOrders = new List<ServiceOrder_VM>(_serviceOrderManager.GetALlServiceOrders());
+
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+                List<dynamic> dataObjects = new List<dynamic>();
+                foreach (ServiceOrder_VM serviceOrder in _serviceOrders)
+                {
+                    bool criticalIssue = serviceOrder.Critical_Issue;
+                    string serviceType_ID = serviceOrder.Service_Type_ID;
+                    string serviceDescription = serviceOrder.Service_Description;
+                    int serviceOrderID = serviceOrder.Service_Order_ID;
+                    Button updateButton = new Button();
+                    updateButton.Height = 30;
+                    updateButton.Width = 80;
+                    updateButton.Content = "Update";
+                    Button completeButton = new Button();
+                    completeButton.Height = 30;
+                    completeButton.Width = 80;
+                    completeButton.Content = "Complete";
+
+                    dynamic myDynamic = new
+                    {
+                        PropertyOne = criticalIssue,
+                        PropertyTwo = serviceType_ID,
+                        PropertyThree = serviceDescription,
+                        PropertyFour = updateButton,
+                        PropertyFive = completeButton,
+                        PropertySix = serviceOrderID
+                    };
+                    dataObjects.Add(myDynamic);
+                }
+
+
+                mntcViewWorkOrderPendingDg.ItemsSource = dataObjects;
+                mntcViewWorkOrderPendingDg.Columns[0].DisplayIndex = 4;
+                mntcViewWorkOrderPendingDg.Columns[1].DisplayIndex = 4;
+                mntcViewWorkOrderPendingDg.Columns[0].Header = "";
+                mntcViewWorkOrderPendingDg.Columns[0].Width = 120;
+                mntcViewWorkOrderPendingDg.Columns[0].CanUserReorder = false;
+                mntcViewWorkOrderPendingDg.Columns[0].IsReadOnly = true;
+                mntcViewWorkOrderPendingDg.Columns[1].Header = "";
+                mntcViewWorkOrderPendingDg.Columns[1].Width = 127;
+                mntcViewWorkOrderPendingDg.Columns[1].CanUserReorder = false;
+                mntcViewWorkOrderPendingDg.Columns[1].IsReadOnly = true;
+                mntcViewWorkOrderPendingDg.Columns[2].Header = "High Priority";
+                mntcViewWorkOrderPendingDg.Columns[2].Width = 76;
+                mntcViewWorkOrderPendingDg.Columns[2].CanUserReorder = false;
+                mntcViewWorkOrderPendingDg.Columns[2].IsReadOnly = true;
+                mntcViewWorkOrderPendingDg.Columns[3].Header = "Service Type";
+                mntcViewWorkOrderPendingDg.Columns[3].Width = 150;
+                mntcViewWorkOrderPendingDg.Columns[3].CanUserReorder = false;
+                mntcViewWorkOrderPendingDg.Columns[4].Header = "Service Description";
+                mntcViewWorkOrderPendingDg.Columns[4].Width = 236;
+                mntcViewWorkOrderPendingDg.Columns[4].CanUserReorder = false;
+            }
         }
     }
 }

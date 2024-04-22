@@ -147,14 +147,18 @@ namespace LogicLayerTests
         /// </summary>
         ///
         /// <remarks>
-        /// Updater Name
-        /// Updated: yyyy/mm/dd
+        /// <br />
+        ///    UPDATER: Parker Svoboda
+        /// <br />
+        ///    UPDATED: 2024-02-13
+        /// <br />
+        ///     Readjusting expected value
         /// </remarks>
         [TestMethod]
         public void TestGetAllPartsInventoryReturnsAllActiveInventorty()
         {
             //arrange
-            int exepcted = 3;
+            int exepcted = 4;
             int actual = 0;
             //act
             actual = _mgr.GetAllParts_Inventory().Count;
@@ -172,14 +176,18 @@ namespace LogicLayerTests
         /// </summary>
         ///
         /// <remarks>
-        /// Updater Name
-        /// Updated: yyyy/mm/dd
+        /// <br />
+        ///    UPDATER: Parker Svoboda
+        /// <br />
+        ///    UPDATED: 2024-02-13
+        /// <br />
+        ///     Readjusting expected value
         /// </remarks>
         [TestMethod]
         public void TestGetActivePartsInventoryReturnsAllActiveInventorty()
         {
             //arrange
-            int exepcted = 2;
+            int exepcted = 3;
             int actual = 0;
             //act
             actual = _mgr.GetActiveParts_Inventory().Count;
@@ -236,6 +244,15 @@ namespace LogicLayerTests
         /// Created: 2024-03-24
         /// This test returns the ID field of the newly added part
         /// </summary>
+        /// 
+        /// <remarks>
+        /// <br />
+        ///    UPDATER: Parker Svoboda
+        /// <br />
+        ///    UPDATED: 2024-02-13
+        /// <br />
+        ///     Readjusting expected value
+        /// </remarks>
         [TestMethod]
         public void TestAddPartsInventoryReturnsIDField()
         {
@@ -250,7 +267,7 @@ namespace LogicLayerTests
                 Ordered_Qty = 0,
                 Stock_Level = 0
             };
-            int expected = 4;
+            int expected = 5;
             int actual = 0;
             //act
             actual = _mgr.AddParts_Inventory(toTest);
@@ -369,6 +386,27 @@ namespace LogicLayerTests
         public void AddPartCompatibilityFailsArgumentExceptionDuplicateEntry()
         {
             int addPart = _mgr.AddModelPartCompatibility(1, 1);
+        }
+        /// <summary>
+        ///     Test that expects an ApplicationException when a duplicate entry is added
+        /// </summary>
+        /// <remarks>
+        ///    CONTRIBUTOR: Jonathan Beck
+        /// <br />
+        ///    CREATED: 2024-04-09
+        /// </remarks>
+        [TestMethod]
+
+        public void TestUpdateOrderedQuantityUpdatesOrderedQuantity() {
+            int actual = 0;
+            int expected = 9;
+
+            _mgr.AddToOrderedQuantity(1, 5);
+            actual = _mgr.GetParts_InventoryByID(1).Ordered_Qty;
+            Assert.AreEqual(expected, actual);
+
+        
+        
         }
     }
     // Reviewed By: John Beck

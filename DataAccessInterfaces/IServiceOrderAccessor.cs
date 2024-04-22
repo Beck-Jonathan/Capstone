@@ -7,8 +7,53 @@ using System.Threading.Tasks;
 
 namespace DataAccessInterfaces
 {
+    /// <summary>
+    /// AUTHOR: Ben Collins
+    /// <br />
+    /// CREATED: 2024-02-10
+    /// <br />
+    /// 
+    ///     Data access class for ServiceOrder.
+    /// </summary>
+    /// 
+    /// <remarks>
+    /// UPDATER: Steven Sanchez
+    /// <br />
+    /// UPDATED: 2024-02-18
+    /// <br />
+    /// UPDATER: Ben Collins
+    /// <br />
+    /// UPDATED: 2024-03-19
+    /// <br />
+    ///     Initial creation
+    ///     Added UpdateServiceOrder(ServiceOrder serviceOrder)
+    ///     Added SelectServiceOrderByServiceOrderID() method to complete a WO.
+    /// </remarks>
+    /// 
     public interface IServiceOrderAccessor
     {
+        /// <summary>
+        ///     Retrieves all ServiceOrder records from the database
+        /// </summary>
+        /// <returns>
+        ///    <see cref="List{ServiceOrder_VM}">ServiceOrder_VM</see> List of ServiceOrder_VM objects otherwise, <see cref="Exception">execption</see>.
+        /// </returns>
+        /// <remarks>
+        ///    Exceptions:
+        /// <br />
+        ///    <see cref="ArgumentException">ArgumentException</see>: No records returned
+        /// <br /><br />
+        ///    CONTRIBUTOR: Ben Collins
+        /// <br />
+        ///    CREATED: 2024-02-10
+        /// <br />
+        /// <br />
+        ///    UPDATER: [Updater's Name]
+        /// <br />
+        ///    UPDATED: yyyy-MM-dd
+        /// <br />
+        ///     Initial Creation
+        /// </remarks>
         List<ServiceOrder_VM> GetAllServiceOrders();
 
         /// <summary>
@@ -64,5 +109,58 @@ namespace DataAccessInterfaces
         /// </remarks>
         /// </update>
         int CreateServiceOrder(ServiceOrder_VM serviceOrder);
+        List<ServiceOrder_VM> GetAllServiceTypes();
+
+        /// <summary>
+        ///     Retrieves all ServiceOrder records from the database
+        /// </summary>
+        /// <returns>
+        ///    <see cref="ServiceOrder_VM">ServiceOrder_VM</see> ServiceOrder_VM object otherwise, <see cref="Exception">execption</see>.
+        /// </returns>
+        /// <remarks>
+        ///    Exceptions:
+        /// <br />
+        ///    <see cref="ArgumentException">ArgumentException</see>: No records returned
+        /// <br /><br />
+        ///    CONTRIBUTOR: Ben Collins
+        /// <br />
+        ///    CREATED: 2024-02-10
+        /// <br />
+        /// <br />
+        ///    UPDATER: [Updater's Name]
+        /// <br />
+        ///    UPDATED: yyyy-MM-dd
+        /// <br />
+        ///     Initial Creation
+        /// </remarks>
+        ServiceOrder_VM SelectServiceOrderByServiceOrderID(int serviceOrderID);
+
+        /// <summary>
+        ///     A method that returns sevice orders that are complete
+        /// </summary>
+        /// <returns>
+        ///    <see cref="List{ServiceOrder_VM}">ServiceOrder_VM</see>: The list of all complete service orders.
+        /// </returns>
+        ///    CONTRIBUTOR: Jared Roberts
+        /// <br />
+        ///    CREATED: 2024-03-05
+        /// <br />
+        ///    Initial Creation
+        /// </remarks>
+        List<ServiceOrder_VM> GetAllCompleteServiceOrders();
+
+        /// <summary>
+        ///     A method that returns sevice orders that are incomplete
+        /// </summary>
+        /// <returns>
+        ///    <see cref="List{ServiceOrder_VM}">ServiceOrder_VM</see>: The list of all incomplete service orders.
+        /// </returns>
+        ///    CONTRIBUTOR: Jared Roberts
+        /// <br />
+        ///    CREATED: 2024-03-05
+        /// <br />
+        ///    Initial Creation
+        /// </remarks>
+        List<ServiceOrder_VM> GetAllIncompleteServiceOrders();
     }
 }

@@ -19,11 +19,17 @@ namespace LogicLayer
     /// </summary>
     /// 
     /// <remarks>
-    /// UPDATER: [Updater's Name]
+    /// UPDATER: Steven Sanchez
     /// <br />
-    /// UPDATED: yyyy-MM-dd
+    /// UPDATED: 2024-02-18
+    /// <br />
+    /// UPDATER: Ben Collins
+    /// <br />
+    /// UPDATED: 2024-03-19
     /// <br />
     ///     Initial creation
+    ///     Added UpdateServiceOrder(ServiceOrder serviceOrder)
+    ///     Added SelectServiceOrderByServiceOrderID()
     /// </remarks>
     public class ServiceOrderManager : IServiceOrderManager
     {
@@ -155,6 +161,127 @@ namespace LogicLayer
                 throw new ApplicationException("Service Order not added", ex);
             }
             return result;
+        }
+
+        public List<ServiceOrder_VM> GetAllServiceTypes()
+        {
+            List<ServiceOrder_VM> serviceTypes = null;
+
+            try
+            {
+                serviceTypes = _serviceOrderAccessor.GetAllServiceTypes();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return serviceTypes;
+        }
+
+        /// <summary>
+        ///     Retrieves all ServiceOrder_VM records from the ServiceOrderAccessor and,
+        ///     <br/>
+        ///     the Vehicle, ServiceOrderLineItems, and Parts_Inventory from their 
+        ///     <br/>
+        ///     respective managers
+        /// </summary>
+        /// <returns>
+        ///    <see cref="ServiceOrder_VM">ServiceOrder_VM</see> ServiceOrder_VM object
+        /// </returns>
+        /// <remarks>
+        ///    Exceptions:
+        /// <br />
+        ///    <see cref="Exception">Exception</see>: Thrown when error encountered
+        /// <br /><br />
+        ///    CONTRIBUTOR: Ben Collins
+        /// <br />
+        ///    CREATED: 2024-02-10
+        /// <br />
+        /// <br />
+        ///    UPDATER: [Updater's Name]
+        /// <br />
+        ///    UPDATED: yyyy-MM-dd
+        /// <br />
+        ///     Initial Creation
+        /// </remarks>
+        public ServiceOrder_VM SelectServiceOrderByServiceOrderID(int serviceOrderID)
+        {
+            // use other objects managers existing Managers methods to populate the data.
+
+            ServiceOrder_VM serviceOrder = new ServiceOrder_VM();
+            IVehicleManager vehicleManager = new VehicleManager();
+            IServiceOrderLineItemsManager LineItemManager = new ServiceOrderLineItemsManager();
+
+
+            try
+            {
+                serviceOrder = _serviceOrderAccessor.SelectServiceOrderByServiceOrderID(serviceOrderID);
+                serviceOrder.serviceOrderLineItems = LineItemManager.GetServiceOrderLineItems();
+                serviceOrder.vehicle = vehicleManager.GetVehicleByVIN(serviceOrder.VIN);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return serviceOrder;
+        }
+
+        /// <summary>
+        ///     A method that returns sevice orders that are complete
+        /// </summary>
+        /// <returns>
+        ///    <see cref="List{ServiceOrder_VM}">ServiceOrder_VM</see>: The list of all complete service orders.
+        /// </returns>
+        ///    CONTRIBUTOR: Jared Roberts
+        /// <br />
+        ///    CREATED: 2024-03-05
+        /// <br />
+        ///    Initial Creation
+        /// </remarks>
+        public List<ServiceOrder_VM> GetAllCompleteServiceOrders()
+        {
+            List<ServiceOrder_VM> serviceOrders = null;
+
+            try
+            {
+                serviceOrders = _serviceOrderAccessor.GetAllCompleteServiceOrders();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return serviceOrders;
+        }
+
+        /// <summary>
+        ///     A method that returns sevice orders that are incomplete
+        /// </summary>
+        /// <returns>
+        ///    <see cref="List{ServiceOrder_VM}">ServiceOrder_VM</see>: The list of all incomplete service orders.
+        /// </returns>
+        ///    CONTRIBUTOR: Jared Roberts
+        /// <br />
+        ///    CREATED: 2024-03-05
+        /// <br />
+        ///    Initial Creation
+        /// </remarks>
+        public List<ServiceOrder_VM> GetAllIncompleteServiceOrders()
+        {
+            List<ServiceOrder_VM> serviceOrders = null;
+
+            try
+            {
+                serviceOrders = _serviceOrderAccessor.GetAllIncompleteServiceOrders();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return serviceOrders;
         }
     }
 }

@@ -26,7 +26,9 @@ namespace DataAccessFakes
     public class ServiceOrderAccessorFakes : IServiceOrderAccessor
     {
         private List<ServiceOrder_VM> _fakeServiceOrders = new List<ServiceOrder_VM>();
+        private ServiceOrder_VM _fakeCompleteServiceOrders = new ServiceOrder_VM();
         private List<ServiceOrder> _updatedServiceOrders = new List<ServiceOrder>();
+        private Parts_Inventory_Fakes _fakePartsInventory = new Parts_Inventory_Fakes();
 
         public ServiceOrderAccessorFakes()
         {
@@ -36,7 +38,9 @@ namespace DataAccessFakes
                 Service_Order_ID = 100000,
                 Critical_Issue = true,
                 Service_Type_ID = "Windshield Wiper Replacement",
-                Service_Description = "Replace the windshield wipers with OEM wipers"
+                Service_Description = "Replace the windshield wipers with OEM wipers",
+                Date_Started = new DateTime(2024, 02, 10),
+                Date_Finished = new DateTime(2024, 02, 11)
             });            
             _fakeServiceOrders.Add(new ServiceOrder_VM()
             {
@@ -44,7 +48,28 @@ namespace DataAccessFakes
                 Service_Order_ID = 100001,
                 Critical_Issue = false,
                 Service_Type_ID = "Brake Pad Replacement",
-                Service_Description = "Replace the brake pads with OEM pads"
+                Service_Description = "Replace the brake pads with OEM pads",
+                Date_Started = new DateTime(2024, 02, 10)
+            });
+            _fakeCompleteServiceOrders = new ServiceOrder_VM()
+            {
+                VIN = "JTLZE4FEXB1123437",
+                Service_Order_ID = 100000,
+                Critical_Issue = true,
+                Service_Type_ID = "Windshield Wiper Replacement",
+                Service_Description = "Replace the windshield wipers with OEM wipers",
+                //vehicle = _fakeVehicle.SelectVehicleForLookupList(),
+                //partsInventory = _fakePartsInventory.selectAllParts_Inventory()
+            };
+            _fakeServiceOrders.Add(new ServiceOrder_VM()
+            {
+                VIN = "JTLZE4FEXB1123437",
+                Service_Order_ID = 100002,
+                Critical_Issue = false,
+                Service_Type_ID = "Brake Pad ",
+                Service_Description = "brake pads with OEM pads",
+                Date_Started = new DateTime(2022, 02, 10),
+                Date_Finished = new DateTime(2023, 01, 14)
             });
         }
         
@@ -161,6 +186,103 @@ namespace DataAccessFakes
 
             _fakeServiceOrders.Add(serviceOrder);
             return 1;
+        }
+
+        public List<ServiceOrder_VM> GetAllServiceTypes()
+        {
+            List<ServiceOrder_VM> fakeServiceTypes = new List<ServiceOrder_VM>
+            {
+                new ServiceOrder_VM
+                {
+                    Service_Type_ID = "Service_Type_1",
+                    Service_Description = "Service Type 1 Description",
+                    Is_Active = true
+                },
+                new ServiceOrder_VM
+                {
+                    Service_Type_ID = "Service_Type_2",
+                    Service_Description = "Service Type 2 Description",
+                    Is_Active = true
+                },
+
+            };
+
+            return fakeServiceTypes;
+        }
+
+        /// <summary>
+        ///     Returns all fake ServiceOrder_VM records
+        /// </summary>
+
+        /// <returns>
+        ///    <see cref="List{ServiceOrder_VM}">ServiceOrder_VM</see> The list of all fake ServiceOrder_VM objects.
+        /// </returns>
+        /// <remarks>
+        ///
+        ///    CONTRIBUTOR: Ben Collins
+        /// <br />
+        ///    CREATED: 2024-02-10
+        /// <br /><br />
+        ///    UPDATER: updater_name
+        /// <br />
+        ///    UPDATED: yyyy-MM-dd
+        /// <br />
+        ///    Initial Creation 
+        /// </remarks>
+        public ServiceOrder_VM SelectServiceOrderByServiceOrderID(int serviceOrderID)
+        {
+            try
+            {
+                if (serviceOrderID == _fakeCompleteServiceOrders.Service_Order_ID)
+                {
+                    return _fakeCompleteServiceOrders;
+                }
+                else
+                {
+                    throw new ArgumentException("No record with that ID found.");
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
+
+        /// <summary>
+        ///     A method that returns sevice orders that are complete
+        /// </summary>
+        /// <returns>
+        ///    <see cref="List{ServiceOrder_VM}">ServiceOrder_VM</see>: The list of all complete service orders.
+        /// </returns>
+        ///    CONTRIBUTOR: Jared Roberts
+        /// <br />
+        ///    CREATED: 2024-03-05
+        /// <br />
+        ///    Initial Creation
+        /// </remarks>
+        public List<ServiceOrder_VM> GetAllCompleteServiceOrders()
+        {
+            List<ServiceOrder_VM> completeServiceOrders = _fakeServiceOrders.Where(serviceOrder => serviceOrder.Date_Finished > serviceOrder.Date_Started).ToList();
+            return completeServiceOrders;
+        }
+        /// <summary>
+        ///     A method that returns sevice orders that are incomplete
+        /// </summary>
+        /// <returns>
+        ///    <see cref="List{ServiceOrder_VM}">ServiceOrder_VM</see>: The list of all incomplete service orders.
+        /// </returns>
+        ///    CONTRIBUTOR: Jared Roberts
+        /// <br />
+        ///    CREATED: 2024-03-05
+        /// <br />
+        ///    Initial Creation
+        /// </remarks>
+        public List<ServiceOrder_VM> GetAllIncompleteServiceOrders()
+        {
+            List<ServiceOrder_VM> incompleteServiceOrders = _fakeServiceOrders.Where(serviceOrder => serviceOrder.Date_Finished < serviceOrder.Date_Started).ToList();
+            return incompleteServiceOrders;
         }
     }
 }

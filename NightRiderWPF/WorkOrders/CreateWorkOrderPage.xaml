@@ -53,12 +53,12 @@
 
         <Label x:Name="ServiceTypeIDlbl" Content="Service Type ID:" HorizontalAlignment="Center" VerticalAlignment="Center"
         Grid.Row="1" Grid.Column="2"/>
-        <TextBox x:Name="ServiceTypeIDtxt" HorizontalAlignment="Center" VerticalAlignment="Center"
-        Grid.Row="1" Grid.Column="3" Width="200"/>
+        <ComboBox x:Name="ServiceTypeIDcbo" HorizontalAlignment="Center" VerticalAlignment="Center"
+        Grid.Row="1" Grid.Column="3" Width="200" SelectionChanged="ServiceTypeIDcbo_SelectionChanged" />
 
         <Label x:Name="ServiceDescriptionlbl" Content="Service Description:" HorizontalAlignment="Center" VerticalAlignment="Center"
         Grid.Row="2" Grid.Column="2"/>
-        <TextBox x:Name="ServiceDescriptiontxt" HorizontalAlignment="Center" VerticalAlignment="Center"
+        <TextBox x:Name="ServiceDescriptiontxt" IsReadOnly="True" TextWrapping="Wrap" Height="50" HorizontalAlignment="Center" VerticalAlignment="Center"
         Grid.Row="2" Grid.Column="3" Width="200"/>
 
         <Label x:Name="CreatedBylbl" Content="Created BY:" HorizontalAlignment="Center" VerticalAlignment="Center"
@@ -85,6 +85,7 @@
 
         <Button x:Name="Createbtn" Content="Create" Click="Createbtn_Click"
         Grid.Row="5" Grid.Column="1" Margin="10"/>
-
+        <Button x:Name="Cancelbtn" Content="Cancel" Click="Cancelbtn_Click"
+        Grid.Row="5" Grid.Column="2" Margin="10"/>
     </Grid>
 </Page>

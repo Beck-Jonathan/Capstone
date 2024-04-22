@@ -50,14 +50,17 @@
     <Compile Include="IBingMapsAccessor.cs" />
     <Compile Include="IClientDependentRoleAccessor.cs" />
     <Compile Include="IDependentAccessor.cs" />
+    <Compile Include="IDispatchAccessor.cs" />
     <Compile Include="IPartsRequestAccessor.cs" />
     <Compile Include="IRouteAccessor.cs" />
     <Compile Include="IPasswordResetAccessor.cs" />
     <Compile Include="IPOLineItemsAccessor.cs" />
     <Compile Include="IPurchase_OrderAccessor.cs" />
+    <Compile Include="IRouteAssignmentAccessor.cs" />
     <Compile Include="IRouteStopAccessor.cs" />
     <Compile Include="IServiceOrderAccessor.cs" />
     <Compile Include="ILoginAccessor.cs" />
+    <Compile Include="IServiceOrderLineItemsAccessor.cs" />
     <Compile Include="ISourceAccessor.cs" />
     <Compile Include="IStopAccessor.cs" />
     <Compile Include="IVehicleAccessor.cs" />

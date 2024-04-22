@@ -6,8 +6,10 @@
 /// </summary>
 ///
 /// <remarks>
-/// Updater Name
-/// Updated: yyyy/mm/dd
+/// Updater Name: Ben Collins
+/// Updated: 2024-03-19
+/// <br/>
+/// Added Part_Unit_Type
 /// </remarks>
 using System;
 using System.Collections.Generic;
@@ -23,6 +25,7 @@ namespace DataObjects
         public int Parts_Inventory_ID { set; get; }
         public string Part_Name { set; get; }
         public int Part_Quantity { set; get; }
+        public string Part_Unit_Type { set; get; }
         public string Item_Description { set; get; }
         public string Item_Specifications { set; get; }
         public string Part_Photo_URL { set; get; }

@@ -49,6 +49,7 @@
   <ItemGroup>
     <Compile Include="ClientDependentRoleAccessorFake.cs" />
     <Compile Include="DependentAccessorFake.cs" />
+    <Compile Include="DispatchAccessorFakes.cs" />
     <Compile Include="LoginAccessorFake.cs" />
     <Compile Include="ClientAccessorFake.cs" />
     <Compile Include="PartsRequestAccessorFake.cs" />
@@ -56,9 +57,11 @@
     <Compile Include="EmployeeAccessorFake.cs" />
     <Compile Include="PasswordResetAccessorFake.cs" />
     <Compile Include="POLineItems_Fakes.cs" />
+    <Compile Include="PRLineItems_Fakes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RouteAccessorFakes.cs" />
     <Compile Include="Purchase_Order_Fakes.cs" />
+    <Compile Include="RouteAssignmentAccessorFake.cs" />
     <Compile Include="RouteStopAccessorFake.cs" />
     <Compile Include="ServiceOrderAccessorFakes.cs" />
     <Compile Include="SourceAccessorFakes.cs" />

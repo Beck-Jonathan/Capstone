@@ -12,6 +12,7 @@ using Newtonsoft.Json;
 using System.Runtime.Remoting.Messaging;
 using DataObjects.HelperObjects;
 using System.Reflection.Emit;
+using System.Device.Location;
 
 namespace DataAccessLayer
 {
@@ -22,6 +23,13 @@ namespace DataAccessLayer
     /// <br />
     ///     Accessor class for the Bing Maps API.
     /// </summary>
+    ///    UPDATER: Steven Sanchez
+    /// <br />
+    ///    UPDATED: 2024-04-06
+    /// <br />
+    ///     Added getMapPolylineForRouteAssignmentVM(IEnumerable<Route_Assignment_VM> stops)
+    ///     and GetCurrentSystemLocation() for drivers route assignment
+    /// </remarks>
     public class BingMapsAccessor : IBingMapsAccessor
     {
         private string _key;
@@ -75,6 +83,68 @@ namespace DataAccessLayer
             string responseBody = await response.Content.ReadAsStringAsync();
 
             return responseBody;
+        }
+
+        public async Task<BingMapsResponse> getMapPolylineForRouteAssignmentVM(IEnumerable<Route_Assignment_VM> stops)
+        {
+            BingMapsResponse output = null;
+            if (stops != null && stops.Any())
+            {
+                HttpClient wc = new HttpClient();
+                StringBuilder locationSet = new StringBuilder("");
+                List<Route_Assignment_VM> stopList = stops.ToList();
+
+                // Add the system's location as the start waypoint
+                Location systemLocation = await GetCurrentSystemLocation();
+                if (systemLocation != null)
+                {
+                    locationSet.Append($"?wayPoint.1={systemLocation.Latitude},{systemLocation.Longitude}");
+
+                    // Add the first stop as the end waypoint
+                    locationSet.Append($"&wayPoint.2={stopList[0].stop.Latitude},{stopList[0].stop.Longitude}");
+
+                    locationSet.Append("&routeAttributes=routePath");
+                    locationSet.Append($"&distanceUnit=mi&key={_key}");
+
+                    try
+                    {
+                        string response = await GetResponse(new Uri("http://dev.virtualearth.net/REST/v1/Routes"), locationSet.ToString(), wc);
+                        output = JsonConvert.DeserializeObject<BingMapsResponse>(response);
+                    }
+                    catch (Exception ex)
+                    {
+                        throw ex;
+                    }
+                    finally
+                    {
+                        wc.Dispose();
+                    }
+                }
+            }
+            return output;
+        }
+
+
+        private async Task<Location> GetCurrentSystemLocation()
+        {
+            GeoCoordinateWatcher watcher = new GeoCoordinateWatcher();
+            GeoCoordinate coord = null;
+
+            watcher.PositionChanged += (sender, e) =>
+            {
+                coord = e.Position.Location;
+            };
+            watcher.Start();
+            await Task.Delay(1000);
+            watcher.Stop();
+            if (coord != null)
+            {
+                return new Location(coord.Latitude, coord.Longitude);
+            }
+            else
+            {
+                return new Location(0, 0); // Default location at (0, 0)
+            }
         }
     }
 }

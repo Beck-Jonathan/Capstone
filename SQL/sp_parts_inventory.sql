@@ -21,6 +21,7 @@ as
 ,[Ordered_Qty] 
 ,[Stock_Level] 
 ,[Active] 
+,[Part_Unit_Type]
 
  FROM [dbo].[Parts_Inventory]
 where [Parts_Inventory_ID]=@Parts_Inventory_ID 
@@ -72,6 +73,7 @@ begin
 ,[Ordered_Qty]
 ,[Stock_Level]
 ,[Active]
+,[Part_Unit_Type]
  FROM Parts_Inventory
  WHERE [Active] = 1
  ;
@@ -225,6 +227,29 @@ WHERE
 Vehicle_Model_ID = @Model_Lookup_ID
 and Parts_Inventory_ID = @Parts_Inventory_ID
 
+return @@rowcount
+end
+go
+
+/******************
+Create the update Quantity proceudre for the parts_inventory table
+ Created By Jonathan Beck3/20/2024
+***************/
+print '' Print '***Create the update ordered Quantity proceudre for the parts_inventory table***'
+ go 
+CREATE PROCEDURE [DBO].[sp_update_parts_inventory_ordered_quantity]
+(@Parts_Inventory_ID[int]
+,@New_Ordered_Qty[int]
+
+)
+as
+BEGIN
+update 
+parts_inventory
+set Ordered_Qty = @New_Ordered_Qty
+
+WHERE
+Parts_Inventory_ID = @Parts_Inventory_ID
 return @@rowcount
 end
 go

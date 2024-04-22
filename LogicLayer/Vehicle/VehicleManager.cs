@@ -215,5 +215,77 @@ namespace LogicLayer
 
             return result;
         }
+
+        /// <summary>
+        ///     Get all service orders for a specificed vehicle
+        /// </summary>
+        /// <param name="VIN">
+        ///    The VIN to get associated service orders for..
+        /// </param>
+        /// 
+        /// <returns>
+        ///    <see cref="ServiceOrder_VM">List:ServiceOrder_VM</see>: a list of service orders related to the vehicle
+        /// </returns>
+        /// <remarks>
+        ///    Exceptions:
+        ///    <see cref="ArgumentException">ArgumentException</see>: Thrown if there is a problem updating the vehicle.
+        ///    CONTRIBUTOR: Jonathan Beck
+        ///    CREATED: 2024-04-13
+        /// </remarks>
+
+        public List<ServiceOrder_VM> getAllService_OrderByVIN(String VIN)
+        {
+            List<ServiceOrder_VM> results = new List<ServiceOrder_VM> ();
+            try
+            {
+                results = _vehicleAccessor.SelectServiceOrdersByVin(VIN);
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            return results;
+        }
+
+
+        /// <summary>
+        ///     Retrives a Vehicle from the database by its VIN using a data accessor method
+        /// </summary>
+        /// <returns>
+        ///    <see cref="Vehicle">Vehicle</see> object
+        /// </returns>
+        /// <remarks>
+        ///    Exceptions:
+        /// <br />
+        ///    <see cref="Exception">Exception</see>: Thrown when error encountered
+        /// <br /><br />
+        ///    CONTRIBUTOR: Ben Collins
+        /// <br />
+        ///    CREATED: 2024-03-24
+        /// <br />
+        /// <br />
+        ///    UPDATER: [Updater's Name]
+        /// <br />
+        ///    UPDATED: yyyy-MM-dd
+        /// <br />
+        ///     Initial Creation
+        /// </remarks>
+        public Vehicle GetVehicleByVIN(string VIN)
+        {
+            Vehicle vehicle = new Vehicle();
+
+            try
+            {
+                vehicle = _vehicleAccessor.SelectVehicleByVIN(VIN);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return vehicle;
+        }
     }
 }

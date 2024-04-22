@@ -112,5 +112,33 @@ namespace LogicLayerTests
         {
             _partsRequestManager.DeactivatePartsRequest(1);
         }
+
+        /// <summary>
+        ///     tests that request gets pushed to purchase order line items after approval and succeeds
+        /// </summary>
+        /// <returns>
+        ///    List of <see cref="int">index of the purchase order line item</see>
+        /// </returns>
+        /// <remarks>
+        ///    Exceptions:
+        /// <br />
+        ///    <see cref="Exception">Exception</see>: Thrown when error encountered
+        /// <br /><br />
+        ///    CONTRIBUTOR: Parker Svoboda
+        /// <br />
+        ///    CREATED: 2024-04-13
+        /// <br />
+        [TestMethod]
+        public void PushToPOLineSuccess()
+        {
+            //arrange
+            int expected = 4;
+
+            //act
+            int actual = _partsRequestManager.PushToPOLine(100001, 2, 3);
+
+            //assert
+            Assert.AreEqual(expected, actual);
+        }
     }
 }

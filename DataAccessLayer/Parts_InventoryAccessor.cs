@@ -72,7 +72,7 @@ namespace DataAccessLayer
                         output.Ordered_Qty = reader.GetInt32(6);
                         output.Stock_Level = reader.GetInt32(7);
                         output.Is_Active = reader.GetBoolean(8);
-
+                        output.Part_Unit_Type = reader.GetString(9);
                     }
                     else
                     {
@@ -171,6 +171,7 @@ namespace DataAccessLayer
                         _Parts_Inventory.Ordered_Qty = reader.GetInt32(6);
                         _Parts_Inventory.Stock_Level = reader.GetInt32(7);
                         _Parts_Inventory.Is_Active = reader.GetBoolean(8);
+                        _Parts_Inventory.Part_Unit_Type = reader.GetString(9);
                         output.Add(_Parts_Inventory);
                     }
             }
@@ -511,6 +512,51 @@ namespace DataAccessLayer
             catch (Exception ex)
             {
                 throw new ApplicationException("Error executing sp_add_compatible_part",ex);
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return rows;
+        }
+        /// <summary>
+        ///     Updates the ordered quantity of a part
+        /// </summary>
+        /// <param cref="Int" name="PartID"> The Part ID
+        ///    
+        /// </param>
+        /// <param name="quantity" > The quantity ordered </param>
+        /// 
+        /// <returns>
+        ///    <see cref="int"/>: 1 if update was successful, 0 if not.
+        /// </returns>
+        /// 
+        /// <throws>
+        ///    <exception cref="SqlException">SqlException</exception>
+        ///    </throws>
+        ///    
+        ///    CONTRIBUTOR: Jonathan Beck
+        ///    CREATED: 4/9/2024
+        public int updateQuantity(int partsInventoryID, int quantity)
+        {
+            int rows = 0;
+
+            var conn = DBConnectionProvider.GetConnection();
+            var commandText = "sp_update_parts_inventory_ordered_quantity";
+            var cmd = new SqlCommand(commandText, conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.Add("@Parts_Inventory_ID", SqlDbType.Int).Value = partsInventoryID;
+            cmd.Parameters.Add("@New_Ordered_Qty", SqlDbType.Int).Value = quantity;
+
+
+            try
+            {
+                conn.Open();
+                rows = cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("Error updating Quantity", ex);
             }
             finally
             {

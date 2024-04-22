@@ -50,7 +50,7 @@
                     <Button Grid.Row="2" Grid.Column="0" Content="Log In" x:Name="btnLogin"
                             Background="{x:Static resources:Statics.SecondaryColor}" Foreground="{x:Static resources:Statics.ButtonText}" Click="btnLogin_Click"/>
                     <Button Grid.Row="2" Grid.Column="1" Content="Forgot Your Password?" x:Name="btnForgotPassword" Height="30" Margin="0 0 0 27.5"
-                            Background="{x:Static resources:Statics.SecondaryColor}" Foreground="{x:Static resources:Statics.ButtonText}"/>
+                            Background="{x:Static resources:Statics.SecondaryColor}" Foreground="{x:Static resources:Statics.ButtonText}" Click="btnForgotPassword_Click"/>
                     <Button Grid.Row="2" Grid.Column="1" Content="Forgot your username?" x:Name="btnForgotUsername" Height="30" Margin="0 27.5 0 0"
                             Background="{x:Static resources:Statics.SecondaryColor}" Foreground="{x:Static resources:Statics.ButtonText}" Click="btnForgotUsername_Click"/>
                     <Button
@@ -71,35 +71,39 @@
                 <ColumnDefinition Width="800px" />
             </Grid.ColumnDefinitions>
             <Border Grid.Column="0" BorderBrush="Black" BorderThickness="2px">
-                <StackPanel x:Name="stackMainNav">
-                    <Button Content="Clients" x:Name="btnClients" Height="50px" Foreground="{x:Static resources:Statics.ButtonText}"
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel x:Name="stackMainNav">
+                        <Button Content="Clients" x:Name="btnClients" Height="50px" Foreground="{x:Static resources:Statics.ButtonText}"
                             Background="{x:Static resources:Statics.SecondaryColor}" Click="btnClients_Click" Visibility="Collapsed" />
-                    <Button Content="Employees" x:Name="btnEmployees" Height="50px" Foreground="{x:Static resources:Statics.ButtonText}"
+                        <Button Content="Employees" x:Name="btnEmployees" Height="50px" Foreground="{x:Static resources:Statics.ButtonText}"
                             Background="{x:Static resources:Statics.SecondaryColor}" Click="btnEmployees_Click" Visibility="Collapsed" />
-                    <Button Content="Vehicles" x:Name="btnVehicles" Height="50px" Foreground="{x:Static resources:Statics.ButtonText}"
+                        <Button Content="Vehicles" x:Name="btnVehicles" Height="50px" Foreground="{x:Static resources:Statics.ButtonText}"
                             Background="{x:Static resources:Statics.SecondaryColor}" Click="btnVehicles_Click" Visibility="Collapsed" />
-                    <Button Content="Vehicle Models"
+                        <Button Content="Vehicle Models"
                             x:Name="btnVehicleModels"
                             Height="50px"
                             Foreground="{x:Static resources:Statics.ButtonText}"
                             Background="{x:Static resources:Statics.SecondaryColor}"
                             Click="btnVehicleModels_Click"
                             Visibility="Collapsed" />
-                    <Button Content="Maintenance" x:Name="btnMaintenance" Height="50px" Foreground="{x:Static resources:Statics.ButtonText}"
+                        <Button Content="Maintenance" x:Name="btnMaintenance" Height="50px" Foreground="{x:Static resources:Statics.ButtonText}"
                             Background="{x:Static resources:Statics.SecondaryColor}" Click="btnMaintenance_Click" Visibility="Collapsed" />
-                    <Button Content="Inventory" x:Name="btnInventory" Height="50px" Foreground="{x:Static resources:Statics.ButtonText}"
+                        <Button Content="Inventory" x:Name="btnInventory" Height="50px" Foreground="{x:Static resources:Statics.ButtonText}"
                             Background="{x:Static resources:Statics.SecondaryColor}" Click="btnInventory_Click" Visibility="Collapsed" />
-                    <Button Content="Driver Scheduling" x:Name="btnDriverSchedules" Height="50px" Foreground="{x:Static resources:Statics.ButtonText}"
+                        <Button Content="Driver Scheduling" x:Name="btnDriverSchedules" Height="50px" Foreground="{x:Static resources:Statics.ButtonText}"
                             Background="{x:Static resources:Statics.SecondaryColor}" Visibility="Collapsed" Click="btnDriverSchedules_Click" />
-                    <Button Content="Dispatch" x:Name="btnDispatch" Height="50px" Foreground="{x:Static resources:Statics.ButtonText}"
+                        <Button Content="Dispatch" x:Name="btnDispatch" Height="50px" Foreground="{x:Static resources:Statics.ButtonText}"
                             Background="{x:Static resources:Statics.SecondaryColor}" Visibility="Collapsed" Click="btnDispatch_Click" />
-                    <Button Content="Vehicle Scheduling" x:Name="btnVehicleSchedules" Height="50px" Foreground="{x:Static resources:Statics.ButtonText}"
+                        <Button Content="Vehicle Scheduling" x:Name="btnVehicleSchedules" Height="50px" Foreground="{x:Static resources:Statics.ButtonText}"
                             Background="{x:Static resources:Statics.SecondaryColor}" Visibility="Collapsed" Click="btnVehicleSchedules_Click" />
-                    <Button Content="Routes" x:Name="btnRoutes" Height="50px" Foreground="{x:Static resources:Statics.ButtonText}"
+                        <Button Content="Routes" x:Name="btnRoutes" Height="50px" Foreground="{x:Static resources:Statics.ButtonText}"
                             Background="{x:Static resources:Statics.SecondaryColor}" Visibility="Hidden" Click="btnRoutes_Click" />
-                    <Button Content="Parts Requests" x:Name="btnPartsRequests" Height="50px" Foreground="{x:Static resources:Statics.ButtonText}"
+                        <Button Content="Parts Requests" x:Name="btnPartsRequests" Height="50px" Foreground="{x:Static resources:Statics.ButtonText}"
                             Background="{x:Static resources:Statics.SecondaryColor}" Visibility="Hidden" Click="btnPartsRequests_Click" />
-                </StackPanel>
+                        <Button Content="Route Assignment" x:Name="btnMyRoutes" Height="50px" Foreground="{x:Static resources:Statics.ButtonText}"
+                            Background="{x:Static resources:Statics.SecondaryColor}" Visibility="Hidden" Click="btnMyRoutes_Click"  />
+                    </StackPanel>
+                </ScrollViewer>
             </Border>
             <Border Grid.Column="1" BorderBrush="Black" BorderThickness="2px">
                 <Frame x:Name="PageViewer" NavigationUIVisibility="Hidden" />

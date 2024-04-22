@@ -452,7 +452,7 @@ VALUES
     (100001, 1, '5XYZH4AG4JH123456', 'ST002', 100002, '2024-01-24 14:30:00', '2024-01-24 16:45:00'),
     (100002, 1, 'JM1BK32F781234567', 'ST003', 100003, '2024-01-23 09:15:00', '2024-01-23 11:00:00'),
     (100003, 1, 'WAUZZZ4G6BN123456', 'ST004', 100004, '2024-01-22 15:00:00', '2024-01-22 17:30:00'),
-    (100004, 1, '1C4RJFAG5FC123456', 'ST005', 100005, '2024-01-21 08:45:00', '2024-01-21 10:15:00')
+    (100004, 1, '1C4RJFAG5FC123456', 'ST005', 100005, '2024-01-21 08:45:00', null)
 GO
 
 /******************
@@ -701,12 +701,13 @@ print ''
 Print '***Insert Sample Data For The  Login table***' 
 GO
 INSERT INTO [dbo].[Login]
-    ([Username], [Employee_ID],[Security_Question_1],[Security_Response_1],
+    ([Username], [Employee_ID],[Client_ID],[Security_Question_1],[Security_Response_1],
     [Security_Question_2],[Security_Response_2],[Security_Question_3],[Security_Response_3])
 VALUES
-    ('JoeSmith1994', 100000, 'what is your favorite animal?', 'lion', 'what is your favorite food?', 'Ramen', 'what was your first dogs name?', 'Hoola'),
-    ('Jacmar125', 100001, 'what is your favorite animal?', 'Ocelot', 'what is your favorite food?', 'Bibimbap', 'what was your first dogs name?', 'Jeff'),
-    ('Lebold2202', 100002, 'what is your favorite animal?', 'Foxes', 'what is your favorite food?', 'Spaghetti', 'what was your first dogs name?', 'Lola')
+    ('JoeSmith1994', 100000, NULL, 'what is your favorite animal?', 'lion', 'what is your favorite food?', 'Ramen', 'what was your first dogs name?', 'Hoola'),
+    ('Jacmar125', 100001, NULL, 'what is your favorite animal?', 'Ocelot', 'what is your favorite food?', 'Bibimbap', 'what was your first dogs name?', 'Jeff'),
+    ('Lebold2202', 100002, NULL, 'what is your favorite animal?', 'Foxes', 'what is your favorite food?', 'Spaghetti', 'what was your first dogs name?', 'Lola'),
+	('Krystal2023', NULL, 100000, 'what is your favorite animal?', 'Foxes', 'what is your favorite food?', 'Spaghetti', 'what was your first dogs name?', 'Lola')
 GO
 
 /******************
