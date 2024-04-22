@@ -11,6 +11,17 @@ using System.Data;
 
 namespace DataAccessLayer
 {
+    /// <summary>
+    /// AUTHOR: Nathan Toothaker
+    /// DATE: 2024-03-05
+    /// Database Logic for Routes
+    /// </summary>
+    /// <remarks>
+    /// UPDATER: Chris Baenziger
+    /// UPDATED: 2024-03-05
+    /// COMMENTS:
+    ///     Added Activate and deactivate route.
+    /// </remarks>
     public class RouteAccessor : IRouteAccessor
     {
         /// <summary>

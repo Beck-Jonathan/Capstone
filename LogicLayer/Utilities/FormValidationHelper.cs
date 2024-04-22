@@ -105,6 +105,35 @@ namespace DataObjects
             return Regex.IsMatch(time, timePattern);
         }
 
+        /// <summary>
+        ///     Converts a set of 7 booleans to a string representation,
+        ///     <br />
+        ///     for converting checkboxes into the char[] associated with ActivityWeek objects.
+        /// </summary>
+        /// <param name="isChecked1">
+        ///    The first character to be added.
+        /// </param>
+        /// <param name="isChecked2">
+        ///    The second character to be added.
+        /// </param>
+        /// <param name="isChecked3">
+        ///    The third character to be added.
+        /// </param>
+        /// <param name="isChecked4">
+        ///    The fourth character to be added.
+        /// </param>
+        /// <param name="isChecked5">
+        ///    The fifth character to be added.
+        /// </param>
+        /// <param name="isChecked6">
+        ///    The sixth character to be added.
+        /// </param>
+        /// <param name="isChecked7">
+        ///    The seventh character to be added.
+        /// </param>
+        /// <returns>
+        ///    <see cref="string">string</see>: the string representation of the 7 bools.
+        /// </returns>
         public static string getActiveDays(bool isChecked1, 
             bool isChecked2, bool isChecked3, bool isChecked4, 
             bool isChecked5, bool isChecked6, bool isChecked7)

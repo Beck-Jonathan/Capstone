@@ -109,6 +109,12 @@ namespace LogicLayerTests
             Assert.AreEqual(expectedResult, actualResult);
         }
 
+        /// <summary>
+        /// Cread By: Nathan Toothaker <br />
+        /// Created: 2024-04-12 <br />
+        /// Tests to ensure that the Route Manager can successfully add a route to the list.
+        /// </summary>
+
         [TestMethod]
         public void InsertRoute_SuccessfullyInserts()
         {
@@ -129,6 +135,11 @@ namespace LogicLayerTests
             Assert.AreEqual(expectedResult, actualResult);
         }
 
+        /// <summary>
+        /// Cread By: Nathan Toothaker <br />
+        /// Created: 2024-04-12 <br />
+        /// Tests to ensure that the Route Manager can't add a route that already exists.
+        /// </summary>
         [TestMethod]
         [ExpectedException(typeof(ApplicationException))]
         public void InsertRoute_FailsInsert()
@@ -148,6 +159,11 @@ namespace LogicLayerTests
             actualResult = _routeManager.AddRoute(newRoute);
 
         }
+        /// <summary>
+        /// Cread By: Nathan Toothaker <br />
+        /// Created: 2024-04-12 <br />
+        /// Tests to ensure that the Route Manager can successfully update a route to the list.
+        /// </summary>
         [TestMethod]
         public void EditRoute_Succeeds()
         {
@@ -231,6 +247,11 @@ namespace LogicLayerTests
 
             Assert.AreEqual(expectedResult, actualResult);
         }
+        /// <summary>
+        /// Cread By: Nathan Toothaker <br />
+        /// Created: 2024-04-12 <br />
+        /// Tests to ensure that the Route Manager verifies that the routes changed have the same ID.
+        /// </summary>
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
         public void EditRoute_FailsChangingPrimaryKey()

@@ -20,6 +20,7 @@ namespace NightRiderWPF.RouteStop
 {
     /// <summary>
     /// Interaction logic for AddEditRouteDetail.xaml
+    /// Created By: Nathan Toothaker
     /// </summary>
     public partial class AddEditRouteDetail : Window
     {

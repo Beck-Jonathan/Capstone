@@ -52,7 +52,7 @@ namespace NightRiderWPF.RouteStop
                 MessageBox.Show(ex.Message, "An Error Occured", MessageBoxButton.OK, MessageBoxImage.Error);
 
                 NavigationService.GoBack();
-
+                return;
             }
             datRouteList.ItemsSource = _routes;
         }
