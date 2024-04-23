@@ -38,7 +38,6 @@ namespace DataObjects
         public bool Is_Active { get; set; }
     }
 
-    /// <inheritdoc />
     public class Employee_VM : Employee
     {
         public Login Login { get; set; }

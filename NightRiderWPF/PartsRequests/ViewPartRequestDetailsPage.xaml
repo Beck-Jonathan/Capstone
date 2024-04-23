@@ -91,7 +91,7 @@
                    HorizontalAlignment="Right" Margin="5,0,40,15" OpacityMask="Black" 
                     />
             <Button x:Name="btnAddToOrder" VerticalAlignment="Top" 
-                    Height="30" Width="175" Margin="0,20,0,0" Content="Add to Order" IsEnabled="false" />
+                    Height="30" Width="175" Margin="0,20,0,0" Content="Add to Order" Click="btnAddToOrder_Click" />
         </Grid>
 
         <!-- Footer Buttons -->
@@ -103,6 +103,10 @@
             <Button x:Name="btnReject" Content="Reject" FontWeight="Bold" 
                     Width="120" Height="30" 
                     HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,40,40" BorderThickness="1,1,2,2" IsEnabled="true" Click="btnReject_Click"/>
+            <ComboBox x:Name="cmbVendors" VerticalAlignment="Top" Height="30" Width="175" Margin="0,80,0,0"/>
+            <TextBox x:Name="txtLineNumber" HorizontalAlignment="Center" Margin="0,146,0,0" TextWrapping="Wrap" FontSize="20" MaxLength="6" VerticalAlignment="Top" Width="176" Height="30" TextAlignment="Center"/>
+            <Label x:Name="lblVendor" Content="Vendor" HorizontalAlignment="Center" Margin="0,110,0,0" VerticalAlignment="Top"/>
+            <Label x:Name="lblLineNumber" Content="Line No." HorizontalAlignment="Center" Margin="0,177,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Top"/>
         </Grid>
 
     </Grid>

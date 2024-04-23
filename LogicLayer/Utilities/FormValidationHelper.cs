@@ -94,6 +94,68 @@ namespace DataObjects
             string cityPattern = @"^([a-zA-Z\u0080-\u024F]+(?:. |-| |'))*[a-zA-Z\u0080-\u024F]*$";
             return Regex.IsMatch(city, cityPattern);
         }
+
+
+        /// <summary>
+        ///     Validates a time using a regular expression pattern.
+        /// </summary>
+        /// <param name="time">
+        ///    The zipcode to validate.
+        /// </param>
+        /// <returns>
+        ///    <see cref="bool">true</see> if the time is valid; otherwise, <see cref="bool">false</see>.
+        /// </returns>
+        public static bool IsValidTime(string time)
+        {
+            string timePattern = @"\b((1[0 - 2] | 0?[1 - 9]):([0 - 5][0 - 9])([AaPp][Mm]))";
+            return Regex.IsMatch(time, timePattern);
+        }
+
+        /// <summary>
+        ///     Converts a set of 7 booleans to a string representation,
+        ///     <br />
+        ///     for converting checkboxes into the char[] associated with ActivityWeek objects.
+        /// </summary>
+        /// <param name="isChecked1">
+        ///    The first character to be added.
+        /// </param>
+        /// <param name="isChecked2">
+        ///    The second character to be added.
+        /// </param>
+        /// <param name="isChecked3">
+        ///    The third character to be added.
+        /// </param>
+        /// <param name="isChecked4">
+        ///    The fourth character to be added.
+        /// </param>
+        /// <param name="isChecked5">
+        ///    The fifth character to be added.
+        /// </param>
+        /// <param name="isChecked6">
+        ///    The sixth character to be added.
+        /// </param>
+        /// <param name="isChecked7">
+        ///    The seventh character to be added.
+        /// </param>
+        /// <returns>
+        ///    <see cref="string">string</see>: the string representation of the 7 bools.
+        /// </returns>
+        public static string getActiveDays(bool isChecked1, 
+            bool isChecked2, bool isChecked3, bool isChecked4, 
+            bool isChecked5, bool isChecked6, bool isChecked7)
+        {
+            string result = "";
+
+            result += isChecked1 ? "1" : "0";
+            result += isChecked2 ? "1" : "0";
+            result += isChecked3 ? "1" : "0";
+            result += isChecked4 ? "1" : "0";
+            result += isChecked5 ? "1" : "0";
+            result += isChecked6 ? "1" : "0";
+            result += isChecked7 ? "1" : "0";
+
+            return result;
+		}
         /// <summary>
         ///     Validates a userName to meet DB NVARCHAR(50) req
         /// </summary>

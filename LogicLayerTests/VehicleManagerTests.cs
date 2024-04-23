@@ -389,6 +389,24 @@ namespace LogicLayerTests
             Assert.AreEqual(expectedResult, actualResult);
         }
 
+        /// <summary>
+        /// AUTHOR: Jonathan Beck
+        /// CREATED: 2024-03-03
+        ///     test select service order by vin functions as intended
+        /// </summary>
+        [TestMethod]
+        public void TestSelectServiceOrdersByVinReturnsCorrectOrders()
+        {
+            //arrange
+            int actual = 0;
+            int expected = 2;
+            //act
+            actual = _vehicleManager.getAllService_OrderByVIN("JTLZE4FEXB1123437").Count;
+            //assert
+            Assert.AreEqual(expected, actual);
+
+        }
+
     }
 
 }

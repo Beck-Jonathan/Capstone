@@ -15,12 +15,13 @@ namespace DataObjects
     /// </summary>
     /// 
     /// <remarks>
-    /// UPDATER: Ben Collins
+    /// UPDATER: Ben Collins, Jonathan Beck
     /// <br />
-    /// UPDATED: 2024-02-10
+    /// UPDATED: 2024-03-19, 2024-04-13
     /// <br />
-    /// 
     ///     Initial creation
+    ///     Added a List of ServiceOrderLineItems's and Vehicle objects to the ServiceOrder_VM.
+    ///     Added the rest of the ServiceOrder columns from the database
     /// </remarks>
     public class ServiceOrder
     {
@@ -36,7 +37,6 @@ namespace DataObjects
         // UPDATE DATE: 2023-03-12
         // SUMMARY: Added the data objects below for Inserting records
         public int Service_Order_Version { get; set; }
-        public int Service_Line_Item_ID { get; set; }
         public int Created_By_Employee_ID { get; set; }
         public int Serviced_By_Employee_ID { get; set; }
         public DateTime Date_Started { get; set; }
@@ -48,6 +48,9 @@ namespace DataObjects
 
     public class ServiceOrder_VM : ServiceOrder
     {
-
+        Employee_VM created_by_Employee_VM { get; set; }
+        Employee_VM serviced_by_Employee_VM { get; set; }
+        public List<ServiceOrderLineItems> serviceOrderLineItems { get; set; }
+        public Vehicle vehicle { get; set; }
     }
 }

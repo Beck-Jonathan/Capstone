@@ -1,0 +1,90 @@
+﻿<Window x:Class="NightRiderWPF.RouteStop.AddEditRouteDetail"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
+        xmlns:local="clr-namespace:NightRiderWPF.RouteStop"
+        xmlns:resources="clr-namespace:NightRiderWPF.Resources"
+        mc:Ignorable="d"
+        Title="" Height="450" Width="500" ResizeMode="NoResize">
+    
+    <Grid Background="{x:Static resources:Statics.BackgroundMain}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="7*" />
+            <RowDefinition Height="2*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" x:Name="lblHeader" 
+               Content="Route Details" VerticalAlignment="Center" 
+               HorizontalAlignment="Center" FontSize="18"/>
+        <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" 
+              Background="{x:Static resources:Statics.BackgroundPage}"
+              Margin="70px 10px 70px 30px">
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition Height="2*" />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="3*" />
+            </Grid.ColumnDefinitions>
+            <Label Grid.Row="0" Grid.Column="0" Content="Route Name:" HorizontalContentAlignment="Right"
+                   VerticalContentAlignment="Center" Margin="0px 0px 5px 0px"/>
+            <TextBox Grid.Row="0" Grid.Column="1" x:Name="txtRouteName" 
+                     HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="5px 0px 10px 0px" />
+            <Label Grid.Row="1" Grid.Column="0" Content="Active Days:" HorizontalContentAlignment="Right"
+                   VerticalContentAlignment="Center" Margin="0px 0px 5px 0px"/>
+            <Grid Grid.Row="1" Grid.Column="1" Margin="5px">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <CheckBox x:Name="chkMonday" Content="Monday" Grid.Row="0" Grid.Column="0" />
+                <CheckBox x:Name="chkTuesday" Content="Tuesday" Grid.Row="0" Grid.Column="1" />
+                <CheckBox x:Name="chkWednesday" Content="Wednesday" Grid.Row="1" Grid.Column="0" />
+                <CheckBox x:Name="chkThursday" Content="Thursday" Grid.Row="1" Grid.Column="1" />
+                <CheckBox x:Name="chkFriday" Content="Friday" Grid.Row="2" Grid.Column="0" />
+                <CheckBox x:Name="chkSaturday" Content="Saturday" Grid.Row="2" Grid.Column="1" />
+                <CheckBox x:Name="chkSunday" Content="Sunday" Grid.Row="3" Grid.Column="0" />
+                <Button x:Name="btnClear" Content="Clear Selection" 
+                        Background="{x:Static resources:Statics.SecondaryColor}" Foreground="{x:Static resources:Statics.ButtonText}"
+                        Grid.Row="3" Grid.Column="1" />
+            </Grid>
+            <Label Grid.Row="2" Grid.Column="0" Content="Start Time:" HorizontalContentAlignment="Right"
+                   VerticalContentAlignment="Center" Margin="0px 0px 5px 0px"/>
+            <syncfusion:SfTimePicker x:Name="tpStartTime" Grid.Row="2" Grid.Column="1" Margin="5px 0px 5px 0px" AutomationProperties.AccessKey="Ngo9BigBOggjHTQxAR8/V1NBaF5cXmZCf1FpRmJGdld5fUVHYVZUTXxaS00DNHVRdkdnWXtfdXVRRWlZV0d/W0c=" />
+            <Label Grid.Row="3" Grid.Column="0" Content="End Time:" HorizontalContentAlignment="Right"
+                   VerticalContentAlignment="Center" Margin="0px 0px 5px 0px"/>
+            <syncfusion:SfTimePicker x:Name="tpEndTime" Grid.Row="3" Grid.Column="1" Margin="5px 0px 5px 0px" AutomationProperties.AccessKey="Ngo9BigBOggjHTQxAR8/V1NBaF5cXmZCf1FpRmJGdld5fUVHYVZUTXxaS00DNHVRdkdnWXtfdXVRRWlZV0d/W0c=" />
+
+            <Label Grid.Row="4" Grid.Column="0" Content="Cycle Time:" HorizontalContentAlignment="Right"
+                   VerticalContentAlignment="Center" Margin="0px 0px 5px 0px"/>
+            <TextBox Grid.Row="4" Grid.Column="1" x:Name="txtRouteCycleTime" 
+                     HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="5px 0px 10px 0px" />
+        </Grid>
+        <Button Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right" 
+                Margin="20px 20px 30px 20px" Content="Save"
+                Width="150px" x:Name="btnSave" 
+                Background="{x:Static resources:Statics.SecondaryColor}"
+                Foreground="{x:Static resources:Statics.ButtonText}" Click="btnSave_Click" />
+        <Button Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" 
+                Margin="20px 20px 30px 20px" Content="Cancel"
+                Width="150px" x:Name="btnCancel" 
+                Background="{x:Static resources:Statics.SecondaryColor}"
+                Foreground="{x:Static resources:Statics.ButtonText}" Click="btnCancel_Click" />
+    </Grid>
+</Window>

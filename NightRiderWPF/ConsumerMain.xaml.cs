@@ -29,7 +29,9 @@ using NightRiderWPF.Login;
 using NightRiderWPF.RouteStop;
 using NightRiderWPF.VehicleModels;
 using NightRiderWPF.PasswordReset;
-using NightRiderWPF.Dispatch;
+using NightRiderWPF;
+using System.Configuration;
+using NightRiderWPF.Driver;
 
 namespace NightRiderWPF
 {
@@ -47,6 +49,12 @@ namespace NightRiderWPF
             _passwordHasher = new PasswordHasher();
             _loginManager = new LoginManager(_passwordHasher);
             InitializeComponent();
+
+            try
+            {
+                EmailClientData.ConnectionString = ConfigurationManager.ConnectionStrings["azureComm"]?.ToString();
+                EmailClientData.Sender = ConfigurationManager.ConnectionStrings["azureCommSender"]?.ToString();
+            } catch (ConfigurationException) { }
         }
 
         private void btnClients_Click(object sender, RoutedEventArgs e)
@@ -209,6 +217,7 @@ namespace NightRiderWPF
                         btnPartsRequests.Visibility = Visibility.Visible;
                         btn_profile.Visibility = Visibility.Visible;
                         btnDispatch.Visibility = Visibility.Visible;
+                        btnMyRoutes.Visibility = Visibility.Visible;
                         break;
                     case "FleetAdmin":
                         btnVehicles.Visibility= Visibility.Visible;
@@ -218,11 +227,13 @@ namespace NightRiderWPF
                         btnPartsRequests.Visibility = Visibility.Visible;
                         btn_profile.Visibility = Visibility.Visible;
                         btnDispatch.Visibility = Visibility.Visible;
+                        btnMyRoutes.Visibility = Visibility.Visible;
                         break;
                     case "Mechanic":
                         btnMaintenance.Visibility = Visibility.Visible;
                         btnInventory.Visibility = Visibility.Visible;
                         btn_profile.Visibility = Visibility.Visible;
+                        btnMyRoutes.Visibility = Visibility.Visible;
                         break;
                     case "Maintenance":
                         btnMaintenance.Visibility = Visibility.Visible;
@@ -235,12 +246,14 @@ namespace NightRiderWPF
                         btn_profile.Visibility = Visibility.Visible;
                         break;
                     case "Driver":
-                    // btnMySchedule.Visibility= Visibility.Visible;
+                        // btnMySchedule.Visibility= Visibility.Visible;
+                        btnMyRoutes.Visibility = Visibility.Visible;
+                        break;
                     case "Operator":
                         btnRoutes.Visibility = Visibility.Visible;
                         btn_profile.Visibility = Visibility.Visible;
                         break;
-                    case "Dispatch":
+                    case "Dispatcher":
                         btnVehicles.Visibility = Visibility.Visible;
                         btnDriverSchedules.Visibility = Visibility.Visible;
                         btnVehicleSchedules.Visibility = Visibility.Visible;
@@ -309,7 +322,10 @@ namespace NightRiderWPF
             {
                 PageViewer.RemoveBackEntry();
             }
+
+            PageViewer.Navigate(new Page());
         }
+
 
         private void btnDriverSchedules_Click(object sender, RoutedEventArgs e)
         {
@@ -442,6 +458,34 @@ namespace NightRiderWPF
                 }
                 btn.Background = Statics.PrimaryColor;
                 PageViewer.Navigate(new DispatchHome());
+            }
+        }
+
+        /// <summary>
+        /// AUTHOR: Steven Sanchez
+        /// DATE: 2024-03-24
+        /// A page for Route Assignments
+        /// </summary>
+        /// <br /><br />
+        ///    UPDATER: 
+        /// <br />
+        ///    UPDATED: 
+        /// <br />
+        ///     Update Comments
+        /// </remarks>
+        private void btnMyRoutes_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button btn && btn.Name == "btnMyRoutes")
+            {
+                foreach (var child in stackMainNav.Children)
+                {
+                    if (child is Button button)
+                    {
+                        button.Background = Statics.SecondaryColor;
+                    }
+                }
+                btn.Background = Statics.PrimaryColor;
+                PageViewer.Navigate(new RouteAssignmentPage(Authentication.AuthenticatedEmployee.Employee_ID));
             }
         }
     }

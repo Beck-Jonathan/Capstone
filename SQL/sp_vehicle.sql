@@ -167,3 +167,31 @@ BEGIN
         AND @Rental = [Rental]
 END
 GO
+
+/******************
+Create sp_select_vehicle_by_vin Stored Procedure
+***************/
+-- Initial Creator: Ben Collins
+-- Creation Date: 2024-03-24
+-- Modification Description: Initial Creation
+-- Stored Procedure Description: Select a Vehicle record by the VIN.
+print '' print '*** creating sp_select_vehicle_by_vin ***'
+GO
+CREATE PROCEDURE [dbo].[sp_select_vehicle_by_vin]
+    @VIN [nvarchar](17)
+AS 
+    BEGIN
+        SELECT  [Vehicle_Number],
+                [Vehicle_Mileage],
+                [Vehicle_License_Plate],
+                [Vehicle_Model_ID],
+                [Vehicle_Type_ID],
+                [Date_Entered],
+                [Description],
+                [Maintenance_Notes],
+                [Rental],
+                [Is_Active]
+        FROM  [dbo].[Vehicle]
+        WHERE [Vehicle].[VIN] = @VIN
+    END
+GO

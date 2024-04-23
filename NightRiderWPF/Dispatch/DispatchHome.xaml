@@ -1,9 +1,9 @@
-﻿<Page x:Class="NightRiderWPF.Dispatch.DispatchHome"
+﻿<Page x:Class="NightRiderWPF.DispatchHome"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:NightRiderWPF.Dispatch"
+      xmlns:local="clr-namespace:NightRiderWPF"
       mc:Ignorable="d" 
       d:DesignHeight="570" d:DesignWidth="800"
       Title="DispatchHome">
@@ -57,6 +57,88 @@
         <Grid x:Name="gridVehicleSchedules" Grid.Row="1" Grid.ColumnSpan="3" Height="470" Visibility="Collapsed">
             <Label>Vehicle Schedules</Label>
         </Grid>
+        <Grid x:Name="gridAddToRoute" Grid.Row="1" Grid.ColumnSpan="3" Height="470" Visibility="Collapsed" IsVisibleChanged="gridAddToRoute_IsVisibleChanged">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="180"/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="230"/>
+                <ColumnDefinition Width="20"/>
+                <ColumnDefinition Width="230"/>
+                <ColumnDefinition Width="20"/>
+                <ColumnDefinition Width="230"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+
+            <!-- Row 0 -->
+            <Label Content="Add Vehicles To Route" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" VerticalAlignment="Center" FontSize="18" FontWeight="Bold"/>
+            <Label Content="Please Select A Route:" Grid.Row="0" Grid.Column="3" Grid.ColumnSpan="3" HorizontalAlignment="Center" 
+                   FontWeight="Bold" FontSize="16" VerticalAlignment="Center" Margin="0 0 110 0"/>
+            <ComboBox x:Name="cboVehicleAddRoutes" Grid.Row="0" Grid.Column="3" Grid.ColumnSpan="3" HorizontalAlignment="Right" Width="200"
+                      Height="30" Margin="85 0 0 0" SelectionChanged="cboVehicleAddRoutes_SelectionChanged" />
+            <!-- Row 1 -->
+            <Label Content="Capacity:" Grid.Row="1" Grid.Column="3" FontWeight="Bold" VerticalAlignment="Top" HorizontalAlignment="Center"/>
+            <ComboBox x:Name="cboVehicleAddSearchCapacity" Grid.Row="1" Grid.Column="3" 
+                      HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="25" Width="80" Padding="2" Margin="30 0 5 0" />
+            <Button x:Name="btnFind" Content="Find" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="2" HorizontalAlignment="Right"
+                    Width="70" Height="40" Margin="50 10 0 0" Click="btnFind_Click" />
+
+            <Button x:Name="btnVehicleAddViewRoutes" Content="View Routes" Grid.Row="1" Grid.Column="5" HorizontalAlignment="Right" Width="100" Height="40" Margin="0 10 0 0" Click="btnVehicleAddViewRoutes_Click"/>
+
+            <DataGrid x:Name="dataVehicleAddAvailableVehicles" Grid.RowSpan="2" Grid.Row="2" Grid.Column="1"  IsReadOnly="True" Margin="0 30 0 0" AutoGenerateColumns="False" MouseDoubleClick="dataVehicleAddAvailableVehicles_MouseDoubleClick">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="VIN" Binding="{Binding VIN}"/>
+                    <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
+                    <DataGridTextColumn Header="Capacity" Binding="{Binding Max_Passengers}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+
+            <DataGrid x:Name="dataVehicleAddAssingedDriver" Grid.RowSpan="2" Grid.Row="2" Grid.Column="3" AutoGenerateColumns="False" IsReadOnly="True" Margin="0 30 0 0" MouseDoubleClick="dataVehicleAddAssingedDriver_MouseDoubleClick">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="ID" Binding="{Binding Employee_ID}"/>
+                    <DataGridTextColumn Header="Last Name" Binding="{Binding Family_Name}"/>
+                    <DataGridTextColumn Header="License" Binding="{Binding Driver_License_Class_ID}"/>
+                    <DataGridTextColumn Header="Max Passengers" Binding="{Binding Max_Passenger_Count}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+
+            <DataGrid x:Name="dataVehicleAddAssingedVehicles" AutoGenerateColumns="False" Grid.RowSpan="2" Grid.Row="2" Grid.Column="5" IsReadOnly="True" Margin="0 30 0 0">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Start" Binding="{Binding Date_Assignment_Started}"/>
+                    <DataGridTextColumn Header="End" Binding="{Binding Date_Assignment_Ended}"/>
+                    <DataGridTextColumn Header="Driver" Binding="{Binding DriverID}"/>
+                    <DataGridTextColumn Header="Vehicle" Binding="{Binding VIN_Number}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+
+
+
+            <Label Content="Available Vehicles" Grid.Row="2" Grid.Column="1" FontWeight="Bold" VerticalAlignment="Top"/>
+            <Label Content="Available Drivers" Grid.Row="2" Grid.Column="3" FontWeight="Bold" VerticalAlignment="Top"/>
+            <Label Content="Existing Assignments" Grid.Row="2" Grid.Column="5" FontWeight="Bold" VerticalAlignment="Top"/>
+
+
+            <Label Content="Start Date:" Grid.Row="1" Grid.Column="1" FontWeight="Bold" VerticalAlignment="Top" Margin="0 0 0 15"/>
+            <DatePicker IsEnabled="False" x:Name="dateStart" Width="130" Grid.Row="1" Grid.Column="1"
+                        HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="0 15 0 0"/>
+            <Label Content="End Date:" Grid.Row="1" Grid.Column="1" FontWeight="Bold" VerticalAlignment="Top" HorizontalAlignment="Right"/>
+            <DatePicker IsEnabled="False" x:Name="dateEnd" Grid.Row="1" Grid.Column="1" Width="130" 
+                       Grid.ColumnSpan="3" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0 10 5 0"/>
+            <Label Content="Selected Vehicle:" Grid.Row="4" Grid.Column="1" FontWeight="Bold" VerticalAlignment="Top" HorizontalAlignment="Right"/>
+            <TextBox x:Name="txtSelectedVehicle" HorizontalAlignment="Right" Width="150" Grid.Row="4" Grid.Column="1" Height="25" Margin="0 15 0 0" IsReadOnly="True"/>
+            <Label Content="Selected Driver:" Grid.Row="4" Grid.Column="3" FontWeight="Bold" VerticalAlignment="Top" HorizontalAlignment="Right"/>
+            <TextBox x:Name="txtSelectedDriver" HorizontalAlignment="Right" Width="150" Grid.Row="4" Grid.Column="3" Height="25" Margin="0 15 0 0" IsReadOnly="True"/>
+            <Button x:Name="btnReset" Grid.Row="5" Grid.Column="5" HorizontalAlignment="Right" Content="Reset" Width="100" Height="40" Click="btnReset_Click"/>
+            <Button x:Name="btnSubmit" Grid.Row="5" Grid.Column="5" HorizontalAlignment="Left" Content="Submit" Width="100" Height="40" Click="btnSubmit_Click" />
+
+        </Grid>
 
         <Grid x:Name="gridVehicleMaintenance" Grid.Row="1" Grid.ColumnSpan="3" Height="470" Visibility="Collapsed">
             <Label>Vehicle Maintenance</Label>
@@ -64,8 +146,8 @@
         <!-- Vehicle Grid End -->
 
         <!-- Driver Grid Begin -->
-        <Grid x:Name="gridDriverSchedules" Grid.Row="1" Grid.ColumnSpan="3" Height="470" Visibility="Collapsed">
-            <Label>Driver Schedules</Label>
+        <Grid x:Name="gridDriverSchedules" Grid.Row="1" Grid.ColumnSpan="3" Height="470" Visibility="Collapsed" IsVisibleChanged="gridDriverSchedules_IsVisibleChanged">
+            <DataGrid x:Name="dataGridDriverSchedule" IsReadOnly="True"></DataGrid>
         </Grid>
 
         <Grid x:Name="gridDriverAvailability" Grid.Row="1" Grid.ColumnSpan="3" Height="470" Visibility="Collapsed">

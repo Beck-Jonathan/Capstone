@@ -52,7 +52,7 @@ namespace NightRiderWPF.RouteStop
                 MessageBox.Show(ex.Message, "An Error Occured", MessageBoxButton.OK, MessageBoxImage.Error);
 
                 NavigationService.GoBack();
-
+                return;
             }
             datRouteList.ItemsSource = _routes;
         }
@@ -111,6 +111,18 @@ namespace NightRiderWPF.RouteStop
         private void btnStopsList_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.Navigate(new StopList());
+        }
+
+        private void btnAddRoute_Click(object sender, RoutedEventArgs e)
+        {
+            AddEditRouteDetail adder = new AddEditRouteDetail(_routeManager);
+            adder.Closed += Adder_Closed;
+            adder.ShowDialog();
+        }
+
+        private void Adder_Closed(object sender, EventArgs e)
+        {
+            refreshRouteList();
         }
     }
 }

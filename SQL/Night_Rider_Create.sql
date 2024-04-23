@@ -518,7 +518,7 @@ CREATE TABLE [dbo].[Service_Order]
     [Created_By_Employee_ID] [int] NOT NULL,
     [Serviced_By_Employee_ID] [int] NULL,
     [Date_Started] [datetime] NOT NULL,
-    [Date_Finished] [datetime] NOT NULL,
+    [Date_Finished] [datetime] NULL,
     [Is_Active] [bit] NOT NULL DEFAULT 1,
     [Critical_Issue] [bit] NOT NULL DEFAULT 0,
     CONSTRAINT [pk_Service_Order] PRIMARY KEY([Service_Order_ID], [Service_Order_Version]),

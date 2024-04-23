@@ -92,5 +92,22 @@ namespace DataAccessInterfaces
         ///    CREATED: 2024-03-26
         /// </remarks>
         int DeactivateRequestById(int id);
+
+        /// <summary>
+        ///     sends request to POLineItems
+        /// </summary>
+        /// <returns>
+        ///    <see cref="int">Index of new POLineItem</see>.
+        /// </returns>
+        /// <remarks>
+        ///    Exceptions:
+        /// <br />
+        ///    <see cref="ArgumentException">ArgumentException</see>: No records returned
+        /// <br /><br />
+        ///    CONTRIBUTOR: Parker Svoboda
+        /// <br />
+        ///    CREATED: 2024-03-26
+        /// </remarks>
+        int approveRequest(int partRequestID, int vendorid, int lineNumber);
     }
 }

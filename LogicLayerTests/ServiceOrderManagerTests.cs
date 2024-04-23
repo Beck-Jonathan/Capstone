@@ -20,7 +20,7 @@ namespace LogicLayerTests
         [TestMethod]
         public void TestGetAllServiceOrderCountPasses()
         {
-            int expected = 2;
+            int expected = 3;
             int actual = _serviceOrderManager.GetALlServiceOrders().Count;
 
             Assert.AreEqual(expected, actual);
@@ -145,7 +145,6 @@ namespace LogicLayerTests
             {
                 VIN = "1HGCM82633A987654",
                 Service_Order_Version = 1,
-                Service_Line_Item_ID = 100000,
                 Service_Type_ID = "Engine Tune-up",
                 Created_By_Employee_ID = 100001,
                 Serviced_By_Employee_ID = 100002,
@@ -191,7 +190,6 @@ namespace LogicLayerTests
                 Service_Order_ID = 100000, // Existing ID in the fakes
                 VIN = "1HGCM82633A987654",
                 Service_Order_Version = 1,
-                Service_Line_Item_ID = 100000,
                 Service_Type_ID = "Engine Tune-up",
                 Created_By_Employee_ID = 100001,
                 Serviced_By_Employee_ID = 100002,
@@ -206,6 +204,87 @@ namespace LogicLayerTests
 
             // Assert
             Assert.AreEqual(false, rowsAffected);
+        }
+
+        [TestMethod]
+        public void TestSelectServiceOrderByServiceOrderIDReturnsAServiceOrder()
+        {
+            var expected = new ServiceOrder_VM()
+            {
+                VIN = "JTLZE4FEXB1123437"
+            };
+            var actual = _serviceOrderManager.SelectServiceOrderByServiceOrderID(100000);
+
+            Assert.AreEqual(expected.VIN, actual.VIN);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void TestSelectServiceOrderByServiceOrderIDReturnsAVehicle()
+        {
+            var actual = _serviceOrderManager.SelectServiceOrderByServiceOrderID(100010);
+        }
+
+        /// <summary>
+        /// Tests that the GetAllCompleteServiceOrders method works.
+        /// </summary>
+        /// <remarks>
+        ///    CONTRIBUTOR: Jared Roberts
+        /// <br />
+        ///    CREATED: 2024-03-05
+        /// <br />
+        /// </remarks>
+        [TestMethod]
+        public void TestGetAllCompleteServiceOrdersReturnsCorrectCount()
+        {
+            int expected = 2;
+            int actual = _serviceOrderManager.GetAllCompleteServiceOrders().Count;
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        /// <summary>
+        /// Tests that the GetAllInCompleteServiceOrders method works.
+        /// </summary>
+        /// <remarks>
+        ///    CONTRIBUTOR: Jared Roberts
+        /// <br />
+        ///    CREATED: 2024-03-05
+        /// <br />
+        /// </remarks>
+        [TestMethod]
+        public void TestGetAllIncompleteServiceOrdersReturnsCorrectCount()
+        {
+            int expected = 1;
+            int actual = _serviceOrderManager.GetAllIncompleteServiceOrders().Count;
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void TestGetAllServiceTypesCountPasses()
+        {
+            // Arrange
+            int expected = 2;
+
+            // Act
+            int actual = _serviceOrderManager.GetAllServiceTypes().Count;
+
+            // Assert
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void TestGetAllServiceTypesCountFails()
+        {
+            // Arrange
+            int expected = 3;
+
+            // Act
+            int actual = _serviceOrderManager.GetAllServiceTypes().Count;
+
+            // Assert
+            Assert.AreNotEqual(expected, actual);
         }
     }
 }

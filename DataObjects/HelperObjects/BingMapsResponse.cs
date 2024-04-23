@@ -7,6 +7,15 @@ using Newtonsoft.Json;
 
 namespace DataObjects.HelperObjects
 {
+    /// <summary>
+    /// AUTHOR: Nathan Toothaker
+    /// <br />
+    /// CREATED: 2024-03-04
+    /// <br />
+    /// 
+    ///     C# representation of JSON data obtained from the Bing Maps API.
+    /// </summary>
+    /// 
     [JsonObject()]
     public class BingMapsResponse
     {

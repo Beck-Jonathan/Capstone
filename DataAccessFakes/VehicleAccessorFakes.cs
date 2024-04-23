@@ -28,6 +28,9 @@ namespace DataAccessFakes
     /// UPDATER: Chris Baenizger
     /// UPDATED: 2024-02-23
     /// Added fakes for deactivate vehicle.
+    /// /// UPDATER: Jonathan Beck
+    /// UPDATED: 2024-04-13
+    /// Chagned service orders to service order VMs
     /// </remarks>
 
     public class VehicleAccessorFakes : IVehicleAccessor
@@ -38,9 +41,35 @@ namespace DataAccessFakes
         List<string> fakeVehicleMakes = new List<string>();
         List<string> fakeVehicleModels = new List<string>();
         List<Vehicle> _fakeVehicleLookupList = new List<Vehicle>();
+        Vehicle fakeVehicle = new Vehicle();
+        List<ServiceOrder_VM> _fakeServiceOrders = new List<ServiceOrder_VM>();
 
         public VehicleAccessorFakes() 
         {
+            _fakeServiceOrders.Add(new ServiceOrder_VM()
+            {
+                VIN = "2GNALDEK9C6340800",
+                Service_Order_ID = 100000,
+                Critical_Issue = true,
+                Service_Type_ID = "Windshield Wiper Replacement",
+                Service_Description = "Replace the windshield wipers with OEM wipers"
+            });
+            _fakeServiceOrders.Add(new ServiceOrder_VM()
+            {
+                VIN = "JTLZE4FEXB1123437",
+                Service_Order_ID = 100001,
+                Critical_Issue = false,
+                Service_Type_ID = "Brake Pad Replacement",
+                Service_Description = "Replace the brake pads with OEM pads"
+            });
+            _fakeServiceOrders.Add(new ServiceOrder_VM()
+            {
+                VIN = "JTLZE4FEXB1123437",
+                Service_Order_ID = 100002,
+                Critical_Issue = false,
+                Service_Type_ID = "Brake rotor Replacement",
+                Service_Description = "Replace the brake rotor with OEM pads"
+            });
             Vehicle vehicle = new Vehicle()
             {
                 VIN = "testaddvin1234567",
@@ -87,6 +116,8 @@ namespace DataAccessFakes
 
             fakeVehicleModels.Add("");
             fakeVehicleModels.Add("");
+
+            fakeVehicle = vehicle;
         }
 
         public int AddVehicle(Vehicle vehicle)
@@ -214,6 +245,53 @@ namespace DataAccessFakes
                 throw new ArgumentException();
             }
             
+        }
+        //Jonathan Beck 2024-04-13
+
+        public List<ServiceOrder_VM> SelectServiceOrdersByVin(string VIN)
+        {
+            List<ServiceOrder_VM> results = new List<ServiceOrder_VM>();
+            foreach (ServiceOrder_VM order in _fakeServiceOrders) { 
+            if (order.VIN == VIN)
+                {
+                    results.Add(order);
+                }
+            
+            }
+
+            return results;
+
+        }
+
+        /// <summary>
+        ///     Retrieves a Vehicle record by the VIN from the database
+        /// </summary>
+        /// <returns>
+        ///    A <see cref="Vehicle">Vehicle</see> object otherwise, <see cref="Exception">execption</see>.
+        /// </returns>
+        /// <remarks>
+        ///    Exceptions:
+        /// <br />
+        ///    <see cref="SqlException">SqlException</see>: No records returned
+        /// <br /><br />
+        ///    CONTRIBUTOR: Ben Collins
+        /// <br />
+        ///    CREATED: 2024-03-24
+        /// <br />
+        /// <br />
+        ///    UPDATER: [Updater's Name]
+        /// <br />
+        ///    UPDATED: yyyy-MM-dd
+        /// <br />
+        ///     Initial Creation
+        /// </remarks>
+        public Vehicle SelectVehicleByVIN(string VIN)
+        {
+            if (VIN == fakeVehicle.VIN)
+            {
+                return fakeVehicle;
+            }
+            return null;
         }
     }
 }

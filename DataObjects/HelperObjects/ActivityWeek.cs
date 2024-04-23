@@ -7,6 +7,15 @@ using System.Threading.Tasks;
 
 namespace DataObjects.HelperObjects
 {
+    /// <summary>
+    /// AUTHOR: Nathan Toothaker
+    /// <br />
+    /// CREATED: 2024-03-04
+    /// <br />
+    /// 
+    ///     a simple object used to take the char[7] that represents days of the week and interpret them smoothly
+    /// </summary>
+    /// 
     public class ActivityWeek
     {
         private char[] _days;
@@ -18,6 +27,38 @@ namespace DataObjects.HelperObjects
             }
             _days = days;
         }
+        /// <summary>
+        ///     Gets the char[7] as a string, that represents the data.
+        /// </summary>
+        /// <returns>
+        ///    <see cref="string">string</see>: a string representation to be stored in the database
+        /// </returns>
+        /// <remarks>
+        ///    CONTRIBUTOR: Nathan Toothaker
+        /// </remarks>
+
+        public object GetStorageString()
+        {
+            return new String(_days);
+        }
+        /// <summary>
+        ///     Returns whether or not specific day is marked as active
+        /// </summary>
+        /// <param name="dayName">The string representation of the day to check.</param>
+        /// <returns>
+        ///    <see cref="bool">bool</see>: Whether or not the day is marked as active
+        /// </returns>
+        /// <remarks>
+        /// <br />
+        /// PARAMETERS:
+        /// <br />
+        /// dayName: the string representation of the day to be checked.
+        /// <br />
+        /// Accept dayNames are "Monday", "Mon", "Tuesday", "Tue", etc. Capitalization does not matter.
+        /// <br /><br />
+        ///    CONTRIBUTOR: Nathan Toothaker
+        /// </remarks>
+
         public bool isActiveOnDay(string dayName)
         {
             bool result = false;
@@ -54,6 +95,15 @@ namespace DataObjects.HelperObjects
             }
             return result;
         }
+        /// <summary>
+        ///     Gets the char[7] as a string that is more easily understood by readers.
+        /// </summary>
+        /// <returns>
+        ///    <see cref="string">string</see>: a string representation to be stored in the database
+        /// </returns>
+        /// <remarks>
+        ///    CONTRIBUTOR: Nathan Toothaker
+        /// </remarks>
         public override string ToString()
         {
             string result = "";

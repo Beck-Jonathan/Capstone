@@ -72,7 +72,7 @@ namespace DataAccessLayer
                         output.Ordered_Qty = reader.GetInt32(6);
                         output.Stock_Level = reader.GetInt32(7);
                         output.Is_Active = reader.GetBoolean(8);
-
+                        output.Part_Unit_Type = reader.GetString(9);
                     }
                     else
                     {
@@ -171,6 +171,7 @@ namespace DataAccessLayer
                         _Parts_Inventory.Ordered_Qty = reader.GetInt32(6);
                         _Parts_Inventory.Stock_Level = reader.GetInt32(7);
                         _Parts_Inventory.Is_Active = reader.GetBoolean(8);
+                        _Parts_Inventory.Part_Unit_Type = reader.GetString(9);
                         output.Add(_Parts_Inventory);
                     }
             }
