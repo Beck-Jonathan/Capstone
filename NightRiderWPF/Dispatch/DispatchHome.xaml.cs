@@ -118,6 +118,7 @@ namespace NightRiderWPF
         //Service cbo selection change event
         private void cboService_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            hideAllGrids();
             if (cboService.SelectedItem is string selectedItem)
             {
                 string selectedService = selectedItem;
@@ -128,6 +129,7 @@ namespace NightRiderWPF
                 switch (_selectedModel)
                 {
                     // add your grid for your feature here.
+                    
                     case "Vehicle":
                         switch (selectedService)
                         {
@@ -216,6 +218,7 @@ namespace NightRiderWPF
             gridRouteSchedules.Visibility = Visibility.Collapsed;
             gridCharterSchedules.Visibility = Visibility.Collapsed;
             gridRideServiceSchedules.Visibility = Visibility.Collapsed;
+            gridAddToRoute.Visibility = Visibility.Collapsed;
             //add any additional grids here as Visibility.Collapsed
         }
 
