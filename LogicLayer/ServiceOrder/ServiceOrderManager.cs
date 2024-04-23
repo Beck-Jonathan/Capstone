@@ -1,4 +1,5 @@
-﻿using DataAccessInterfaces;
+﻿using DataAccessFakes;
+using DataAccessInterfaces;
 using DataAccessLayer;
 using DataObjects;
 using System;
@@ -34,18 +35,25 @@ namespace LogicLayer
     public class ServiceOrderManager : IServiceOrderManager
     {
         IServiceOrderAccessor _serviceOrderAccessor = null;
+        IParts_InventoryManager _inventoryManager = null;
+        IServiceOrderLineItemsManager _lineItemsManager = null;
 
 
         // Default Constuctor
         public ServiceOrderManager()
         {
             _serviceOrderAccessor = new ServiceOrderAccessor();
+            _inventoryManager = new Parts_InventoryManager();
+            _lineItemsManager = new ServiceOrderLineItemsManager();
         }
 
         // Parametized constructor to allow use of fake data
         public ServiceOrderManager(IServiceOrderAccessor serviceOrderAccessor)
         {
             _serviceOrderAccessor = serviceOrderAccessor;
+            _inventoryManager = new Parts_InventoryManager(new Parts_Inventory_Fakes());
+            _lineItemsManager = new ServiceOrderLineItemsManager(new ServiceOrderLineItemsFakes());
+
         }
 
 
@@ -210,6 +218,106 @@ namespace LogicLayer
             }
 
             return serviceOrder;
+        }
+
+        /// <summary>
+        /// Marks a service order as completed, adding line 
+        /// <br/>
+        /// items to the order, and changing QoH for the parts used
+        /// <br/>
+        /// <br/>
+        /// Author: Max Fare
+        /// <br/>
+        /// Created: 2024-04-01
+        /// </summary>
+        /// <param name="serviceOrder"></param>
+        /// <returns></returns>
+        /// <exception cref="ApplicationException">If a step in the completion process fails</exception>
+        public int CompleteServiceOrder(ServiceOrder_VM serviceOrder)
+        {
+            int result = 0;
+            List<Parts_Inventory> inventory = null;
+            //deactivate the service order
+            try
+            {
+                if(1 != _serviceOrderAccessor.DeactivateServiceOrder(serviceOrder))
+                {
+                    throw new Exception("Deactivation failed");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("Order Failure", ex);
+            }
+            //add line items to the service order
+            try
+            {
+                for(int i = 0; i < serviceOrder.serviceOrderLineItems.Count; i++)
+                {
+                    ServiceOrderLineItems_VM temp = new ServiceOrderLineItems_VM()
+                    {
+                        Service_Order_ID = serviceOrder.serviceOrderLineItems[i].Service_Order_ID,
+                        Service_Order_Version = serviceOrder.serviceOrderLineItems[i].Service_Order_Version,
+                        Quantity = serviceOrder.serviceOrderLineItems[i].Quantity,
+                        Parts_Inventory_ID = serviceOrder.serviceOrderLineItems[i].Parts_Inventory_ID
+                    };
+                    foreach(var oldLine in _lineItemsManager.GetServiceOrderLineItems())
+                    {
+                        if(oldLine.Service_Order_ID == temp.Service_Order_ID
+                            && oldLine.Service_Order_Version == temp.Service_Order_Version
+                            && oldLine.Parts_Inventory_ID == temp.Parts_Inventory_ID)
+                        {
+                            serviceOrder.serviceOrderLineItems.Remove(serviceOrder.serviceOrderLineItems[i]);
+                        }
+                    }
+                    foreach (var line in serviceOrder.serviceOrderLineItems)
+                    {
+                        if (line.Service_Order_ID == temp.Service_Order_ID
+                            && line.Service_Order_Version == temp.Service_Order_Version
+                            && line.Parts_Inventory_ID == temp.Parts_Inventory_ID)
+                        {
+                            _lineItemsManager.AddServiceOrderLineItem(temp);
+                        }
+                    }                      
+                }
+                result = 1;
+            }
+            catch (Exception ex)
+            {
+
+                throw new ApplicationException("A line item already exists, or failed to complete.", ex);
+            }
+            //change inventory numbers to match what the service order used
+            try
+            {
+                inventory = _inventoryManager.GetAllParts_Inventory();
+
+                for (int i = 0; i < serviceOrder.serviceOrderLineItems.Count; i++)
+                {
+                    Parts_Inventory newQty = _inventoryManager.GetParts_InventoryByID(serviceOrder.serviceOrderLineItems[i].Parts_Inventory_ID);
+                    int tempQty = newQty.Part_Quantity;
+                    newQty.Part_Quantity -= serviceOrder.serviceOrderLineItems[i].Quantity;
+
+                    if (0 == _inventoryManager.EditParts_Inventory(_inventoryManager.GetParts_InventoryByID(serviceOrder.serviceOrderLineItems[i].Parts_Inventory_ID), newQty))
+                    {
+                        //revert inventory back to what it was before updating
+                        foreach (Parts_Inventory part in inventory)
+                        {
+                            _inventoryManager.EditParts_Inventory(_inventoryManager.GetParts_InventoryByID(part.Parts_Inventory_ID), part);
+                        }
+                        _serviceOrderAccessor.ActivateServiceOrder(serviceOrder);
+                        throw new ArgumentException("A part failed to update", "Please contact IT");
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                throw new ApplicationException("Inventory Update Failure", ex);
+            }
+            
+            return result;
         }
     }
 }

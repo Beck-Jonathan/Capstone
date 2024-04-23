@@ -86,6 +86,7 @@
     <Compile Include="SourceManagerTests.cs" />
     <Compile Include="StopManagerTests.cs" />
     <Compile Include="ClientDependentRoleManagerTests.cs" />
+    <Compile Include="ServiceOrderLineItemsManagerTests.cs" />
     <Compile Include="VehicleModelManager_Tests.cs" />
     <Compile Include="VendorManagerTests.cs" />
     <Compile Include="VerificationCodeGenerator_Tests.cs" />

@@ -26,7 +26,6 @@ namespace DataAccessFakes
     public class ServiceOrderAccessorFakes : IServiceOrderAccessor
     {
         private List<ServiceOrder_VM> _fakeServiceOrders = new List<ServiceOrder_VM>();
-        private ServiceOrder_VM _fakeCompleteServiceOrders = new ServiceOrder_VM();
         private List<ServiceOrder> _updatedServiceOrders = new List<ServiceOrder>();
         private Parts_Inventory_Fakes _fakePartsInventory = new Parts_Inventory_Fakes();
 
@@ -38,7 +37,8 @@ namespace DataAccessFakes
                 Service_Order_ID = 100000,
                 Critical_Issue = true,
                 Service_Type_ID = "Windshield Wiper Replacement",
-                Service_Description = "Replace the windshield wipers with OEM wipers"
+                Service_Description = "Replace the windshield wipers with OEM wipers",
+                Is_Active = true,
             });            
             _fakeServiceOrders.Add(new ServiceOrder_VM()
             {
@@ -46,18 +46,18 @@ namespace DataAccessFakes
                 Service_Order_ID = 100001,
                 Critical_Issue = false,
                 Service_Type_ID = "Brake Pad Replacement",
-                Service_Description = "Replace the brake pads with OEM pads"
+                Service_Description = "Replace the brake pads with OEM pads",
+                Is_Active = true
             });
-            _fakeCompleteServiceOrders = new ServiceOrder_VM()
+            _fakeServiceOrders.Add(new ServiceOrder_VM()
             {
-                VIN = "JTLZE4FEXB1123437",
-                Service_Order_ID = 100000,
+                VIN = "JTLZE4FEXB1123456",
+                Service_Order_ID = 100002,
                 Critical_Issue = true,
                 Service_Type_ID = "Windshield Wiper Replacement",
                 Service_Description = "Replace the windshield wipers with OEM wipers",
-                //vehicle = _fakeVehicle.SelectVehicleForLookupList(),
-                //partsInventory = _fakePartsInventory.selectAllParts_Inventory()
-            };
+                Is_Active = false
+            });
         }
         
 
@@ -198,14 +198,14 @@ namespace DataAccessFakes
         {
             try
             {
-                if (serviceOrderID == _fakeCompleteServiceOrders.Service_Order_ID)
+                foreach (var order in _fakeServiceOrders)
                 {
-                    return _fakeCompleteServiceOrders;
+                    if (serviceOrderID == order.Service_Order_ID)
+                    {
+                        return order;
+                    }
                 }
-                else
-                {
-                    throw new ArgumentException("No record with that ID found.");
-                }
+                throw new ArgumentException("No record with that ID found.");
 
             }
             catch (Exception ex)
@@ -213,6 +213,67 @@ namespace DataAccessFakes
                 throw ex;
             }
 
+        }
+        /// <summary>
+        /// Checks the active status of the given order, the deactivates it
+        /// </summary>
+        /// <param name="serviceOrder"></param>
+        /// <returns>the number of records affected, should only be 1 or 0</returns>
+        /// <exception cref="ApplicationException"></exception>
+        /// <remarks>
+        /// <br/>
+        /// Created By: Max Fare
+        /// Date: 2024-04-20
+        /// </remarks>
+        public int DeactivateServiceOrder(ServiceOrder_VM serviceOrder)
+        {
+            for (int i = 0; i < _fakeServiceOrders.Count; i++)
+            {
+                if (serviceOrder.Service_Order_ID == _fakeServiceOrders[i].Service_Order_ID)
+                {
+                    if (_fakeServiceOrders[i].Is_Active)
+                    {
+                        _fakeServiceOrders[i].Is_Active = false;
+                        return 1;
+                    }
+                    else
+                    {
+                        return 0;
+                    }
+                }
+            }
+            throw new ApplicationException("no service order matching the one given exists");
+        }
+        /// <summary>
+        /// Checks the active status of the given order, the activates it
+        /// </summary>
+        /// <param name="serviceOrder"></param>
+        /// <returns>the number of records affected, should only be 1 or 0</returns>
+        /// <exception cref="ApplicationException"></exception>
+        /// <remarks>
+        /// <br/>
+        /// Created By: Max Fare
+        /// Date: 2024-04-20
+        /// </remarks>
+        public int ActivateServiceOrder(ServiceOrder_VM serviceOrder)
+        {
+            for (int i = 0; i < _fakeServiceOrders.Count; i++)
+            {
+                if (serviceOrder.Service_Order_ID == _fakeServiceOrders[i].Service_Order_ID)
+                {
+                    if (_fakeServiceOrders[i].Is_Active)
+                    {
+                        return 0;
+                    }
+                    else
+                    {
+                        _fakeServiceOrders[i].Is_Active = true;
+                        return 1;
+                    }
+
+                };
+            }
+            throw new ApplicationException("no service order matching the one given exists");
         }
     }
 }

@@ -323,7 +323,16 @@ namespace DataAccessFakes
 
             return result;
         }
-
+        /// <summary>
+        /// Finds the given oldPart, and changes its data to match newPart
+        /// </summary>
+        /// <param name="oldPart">the data to find and change</param>
+        /// <param name="newPart">he data to change the part's data to</param>
+        /// <returns>An integer noting the success or failure to change the record</returns>
+        /// <remarks>
+        /// Creator: Max Fare
+        /// Date: 2024-02-06
+        /// </remarks>
         public int UpdateParts_Inventory(Parts_Inventory oldPart, Parts_Inventory newPart)
         {
             int result = 0;

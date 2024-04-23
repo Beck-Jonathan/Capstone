@@ -3,6 +3,7 @@ using DataObjects;
 using LogicLayer;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Collections.Generic;
 
 namespace LogicLayerTests
 {
@@ -20,7 +21,7 @@ namespace LogicLayerTests
         [TestMethod]
         public void TestGetAllServiceOrderCountPasses()
         {
-            int expected = 2;
+            int expected = 3;
             int actual = _serviceOrderManager.GetALlServiceOrders().Count;
 
             Assert.AreEqual(expected, actual);
@@ -211,7 +212,7 @@ namespace LogicLayerTests
         {
             var expected = new ServiceOrder_VM()
             {
-                VIN = "JTLZE4FEXB1123437"
+                VIN = "2GNALDEK9C6340800"
             };
             var actual = _serviceOrderManager.SelectServiceOrderByServiceOrderID(100000);
 
@@ -220,9 +221,45 @@ namespace LogicLayerTests
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
-        public void TestSelectServiceOrderByServiceOrderIDReturnsAVehicle()
+        public void TestSelectServiceOrderByBadServiceOrderIDReturnsAnException()
         {
             var actual = _serviceOrderManager.SelectServiceOrderByServiceOrderID(100010);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ApplicationException))]
+        public void TestCompleteServiceOrderFailsGivenDeactivatedServiceOrder()
+        {
+            int actual = 0;
+            var order = new ServiceOrder_VM()
+            {
+                Service_Order_ID = 100000
+            };
+
+            actual = _serviceOrderManager.CompleteServiceOrder(order);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ApplicationException))]
+        public void TestCompleteServiceOrderFailsWithIncorrectPartData()
+        {
+            //fails if the partID is not supplied, or if the part
+            //ID given does not corrospond with a part in the DB
+            int actual = 0;
+            var order = new ServiceOrder_VM()
+            {
+                Service_Order_ID = 100000,
+                serviceOrderLineItems = new List<ServiceOrderLineItems>()
+                {
+                    new ServiceOrderLineItems()
+                    {
+                        Service_Order_ID = 100000,
+                        Parts_Inventory_ID = 99999999
+                    }
+                }
+            };
+
+            actual = _serviceOrderManager.CompleteServiceOrder(order);
         }
     }
 }

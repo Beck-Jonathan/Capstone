@@ -13,4 +13,9 @@ namespace DataObjects
         public int Parts_Inventory_ID { get; set; }
         public int Quantity { get; set; }
     }
+
+    public class ServiceOrderLineItems_VM : ServiceOrderLineItems
+    {
+        public Parts_Inventory Inventory_Part { get; set; }
+    }
 }

@@ -321,5 +321,82 @@ namespace DataAccessLayer
             }
             return completeServiceOrder;
         }
+
+        /// <summary>
+        /// changes the active field in the database for the given service order,
+        ///  <br/>
+        /// making active = false
+        /// <br />
+        /// <br />
+        ///    Creator: Max Fare
+        /// <br />
+        ///    CREATED: 2024-04-05
+        /// </summary>
+        /// <param name="serviceOrder">The service order to deactivate</param>
+        /// <returns>the number of rows affected in the database</returns>
+        public int DeactivateServiceOrder(ServiceOrder_VM serviceOrder)
+        {
+            int rows = 0;
+            var conn = DBConnectionProvider.GetConnection();
+            var cmdText = "sp_deactivate_service_order";
+            var cmd = new SqlCommand(cmdText, conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            cmd.Parameters.AddWithValue("@Service_Order_ID", serviceOrder.Service_Order_ID);
+            cmd.Parameters.AddWithValue("@Version", serviceOrder.Service_Order_Version);
+            try
+            {
+                conn.Open();
+                rows = cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return rows;
+        }
+        /// <summary>
+        /// changes the active field in the database for the given service order,
+        /// <br/>
+        /// making active = true
+        /// <br />
+        /// <br />
+        ///    Creator: Max Fare
+        /// <br />
+        ///    CREATED: 2024-04-05
+        /// </summary>
+        /// <param name="serviceOrder">The service order to activate</param>
+        /// <returns>the number of rows affected in the database</returns>
+        public int ActivateServiceOrder(ServiceOrder_VM serviceOrder)
+        {
+            int rows = 0;
+            var conn = DBConnectionProvider.GetConnection();
+            var cmdText = "sp_activate_service_order";
+            var cmd = new SqlCommand(cmdText, conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            cmd.Parameters.AddWithValue("@Service_Order_ID", serviceOrder.Service_Order_ID);
+            cmd.Parameters.AddWithValue("@Version", serviceOrder.Service_Order_Version);
+            try
+            {
+                conn.Open();
+                rows = cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return rows;
+        }
     }
 }

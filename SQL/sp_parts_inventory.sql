@@ -48,6 +48,7 @@ begin
 ,[Ordered_Qty]
 ,[Stock_Level]
 ,[Active]
+,[Part_Unit_Type]
  FROM Parts_Inventory
  ;
  END  
