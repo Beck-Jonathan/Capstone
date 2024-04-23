@@ -12,6 +12,7 @@ using DataObjects;
 using LogicLayer;
 using LogicLayer.AppData;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -39,6 +40,7 @@ namespace NightRiderWPF.WorkOrders
         {
             PopulateTextBox();
             PopulateVinComboBox();
+            PopulateServiceTypeComboBox();
         }
 
         private void PopulateTextBox()
@@ -84,71 +86,84 @@ namespace NightRiderWPF.WorkOrders
                 MessageBox.Show("Error loading VIN #'s: " + ex.Message);
             }
         }
-
+        private void PopulateServiceTypeComboBox()
+        {
+            try
+            {
+                List<ServiceOrder_VM> serviceType = _serviceOrderManager.GetAllServiceTypes();
+                var serviceTypeIds = serviceType.Select(st => st.Service_Type_ID);
+                ServiceTypeIDcbo.ItemsSource = serviceTypeIds;
+                ServiceTypeIDcbo.SelectedIndex = 0;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error loading service types: " + ex.Message);
+            }
+        }
         private void Createbtn_Click(object sender, RoutedEventArgs e)
         {
 
-                // Check if form is null, empty, or whitespace
-                if (string.IsNullOrWhiteSpace(ServiceIDtxt.Text))
-                {
-                    MessageBox.Show("Please enter a service ID.");
-                    return;
-                }
+            // Check if form is null, empty, or whitespace
+            if (string.IsNullOrWhiteSpace(ServiceIDtxt.Text))
+            {
+                MessageBox.Show("Please enter a service ID.");
+                return;
+            }
 
-                if (string.IsNullOrWhiteSpace(ServiceOrderVersiontxt.Text))
-                {
-                    MessageBox.Show("Please enter a service version.");
-                    return;
-                }
+            if (string.IsNullOrWhiteSpace(ServiceOrderVersiontxt.Text))
+            {
+                MessageBox.Show("Please enter a service version.");
+                return;
+            }
 
-                if (string.IsNullOrWhiteSpace(VINcbo.SelectedValue?.ToString()))
-                {
-                    MessageBox.Show("Please select a VIN.");
-                    return;
-                }
+            if (string.IsNullOrWhiteSpace(VINcbo.SelectedValue?.ToString()))
+            {
+                MessageBox.Show("Please select a VIN.");
+                return;
+            }
 
-                if (string.IsNullOrWhiteSpace(ServiceTypeIDtxt.Text))
-                {
-                    MessageBox.Show("Please enter a service type ID.");
-                    return;
-                }
+            if (string.IsNullOrWhiteSpace(ServiceTypeIDcbo.SelectedValue?.ToString()))
+            {
+                MessageBox.Show("Please enter a service type ID.");
+                return;
+            }
 
-                if (string.IsNullOrWhiteSpace(ServiceDescriptiontxt.Text))
-                {
-                    MessageBox.Show("Please enter a service desctription.");
-                    return;
-                }
+            if (string.IsNullOrWhiteSpace(ServiceDescriptiontxt.Text))
+            {
+                MessageBox.Show("Please enter a service desctription.");
+                return;
+            }
 
-                if (string.IsNullOrWhiteSpace(CreatedBytxt.Text))
-                {
-                    MessageBox.Show("Please select an employee creating work order.");
-                    return;
-                }
+            if (string.IsNullOrWhiteSpace(CreatedBytxt.Text))
+            {
+                MessageBox.Show("Please select an employee creating work order.");
+                return;
+            }
 
-                if (DateStartedpkr.SelectedDate == null)
-                {
-                    MessageBox.Show("Please select a date started.");
-                    return;
-                }
+            if (DateStartedpkr.SelectedDate == null)
+            {
+                MessageBox.Show("Please select a date started.");
+                return;
+            }
 
-                if (DateFinishedpkr.SelectedDate == null)
-                {
-                    MessageBox.Show("Please select an anticipated date to finish.");
-                    return;
-                }
+            if (DateFinishedpkr.SelectedDate == null)
+            {
+                MessageBox.Show("Please select an anticipated date to finish.");
+                return;
+            }
 
-                // Create a new ServiceOrder_VM object with data from the form
-                ServiceOrder_VM serviceOrder = new ServiceOrder_VM()
-                {
-                    Service_Order_ID = int.Parse(ServiceIDtxt.Text),
-                    Service_Order_Version = int.Parse(ServiceOrderVersiontxt.Text),
-                    VIN = VINcbo.SelectedValue.ToString(),
-                    Service_Type_ID = ServiceTypeIDtxt.Text,
-                    Created_By_Employee_ID = int.Parse(CreatedBytxt.Text),
-                    Date_Started = DateStartedpkr.SelectedDate ?? DateTime.MinValue,
-                   Date_Finished = DateFinishedpkr.SelectedDate ?? DateTime.MinValue,
-                    Service_Description = ServiceDescriptiontxt.Text
-                };
+            // Create a new ServiceOrder_VM object with data from the form
+            ServiceOrder_VM serviceOrder = new ServiceOrder_VM()
+            {
+                Service_Order_ID = int.Parse(ServiceIDtxt.Text),
+                Service_Order_Version = int.Parse(ServiceOrderVersiontxt.Text),
+                VIN = VINcbo.SelectedValue.ToString(),
+                Service_Type_ID = ServiceTypeIDcbo.SelectedValue.ToString(),
+                Created_By_Employee_ID = int.Parse(CreatedBytxt.Text),
+                Date_Started = DateStartedpkr.SelectedDate ?? DateTime.MinValue,
+                Date_Finished = DateFinishedpkr.SelectedDate ?? DateTime.MinValue,
+                Service_Description = ServiceDescriptiontxt.Text
+            };
             try
             {
                 _serviceOrderManager.CreateServiceOrder(serviceOrder);
@@ -168,11 +183,38 @@ namespace NightRiderWPF.WorkOrders
             ServiceIDtxt.Text = "";
             ServiceOrderVersiontxt.Text = "";
             VINcbo.SelectedIndex = -1;
-            ServiceTypeIDtxt.Text = "";
-            CreatedBytxt.Text="";
+            ServiceTypeIDcbo.SelectedIndex = -1;
+            CreatedBytxt.Text = "";
             DateStartedpkr.SelectedDate = null;
             DateFinishedpkr.SelectedDate = null;
             ServiceDescriptiontxt.Text = "";
+        }
+
+        private void Cancelbtn_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult result = MessageBox.Show("Are you sure you want to cancel creating the Service Order?", "Cancel Service Order Creation", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+            if (result == MessageBoxResult.Yes)
+            {
+                NavigationService.GoBack();
+            }
+        }
+
+        private void ServiceTypeIDcbo_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            // Get the selected Service_Type_ID
+            string selectedServiceTypeID = ServiceTypeIDcbo.SelectedItem as string;
+
+
+            ServiceOrder_VM selectedServiceType = _serviceOrderManager
+                .GetAllServiceTypes()
+                .FirstOrDefault(st => st.Service_Type_ID == selectedServiceTypeID);
+
+            // Update the Descriptiontxt TextBox with the Service_Description
+            if (selectedServiceType != null)
+            {
+                ServiceDescriptiontxt.Text = selectedServiceType.Service_Description;
+            }
         }
     }
 }

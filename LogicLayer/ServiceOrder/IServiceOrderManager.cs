@@ -104,6 +104,8 @@ namespace LogicLayer
         /// </remarks>
         /// </update>
         bool CreateServiceOrder(ServiceOrder_VM serviceOrder);
+        List<ServiceOrder_VM> GetAllServiceTypes();
+
 
         /// <summary>
         ///     Retrieves all ServiceOrder_VM records from the ServiceOrderAccessor and,
@@ -145,5 +147,32 @@ namespace LogicLayer
         /// <param name="serviceOrder">The order to complete</param>
         /// <returns><see cref="int">A number identifying the result of attempted changes</see></returns>
         int CompleteServiceOrder(ServiceOrder_VM serviceOrder);
+
+        ///     A method that returns sevice orders that are complete
+        /// </summary>
+        /// <returns>
+        ///    <see cref="List{ServiceOrder_VM}">ServiceOrder_VM</see>: The list of all complete service orders.
+        /// </returns>
+        ///    CONTRIBUTOR: Jared Roberts
+        /// <br />
+        ///    CREATED: 2024-03-05
+        /// <br />
+        ///    Initial Creation
+        /// </remarks>
+        List<ServiceOrder_VM> GetAllCompleteServiceOrders();
+
+        /// <summary>
+        ///     A method that returns sevice orders that are incomplete
+        /// </summary>
+        /// <returns>
+        ///    <see cref="List{ServiceOrder_VM}">ServiceOrder_VM</see>: The list of all incomplete service orders.
+        /// </returns>
+        ///    CONTRIBUTOR: Jared Roberts
+        /// <br />
+        ///    CREATED: 2024-03-05
+        /// <br />
+        ///    Initial Creation
+        /// </remarks>
+        List<ServiceOrder_VM> GetAllIncompleteServiceOrders();
     }
 }

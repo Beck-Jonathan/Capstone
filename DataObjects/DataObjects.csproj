@@ -46,6 +46,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Accommodation.cs" />
+    <Compile Include="Assignment\Driver.cs" />
+    <Compile Include="Assignment\DriverUnavailability.cs" />
+    <Compile Include="Assignment\VehicleAssignment.cs" />
+    <Compile Include="Assignment\VehicleUnavailability.cs" />
     <Compile Include="ClientDependentRole.cs" />
     <Compile Include="Dependent.cs" />
     <Compile Include="Client.cs" />
@@ -63,6 +67,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RouteObjects\Route.cs" />
     <Compile Include="RouteObjects\RouteStop.cs" />
+    <Compile Include="RouteObjects\Route_Assignment.cs" />
     <Compile Include="RouteObjects\Stop.cs" />
     <Compile Include="ScheduleObjects\IScheduleObject.cs" />
     <Compile Include="Purchase_Order.cs" />

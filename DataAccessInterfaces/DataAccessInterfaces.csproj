@@ -56,6 +56,7 @@
     <Compile Include="IPasswordResetAccessor.cs" />
     <Compile Include="IPOLineItemsAccessor.cs" />
     <Compile Include="IPurchase_OrderAccessor.cs" />
+    <Compile Include="IRouteAssignmentAccessor.cs" />
     <Compile Include="IRouteStopAccessor.cs" />
     <Compile Include="IServiceOrderAccessor.cs" />
     <Compile Include="ILoginAccessor.cs" />

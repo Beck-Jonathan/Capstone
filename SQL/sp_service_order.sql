@@ -72,24 +72,15 @@ GO
 CREATE PROCEDURE sp_update_service_order
     @Service_Order_ID INT,
     @Critical_Issue BIT,
-    @New_Service_Type_ID NVARCHAR(256),
-    @Service_Description NVARCHAR(256)
+    @Service_Type_ID [nvarchar] (256)
 AS
 BEGIN
-    SET NOCOUNT ON;
-
     -- Update the Service_Order table
     UPDATE Service_Order
     SET 
-        Critical_Issue = @Critical_Issue
+        Critical_Issue = @Critical_Issue,
+        Service_Type_ID = @Service_Type_ID
     WHERE Service_Order_ID = @Service_Order_ID;
-
-    -- Update the Service_Type entry with new Service_Type_ID
-    UPDATE Service_Type
-    SET 
-        Service_Type_ID = @New_Service_Type_ID,
-        Service_Description = @Service_Description
-    WHERE Service_Type_ID = (SELECT Service_Type_ID FROM Service_Order WHERE Service_Order_ID = @Service_Order_ID);
 END
 
 GO
@@ -207,4 +198,43 @@ AS
         WHERE [Service_Order_ID] = @Service_Order_ID
             AND [Service_Order_Version] = @Version
     END
+GO
+
+ 
+ -- Initial Creator: Jared Roberts
+-- Creation Date: 2024-02-27
+-- Modification Description: Initial Creation
+-- Stored Procedure Description: Select all pending Service_Order records
+CREATE PROCEDURE [dbo].[sp_select_incomplete_service_orders]
+AS 
+    BEGIN
+        SELECT  [Service_Order].[VIN],
+                [Service_Order].[Service_Order_ID],
+                [Service_Order].[Critical_Issue],
+                [Service_Type].[Service_Type_ID],
+                [Service_Type].[Service_Description]
+        FROM   [dbo].[Service_Order]
+        INNER JOIN [dbo].[Service_Type] ON [Service_Order].[Service_Type_ID] = [Service_Type].[Service_Type_ID]
+        WHERE [Service_Order].[Is_Active] = 1
+			AND [Service_Order].[Date_Finished] is null
+    END;
+GO
+
+-- Initial Creator: Jared Roberts
+-- Creation Date: 2024-02-27
+-- Modification Description: Initial Creation
+-- Stored Procedure Description: Select all completed Service_Order records
+CREATE PROCEDURE [dbo].[sp_select_complete_service_orders]
+AS 
+    BEGIN
+        SELECT  [Service_Order].[VIN],
+                [Service_Order].[Service_Order_ID],
+                [Service_Order].[Critical_Issue],
+                [Service_Type].[Service_Type_ID],
+                [Service_Type].[Service_Description]
+        FROM   [dbo].[Service_Order]
+        INNER JOIN [dbo].[Service_Type] ON [Service_Order].[Service_Type_ID] = [Service_Type].[Service_Type_ID]
+        WHERE [Service_Order].[Is_Active] = 1
+			AND [Service_Order].[Date_Finished] is not null
+    END;
 GO

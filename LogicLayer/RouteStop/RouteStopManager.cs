@@ -40,6 +40,26 @@ namespace LogicLayer.RouteStop
         {
             throw new NotImplementedException();
         }
+        /// <summary>
+        ///     Gets a list of all stops (And RouteStop data) for a given route
+        /// </summary>
+        /// <param name="routeId">
+        ///    The ID of the route whose stops we want
+        /// </param>
+        /// <returns>
+        ///    <see cref="IEnumerable{T}">IEnumerable</see>: The list of stops, in order
+        /// </returns>
+        /// <remarks>
+        ///    Parameters:
+        /// <br />
+        ///    <see cref="int">int</see> route: The ID of the route whose stops we want
+        /// <br /><br />
+        ///    Exceptions:
+        /// <br />
+        ///    <see cref="ApplicationException">ApplicationException</see>: Thrown when an error is caught from the data accessor
+        /// <br /><br />
+        ///    CONTRIBUTOR: Nathan Toothaker
+        /// </remarks>
 
         public IEnumerable<RouteStopVM> GetRouteStopByRouteId(int routeId)
         {

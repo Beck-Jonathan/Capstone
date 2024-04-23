@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -175,6 +176,19 @@ namespace NightRiderWPF.RouteStop
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void btnEditRoute_Click(object sender, RoutedEventArgs e)
+        {
+            new AddEditRouteDetail(_route, _routeManager).ShowDialog();
+        }
+
+        private void btnBackToRouteList_Click(object sender, RoutedEventArgs e)
+        {
+            if (NavigationService.CanGoBack)
+            {
+                NavigationService.GoBack();
+            }
         }
     }
 }

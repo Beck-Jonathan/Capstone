@@ -302,6 +302,61 @@ namespace LogicLayerTests
             Assert.IsNotNull(correctEmployee, "Correct employee should be found");
             Assert.AreEqual(goodEmail, correctEmployee.Email, "Employee IDs should match");
         }
+
+        /// <summary>
+        /// AUTHOR: Steven Sanchez
+        /// DATE: 2024-03-24
+        /// Tests for Employee Manager GetAllEmployees() method 
+        /// gets the count of employees
+        /// </summary>
+        /// <br /><br />
+        ///    UPDATER: 
+        /// <br />
+        ///    UPDATED: 
+        /// <br />
+        ///     Update Comments
+        /// </remarks>
+
+        [TestMethod]
+        public void TestGetAllEmployeesReturnsEmployees()
+        {
+            // Arrange
+            int expectedCount = 3;
+
+            // Act
+            List<Employee_VM> allEmployees = _employeeManager.GetAllEmployees().ToList();
+
+            // Assert
+            Assert.IsNotNull(allEmployees, "Employee list should not be null");
+            Assert.AreEqual(expectedCount, allEmployees.Count, $"Employee count should be {expectedCount}");
+        }
+
+        /// <summary>
+        /// AUTHOR: Steven Sanchez
+        /// DATE: 2024-03-24
+        /// Tests for Employee Manager GetAllEmployees() method 
+        /// checks if an employees id is within the list.
+        /// </summary>
+        /// <br /><br />
+        ///    UPDATER: 
+        /// <br />
+        ///    UPDATED: 
+        /// <br />
+        ///     Update Comments
+        /// </remarks>
+        [TestMethod]
+        public void TestGetAllEmployeesContainsEmployeeWithID()
+        {
+            // Arrange
+            int employeeIDToFind = 100001;
+
+            // Act
+            List<Employee_VM> allEmployees = _employeeManager.GetAllEmployees().ToList();
+            Employee_VM foundEmployee = allEmployees.FirstOrDefault(e => e.Employee_ID == employeeIDToFind);
+
+            // Assert
+            Assert.IsNotNull(foundEmployee, $"Employee with ID {employeeIDToFind} should be found.");
+        }
     }
 }
 // Checked by Nathan Toothaker

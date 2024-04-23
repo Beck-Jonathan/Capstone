@@ -109,6 +109,7 @@ namespace DataAccessInterfaces
         /// </remarks>
         /// </update>
         int CreateServiceOrder(ServiceOrder_VM serviceOrder);
+        List<ServiceOrder_VM> GetAllServiceTypes();
 
         /// <summary>
         ///     Retrieves all ServiceOrder records from the database
@@ -154,5 +155,31 @@ namespace DataAccessInterfaces
         /// <param name="serviceOrder">The Service Order to Reactivate</param>
         /// <returns></returns>
         int ActivateServiceOrder(ServiceOrder_VM serviceOrder);
+        ///     A method that returns sevice orders that are complete
+        /// </summary>
+        /// <returns>
+        ///    <see cref="List{ServiceOrder_VM}">ServiceOrder_VM</see>: The list of all complete service orders.
+        /// </returns>
+        ///    CONTRIBUTOR: Jared Roberts
+        /// <br />
+        ///    CREATED: 2024-03-05
+        /// <br />
+        ///    Initial Creation
+        /// </remarks>
+        List<ServiceOrder_VM> GetAllCompleteServiceOrders();
+
+        /// <summary>
+        ///     A method that returns sevice orders that are incomplete
+        /// </summary>
+        /// <returns>
+        ///    <see cref="List{ServiceOrder_VM}">ServiceOrder_VM</see>: The list of all incomplete service orders.
+        /// </returns>
+        ///    CONTRIBUTOR: Jared Roberts
+        /// <br />
+        ///    CREATED: 2024-03-05
+        /// <br />
+        ///    Initial Creation
+        /// </remarks>
+        List<ServiceOrder_VM> GetAllIncompleteServiceOrders();
     }
 }

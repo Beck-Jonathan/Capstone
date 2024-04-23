@@ -79,6 +79,7 @@
     <Compile Include="POlineItemsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DependentManagerTests.cs" />
+    <Compile Include="RouteAssignmentManagerTests.cs" />
     <Compile Include="RouteManagerTests.cs" />
     <Compile Include="PurchaseOrderTests.cs" />
     <Compile Include="RouteStopManagerTests.cs" />

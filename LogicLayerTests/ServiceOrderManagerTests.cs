@@ -21,7 +21,7 @@ namespace LogicLayerTests
         [TestMethod]
         public void TestGetAllServiceOrderCountPasses()
         {
-            int expected = 3;
+            int expected = 4;
             int actual = _serviceOrderManager.GetALlServiceOrders().Count;
 
             Assert.AreEqual(expected, actual);
@@ -260,6 +260,67 @@ namespace LogicLayerTests
             };
 
             actual = _serviceOrderManager.CompleteServiceOrder(order);
+        }
+        /// <summary>
+        /// Tests that the GetAllCompleteServiceOrders method works.
+        /// </summary>
+        /// <remarks>
+        ///    CONTRIBUTOR: Jared Roberts
+        /// <br />
+        ///    CREATED: 2024-03-05
+        /// <br />
+        /// </remarks>
+        [TestMethod]
+        public void TestGetAllCompleteServiceOrdersReturnsCorrectCount()
+        {
+            int expected = 2;
+            int actual = _serviceOrderManager.GetAllCompleteServiceOrders().Count;
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        /// <summary>
+        /// Tests that the GetAllInCompleteServiceOrders method works.
+        /// </summary>
+        /// <remarks>
+        ///    CONTRIBUTOR: Jared Roberts
+        /// <br />
+        ///    CREATED: 2024-03-05
+        /// <br />
+        /// </remarks>
+        [TestMethod]
+        public void TestGetAllIncompleteServiceOrdersReturnsCorrectCount()
+        {
+            int expected = 1;
+            int actual = _serviceOrderManager.GetAllIncompleteServiceOrders().Count;
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void TestGetAllServiceTypesCountPasses()
+        {
+            // Arrange
+            int expected = 2;
+
+            // Act
+            int actual = _serviceOrderManager.GetAllServiceTypes().Count;
+
+            // Assert
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void TestGetAllServiceTypesCountFails()
+        {
+            // Arrange
+            int expected = 3;
+
+            // Act
+            int actual = _serviceOrderManager.GetAllServiceTypes().Count;
+
+            // Assert
+            Assert.AreNotEqual(expected, actual);
         }
     }
 }

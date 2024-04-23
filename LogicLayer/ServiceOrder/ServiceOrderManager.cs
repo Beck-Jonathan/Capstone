@@ -171,6 +171,22 @@ namespace LogicLayer
             return result;
         }
 
+        public List<ServiceOrder_VM> GetAllServiceTypes()
+        {
+            List<ServiceOrder_VM> serviceTypes = null;
+
+            try
+            {
+                serviceTypes = _serviceOrderAccessor.GetAllServiceTypes();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return serviceTypes;
+        }
+
         /// <summary>
         ///     Retrieves all ServiceOrder_VM records from the ServiceOrderAccessor and,
         ///     <br/>
@@ -240,7 +256,7 @@ namespace LogicLayer
             //deactivate the service order
             try
             {
-                if(1 != _serviceOrderAccessor.DeactivateServiceOrder(serviceOrder))
+                if (1 != _serviceOrderAccessor.DeactivateServiceOrder(serviceOrder))
                 {
                     throw new Exception("Deactivation failed");
                 }
@@ -252,7 +268,7 @@ namespace LogicLayer
             //add line items to the service order
             try
             {
-                for(int i = 0; i < serviceOrder.serviceOrderLineItems.Count; i++)
+                for (int i = 0; i < serviceOrder.serviceOrderLineItems.Count; i++)
                 {
                     ServiceOrderLineItems_VM temp = new ServiceOrderLineItems_VM()
                     {
@@ -261,9 +277,9 @@ namespace LogicLayer
                         Quantity = serviceOrder.serviceOrderLineItems[i].Quantity,
                         Parts_Inventory_ID = serviceOrder.serviceOrderLineItems[i].Parts_Inventory_ID
                     };
-                    foreach(var oldLine in _lineItemsManager.GetServiceOrderLineItems())
+                    foreach (var oldLine in _lineItemsManager.GetServiceOrderLineItems())
                     {
-                        if(oldLine.Service_Order_ID == temp.Service_Order_ID
+                        if (oldLine.Service_Order_ID == temp.Service_Order_ID
                             && oldLine.Service_Order_Version == temp.Service_Order_Version
                             && oldLine.Parts_Inventory_ID == temp.Parts_Inventory_ID)
                         {
@@ -278,7 +294,7 @@ namespace LogicLayer
                         {
                             _lineItemsManager.AddServiceOrderLineItem(temp);
                         }
-                    }                      
+                    }
                 }
                 result = 1;
             }
@@ -316,8 +332,62 @@ namespace LogicLayer
 
                 throw new ApplicationException("Inventory Update Failure", ex);
             }
-            
+
             return result;
+        }
+        ///     A method that returns sevice orders that are complete
+        /// </summary>
+        /// <returns>
+        ///    <see cref="List{ServiceOrder_VM}">ServiceOrder_VM</see>: The list of all complete service orders.
+        /// </returns>
+        ///    CONTRIBUTOR: Jared Roberts
+        /// <br />
+        ///    CREATED: 2024-03-05
+        /// <br />
+        ///    Initial Creation
+        /// </remarks>
+        public List<ServiceOrder_VM> GetAllCompleteServiceOrders()
+        {
+            List<ServiceOrder_VM> serviceOrders = null;
+
+            try
+            {
+                serviceOrders = _serviceOrderAccessor.GetAllCompleteServiceOrders();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return serviceOrders;
+        }
+
+        /// <summary>
+        ///     A method that returns sevice orders that are incomplete
+        /// </summary>
+        /// <returns>
+        ///    <see cref="List{ServiceOrder_VM}">ServiceOrder_VM</see>: The list of all incomplete service orders.
+        /// </returns>
+        ///    CONTRIBUTOR: Jared Roberts
+        /// <br />
+        ///    CREATED: 2024-03-05
+        /// <br />
+        ///    Initial Creation
+        /// </remarks>
+        public List<ServiceOrder_VM> GetAllIncompleteServiceOrders()
+        {
+            List<ServiceOrder_VM> serviceOrders = null;
+
+            try
+            {
+                serviceOrders = _serviceOrderAccessor.GetAllIncompleteServiceOrders();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return serviceOrders;
         }
     }
 }

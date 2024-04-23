@@ -132,6 +132,8 @@
     <Compile Include="Inventory\SourceManager.cs" />
     <Compile Include="PartsRequest\IPartsRequestsManager.cs" />
     <Compile Include="PartsRequest\PartsRequestManager.cs" />
+    <Compile Include="RouteAssignment\IRouteAssignmentManager.cs" />
+    <Compile Include="RouteAssignment\RouteAssignmentManager.cs" />
     <Compile Include="RouteStop\IRouteManager.cs" />
     <Compile Include="RouteStop\IStopManager.cs" />
     <Compile Include="RouteStop\RouteManager.cs" />
@@ -200,8 +202,6 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Helpers\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

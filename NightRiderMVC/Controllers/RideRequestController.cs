@@ -9,6 +9,7 @@ namespace NightRiderMVC.Controllers
     public class RideRequestController : Controller
     {
         // GET: RideRequest
+        [Authorize]
         public ActionResult Index()
         {
             ViewBag.Message = "Request a Ride";
