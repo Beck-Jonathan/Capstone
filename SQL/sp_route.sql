@@ -17,40 +17,69 @@ AS
 				[Route_End_Time],
 				[Days_Of_Service],
 				[Is_Active]
-		FROM	[Route]
+		FROM	[dbo].[Route]
 	END
 GO
 
-print ''
-print '*** Create sp_activate_route_by_id ***'
-GO
+/******************
+Create sp_activate_route_by_id Stored Procedure
+***************/
 -- AUTHOR: Chris Baenziger
 -- CREATED: 2024-03-02
+print '' print '*** Create sp_activate_route_by_id ***'
+GO
 CREATE PROCEDURE [dbo].[sp_activate_route_by_id]
-	(
+(
 	@RouteID        [int]
 )
 AS
-BEGIN
-	UPDATE [Route]
-    SET [Is_Active] = 1
-    WHERE @RouteID = [Route_ID]
-END
+	BEGIN
+		UPDATE [dbo].[Route]
+		SET [Is_Active] = 1
+		WHERE @RouteID = [Route_ID]
+	END
 GO
 
-print ''
-print '*** Create sp_deactivate_route_by_id ***'
-GO
+/******************
+Create sp_deactivate_route_by_id Stored Procedure
+***************/
 -- AUTHOR: Chris Baenziger
 -- CREATED: 2024-03-02
+print '' print '*** Create sp_deactivate_route_by_id ***'
+GO
 CREATE PROCEDURE [dbo].[sp_deactivate_route_by_id]
+(
+	@RouteID        [int]
+)
+AS
+	BEGIN
+		UPDATE [dbo].[Route]
+		SET [Is_Active] = 0
+		WHERE @RouteID = [Route_ID]
+	END
+GO
+
+/******************
+Create sp_select_route_by_id Stored Procedure
+***************/
+-- AUTHOR: Michael Springer
+-- CREATED: 2024-04-19
+print '' print '*** creating sp_select_route_by_id ***'
+GO
+CREATE PROCEDURE [dbo].[sp_select_route_by_id]
 	(
 	@RouteID        [int]
 )
 AS
-BEGIN
-	UPDATE [Route]
-    SET [Is_Active] = 0
-    WHERE @RouteID = [Route_ID]
+	BEGIN
+		SELECT	[Route_ID],
+				[Route_Name],
+				[Route_Start_Time],
+				[Route_Cycle],
+				[Route_End_Time],
+				[Days_Of_Service]
+		FROM	[dbo].[Route]
+		WHERE	@RouteID = [Route_ID]
+			AND [Is_Active] = 1
 END
 GO

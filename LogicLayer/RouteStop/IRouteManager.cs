@@ -19,14 +19,20 @@ namespace LogicLayer.RouteStop
     /// UPDATED: 2024-03-05
     /// COMMENTS:
     ///     Added Activate and deactivate route.
+    /// <br /><br />
+    /// UPDATER: Michael Springer
+    /// UPDATED: 2024-04-19
+    /// COMMENTS: added method for GetRoutesWithStops
     /// </remarks>
     public interface IRouteManager
     {
         RouteVM getRouteById(int routeId);
         IEnumerable<RouteVM> getRoutes();
+        IEnumerable<RouteVM> GetRoutesWithStops();
         int AddRoute(RouteVM route);
         int EditRoute(RouteVM oldRoute, RouteVM newRoute);
         Task<BingMapsResponse> getRouteLine(RouteVM route);
+
 
         /// <summary>
         /// Method to deactivate a route

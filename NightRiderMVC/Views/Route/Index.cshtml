@@ -1,9 +1,65 @@
-﻿
+﻿@model IEnumerable<DataObjects.RouteObjects.RouteVM>
+
 @{
-    ViewBag.Title = "Routes and stops";
+    ViewBag.Title = ViewBag.Message;
 }
-<main aria-labelledby="title">
-    <h2 id="title">@ViewBag.Title.</h2>
-    <h3>@ViewBag.Message</h3>
-</main>
+
+<h2>@ViewBag.Message</h2>
+
+
+<div class="container">
+    <div class="row mb-1">
+        <div class="col">Route</div>
+        <div class="col">Start Time</div>
+        <div class="col">Last Stop Arrival</div>
+        <div class="col">Repeat Interval</div>
+        <div class="col"></div>
+    </div>
+    @foreach (var item in Model)
+    {
+        var collapseId = "collapse-" + item.RouteId; // used to create unique id for each collapse
+        var mapId = "map-" + item.RouteId; // used to assign a map to each collapse
+
+        <div class="row gx-5 py-2 my-2 border rounded-2 border-secondary ">
+            <div class="col">@Html.DisplayFor(modelItem => item.RouteName)</div>
+            <div class="col">@item.StartTime.ToString()</div>
+            <div class="col">@item.EndTime.ToString()</div>
+            <div class="col">@Html.DisplayFor(modelItem => item.RepeatTime)</div>
+            <div class="col">
+                <button class="btn btn-primary btn-map" type="button" data-bs-toggle="collapse" data-bs-target="#@collapseId" aria-expanded="false" aria-controls="@collapseId">
+                    Stops and Map
+                </button>
+            </div>
+        </div>
+        <div class="row collapse" id="@collapseId">
+            <div class="card card-body ms-3">
+                <div class="row gx-3">
+                    <div class="col-md-4">
+                        <div class="row border border-primary border-top-0 border-start-0 border-end-0">
+                            <div class="col-8">Location</div>
+                            <div class="col-4">Arrival Offset</div>
+                        </div>
+                        @if (item.RouteStops != null && item.RouteStops.Count() > 0)
+                        {
+                            foreach (var routeStop in item.RouteStops)
+                            {
+                                <div class="row border border-primary border-top-0 border-start-0 border-end-0">
+                                    <div class="col-8">@Html.DisplayFor(_ => routeStop.stop.StreetAddress)</div>
+                                    <div class="col-4">@Html.DisplayFor((_ => routeStop.OffsetFromRouteStart))</div>
+                                </div>
+                            }
+                        }
+                        <!-- Map section-->
+                    </div>
+                    <div class="col-md-8">
+                        <div id="@mapId" class="map-div mx-2" data-map-id="@mapId"></div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    }
+</div>
+<div id="mapConfig" data-bing-maps-key="@ViewBag.BingMapsKey" style="display:none;"></div>
+<div id="routesData" data-routes='@Html.Raw(ViewBag.RoutesData)' style="display:none;"></div>
 

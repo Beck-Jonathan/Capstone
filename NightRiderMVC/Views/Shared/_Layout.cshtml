@@ -6,6 +6,7 @@
     <title>@ViewBag.Title - My ASP.NET Application</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    
 
 </head>
 <body>
@@ -21,7 +22,7 @@
                     <li class="m-2">@Html.ActionLink("Contact Us", "Contact", "Home", new { area = "" }, new { @class = "nav-link" })</li>
                 </ul>
             </div>
-            
+
             <div class=" col-3 collapse navbar-collapse d-sm-inline-flex justify-content-center">
                 @Html.Partial("_LoginPartial")
             </div>
@@ -51,5 +52,14 @@
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
     <script src="@Url.Content("~/Scripts/site.js")" type="text/javascript"></script>
-</body>
+
+    @* Bing Maps API only accessed on Route Index View *@
+    @if (ViewContext.RouteData.Values["controller"].ToString().Equals("Route") &&
+        ViewContext.RouteData.Values["action"].ToString().Equals("Index"))
+    {
+        <script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?key=@ViewBag.BingMapsKey&callback=loadMapScenario' async defer></script>
+        <script src="@Url.Content("~/Scripts/map-handler.js")" type="text/javascript"></script>
+    }
+
+
 </html>
