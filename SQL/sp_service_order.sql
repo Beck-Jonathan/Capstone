@@ -153,6 +153,53 @@ where [VIN]=@VIN
 
  END 
  GO
+
+ /******************
+Create sp_deactivate_service_order Stored Procedure
+***************/
+-- Initial Creator: Max Fare
+-- Creation Date: 2024-04-01
+-- Stored Procedure Description: Updates a service order record to set the Active field as false
+PRINT '*** Creating sp_deactivate_service_order ***'
+GO
+
+CREATE PROCEDURE sp_deactivate_service_order
+(
+    @Service_Order_ID   [int],
+    @Version            [int]
+)
+AS
+    BEGIN
+        UPDATE [dbo].[Service_Order]
+        SET [Is_Active] = 0
+        WHERE [Service_Order_ID] = @Service_Order_ID
+            AND [Service_Order_Version] = @Version
+    END
+GO
+
+/******************
+Create sp_activate_service_order Stored Procedure
+***************/
+-- Initial Creator: Max Fare
+-- Creation Date: 2024-04-01
+-- Stored Procedure Description: Updates a service order record to set the Active field as true
+PRINT '*** Creating sp_activate_service_order ***'
+GO
+
+CREATE PROCEDURE sp_activate_service_order
+(
+    @Service_Order_ID   [int],
+    @Version            [int]
+)
+AS
+    BEGIN
+        UPDATE [dbo].[Service_Order]
+        SET [Is_Active] = 1
+        WHERE [Service_Order_ID] = @Service_Order_ID
+            AND [Service_Order_Version] = @Version
+    END
+GO
+
  
  -- Initial Creator: Jared Roberts
 -- Creation Date: 2024-02-27

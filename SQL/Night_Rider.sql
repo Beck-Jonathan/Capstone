@@ -1056,7 +1056,7 @@ CREATE TABLE [dbo].[Service_Line_Item]
         REFERENCES [dbo].[Parts_Inventory] ([Parts_Inventory_ID]),
     CONSTRAINT [FK_Service_Line_Item_Service_Order_ID] FOREIGN KEY([Service_Order_ID], [Service_Order_Version])
         REFERENCES [dbo].[Service_Order] ([Service_Order_ID], [Service_Order_Version]),
-    CONSTRAINT [CPK_Service_Line_Item] PRIMARY KEY([Service_Order_ID], [Parts_Inventory_ID])
+    CONSTRAINT [CPK_Service_Line_Item] PRIMARY KEY([Service_Order_ID], [Service_Order_Version], [Parts_Inventory_ID])
 )
 GO
 

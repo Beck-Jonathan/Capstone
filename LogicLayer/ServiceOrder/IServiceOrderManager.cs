@@ -136,6 +136,18 @@ namespace LogicLayer
         ServiceOrder_VM SelectServiceOrderByServiceOrderID(int serviceOrderID);
 
         /// <summary>
+        /// Completes a service order by enacting changes to inventory 
+        /// <br/>
+        /// numbers and marking the order as completed.
+        /// <br/>
+        /// <br/>
+        /// Max Fare 
+        /// Created: 2024-04-01
+        /// </summary>
+        /// <param name="serviceOrder">The order to complete</param>
+        /// <returns><see cref="int">A number identifying the result of attempted changes</see></returns>
+        int CompleteServiceOrder(ServiceOrder_VM serviceOrder);
+
         ///     A method that returns sevice orders that are complete
         /// </summary>
         /// <returns>

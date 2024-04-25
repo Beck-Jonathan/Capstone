@@ -2,6 +2,7 @@
 using DataAccessLayer;
 using DataObjects;
 using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -66,19 +67,40 @@ namespace LogicLayer
         /// </remarks>
         public List<ServiceOrderLineItems> GetServiceOrderLineItems()
         {
-            List<ServiceOrderLineItems> result = null;
+            List<ServiceOrderLineItems> result = new List<ServiceOrderLineItems>();
             try
             {
-                result = _serviceOrderLineItemsAccessor.GetAllServiceOrderLineItems();
-
-                if (result == null)
-                {
-                    throw new ArgumentException("No Parts Inventory record found.");
-                }                
+                result = _serviceOrderLineItemsAccessor.GetAllServiceOrderLineItems();          
             }
             catch (Exception ex)
             {
-                throw ex;
+                throw new ApplicationException("Stored Procedure Problem.", ex);
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// Adds a line item to an existing Service Order
+        /// <br/>
+        /// <br/>
+        /// Creator: Max Fare
+        /// <br/>
+        /// Date Created: 2024-04-05
+        /// </summary>
+        /// <param name="item"></param>
+        /// <returns>An int to be used as a success indicator</returns>
+        /// <exception cref="ApplicationException"></exception>
+        public int AddServiceOrderLineItem(ServiceOrderLineItems_VM item)
+        {
+            int result = 0;
+            try
+            {
+                result = _serviceOrderLineItemsAccessor.InsertServiceOrderLineItem(item);
+            }
+            catch (Exception ex)
+            {
+
+                throw new ApplicationException("Stored Procedure Problem", ex);
             }
             return result;
         }

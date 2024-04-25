@@ -28,7 +28,7 @@ namespace NightRiderWPF.DeveloperView
         List<ServiceOrderLineItems> _serviceOrderLineItems = null;
         Parts_InventoryManager _inventoryManager = null;
         List<Parts_Inventory> _allInventoryList = null;
-        List<Parts_Inventory> _usedInventoryList = null;
+        List<Parts_Inventory> _usedInventoryList = new List<Parts_Inventory>();
 
         public CompleteWorkOrderPage(ServiceOrder_VM serviceOrder)
         {
@@ -44,6 +44,7 @@ namespace NightRiderWPF.DeveloperView
             } catch (Exception ex)
             {
                 MessageBox.Show("Error Occurred: " + ex.ToString());
+                return;
             }
             
         }
@@ -132,11 +133,49 @@ namespace NightRiderWPF.DeveloperView
 
         private void confirmCompletionBtn_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.GoBack();
+            //create full object
+            ServiceOrder_VM toComplete = _serviceOrder;
+            List<Parts_Inventory> parts = new List<Parts_Inventory>();
+            toComplete.serviceOrderLineItems.Clear();
+            //update line items with new number of parts used
+            for(int i = 0; i < productUsedDataGrid.Items.Count; i++)
+            {
+                parts.Add((Parts_Inventory)productUsedDataGrid.Items[i]);
+            }
+            foreach(Parts_Inventory p in parts)
+            {
+                toComplete.serviceOrderLineItems.Add(new ServiceOrderLineItems()
+                {
+                    Service_Order_ID = toComplete.Service_Order_ID,
+                    Service_Order_Version = toComplete.Service_Order_Version,
+                    Parts_Inventory_ID = p.Parts_Inventory_ID,
+                    Quantity = p.Part_Quantity
+                });
+            }
+            
+            //send the object to the manager class to be completed
+            try
+            {
+                if (1 == _serviceOrderManager.CompleteServiceOrder(toComplete))
+                {
+                    MessageBox.Show("Service Order Completed, returning to Order list.", "Success", MessageBoxButton.OK, MessageBoxImage.None);
+                    
+                    NavigationService.Navigate(new WorkOrders.ViewWorkOrderList());
+                }
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show("Completion failed, " + ex.Message, "Failure", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
+            if(_allInventoryList.Count == 0)
+            {
+                NavigationService.GoBack();
+            }
             foreach(Parts_Inventory partsInventory in _allInventoryList)
             {
                 productCmbBox.Items.Add(partsInventory.Parts_Inventory_ID + " | " + partsInventory.Part_Name);
