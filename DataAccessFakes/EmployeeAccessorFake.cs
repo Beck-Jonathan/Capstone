@@ -503,6 +503,34 @@ namespace DataAccessFakes
             }
             return tempEmployee;
         }
+
+        public int RemoveEmployeeRoles(int employee_ID, string role)
+        {
+            IEnumerable<Role> roles;
+            List<Role> employeeRoles = new List<Role>();
+            int rows = 0;
+            foreach (var employee in _fakeEmployees)
+            {
+                if (employee.Employee_ID == employee_ID)
+                {
+
+                    foreach (var employeeRole in employee.Roles)
+                    {
+                        employeeRoles.Remove(new Role() { RoleID = "Maintenence", IsActive = true });
+                        rows++;
+                    }
+
+                    employee.Roles = employeeRoles;
+                }
+
+            }
+            if (rows == 0)
+            {
+                throw new ArgumentException("Error adding employee role");
+            }
+
+            return rows;
+        }
     }
 }
 // Checked by Nathan Toothaker

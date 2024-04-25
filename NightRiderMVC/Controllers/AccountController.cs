@@ -199,7 +199,7 @@ namespace NightRiderMVC.Controllers
                         }
                         AddErrors(result);
                     }
-                    else if (clientMgr.GetClientByEmail(model.Email).ClientID >= 100000)
+                    else if (!clientMgr.GetClientByEmail(model.Email).Equals(null))
                     {
                         var placeholderUsername = loginMgr.GetClientUserNameByEmail(model.Email);
                         var oldUser = loginMgr.AuthenticateClient(placeholderUsername, model.Password);
@@ -235,8 +235,8 @@ namespace NightRiderMVC.Controllers
                         {
                             //we will uncomment the following two lines of code later once our view model
                             // and our view are updated to ask for them:
-                            //GivenName = model.GivenName,
-                            //FamilyName = model.FamilyName,
+                            GivenName = model.GivenName,
+                            FamilyName = model.FamilyName,
                             UserName = model.Email,
                             Email = model.Email
                         };
@@ -489,6 +489,87 @@ namespace NightRiderMVC.Controllers
         {
             return View();
         }
+
+
+        //GET: /Account/RegisterEmployeeUser
+        [Authorize(Roles = "Admin")]
+        public ActionResult RegisterEmployeeUser()
+        {
+            return View();
+        }
+
+        //POST: /Acount/RegisterEmployeeUser
+        [HttpPost]
+        [Authorize(Roles="Admin")]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> RegisterEmployeeUser(RegisterEmployeeViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                //check to see if this user is in the existing database
+                LogicLayer.EmployeeManager empMgr = new LogicLayer.EmployeeManager();
+                LogicLayer.LoginManager loginMgr = new LogicLayer.LoginManager();
+                try
+                {
+                    if (empMgr.GetEmployeeByEmail(model.Email).Employee_ID >= 100000)
+                    {
+                        // if this user already exists we need to use the regular register method
+                        return RedirectToAction("Register", "Account");
+                    }
+                    else // if not existing user create a user without roles
+                    {
+                        var employee = new DataObjects.Employee_VM()
+                        {
+                            //these fields needed by sp_insert_user
+                            Email = model.Email,
+                            Given_Name = model.GivenName,
+                            Family_Name = model.FamilyName,
+                            Phone_Number = model.PhoneNumber,
+                            DOB = new DateTime(1973, 4, 5),
+                            Address = "",
+                            City = "",
+                            State = "",
+                            Country = "",
+                            Zip = "",
+                            Position = "",
+                            
+
+                        };
+                        if (empMgr.AddEmployee(employee) >= 100000) //add the dataobjects.user to employee
+                        {
+                            
+                            var employeeID = empMgr.RetrieveEmployeeIDFromEmail(model.Email);
+                            var login = loginMgr.AddEmployeeLogin(model.Email, employeeID);
+                            var user = new ApplicationUser // if it worked create an identity user
+                            {
+                                EmployeeID = employeeID,
+                                GivenName = model.GivenName,
+                                FamilyName = model.FamilyName,
+                                UserName = model.Email,
+                                Email = model.Email,
+                            };
+                            var result = await UserManager.CreateAsync(user, "newuser");
+                            if (result.Succeeded)
+                            {
+                                return RedirectToAction("Index", "Admin");
+                            }
+                            AddErrors(result);
+
+                        }
+
+                    }
+                }
+                catch (Exception ex)
+                {
+                    //creating old user failed probably because authenticate user failed
+                    return View(model);
+                }
+                //modelstate was not valid
+            }
+            return View(model);
+        }
+
+
 
         protected override void Dispose(bool disposing)
         {

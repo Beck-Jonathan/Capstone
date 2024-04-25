@@ -36,5 +36,7 @@ namespace NightRiderMVC.Models
         {
             return new ApplicationDbContext();
         }
+
+        //public System.Data.Entity.DbSet<NightRiderMVC.Models.ApplicationUser> ApplicationUsers { get; set; }
     }
 }

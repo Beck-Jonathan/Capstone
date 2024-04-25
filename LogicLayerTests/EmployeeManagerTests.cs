@@ -1,7 +1,9 @@
 ﻿using DataAccessFakes;
 using DataObjects;
 using LogicLayer;
+using Microsoft.Maps.MapControl.WPF.Overlays;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework.Internal;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -357,6 +359,36 @@ namespace LogicLayerTests
             // Assert
             Assert.IsNotNull(foundEmployee, $"Employee with ID {employeeIDToFind} should be found.");
         }
+
+
+
+        [TestMethod]
+        public void TestRemoveEmployeeRoleSucceeds()
+        {
+            // Arrange
+            int result = 0;
+            int expectedResult = 1;
+
+            // Act
+            result = _employeeManager.RemoveEmployeeRoles(2, "Maintenance");
+            // Assert
+            Assert.AreEqual(expectedResult, result);
+            
+            
+        }
+
+        [TestMethod]
+        public void TestRetrieveEmployeeIDFromEmailWorks()
+        {
+            int result = 0;
+            int expectedResult = 1;
+
+            result = _employeeManager.RetrieveEmployeeIDFromEmail("tess@company.com");
+
+            Assert.AreEqual(expectedResult, result);
+        }
+
+       
     }
 }
 // Checked by Nathan Toothaker

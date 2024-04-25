@@ -20,6 +20,10 @@
                     <li class="m-2">@Html.ActionLink("Routes and Stops", "Index", "Route", new { area = "" }, new { @class = "nav-link" })</li>
                     <li class="m-2">@Html.ActionLink("Request a Ride", "Index", "RideRequest", new { area = "" }, new { @class = "nav-link" })</liclass="m-2">
                     <li class="m-2">@Html.ActionLink("Contact Us", "Contact", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <li class="m-2">@Html.ActionLink("User Administration", "Index", "Admin", new { area = "" }, new { @class = "nav-link" })</li>
+                    }
                 </ul>
             </div>
 

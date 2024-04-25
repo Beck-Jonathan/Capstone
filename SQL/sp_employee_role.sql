@@ -21,6 +21,27 @@ BEGIN
 END
 GO
 
+
+-- Initial Creator: Jacob Rohr
+-- Creation Date: 2024-23-04
+-- Last Modified: Jacob Rohr
+-- Modification Description: Initial Creation
+-- Stored Procedure Description: Delete employee_role record
+CREATE PROCEDURE [dbo].[sp_delete_employee_role]
+(
+	@p_Employee_ID			int,
+	@p_Role_ID				nvarchar(25)
+)
+as
+BEGIN
+	DELETE FROM [dbo].[Employee_Role]
+	WHERE [Employee_ID] =	@p_EmployeeID
+	AND [Role_ID] = 		@p_RoleID
+	
+END
+GO
+
+
 -- Initial Creator: James Williams
 -- Creation Date: 2024-02-06
 -- Last Modified: James Williams

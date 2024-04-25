@@ -67,6 +67,13 @@ namespace LogicLayer
         ///    UPDATED: 2024-04-13
         /// <br />
         ///     Changed output from bool to an int representing the assigned employeeID
+        ///     
+        /// ///    UPDATER: Jacob Rohr
+        /// <br />
+        ///    UPDATED: 2024-04-24
+        /// <br />
+        ///     Changed where it adds roles to add them only if it isn't null.
+        /// </remarks>
         /// </remarks>
         public int AddEmployee(Employee_VM newEmployee)
         {
@@ -79,13 +86,18 @@ namespace LogicLayer
              
                 int rows = 0;
                 // Creates a copy of Employe_Roles to be iterated
-                var rolesCopy = newEmployee.Roles.ToList();
-                foreach (var role in rolesCopy)
+                
+                if(newEmployee.Roles != null)
                 {
-                    string roleName = role.RoleID;
-                    //inserts new record(s) and returns number of rows inserted
-                    rows = _employeeAccessor.InsertEmployeeRoles(newID, roleName);
+                    var rolesCopy = newEmployee.Roles.ToList();
+                    foreach (var role in rolesCopy)
+                    {
+                        string roleName = role.RoleID;
+                        //inserts new record(s) and returns number of rows inserted
+                        rows = _employeeAccessor.InsertEmployeeRoles(newID, roleName);
+                    }
                 }
+                
                 // assumes if 0 rows returned that the insert failed
              
             }
@@ -323,7 +335,111 @@ namespace LogicLayer
             }
             return result;
         }
+        /// <summary>
+        ///     Inserts new employee role record into database
+        /// </summary>
+        /// <param name="employeeID">
+        ///    The ID of the employee you would like to insert a role for
+        /// </param>
+        /// <param name="role">
+        ///     The role you would like to associate with the employee
+        /// </param>
+        /// <returns>
+        ///    <see cref="int"> Number of rows inserted </see>
+        /// </returns>
+        /// <remarks>
+        ///    Parameters:
+        /// <br />
+        ///    <see cref="int">employeeID</see> a: ID of employee to insert roles on
+        /// <br />
+        /// <br />
+        ///    <see cref="string">role</see> a: role to be inserted
+        /// <br />
+        ///    Exceptions:
+        ///   <br />
+        ///   <br />
+        ///    <see cref="ApplicationException">ArgumentException</see>: Throws when no roles inserted
+        /// <br /><br />
+        ///    CONTRIBUTOR: Jacob Rohr
+        /// <br />
+        ///    CREATED: 2024-04-23
+        /// <br />
+        public int InsertEmployeeRoles(int employee_ID, string role)
+        {
+            int result = 0;
+            try
+            {
+                result = _employeeAccessor.InsertEmployeeRoles(employee_ID, role);
+            }
+            catch(Exception ex)
+            {
+                throw new ApplicationException("Role not added!", ex);
+            }
+            return result;
+        }
+
+        /// <summary>
+        ///     deletes employee role record into database
+        /// </summary>
+        /// <param name="employeeID">
+        ///    The ID of the employee you would like to delete a role from
+        /// </param>
+        /// <param name="role">
+        ///     The role you would like to get rid of 
+        /// </param>
+        /// <returns>
+        ///    <see cref="int"> Number of rows inserted </see>
+        /// </returns>
+        /// <remarks>
+        ///    Parameters:
+        /// <br />
+        ///    <see cref="int">employeeID</see> a: ID of employee to remove roles from
+        /// <br />
+        /// <br />
+        ///    <see cref="string">role</see> a: role to be removed
+        /// <br />
+        ///    Exceptions:
+        ///   <br />
+        ///   <br />
+        ///    <see cref="ApplicationException">ArgumentException</see>: Throws when no roles found
+        /// <br /><br />
+        ///    CONTRIBUTOR: Jacob Rohr
+        /// <br />
+        ///    CREATED: 2024-04-23
+        /// <br />
+        public int RemoveEmployeeRoles(int employee_ID, string role)
+        {
+            int result = 0;
+            try
+            {
+                result = _employeeAccessor.RemoveEmployeeRoles(employee_ID, role);
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("Role not added!", ex);
+            }
+            return result;
+        }
+
+
+
+        //Does the same thing as the GetEmployeeByEmail except it only returns the ID
+        public int RetrieveEmployeeIDFromEmail(string email)
+        {
+            try
+            {
+                return _employeeAccessor.GetEmployeeByEmail(email).Employee_ID;
+            }
+            catch (Exception ex)
+            {
+
+                throw new ApplicationException("Database error", ex);
+            }
+        }
+
+
     }
     
+
 }
 // Checked by Nathan Toothaker
