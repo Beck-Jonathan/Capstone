@@ -48,6 +48,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ActiveRouteAccessor.cs" />
     <Compile Include="BingMapsAccessor.cs" />
     <Compile Include="ClientAccessor.cs" />
     <Compile Include="ClientDependentRoleAccessor.cs" />

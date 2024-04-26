@@ -26,8 +26,11 @@ namespace DataAccessInterfaces
     /// <br />
     /// Added method for deactivate vehicle.
     /// Added SelectVehicleByVIN(string VIN).
+    /// UPDATER: Chris Baenziger
+    /// UPDATED: 2024-04-20
+    /// Added vehicle checklist
     /// </remarks>
-
+    
     public interface IVehicleAccessor
     {
         /// <summary>
@@ -249,5 +252,24 @@ namespace DataAccessInterfaces
         ///     Initial Creation
         /// </remarks>
         Vehicle SelectVehicleByVIN(string VIN);
+
+        /// <summary>
+        ///     Add vehicle checklist to the database.
+        /// </summary>
+        /// <param name="checklist">
+        ///    The checklist information to be added as a Vehicle checklist object.
+        /// </param>
+        /// <returns>
+        ///    <see cref="int">int</see>: The ID for the new checklist.
+        /// </returns>
+        /// <remarks>
+        ///    Parameters:
+        ///    <see cref="VehicleChecklist">VehicleChecklist</see> Vehicle Checklist: The checklist information to be added.
+        ///    Exceptions:
+        ///    <see cref="SqlException">SqlException</see>: Thrown if there is a problem writing to the DB.
+        ///    CONTRIBUTOR: Chris Baenziger
+        ///    CREATED: 2024-04-20
+        /// </remarks>
+        int AddVehicleChecklist(VehicleChecklist checklist);
     }
 }

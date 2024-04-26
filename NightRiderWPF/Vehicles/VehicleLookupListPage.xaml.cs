@@ -73,7 +73,7 @@ namespace NightRiderWPF.Vehicles
 
         private void addRentalBtn_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Not Implemented");
+            NavigationService.Navigate(new VehicleChecklist());
         }
 
         /// <summary>

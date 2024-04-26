@@ -80,18 +80,19 @@ GO
 /******************
 Insert Sample Data For The  Purchase_Order table
 ***************/
-print '' Print '***Insert Sample Data For The  Purchase_Order table***' 
- go 
- INSERT INTO [dbo].[Purchase_Order]
-		([Vendor_ID],[Purchase_Order_Date],[Delivery_Address],[Delivery_Address2],[Delivery_City],[Delivery_State],[Delivery_Country],[Delivery_Zip])
-	VALUES
-		(100000,'2022-05-05','123 fake street','Apt #3','Cedar Rapids','IA','USA','52002'),
-		(100001,'2022-05-06','123 fake street','Apt #3','Cedar Rapids','IA','USA','52002'),
-		(100002,'2022-05-07','123 fake street','Apt #3','Cedar Rapids','IA','USA','52002'),
-		(100003,'2022-05-08','123 fake street','Apt #3','Cedar Rapids','IA','USA','52002'),
-		(100004,'2022-05-09','123 fake street','Apt #3','Cedar Rapids','IA','USA','52002'),
-		(100004,'2022-05-10','123 fake street','Apt #3','Cedar Rapids','IA','USA','52002'),
-		(100003,'2022-05-11','123 fake street','Apt #3','Cedar Rapids','IA','USA','52002')
+print ''
+Print '***Insert Sample Data For The  Purchase_Order table***' 
+ go
+INSERT INTO [dbo].[Purchase_Order]
+    ([Vendor_ID],[Purchase_Order_Date],[Delivery_Address],[Delivery_Address2],[Delivery_City],[Delivery_State],[Delivery_Country],[Delivery_Zip])
+VALUES
+    (100000, '2022-05-05', '123 fake street', 'Apt #3', 'Cedar Rapids', 'IA', 'USA', '52002'),
+    (100001, '2022-05-06', '123 fake street', 'Apt #3', 'Cedar Rapids', 'IA', 'USA', '52002'),
+    (100002, '2022-05-07', '123 fake street', 'Apt #3', 'Cedar Rapids', 'IA', 'USA', '52002'),
+    (100003, '2022-05-08', '123 fake street', 'Apt #3', 'Cedar Rapids', 'IA', 'USA', '52002'),
+    (100004, '2022-05-09', '123 fake street', 'Apt #3', 'Cedar Rapids', 'IA', 'USA', '52002'),
+    (100004, '2022-05-10', '123 fake street', 'Apt #3', 'Cedar Rapids', 'IA', 'USA', '52002'),
+    (100003, '2022-05-11', '123 fake street', 'Apt #3', 'Cedar Rapids', 'IA', 'USA', '52002')
 
 GO
 
@@ -167,14 +168,15 @@ print ''
 Print '***Insert Sample Data For The  Parts_Inventory table***' 
  go
 
- INSERT INTO [dbo].[Parts_Inventory] (
-    
-    [Part_Name], 
+INSERT INTO [dbo].[Parts_Inventory]
+    (
+
+    [Part_Name],
     [Part_Unit_Type],
-    [Item_Description], 
-    [Item_Specifications], 
+    [Item_Description],
+    [Item_Specifications],
     [Part_Photo_URL]
-)
+    )
 VALUES
     ( 'Fastner A', 'Pieces', 'Standard widget', 'Dimensions: 5cm x 3cm x 2cm, Material: Steel', 'https://4.imimg.com/data4/EN/PJ/MY-7251967/hex-head-bolts-500x500.jpg'),
     ( 'Bolt B', 'Pieces', 'Heavy-duty bolt', 'Thread size: M10, Length: 50mm, Material: Stainless steel', 'https://www.iqsdirectory.com/articles/bolts/types-of-bolts/bolts.jpg'),
@@ -185,7 +187,7 @@ VALUES
     ( 'Screw C', 'Pieces', 'Metal Screws', 'Diameter: 10mm, Material: Steel', 'https://m.media-amazon.com/images/I/61tO5ExJfxL.jpg'),
     ( 'Wire Stripper D', 'Unit', 'Wire Stripper', 'Length: 2 meters', 'https://m.media-amazon.com/images/I/61C-UqAIndL.jpg'),
     ( 'Nails E', 'Pounds', 'Wood Nails', 'Dimensions: 30cm x 20cm, Material: Aluminum', 'https://m.media-amazon.com/images/I/81RoBbXE7RL._AC_UF894,1000_QL80_.jpg'),
-	( 'Tires A', 'Unit', 'Sedan Tires', 'Dimensions: 5cm x 3cm x 2cm, Material: rubber', 'https://m.media-amazon.com/images/I/81bkWoDhtKL.jpg'),
+    ( 'Tires A', 'Unit', 'Sedan Tires', 'Dimensions: 5cm x 3cm x 2cm, Material: rubber', 'https://m.media-amazon.com/images/I/81bkWoDhtKL.jpg'),
     ( 'Tires B', 'Unit', 'Bus Tires', 'Thread size: M10, Length: 50mm, Material: Rubber', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTtNwGpQYMQ9m0EIw1ZKM0IcwAwh17TznAv1Rtysc-nc5r7JGEc3h3IW7vf14jQIr0VGxA&usqp=CAU'),
     ( 'Axel A', 'Unit', 'Mazda 3 Rear Axel', 'Diameter: 10mm, Material: Steel', 'https://m.media-amazon.com/images/I/51Q6MN6ArnL._AC_UF894,1000_QL80_.jpg'),
     ( 'Struts', 'Unit', 'VW Bug front strut', 'Length: 2 meters, Gauge: 18 AWG', 'https://m.media-amazon.com/images/I/71XlY5CA3AL.jpg'),
@@ -200,7 +202,7 @@ CREATE TABLE [dbo].[Purchase_Order_Line_Item]
     [Line_Number] [int] NOT NULL,
     [Line_Item_Name] [nvarchar](30) NULL,
     [Line_Item_Qty] [int] NOT NULL,
-	[Line_Item_Price][money] NOT NULL,
+    [Line_Item_Price][money] NOT NULL,
     [Line_Item_Description] [nvarchar](100) NOT NULL,
     [Is_Active] [bit] NOT NULL DEFAULT(1),
     CONSTRAINT [PK_Purchase_Order_Line_Item] PRIMARY KEY([Purchase_Order_ID], [Parts_Inventory_ID]),
@@ -219,35 +221,35 @@ GO
 INSERT INTO [dbo].[Purchase_Order_Line_Item]
     ([Purchase_Order_ID], [Parts_Inventory_ID], [Line_Number], [Line_Item_Name], [Line_Item_Qty],[Line_Item_Price], [Line_Item_Description])
 VALUES
-    (100000, 100000, 100000, 'Fastner', 2,1, 'Some Fastner'),
-	(100000, 100001, 100001, 'Bolt', 2,1, 'Some Bolt'),
-	(100000, 100002, 100002, 'Grommet', 2,3, 'Some Grommet'),
-	(100000, 100003, 100003, 'Cable', 2,4, 'Some Cable'),
-	(100000, 100004, 100004, 'Frame', 2,5, 'Some Frame'),
-	(100000, 100005, 100005, 'Washer', 2,6, 'Some Washer'),
-	(100001, 100006, 100001, 'Screw', 2,7, 'Some Screw'),
-	(100001, 100007, 100002, 'Wire Stripper D', 2,8, 'Some Stripper'),
-	(100001, 100008, 100003, 'Nails', 2,9, 'Some Nails'),
-	(100001, 100009, 100004, 'Tires', 2,10, 'Some Tires'),
-	(100001, 100010, 100005, 'Tires', 2,11, 'Some Tires'),
-	(100001, 100011, 100006, 'Axel', 2,12, 'Some Axel'),
-	(100002, 100012, 100000, 'Struts', 2,13.25, 'Some Struts'),
-	(100002, 100013, 100001, 'Hubcaps', 2,14.25, 'Some Hubcaps'),
-	(100003, 100013, 100003, 'Hubcaps', 2,15.25, 'Some Hubcaps'),
-	(100003, 100001, 100000, 'Bolt', 2,16.25, 'Some Bolt'),
-	(100003, 100002, 100001, 'Grommet', 2,17.25, 'Some Grommet'),
-	(100003, 100003, 100002, 'Cable', 2,21.25, 'Some Cable'),
-	(100004, 100004, 100000, 'Frame', 2,22.25, 'Some Frame'),
-	(100004, 100005, 100001, 'Washer', 2,23.25, 'Some Washer'),
-	(100005, 100006, 100000, 'Screw', 2,24.25, 'Some Screw'),
-	(100005, 100007, 100001, 'Wire Stripper D', 2,25.25, 'Some Stripper'),
-	(100006, 100008, 100000, 'Nails', 2,26.25, 'Some Nails'),
-	(100006, 100009, 100001, 'Tires', 2,27.25, 'Some Tires'),
-	(100006, 100010, 100002, 'Tires', 2,31.25, 'Some Tires'),
-	(100006, 100011, 100003, 'Axels', 2,32.25, 'Some Axels'),
-	(100006, 100012, 100004, 'Struts', 2,33.25, 'Some Struts'),
-	
-	(100006, 100000, 100006, 'Fastner', 2,35.25, 'Some Fastener')
+    (100000, 100000, 100000, 'Fastner', 2, 1, 'Some Fastner'),
+    (100000, 100001, 100001, 'Bolt', 2, 1, 'Some Bolt'),
+    (100000, 100002, 100002, 'Grommet', 2, 3, 'Some Grommet'),
+    (100000, 100003, 100003, 'Cable', 2, 4, 'Some Cable'),
+    (100000, 100004, 100004, 'Frame', 2, 5, 'Some Frame'),
+    (100000, 100005, 100005, 'Washer', 2, 6, 'Some Washer'),
+    (100001, 100006, 100001, 'Screw', 2, 7, 'Some Screw'),
+    (100001, 100007, 100002, 'Wire Stripper D', 2, 8, 'Some Stripper'),
+    (100001, 100008, 100003, 'Nails', 2, 9, 'Some Nails'),
+    (100001, 100009, 100004, 'Tires', 2, 10, 'Some Tires'),
+    (100001, 100010, 100005, 'Tires', 2, 11, 'Some Tires'),
+    (100001, 100011, 100006, 'Axel', 2, 12, 'Some Axel'),
+    (100002, 100012, 100000, 'Struts', 2, 13.25, 'Some Struts'),
+    (100002, 100013, 100001, 'Hubcaps', 2, 14.25, 'Some Hubcaps'),
+    (100003, 100013, 100003, 'Hubcaps', 2, 15.25, 'Some Hubcaps'),
+    (100003, 100001, 100000, 'Bolt', 2, 16.25, 'Some Bolt'),
+    (100003, 100002, 100001, 'Grommet', 2, 17.25, 'Some Grommet'),
+    (100003, 100003, 100002, 'Cable', 2, 21.25, 'Some Cable'),
+    (100004, 100004, 100000, 'Frame', 2, 22.25, 'Some Frame'),
+    (100004, 100005, 100001, 'Washer', 2, 23.25, 'Some Washer'),
+    (100005, 100006, 100000, 'Screw', 2, 24.25, 'Some Screw'),
+    (100005, 100007, 100001, 'Wire Stripper D', 2, 25.25, 'Some Stripper'),
+    (100006, 100008, 100000, 'Nails', 2, 26.25, 'Some Nails'),
+    (100006, 100009, 100001, 'Tires', 2, 27.25, 'Some Tires'),
+    (100006, 100010, 100002, 'Tires', 2, 31.25, 'Some Tires'),
+    (100006, 100011, 100003, 'Axels', 2, 32.25, 'Some Axels'),
+    (100006, 100012, 100004, 'Struts', 2, 33.25, 'Some Struts'),
+
+    (100006, 100000, 100006, 'Fastner', 2, 35.25, 'Some Fastener')
 	
     
 GO
@@ -371,7 +373,7 @@ CREATE TABLE [dbo].[Vehicle_Type]
 (
     [Vehicle_Type_ID] [nvarchar](50) not null /*a type of vehicle, like bus or van*/,
     [Is_Active] [bit] DEFAULT 1 not null
-    CONSTRAINT [pk_vehicleType] PRIMARY KEY([Vehicle_Type_ID])
+        CONSTRAINT [pk_vehicleType] PRIMARY KEY([Vehicle_Type_ID])
 );
 GO
 /******************
@@ -447,7 +449,7 @@ CREATE TABLE [dbo].[Vehicle]
     [Vehicle_Mileage] [int] NOT NULL,
     [Vehicle_License_Plate] [nvarchar](10) NOT NULL,
     [Vehicle_Model_ID] [int] NOT NULL,
-    [Vehicle_Type_ID] [nvarchar](50) NOT NULL,
+    [Vehicle_Type_ID] [nvarchar](50) NULL,
     [Date_Entered] [date] NOT NULL,
     [Description] [nvarchar](256) NOT NULL,
     [Maintenance_Notes] [nvarchar](MAX),
@@ -495,22 +497,23 @@ Print '***Create the [dbo].[Employee] table***'
  go
 
 
-CREATE TABLE [dbo].[Employee] (
-	[Employee_ID]	[int] IDENTITY(100000, 1) NOT NULL,
-	[Given_Name] 	[nvarchar](50) 	NOT NULL,
-	[Family_Name]	[nvarchar](50) 	NOT NULL,
-	[DOB]			[datetime]		NOT NULL,
-	[Address]		[nvarchar](50) 	NOT NULL,
-	[Address2]		[nvarchar](50) 	NULL,
-	[City]			[nvarchar](20) 	NOT NULL,
-	[State]			[nvarchar](2) 	NOT NULL,
-	[Country]		[nvarchar](3) 	NOT NULL,
-	[Zip]			[nvarchar](9) 	NOT NULL,
-	[Phone_Number]	[nvarchar](20) 	NOT NULL,
-	[Email]			[nvarchar](50) 	NOT NULL,
-	[Position]		[nvarchar](20) 	NOT NULL,
-	[Is_Active]		[bit]			NOT NULL DEFAULT 1,
-	CONSTRAINT [pk_Employee] PRIMARY KEY([Employee_ID])
+CREATE TABLE [dbo].[Employee]
+(
+    [Employee_ID] [int] IDENTITY(100000, 1) NOT NULL,
+    [Given_Name] [nvarchar](50) NOT NULL,
+    [Family_Name] [nvarchar](50) NOT NULL,
+    [DOB] [datetime] NOT NULL,
+    [Address] [nvarchar](50) NOT NULL,
+    [Address2] [nvarchar](50) NULL,
+    [City] [nvarchar](20) NOT NULL,
+    [State] [nvarchar](2) NOT NULL,
+    [Country] [nvarchar](3) NOT NULL,
+    [Zip] [nvarchar](9) NOT NULL,
+    [Phone_Number] [nvarchar](20) NOT NULL,
+    [Email] [nvarchar](50) NOT NULL,
+    [Position] [nvarchar](20) NOT NULL,
+    [Is_Active] [bit] NOT NULL DEFAULT 1,
+    CONSTRAINT [pk_Employee] PRIMARY KEY([Employee_ID])
 )
 GO
 
@@ -575,26 +578,29 @@ Print '***Create the [dbo].[Role] table***'
 GO
 CREATE TABLE [dbo].[Role]
 (
-    [Role_ID] 			[nvarchar](25) NOT NULL,
-	[Role_Description] 	[nvarchar](255) NOT NULL DEFAULT '',
-    [Is_Active] 		[bit] NOT NULL DEFAULT 1,
+    [Role_ID] [nvarchar](25) NOT NULL,
+    [Role_Description] [nvarchar](255) NOT NULL DEFAULT '',
+    [Is_Active] [bit] NOT NULL DEFAULT 1,
     CONSTRAINT 		[pk_Role_ID] PRIMARY KEY ([Role_ID])
 )
 GO
 /******************
 Insert Sample Data For The  Role table
 ***************/
-print '' Print '***Insert Sample Data For The  Role table***' 
+print ''
+Print '***Insert Sample Data For The  Role table***' 
 GO
- Insert into [dbo].[Role] ([Role_ID], [Role_Description]) VALUES 
-	('Admin', 'Manages entire application, typically aids in system setup.'),
-	('FleetAdmin', 'Manages the fleet'),
-	('Mechanic', 'Fixes the vehicles'),
-	('Maintenance', 'Routine maintenance work that doesnt require mechanic'),
-	('PartsPerson', 'An invetory specialist, that is the go to for any parts for vehicles'),
+Insert into [dbo].[Role]
+    ([Role_ID], [Role_Description])
+VALUES
+    ('Admin', 'Manages entire application, typically aids in system setup.'),
+    ('FleetAdmin', 'Manages the fleet'),
+    ('Mechanic', 'Fixes the vehicles'),
+    ('Maintenance', 'Routine maintenance work that doesnt require mechanic'),
+    ('PartsPerson', 'An invetory specialist, that is the go to for any parts for vehicles'),
     ('Dispatcher', 'The controller of the fleet. Assigns tasks, routes drivers, and ensures services run smoothly.'),
-	('Operator', 'Manages the routes'),
-	('Driver', 'Drives the vehicles')
+    ('Operator', 'Manages the routes'),
+    ('Driver', 'Drives the vehicles')
 GO
 
 
@@ -622,7 +628,7 @@ GO
 /******************
 Insert Sample Data For The  Employee_Role table
 ***************/
- print ''
+print ''
 print '*** inserting Employee_roles records ***'
 GO
 INSERT INTO [dbo].[Employee_Role]
@@ -799,6 +805,44 @@ VALUES
     (100004, 100003, '1C4RJFAG5FC123456', '2023-07-12', '2023-09-06')
 go
 
+/******************
+Create the [dbo].[Route_Fulfillment] table
+***************/
+print ''
+Print '***Create the [dbo].[Route_Fulfillment] table***' 
+GO
+CREATE TABLE [dbo].[Route_Fulfillment]
+(
+    [Assignment_ID] [int] NOT NULL,
+    [Actual_Driver_ID] [int] NOT NULL,
+    [Actual_VIN] [nvarchar](17) NOT NULL,
+    [Start_Time] [datetime] NOT NULL,
+    [End_Time] [datetime] NULL,
+    CONSTRAINT [pk_Route_Fulfillment] PRIMARY KEY([Assignment_ID], [Actual_Driver_ID], [Actual_VIN]),
+    CONSTRAINT [fk_Route_Fulfillment_Assigment_ID] FOREIGN KEY([Assignment_ID])
+        REFERENCES [dbo].[Route_Assignment]([Assignment_ID]),
+    CONSTRAINT [fk_Route_Fulfillment_Driver_ID] FOREIGN KEY([Actual_Driver_ID]) 
+        REFERENCES [dbo].[Driver]([Employee_ID]),
+    CONSTRAINT [fk_Route_Fulfillment_VIN] FOREIGN KEY([Actual_VIN]) 
+        REFERENCES [dbo].[Vehicle]([VIN])
+)
+GO
+
+/******************
+Insert Sample Data For The  Route_Fulfillment table
+***************/
+print ''
+Print '***Insert Sample Data For The  Route_Fulfillment table***' 
+go
+INSERT INTO [dbo].[Route_Fulfillment]
+    ([Assignment_ID], [Actual_Driver_ID], [Actual_VIN], [Start_Time], [End_Time])
+VALUES
+    (100000, 100000, '1HGCM82633A123456', '2023-11-01 11:01:37.000', '2023-11-01 18:31:37.000'),
+    (100001, 100000, '5XYZH4AG4JH123456', '2023-12-15 12:15:37.000', '2023-12-15 19:54:15.000'),
+    (100002, 100001, 'JM1BK32F781234567', '2024-01-20 13:20:20.000', '2024-01-20 18:20:20.000'),
+    (100003, 100002, 'WAUZZZ4G6BN123456', '2022-04-23 16:23:23.000', '2022-04-23 20:23:23.000'),
+    (100004, 100003, '1C4RJFAG5FC123456', '2023-07-12 19:12:12.000', '2023-07-12 22:12:12.000')
+go
 
 /******************
 Create the [dbo].[Safety_Report] table
@@ -1048,10 +1092,10 @@ Print '***Create the [dbo].[Service_Line_Item] table***'
 
 CREATE TABLE [dbo].[Service_Line_Item]
 (
-    [Service_Order_ID]            [int]         NOT NULL,
-    [Service_Order_Version]       [int]         NOT NULL,
-    [Parts_Inventory_ID]          [int]         NOT NULL,
-    [Quantity]                    [int]         NOT NULL,
+    [Service_Order_ID] [int] NOT NULL,
+    [Service_Order_Version] [int] NOT NULL,
+    [Parts_Inventory_ID] [int] NOT NULL,
+    [Quantity] [int] NOT NULL,
     CONSTRAINT [FK_Service_Line_Item_Parts_Inventory_ID] FOREIGN KEY([Parts_Inventory_ID])
         REFERENCES [dbo].[Parts_Inventory] ([Parts_Inventory_ID]),
     CONSTRAINT [FK_Service_Line_Item_Service_Order_ID] FOREIGN KEY([Service_Order_ID], [Service_Order_Version])
@@ -1064,9 +1108,10 @@ GO
 /******************
 Insert Sample Data For The  Service_Line_Item table
 ***************/
-print '' Print '***Insert Sample Data For The  Service_Line_Item table***' 
- go 
- INSERT INTO [dbo].[Service_Line_Item] 
+print ''
+Print '***Insert Sample Data For The  Service_Line_Item table***' 
+ go
+INSERT INTO [dbo].[Service_Line_Item]
     ([Service_Order_ID], [Service_Order_Version], [Parts_Inventory_ID], [Quantity])
 VALUES
     (100000, 1, 100000, 2),
@@ -1098,8 +1143,8 @@ CREATE TABLE [dbo].[Service_Line]
     CONSTRAINT [PK_Service_Line] PRIMARY KEY ([Service_Line_ID],[Service_Line_Item_ID])
 ,
     CONSTRAINT [AK_Service_Line_Item_ID1] UNIQUE([Service_Line_Item_ID])
-/*,CONSTRAINT [fk_Service_Line_Service_Order0] foreign key ([Service_Line_ID]) references [Service_Order]([Service_Order_ID])*/
-,
+    /*,CONSTRAINT [fk_Service_Line_Service_Order0] foreign key ([Service_Line_ID]) references [Service_Order]([Service_Order_ID])*/
+    ,
     -- CONSTRAINT [fk_Service_Line_Service_Line_Item1] foreign key ([Service_Line_Item_ID]) references [Service_Line_Item]([Service_Line_Item_ID])
 
 )
@@ -1144,11 +1189,11 @@ Print '***Insert Sample Data For The  Special_Service_Order table***'
 
 INSERT INTO [dbo].[Special_Service_Order]
     (
-        [Service_Order_ID], 
-        [Service_Order_Version],
-        [Event_Description],
-        [Priority],
-        [Is_Active]
+    [Service_Order_ID],
+    [Service_Order_Version],
+    [Event_Description],
+    [Priority],
+    [Is_Active]
     )
 VALUES
     (100000, 1, 'Hit a Tree', "0", 1),
@@ -1468,17 +1513,17 @@ VALUES
     (100001, 100003),
     (100001, 100004),
     (100001, 100005),
-	(100002, 100006),
+    (100002, 100006),
     (100002, 100007),
     (100002, 100008),
     (100002, 100009),
     (100002, 100010),
-	(100003, 100011),
+    (100003, 100011),
     (100003, 100001),
     (100003, 100002),
     (100003, 100003),
     (100004, 100004),
-	(100004, 100005),
+    (100004, 100005),
     (100004, 100006);
     
 GO
@@ -1634,7 +1679,7 @@ CREATE TABLE [dbo].[Inspection_Report]
     [Windshield_Washer_Fluid] [nvarchar](4) NULL,
     [Problem_Description] [nvarchar](256) NULL,
     [Is_Active] [bit] NOT NULL DEFAULT 1
-    CONSTRAINT [fk_Inspection_Report_Employee_ID] FOREIGN KEY ([Employee_ID])
+        CONSTRAINT [fk_Inspection_Report_Employee_ID] FOREIGN KEY ([Employee_ID])
         REFERENCES [dbo].[Driver] ([Employee_ID]),
     CONSTRAINT [fk_Inspection_Report_VIN] FOREIGN KEY ([VIN])
         REFERENCES [dbo].[Vehicle] ([VIN]),
@@ -1818,7 +1863,7 @@ VALUES
     ('JoeSmith1994', 100000, NULL, 'what is your favorite animal?', 'lion', 'what is your favorite food?', 'Ramen', 'what was your first dogs name?', 'Hoola'),
     ('Jacmar125', 100001, NULL, 'what is your favorite animal?', 'Ocelot', 'what is your favorite food?', 'Bibimbap', 'what was your first dogs name?', 'Jeff'),
     ('Lebold2202', 100002, NULL, 'what is your favorite animal?', 'Foxes', 'what is your favorite food?', 'Spaghetti', 'what was your first dogs name?', 'Lola'),
-	('Krystal2023', NULL, 100000, 'what is your favorite animal?', 'Foxes', 'what is your favorite food?', 'Spaghetti', 'what was your first dogs name?', 'Lola'),
+    ('Krystal2023', NULL, 100000, 'what is your favorite animal?', 'Foxes', 'what is your favorite food?', 'Spaghetti', 'what was your first dogs name?', 'Lola'),
     ('JaneDoe303', 100003, NULL, 'what is your favorite animal?', 'Iguana', 'what is your favorite food?', 'Ham', 'what was your first dogs name?', 'Winger'),
     ('ButterScotch404', 100004, NULL, 'what is your favorite animal?', 'Cheetah', 'what is your favorite food?', 'Chips', 'what was your first dogs name?', 'Britta'),
     ('AmyMarasco505', 100005, NULL, 'what is your favorite animal?', 'Rhino', 'what is your favorite food?', 'Fish', 'what was your first dogs name?', 'Shirley'),
@@ -1930,7 +1975,7 @@ VALUES
     ('Dropped Floor', 'A dropped floor to allow more space in the case of a wheelchair'),
     ('Transfer Seats', 'Used to lift a person into and out of their vehicle.'),
     ('Swivel Seats', 'Lets a regular seat swivel towards the door for easy access'),
-	('None', 'No accommodation required')
+    ('None', 'No accommodation required')
     
 GO
 
@@ -1988,7 +2033,7 @@ CREATE TABLE [dbo].[Dependent]
     [DOB] [DATE] NOT NULL,
     [Gender] [nvarchar](20) NULL,
     [Emergency_Contact] [nvarchar](100) NOT NULL,
-	[Contact_Relationship] 	[nvarchar](100) 				NOT NULL,
+    [Contact_Relationship] [nvarchar](100) NOT NULL,
     [Emergency_Phone] [nvarchar](12) NOT NULL,
     [Is_Active] [bit] NOT NULL DEFAULT 1,
     CONSTRAINT 		[pk_Dependent_ID] PRIMARY KEY ([Dependent_ID])
@@ -2004,57 +2049,61 @@ GO
 /******************
 Insert Sample Data For The  Dependent table
 ***************/
-print '' Print '***Insert Sample Data For The  Dependent table***' 
- go 
- INSERT INTO [dbo].[Dependent]
-        ([Given_Name],[Middle_Name],[Family_Name],[DOB],[Gender],[Emergency_Contact],[Contact_Relationship],[Emergency_Phone])
-    VALUES
-        ('Anita','ko','Feuer','12-12-1996','Female','Thomas Feuer', 'test1', '5552231049'),
-        ('Flint','N','Steele','12-12-2002','Male','Cole D. Steele','test1','5554259994'),
-		('Jarlson','lo','Flouf','12-12-1996','Male','Thomas Feuer','test1','5552231222'),
-        ('Tanner','Ant','Minecraft','12-12-2002','Male','Mother','test1','5554259333'),
-		('Christa','Lank','Crank','12-12-1996','Male','Thomas Feuer','test1','5552231444'),
-        ('Lincoln','The','Logs','12-12-2002','Male','Pick ingups tix','test1','5554259555'),
-		('FatherHeim','l','MotherHerm','12-12-1996','Female','Cousinxeim','test1','5552231666'),
-        ('TinkerBell','H','Pixie','12-12-2002','Female','Pixar Studios','test1','5554259777')
-GO 
+print ''
+Print '***Insert Sample Data For The  Dependent table***' 
+ go
+INSERT INTO [dbo].[Dependent]
+    ([Given_Name],[Middle_Name],[Family_Name],[DOB],[Gender],[Emergency_Contact],[Contact_Relationship],[Emergency_Phone])
+VALUES
+    ('Anita', 'ko', 'Feuer', '12-12-1996', 'Female', 'Thomas Feuer', 'test1', '5552231049'),
+    ('Flint', 'N', 'Steele', '12-12-2002', 'Male', 'Cole D. Steele', 'test1', '5554259994'),
+    ('Jarlson', 'lo', 'Flouf', '12-12-1996', 'Male', 'Thomas Feuer', 'test1', '5552231222'),
+    ('Tanner', 'Ant', 'Minecraft', '12-12-2002', 'Male', 'Mother', 'test1', '5554259333'),
+    ('Christa', 'Lank', 'Crank', '12-12-1996', 'Male', 'Thomas Feuer', 'test1', '5552231444'),
+    ('Lincoln', 'The', 'Logs', '12-12-2002', 'Male', 'Pick ingups tix', 'test1', '5554259555'),
+    ('FatherHeim', 'l', 'MotherHerm', '12-12-1996', 'Female', 'Cousinxeim', 'test1', '5552231666'),
+    ('TinkerBell', 'H', 'Pixie', '12-12-2002', 'Female', 'Pixar Studios', 'test1', '5554259777')
+GO
 
 /******************
 Create the [dbo].[Dependent_Accommodation] table
 ***************/
-print '' Print '***Create the [dbo].[Dependent_Accommodation] table***' 
+print ''
+Print '***Create the [dbo].[Dependent_Accommodation] table***' 
 GO
-CREATE TABLE [dbo].[Dependent_Accommodation] (
-    [Dependent_ID]            [int]                        NOT NULL,
-    [Accommodation_ID]        [nvarchar](100)                NOT NULL,                            
-    [Is_Active]                [bit]                        NOT NULL    DEFAULT 1,
+CREATE TABLE [dbo].[Dependent_Accommodation]
+(
+    [Dependent_ID] [int] NOT NULL,
+    [Accommodation_ID] [nvarchar](100) NOT NULL,
+    [Is_Active] [bit] NOT NULL DEFAULT 1,
     CONSTRAINT        [fk_Dependent_ID]
         FOREIGN KEY ([Dependent_ID])  REFERENCES [dbo].[Dependent]([Dependent_ID]),
     CONSTRAINT        [fk_Accommodation_ID]
         FOREIGN KEY ([Accommodation_ID])  REFERENCES [dbo].[Accommodation]([Accommodation_ID]),
-	CONSTRAINT [cpk_DependentAccommodation] PRIMARY KEY ([Dependent_ID], [Accommodation_ID])
+    CONSTRAINT [cpk_DependentAccommodation] PRIMARY KEY ([Dependent_ID], [Accommodation_ID])
 )
 GO
 
 /******************
 Insert Sample Data For The  Dependent_Accommodation table
 ***************/
-print '' Print '***Insert Sample Data For The  Dependent_Accommodation table***' 
+print ''
+Print '***Insert Sample Data For The  Dependent_Accommodation table***' 
 GO
- 
- INSERT INTO [dbo].[Dependent_Accommodation]
-        ([Dependent_ID], [Accommodation_ID], [is_active])
-    VALUES
-        (100000, 'Wheelchair Lift', 1),
-		(100001, 'Raised Roof', 1),
-		(100002, 'None', 1),
-		(100003, 'Raised Roof', 1),
-		(100003, 'Dropped Floor', 1),
-		(100004, 'None', 1),
-		(100005, 'Transfer Seats', 1),
-		(100006, 'Swivel Seats', 1),
-		(100007, 'Swivel Seats', 1)
-GO 
+
+INSERT INTO [dbo].[Dependent_Accommodation]
+    ([Dependent_ID], [Accommodation_ID], [is_active])
+VALUES
+    (100000, 'Wheelchair Lift', 1),
+    (100001, 'Raised Roof', 1),
+    (100002, 'None', 1),
+    (100003, 'Raised Roof', 1),
+    (100003, 'Dropped Floor', 1),
+    (100004, 'None', 1),
+    (100005, 'Transfer Seats', 1),
+    (100006, 'Swivel Seats', 1),
+    (100007, 'Swivel Seats', 1)
+GO
 
 
 /******************
@@ -2064,14 +2113,21 @@ print ''
 Print '***Create the [dbo].[Client_Dependent_Role] table***' 
  go
 
-CREATE TABLE [dbo].[Client_Dependent_Role](
-[Client_ID]	[int]	not null	
-,[Dependent_ID]	[int]	not null	
-,[Relationship]	[nvarchar](100)	not null	
-,[Is_Active]	[bit]	not null	
-,CONSTRAINT [PK_Client_Dependent_Role] PRIMARY KEY ([Client_ID] , [Dependent_ID])
-,CONSTRAINT [fk_Client_Dependent_Role_Client0] foreign key ([Client_ID]) references [Client]([Client_ID])
-,CONSTRAINT [fk_Client_Dependent_Role_Dependent1] foreign key ([Dependent_ID]) references [Dependent]([Dependent_ID])
+CREATE TABLE [dbo].[Client_Dependent_Role]
+(
+    [Client_ID] [int] not null	
+,
+    [Dependent_ID] [int] not null	
+,
+    [Relationship] [nvarchar](100) not null	
+,
+    [Is_Active] [bit] not null	
+,
+    CONSTRAINT [PK_Client_Dependent_Role] PRIMARY KEY ([Client_ID] , [Dependent_ID])
+,
+    CONSTRAINT [fk_Client_Dependent_Role_Client0] foreign key ([Client_ID]) references [Client]([Client_ID])
+,
+    CONSTRAINT [fk_Client_Dependent_Role_Dependent1] foreign key ([Dependent_ID]) references [Dependent]([Dependent_ID])
 )
 go
 
@@ -2079,18 +2135,19 @@ go
 Insert Sample Data For The  Client_Dependent_Role table
 ***************/
 
-print '' Print '***Insert Sample Data For The  Client_Dependent_Role table***' 
+print ''
+Print '***Insert Sample Data For The  Client_Dependent_Role table***' 
  go
   go
- INSERT INTO [dbo].[Client_Dependent_Role]
-		([Client_ID], [Dependent_ID], [Relationship], [Is_Active])
-	VALUES
-		(100000, 100000, 'Parent', 0),
-		(100000, 100001, 'Parent', 1),
-		(100000, 100002, 'Parent', 1),
-		(100003, 100002, 'Legal Custodian', 1),
-		(100004, 100003, 'Parent', 1),
-		(100002, 100003, 'Parent', 1)
+INSERT INTO [dbo].[Client_Dependent_Role]
+    ([Client_ID], [Dependent_ID], [Relationship], [Is_Active])
+VALUES
+    (100000, 100000, 'Parent', 0),
+    (100000, 100001, 'Parent', 1),
+    (100000, 100002, 'Parent', 1),
+    (100003, 100002, 'Legal Custodian', 1),
+    (100004, 100003, 'Parent', 1),
+    (100002, 100003, 'Parent', 1)
 GO
 
 /******************
@@ -2525,11 +2582,11 @@ SET IDENTITY_INSERT [dbo].[Vehicle_Checklist] ON
 INSERT INTO [dbo].[Vehicle_Checklist]
     ([Checklist_ID], [Employee_ID], [VIN], [Date], [Cosmetic], [Tire_Pressure_DF], [Tire_Pressure_PF], [Tire_Pressure_DR], [Tire_Pressure_PR], [Mileage], [Fuel_Level], [Notes])
 VALUES
-    (100000, 100001, '1HGCM82633A123456', '2024-01-26 10:00:00', 'Minor scratches on front bumper', 32, 35, 34, 33, 25000, 75, 'Vehicle in good condition. Minor scratch on passenger door.'),
-    (100001, 100002, '5XYZH4AG4JH123456', '2024-01-25 12:30:00', 'No cosmetic issues', 35, 35, 35, 35, 38000, 50, 'Headlight bulb on driver''s side needs replacement.'),
-    (100002, 100003, 'JM1BK32F781234567', '2024-01-24 15:45:00', 'Small dent on passenger door', 30, 34, 32, 31, 12500, 90, 'Interior needs cleaning.'),
-    (100003, 100004, 'WAUZZZ4G6BN123456', '2024-01-23 17:00:00', 'Scratches on rear windshield', 33, 32, 34, 35, 41000, 25, 'Brakes feel slightly worn. Recommend inspection.'),
-    (100004, 100005, '1C4RJFAG5FC123456', '2024-01-22 09:30:00', 'Minor paint chips on hood', 31, 31, 33, 32, 15000, 80, 'No issues found.')
+    (100000, 100001, '1HGCM82633A123456', '2024-01-26 10:00:00', 'Minor scratches on front bumper', 0, 0, 0, 0, 25000, 75, 'Vehicle in good condition. Minor scratch on passenger door.'),
+    (100001, 100002, '5XYZH4AG4JH123456', '2024-01-25 12:30:00', 'No cosmetic issues', 0, 0, 0, 0, 38000, 50, 'Headlight bulb on driver''s side needs replacement.'),
+    (100002, 100003, 'JM1BK32F781234567', '2024-01-24 15:45:00', 'Small dent on passenger door', 0, 0, 0, 0, 12500, 90, 'Interior needs cleaning.'),
+    (100003, 100004, 'WAUZZZ4G6BN123456', '2024-01-23 17:00:00', 'Scratches on rear windshield', 0, 0, 0, 0, 41000, 25, 'Brakes feel slightly worn. Recommend inspection.'),
+    (100004, 100005, '1C4RJFAG5FC123456', '2024-01-22 09:30:00', 'Minor paint chips on hood', 0, 0, 0, 0, 15000, 80, 'No issues found.')
 SET IDENTITY_INSERT [dbo].[Vehicle_Checklist] OFF
 GO
 CREATE TABLE [dbo].[Driver_Maintenance_Report]
@@ -2721,19 +2778,29 @@ Print '***Create the [dbo].[Source] table***'
  GO
 
 
-CREATE TABLE [dbo].[Source](
+CREATE TABLE [dbo].[Source]
+(
 
 
-[Vendor_Id]	[int]	not null	
-,[Parts_inventory_id]	[int]	not null	
-,[Vendor_Part_Number]	[nvarchar](100)	not null	
-,[Estimated_delivery_time_days]	[int]	not null	
-,[Part_Price]	[smallmoney]	not null	
-,[Minimum_order_Qty]	[int]	not null	
-,[Active]	[bit]	not null	
-,CONSTRAINT [CPK_Source] PRIMARY KEY ([Vendor_Id] , [Parts_inventory_id])
-,CONSTRAINT [fk_Source_Vendor0] foreign key ([Vendor_ID]) references [Vendor]([Vendor_ID])
-,CONSTRAINT [fk_Source_Parts_Inventory1] foreign key ([Parts_inventory_id]) references [Parts_Inventory]([Parts_Inventory_ID])
+    [Vendor_Id] [int] not null	
+,
+    [Parts_inventory_id] [int] not null	
+,
+    [Vendor_Part_Number] [nvarchar](100) not null	
+,
+    [Estimated_delivery_time_days] [int] not null	
+,
+    [Part_Price] [smallmoney] not null	
+,
+    [Minimum_order_Qty] [int] not null	
+,
+    [Active] [bit] not null	
+,
+    CONSTRAINT [CPK_Source] PRIMARY KEY ([Vendor_Id] , [Parts_inventory_id])
+,
+    CONSTRAINT [fk_Source_Vendor0] foreign key ([Vendor_ID]) references [Vendor]([Vendor_ID])
+,
+    CONSTRAINT [fk_Source_Parts_Inventory1] foreign key ([Parts_inventory_id]) references [Parts_Inventory]([Parts_Inventory_ID])
 )
 go
 
@@ -2743,37 +2810,65 @@ Insert Sample Data For The  Source table
 print ''
 Print '***Insert Sample Data For The  Source table***' 
  GO
- 
- INSERT INTO [dbo].[Source] ([Vendor_Id], [Parts_inventory_id], [Vendor_Part_Number], [Estimated_delivery_time_days], [Part_Price], [Minimum_order_Qty], [Active])
- VALUES 
- (100000, 100000, N'Some Fastner', 5, CAST(1.0000 AS SmallMoney), 2, 1)
-  ,(100000, 100001, 'Some Bolt', 5, CAST(1.0000 AS SmallMoney), 2, 1)
-  ,(100000, 100002, 'Some Grommet', 5, CAST(3.0000 AS SmallMoney), 2, 1)
-  ,(100000, 100003, 'Some Cable', 5, CAST(4.0000 AS SmallMoney), 2, 1)
-  ,(100000, 100004, 'Some Frame', 5, CAST(5.0000 AS SmallMoney), 2, 1)
-  ,(100000, 100005, 'Some Washer', 5, CAST(6.0000 AS SmallMoney), 2, 1)
-  ,(100001, 100006, 'Some Screw', 5, CAST(7.0000 AS SmallMoney), 2, 1)
-  ,(100001, 100007, 'Some Stripper', 5, CAST(8.0000 AS SmallMoney), 2, 1)
-  ,(100001, 100008, 'Some Nails', 5, CAST(9.0000 AS SmallMoney), 2, 1)
-  ,(100001, 100009, 'Some Tires', 5, CAST(10.0000 AS SmallMoney), 2, 1)
-  ,(100001, 100010, 'Some Tires', 5, CAST(11.0000 AS SmallMoney), 2, 1)
-  ,(100001, 100011, 'Some Axel', 5, CAST(12.0000 AS SmallMoney), 2, 1)
-  ,(100002, 100012, 'Some Struts', 5, CAST(13.2500 AS SmallMoney), 2, 1)
-  ,(100002, 100013, 'Some Hubcaps', 5, CAST(14.2500 AS SmallMoney), 2, 1)
-  ,(100003, 100000, 'Some Fastner', 5, CAST(35.2500 AS SmallMoney), 2, 1)
-  ,(100003, 100001, 'Some Bolt', 5, CAST(16.2500 AS SmallMoney), 2, 1)
-  ,(100003, 100002, 'Some Grommet', 5, CAST(17.2500 AS SmallMoney), 2, 1)
-  ,(100003, 100003, 'Some Cable', 5, CAST(21.2500 AS SmallMoney), 2, 1)
-  ,(100003, 100008, 'Some Nails', 5, CAST(26.2500 AS SmallMoney), 2, 1)
-  ,(100003, 100009, 'Some Tires', 5, CAST(27.2500 AS SmallMoney), 2, 1)
-  ,(100003, 100010, 'Some Tires', 5, CAST(31.2500 AS SmallMoney), 2, 1)
-  ,(100003, 100011, 'Some Axels', 5, CAST(32.2500 AS SmallMoney), 2, 1)
-  ,(100003, 100012, 'Some Struts', 5, CAST(33.2500 AS SmallMoney), 2, 1)
-  ,(100003, 100013, 'Some Hubcaps', 5, CAST(15.2500 AS SmallMoney), 2, 1)
-  ,(100004, 100004, 'Some Frame', 5, CAST(22.2500 AS SmallMoney), 2, 1)
-  ,(100004, 100005, 'Some Washer', 5, CAST(23.2500 AS SmallMoney), 2, 1)
-  ,(100004, 100006, 'Some Screw', 5, CAST(24.2500 AS SmallMoney), 2, 1)
-  ,(100004, 100007, 'Some Stripper', 5, CAST(25.2500 AS SmallMoney), 2, 1)
+
+INSERT INTO [dbo].[Source]
+    ([Vendor_Id], [Parts_inventory_id], [Vendor_Part_Number], [Estimated_delivery_time_days], [Part_Price], [Minimum_order_Qty], [Active])
+VALUES
+    (100000, 100000, N'Some Fastner', 5, CAST(1.0000 AS SmallMoney), 2, 1)
+  ,
+    (100000, 100001, 'Some Bolt', 5, CAST(1.0000 AS SmallMoney), 2, 1)
+  ,
+    (100000, 100002, 'Some Grommet', 5, CAST(3.0000 AS SmallMoney), 2, 1)
+  ,
+    (100000, 100003, 'Some Cable', 5, CAST(4.0000 AS SmallMoney), 2, 1)
+  ,
+    (100000, 100004, 'Some Frame', 5, CAST(5.0000 AS SmallMoney), 2, 1)
+  ,
+    (100000, 100005, 'Some Washer', 5, CAST(6.0000 AS SmallMoney), 2, 1)
+  ,
+    (100001, 100006, 'Some Screw', 5, CAST(7.0000 AS SmallMoney), 2, 1)
+  ,
+    (100001, 100007, 'Some Stripper', 5, CAST(8.0000 AS SmallMoney), 2, 1)
+  ,
+    (100001, 100008, 'Some Nails', 5, CAST(9.0000 AS SmallMoney), 2, 1)
+  ,
+    (100001, 100009, 'Some Tires', 5, CAST(10.0000 AS SmallMoney), 2, 1)
+  ,
+    (100001, 100010, 'Some Tires', 5, CAST(11.0000 AS SmallMoney), 2, 1)
+  ,
+    (100001, 100011, 'Some Axel', 5, CAST(12.0000 AS SmallMoney), 2, 1)
+  ,
+    (100002, 100012, 'Some Struts', 5, CAST(13.2500 AS SmallMoney), 2, 1)
+  ,
+    (100002, 100013, 'Some Hubcaps', 5, CAST(14.2500 AS SmallMoney), 2, 1)
+  ,
+    (100003, 100000, 'Some Fastner', 5, CAST(35.2500 AS SmallMoney), 2, 1)
+  ,
+    (100003, 100001, 'Some Bolt', 5, CAST(16.2500 AS SmallMoney), 2, 1)
+  ,
+    (100003, 100002, 'Some Grommet', 5, CAST(17.2500 AS SmallMoney), 2, 1)
+  ,
+    (100003, 100003, 'Some Cable', 5, CAST(21.2500 AS SmallMoney), 2, 1)
+  ,
+    (100003, 100008, 'Some Nails', 5, CAST(26.2500 AS SmallMoney), 2, 1)
+  ,
+    (100003, 100009, 'Some Tires', 5, CAST(27.2500 AS SmallMoney), 2, 1)
+  ,
+    (100003, 100010, 'Some Tires', 5, CAST(31.2500 AS SmallMoney), 2, 1)
+  ,
+    (100003, 100011, 'Some Axels', 5, CAST(32.2500 AS SmallMoney), 2, 1)
+  ,
+    (100003, 100012, 'Some Struts', 5, CAST(33.2500 AS SmallMoney), 2, 1)
+  ,
+    (100003, 100013, 'Some Hubcaps', 5, CAST(15.2500 AS SmallMoney), 2, 1)
+  ,
+    (100004, 100004, 'Some Frame', 5, CAST(22.2500 AS SmallMoney), 2, 1)
+  ,
+    (100004, 100005, 'Some Washer', 5, CAST(23.2500 AS SmallMoney), 2, 1)
+  ,
+    (100004, 100006, 'Some Screw', 5, CAST(24.2500 AS SmallMoney), 2, 1)
+  ,
+    (100004, 100007, 'Some Stripper', 5, CAST(25.2500 AS SmallMoney), 2, 1)
 go
 
 
@@ -2873,7 +2968,8 @@ Create the Password_Reset table
 
 print ''
 print '*** Creating Password_Reset Table***'
-CREATE TABLE [dbo].[Password_Reset] (
+CREATE TABLE [dbo].[Password_Reset]
+(
     [Password_Reset_ID] [int] IDENTITY(100000,1) NOT NULL,
     [Username] [nvarchar](50) NOT NULL,
     [Request_Datetime] [datetime] NOT NULL DEFAULT CURRENT_TIMESTAMP,

@@ -29,6 +29,9 @@ namespace DataAccessLayer
     /// UPDATER: Jacob Rohr
     /// UPDATED: 2024-04-01
     /// Removed inheritdoc and migrated Interface file comments. 
+    /// UPDATER: Chris Baenziger
+    /// UPDATED: 2024-04-25
+    /// Added add checklist 
     /// </remarks>
     public class VehicleAccessor : IVehicleAccessor
     {
@@ -57,7 +60,14 @@ namespace DataAccessLayer
             cmd.Parameters["@Vehicle_Mileage"].Value = vehicle.VehicleMileage;
             cmd.Parameters["@Vehicle_Model_ID"].Value = vehicle.VehicleModelID;
             cmd.Parameters["@Vehicle_License_plate"].Value = vehicle.VehicleLicensePlate;
-            cmd.Parameters["@Vehicle_Type_ID"].Value = vehicle.VehicleType;
+            if (vehicle.VehicleType.isNotEmptyOrNull())
+            {
+                cmd.Parameters["@Vehicle_Type_ID"].Value = vehicle.VehicleType;
+            }
+            else
+            {
+                cmd.Parameters["@Vehicle_Type_ID"].Value = DBNull.Value;
+            }
             cmd.Parameters["@Date_Entered"].Value = vehicle.DateEntered.Date;
             cmd.Parameters["@Description"].Value = vehicle.VehicleDescription;
             cmd.Parameters["@Rental"].Value = vehicle.Rental;
@@ -643,6 +653,73 @@ namespace DataAccessLayer
                 conn.Close();
             }
             return returnVehicle;
+        }
+
+        public int AddVehicleChecklist(VehicleChecklist checklist)
+        {
+            int checklistID = 0;
+
+            var conn = DBConnectionProvider.GetConnection();
+            var cmdText = "sp_insert_vehicle_checklist";
+            var cmd = new SqlCommand(cmdText, conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            cmd.Parameters.AddWithValue("@Employee_ID", checklist.EmployeeID);
+            cmd.Parameters.AddWithValue("@VIN", checklist.VIN);
+            cmd.Parameters.AddWithValue("@Date", checklist.ChecklistDate);
+            cmd.Parameters.AddWithValue("@Clean", checklist.Clean);
+            cmd.Parameters.AddWithValue("@Pedals", checklist.Pedals);
+            cmd.Parameters.AddWithValue("@Dash", checklist.Dash);
+            cmd.Parameters.AddWithValue("@Steering", checklist.Steering);
+            cmd.Parameters.AddWithValue("@AC_Heat", checklist.AC_Heat);
+            cmd.Parameters.AddWithValue("@Mirror_DS", checklist.MirrorDS);
+            cmd.Parameters.AddWithValue("@Mirror_PS", checklist.MirrorPS);
+            cmd.Parameters.AddWithValue("@Mirror_RV", checklist.MirrorRV);
+            cmd.Parameters.AddWithValue("@Cosmetic", checklist.Cosmetic);
+            cmd.Parameters.AddWithValue("@Tire_Pressure_DF", checklist.Tire_Pressure_DF);
+            cmd.Parameters.AddWithValue("@Tire_Pressure_PF", checklist.Tire_Pressure_PF);
+            cmd.Parameters.AddWithValue("@Tire_Pressure_DR", checklist.Tire_Pressure_DR);
+            cmd.Parameters.AddWithValue("@Tire_Pressure_PR", checklist.Tire_Pressure_PR);
+            cmd.Parameters.AddWithValue("@Blinker_DF", checklist.Blinker_DF);
+            cmd.Parameters.AddWithValue("@Blinker_PF", checklist.Blinker_PF);
+            cmd.Parameters.AddWithValue("@Blinker_DR", checklist.Blinker_DR);
+            cmd.Parameters.AddWithValue("@Blinker_PR", checklist.Blinker_PR);
+            cmd.Parameters.AddWithValue("@Breaklight_DR", checklist.Breaklight_DR);
+            cmd.Parameters.AddWithValue("@Breaklight_PR", checklist.Breaklight_PR);
+            cmd.Parameters.AddWithValue("@Headlight_DS", checklist.Headlight_Driver);
+            cmd.Parameters.AddWithValue("@Headlight_PS", checklist.Headlight_Passenger);
+            cmd.Parameters.AddWithValue("@Taillight_DS", checklist.TailLight_Driver);
+            cmd.Parameters.AddWithValue("@Taillight_PS", checklist.TailLight_Passenger);
+            cmd.Parameters.AddWithValue("@Wiper_DS", checklist.Wiper_Driver);
+            cmd.Parameters.AddWithValue("@Wiper_PS", checklist.Wiper_Passenger);
+            cmd.Parameters.AddWithValue("@Wiper_R", checklist.Wiper_Rear);
+            cmd.Parameters.AddWithValue("@Seat_Belts", checklist.SeatBelts);
+            cmd.Parameters.AddWithValue("@Fire_Extinguisher", checklist.FireExtinguisher);
+            cmd.Parameters.AddWithValue("@Airbags", checklist.Airbags);
+            cmd.Parameters.AddWithValue("@First_Aid", checklist.FirstAid);
+            cmd.Parameters.AddWithValue("@Emergency_Kit", checklist.EmergencyKit);
+            cmd.Parameters.AddWithValue("@Mileage", checklist.Mileage);
+            cmd.Parameters.AddWithValue("@Fuel_Level", checklist.FuelLevel);
+            cmd.Parameters.AddWithValue("@Brakes", checklist.Breaks);
+            cmd.Parameters.AddWithValue("@Accelerator", checklist.Accelerator);
+            cmd.Parameters.AddWithValue("@Clutch", checklist.Clutch);
+            cmd.Parameters.AddWithValue("@Notes", checklist.Notes);
+
+            try
+            {
+                conn.Open();
+                checklistID = (int)cmd.ExecuteScalar();
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return checklistID;
         }
     }
 }

@@ -41,6 +41,7 @@ sqlcmd -S localhost -E -i SQL/sp_ride.sql
 sqlcmd -S localhost -E -i SQL/sp_role.sql
 sqlcmd -S localhost -E -i SQL/sp_route.sql
 sqlcmd -S localhost -E -i SQL/sp_route_assignment.sql
+sqlcmd -S localhost -E -i SQL/sp_route_fulfillment.sql
 sqlcmd -S localhost -E -i SQL/sp_route_stop.sql
 sqlcmd -S localhost -E -i SQL/sp_safety_report.sql
 sqlcmd -S localhost -E -i SQL/sp_schedule.sql

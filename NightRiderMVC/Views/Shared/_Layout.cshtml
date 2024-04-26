@@ -18,7 +18,15 @@
             <div class="col-6 collapse navbar-collapse d-sm-inline-flex justify-content-center">
                 <ul class="navbar-nav flex-grow-1 nav-text">
                     <li class="m-2">@Html.ActionLink("Routes and Stops", "Index", "Route", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li class="m-2">@Html.ActionLink("Request a Ride", "Index", "RideRequest", new { area = "" }, new { @class = "nav-link" })</liclass="m-2">
+                    <li class="m-2">@Html.ActionLink("Request a Ride", "Index", "RideRequest", new { area = "" }, new { @class = "nav-link" })</li>
+                    @if (User.IsInRole("Driver") || User.IsInRole("Dispatcher") || User.IsInRole("FleetAdmin") || User.IsInRole("Maintenanace") || User.IsInRole("Mechanic") || User.IsInRole("Operator") || User.IsInRole("PartsPerson"))
+                    {
+                        <li class="m-2">@Html.ActionLink("Checklist", "Create", "VehicleChecklist", new { area = "" }, new { @class = "nav-link" })</li>
+                    }
+                    @if (User.IsInRole("Driver") || User.IsInRole("Dispatcher") || User.IsInRole("FleetAdmin") || User.IsInRole("Operator"))
+                    {
+                        <li class="m-2">@Html.ActionLink("Routes", "Index", "ActiveRoute", new { area = "" }, new { @class = "nav-link" })</li>
+                    }
                     <li class="m-2">@Html.ActionLink("Contact Us", "Contact", "Home", new { area = "" }, new { @class = "nav-link" })</li>
                     @if (User.IsInRole("Admin"))
                     {

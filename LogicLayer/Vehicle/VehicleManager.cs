@@ -287,5 +287,21 @@ namespace LogicLayer
 
             return vehicle;
         }
+
+        public int AddVehicleChecklist(VehicleChecklist checklist)
+        {
+            int checklistID = 0;
+
+            try
+            {
+                checklistID = _vehicleAccessor.AddVehicleChecklist(checklist);
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("Unable to add checklist", ex);
+            }
+
+            return checklistID;
+        }
     }
 }

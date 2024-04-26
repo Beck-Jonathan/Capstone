@@ -407,6 +407,115 @@ namespace LogicLayerTests
 
         }
 
+        [TestMethod]
+        public void TestAddVehicleChecklistReturnsCorrectValue()
+        {
+            int expectedResult = 100001;
+            int actualResult = 0;
+
+            actualResult = _vehicleManager.AddVehicleChecklist(new VehicleChecklist
+            {
+                ChecklistID = 0,
+                EmployeeID = 100001,
+                VIN = "testaddvin1234567",
+                ChecklistDate = DateTime.Now,
+                Clean = false,
+                Pedals = false,
+                Dash = false,
+                Steering = false,
+                AC_Heat = false,
+                MirrorDS = false,
+                MirrorPS = false,
+                MirrorRV = false,
+                Cosmetic = "No damage",
+                Tire_Pressure_DF = false,
+                Tire_Pressure_PF = false,
+                Tire_Pressure_DR = false,
+                Tire_Pressure_PR = false,
+                Blinker_DF = false,
+                Blinker_PF = false,
+                Blinker_DR = false,
+                Blinker_PR = false,
+                Breaklight_DR = false,
+                Breaklight_PR = false,
+                Headlight_Driver = false,
+                Headlight_Passenger = false,
+                TailLight_Driver = false,
+                TailLight_Passenger = false,
+                Wiper_Driver = false,
+                Wiper_Passenger = false,
+                Wiper_Rear = false,
+                SeatBelts = false,
+                FireExtinguisher = false,
+                Airbags = false,
+                FirstAid = false,
+                EmergencyKit = false,
+                Mileage = 1000,
+                FuelLevel = 1,
+                Breaks = false,
+                Accelerator = false,
+                Clutch = false,
+                Notes = "None"
+            });
+
+            Assert.AreEqual(expectedResult, actualResult);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ApplicationException))]
+        public void TestAddVehicleChecklistReturnsErrorWithBadData()
+        {
+            int expectedResult = 100001;
+            int actualResult = 0;
+
+            actualResult = _vehicleManager.AddVehicleChecklist(new VehicleChecklist
+            {
+                ChecklistID = 0,
+                EmployeeID = 100001,
+                VIN = "1234567890asdfasd",
+                ChecklistDate = DateTime.Now,
+                Clean = false,
+                Pedals = false,
+                Dash = false,
+                Steering = false,
+                AC_Heat = false,
+                MirrorDS = false,
+                MirrorPS = false,
+                MirrorRV = false,
+                Cosmetic = "No damage",
+                Tire_Pressure_DF = false,
+                Tire_Pressure_PF = false,
+                Tire_Pressure_DR = false,
+                Tire_Pressure_PR = false,
+                Blinker_DF = false,
+                Blinker_PF = false,
+                Blinker_DR = false,
+                Blinker_PR = false,
+                Breaklight_DR = false,
+                Breaklight_PR = false,
+                Headlight_Driver = false,
+                Headlight_Passenger = false,
+                TailLight_Driver = false,
+                TailLight_Passenger = false,
+                Wiper_Driver = false,
+                Wiper_Passenger = false,
+                Wiper_Rear = false,
+                SeatBelts = false,
+                FireExtinguisher = false,
+                Airbags = false,
+                FirstAid = false,
+                EmergencyKit = false,
+                Mileage = 1000,
+                FuelLevel = 1,
+                Breaks = false,
+                Accelerator = false,
+                Clutch = false,
+                Notes = "None"
+            });
+
+            Assert.AreEqual(expectedResult, actualResult);
+        }
+
     }
 
 }

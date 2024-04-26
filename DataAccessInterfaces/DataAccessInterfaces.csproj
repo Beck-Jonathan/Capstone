@@ -47,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IActiveRouteAccessor.cs" />
     <Compile Include="IBingMapsAccessor.cs" />
     <Compile Include="IClientDependentRoleAccessor.cs" />
     <Compile Include="IDependentAccessor.cs" />

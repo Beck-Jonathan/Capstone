@@ -360,6 +360,22 @@ VALUES
 GO
 
 /******************
+Insert Sample Data For The  Route_Fulfillment table
+***************/
+print ''
+Print '***Insert Sample Data For The  Route_Fulfillment table***' 
+go
+INSERT INTO [dbo].[Route_Fulfillment]
+    ([Assignment_ID], [Actual_Driver_ID], [Actual_VIN], [Start_Time], [End_Time])
+VALUES
+    (100000, 100000, '1HGCM82633A123456', '2023-11-01 11:01:37.000', '2023-11-01 18:31:37.000'),
+    (100001, 100000, '5XYZH4AG4JH123456', '2023-12-15 12:15:37.000', '2023-12-15 19:54:15.000'),
+    (100002, 100001, 'JM1BK32F781234567', '2024-01-20 13:20:20.000', '2024-01-20 18:20:20.000'),
+    (100003, 100002, 'WAUZZZ4G6BN123456', '2022-04-23 16:23:23.000', '2022-04-23 20:23:23.000'),
+    (100004, 100003, '1C4RJFAG5FC123456', '2023-07-12 19:12:12.000', '2023-07-12 22:12:12.000')
+go
+
+/******************
 Insert Sample Data For The  Safety_Report table
 ***************/
 print ''
