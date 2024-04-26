@@ -39,15 +39,15 @@ namespace DataAccessLayer
 
             cmd.Parameters["@p_GivenName"].Value = client.GivenName;
             cmd.Parameters["@p_FamilyName"].Value = client.FamilyName;
-            cmd.Parameters["@p_MiddleName"].Value = client.MiddleName;
+            cmd.Parameters["@p_MiddleName"].Value = client.MiddleName ?? Convert.DBNull;
             cmd.Parameters["@p_DOB"].Value = client.DOB;
             cmd.Parameters["@p_Email"].Value = client.Email;
-            cmd.Parameters["@p_PostalCode"].Value = client.PostalCode;
-            cmd.Parameters["@p_City"].Value = client.City;
-            cmd.Parameters["@p_Region"].Value = client.Region;
-            cmd.Parameters["@p_Address"].Value = client.Address;
-            cmd.Parameters["@p_TextNumber"].Value = client.TextNumber;
-            cmd.Parameters["@p_VoiceNumber"].Value = client.VoiceNumber;
+            cmd.Parameters["@p_PostalCode"].Value = client.PostalCode ?? Convert.DBNull;
+            cmd.Parameters["@p_City"].Value = client.City ?? Convert.DBNull;
+            cmd.Parameters["@p_Region"].Value = client.Region ?? Convert.DBNull;
+            cmd.Parameters["@p_Address"].Value = client.Address ?? Convert.DBNull;
+            cmd.Parameters["@p_TextNumber"].Value = client.TextNumber ?? Convert.DBNull;
+            cmd.Parameters["@p_VoiceNumber"].Value = client.VoiceNumber ?? Convert.DBNull;
             cmd.Parameters["@p_Active"].Value = client.IsActive;
 
             try
@@ -172,7 +172,7 @@ namespace DataAccessLayer
                 }
                 else
                 {
-                    throw new ApplicationException("Client not found.");
+                    throw new ApplicationException("Client not found");
                 }
             }
             catch (Exception ex)
@@ -210,6 +210,10 @@ namespace DataAccessLayer
         ///     Updater: Michael Springer <br />
         ///     Updated 2024-03-26 <br />
         ///         removed @ from cmdText 
+        /// <br /><br />
+        ///     UPDATER: Michael Springer
+        ///     UPDATED: 2024-004-26
+        ///     allowed querying nullable values
         /// </remarks>
         public Client_VM SelectClientByEmail(string email)
         {
@@ -237,18 +241,18 @@ namespace DataAccessLayer
                         clientVM.MiddleName = reader.IsDBNull(3) ? null : reader.GetString(3);
                         clientVM.DOB = reader.GetDateTime(4);
                         clientVM.Email = reader.GetString(5);
-                        clientVM.PostalCode = reader.GetString(6);
-                        clientVM.City = reader.GetString(7);
-                        clientVM.Region = reader.GetString(8);
-                        clientVM.Address = reader.GetString(9);
-                        clientVM.TextNumber = reader.GetString(10);
-                        clientVM.VoiceNumber = reader.GetString(11);
+                        clientVM.PostalCode = reader.IsDBNull(6) ? null : reader.GetString(6);
+                        clientVM.City = reader.IsDBNull(7) ? null : reader.GetString(7);
+                        clientVM.Region = reader.IsDBNull(8) ? null : reader.GetString(8);
+                        clientVM.Address = reader.IsDBNull(9) ? null : reader.GetString(9);
+                        clientVM.TextNumber = reader.IsDBNull(10) ? null : reader.GetString(10);
+                        clientVM.VoiceNumber = reader.IsDBNull(11) ? null : reader.GetString(11);
 
                     }
                 }
                 else
                 {
-                    throw new ApplicationException("Client not found.");
+                    throw new ApplicationException("Client not found");
                 }
             }
             catch (Exception ex)
