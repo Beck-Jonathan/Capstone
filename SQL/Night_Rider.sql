@@ -594,7 +594,8 @@ GO
 	('PartsPerson', 'An invetory specialist, that is the go to for any parts for vehicles'),
     ('Dispatcher', 'The controller of the fleet. Assigns tasks, routes drivers, and ensures services run smoothly.'),
 	('Operator', 'Manages the routes'),
-	('Driver', 'Drives the vehicles')
+	('Driver', 'Drives the vehicles'),
+    ('Client', 'The end user of the service')
 GO
 
 
@@ -1703,8 +1704,8 @@ CREATE TABLE [dbo].[Client]
     [City] [nvarchar] (50) NULL,
     [Region] [nvarchar] (50) NULL,
     [Address] [nvarchar] (100) NULL,
-    [Text_Number] [nvarchar] (12) UNIQUE NULL,
-    [Voice_Number] [nvarchar] (12) UNIQUE NULL,
+    [Text_Number] [nvarchar] (12) NULL,
+    [Voice_Number] [nvarchar] (12) NULL,
     [Is_Active] [bit] NOT NULL DEFAULT 1,
     CONSTRAINT [pk_Client_ID] PRIMARY KEY ([Client_ID])
 )

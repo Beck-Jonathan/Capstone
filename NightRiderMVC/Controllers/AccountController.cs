@@ -1,10 +1,12 @@
 ﻿using System;
+using System.CodeDom;
 using System.Globalization;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using DataObjects;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
@@ -149,6 +151,10 @@ namespace NightRiderMVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
+            const int MIN_VALID_CLIENT_ID = 100000;
+            // effectivley const but DateTime is a struct and can't be declared as const
+            DateTime DEFAULT_DOB = new DateTime(1973, 4, 5);
+
             //JACOBS NOTES FOR PERSONAL COMPREHENSION TO PREVENT INSANSITY
 
             //If an id exists, that means a login exists for it. 
@@ -199,7 +205,7 @@ namespace NightRiderMVC.Controllers
                         }
                         AddErrors(result);
                     }
-                    else if (!clientMgr.GetClientByEmail(model.Email).Equals(null))
+                    else if (clientMgr.FindClient(model.Email))
                     {
                         var placeholderUsername = loginMgr.GetClientUserNameByEmail(model.Email);
                         var oldUser = loginMgr.AuthenticateClient(placeholderUsername, model.Password);
@@ -229,24 +235,47 @@ namespace NightRiderMVC.Controllers
                         }
                         AddErrors(result);
                     }
-                    else // if not existing user create a user without roles
+                    else // if not existing user create a user with the client role
                     {
-                        var user = new ApplicationUser
+                        // new client object for the Client Table
+                        var client = new DataObjects.Client_VM()
                         {
-                            //we will uncomment the following two lines of code later once our view model
-                            // and our view are updated to ask for them:
                             GivenName = model.GivenName,
                             FamilyName = model.FamilyName,
-                            UserName = model.Email,
-                            Email = model.Email
+                            Email = model.Email,
+                            DOB = DEFAULT_DOB
                         };
-                        var result = await UserManager.CreateAsync(user, model.Password);
-                        if (result.Succeeded)
+                        //set an invalid clientId
+                        int newClientId = 0;
+                        // add that client to the table
+                        clientMgr.AddClient(client);
+                        // get id of the client we just added
+                        newClientId = clientMgr.GetClientByEmail(model.Email).ClientID;
+                        // if that worked, make an ASPUser for the client
+                        if(newClientId >= MIN_VALID_CLIENT_ID)
                         {
-                            await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-                            return RedirectToAction("Index", "Home");
+                            var user = new ApplicationUser
+                            {
+                                
+                                ClientID = newClientId,
+                                GivenName = model.GivenName,
+                                FamilyName = model.FamilyName,
+                                UserName = model.Email,
+                                Email = model.Email
+                                
+                            };
+                            var result = await UserManager.CreateAsync(user, model.Password);
+                            if (result.Succeeded)
+                            {
+                                // assign the client role to the user
+                                UserManager.AddToRole(user.Id, "Client");
+
+                                await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                                return RedirectToAction("Index", "Home");
+
+                            }
+                            AddErrors(result);
                         }
-                        AddErrors(result);
                     }
                 }
                 catch (Exception ex)

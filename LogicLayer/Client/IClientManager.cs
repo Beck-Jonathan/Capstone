@@ -96,5 +96,15 @@ namespace LogicLayer
         int EditClient(Client_VM newClient);
         void DeactivateClient(int id);
         void ActivateClient(int id);
+        /// <summary>
+        /// Returns a bool if client exist
+        /// </summary>
+        /// <param name="email">client's email</param>
+        /// <returns></returns>
+        /// <remarks>
+        /// AUTHOR: Michael Springer
+        /// CREATED: 2024-04-24
+        /// </remarks>
+        bool FindClient(string email);
     }
 }
