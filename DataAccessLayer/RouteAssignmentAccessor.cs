@@ -268,6 +268,69 @@ namespace DataAccessLayer
         }
 
         /// <summary>
+        ///     Get available drivers by date
+        /// </summary>
+        /// <param name="start">
+        ///    DateTime start date
+        /// </param>
+        /// <param name="end">
+        ///   DateTime end date
+        /// </param>
+        /// <returns>
+        ///    List<Driver> List of driver objects
+        /// </returns>
+        /// <remarks>
+        ///    Exceptions:
+        ///    <see cref="SystemException">SystemException</see>: Thrown if there is a problem writing to the DB.
+        ///    CONTRIBUTOR: James Williams
+        ///    CREATED: 2024-04-25
+        /// </remarks>
+        public List<Driver> GetAvailableDriversByDate(DateTime start, DateTime end)
+        {
+            List<Driver> assignments = new List<Driver>();
+
+            var conn = DBConnectionProvider.GetConnection();
+            var commandText = "sp_get_available_drivers_by_date";
+
+            var cmd = new SqlCommand(commandText, conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.Add("@p_Start_Date", SqlDbType.DateTime).Value = start;
+            cmd.Parameters.Add("@p_End_Date", SqlDbType.DateTime).Value = end;
+
+
+            try
+            {
+                conn.Open();
+                var reader = cmd.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        assignments.Add(new Driver()
+                        {
+                            Employee_ID = reader.GetInt32(0),
+                            Given_Name = reader.GetString(1),
+                            Family_Name = reader.GetString(2),
+                            Driver_License_Class_ID = reader.GetString(3),
+                            Max_Passenger_Count = reader.GetInt32(4)
+                        });
+                    };
+                }
+                if (assignments.Count == 0)
+                {
+                    throw new ArgumentException("No records found");
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw new SystemException("Database Error", ex);
+            }
+
+            return assignments;
+        }
+
+        /// <summary>
         ///     Get available vehicles from the database that meet the criteria of the parameters
         /// </summary>
         /// <param name="start">
@@ -331,6 +394,125 @@ namespace DataAccessLayer
             }
 
             return assignments;
+        }
+
+        /// <summary>
+        ///     Get available vehicles by date
+        /// </summary>
+        /// <param name="start">
+        ///    DateTime start date
+        /// </param>
+        /// <param name="end">
+        ///   DateTime end date
+        /// </param>
+        /// <returns>
+        ///    List<VehicleAssignment> List of vehicle assignments 
+        /// </returns>
+        /// <remarks>
+        ///    Exceptions:
+        ///    <see cref="SystemException">SystemException</see>: Thrown if there is a problem writing to the DB.
+        ///    CONTRIBUTOR: James Williams
+        ///    CREATED: 2024-04-25
+        /// </remarks>
+        public List<VehicleAssignment> GetAvailableVehiclesByDate(DateTime start, DateTime end)
+        {
+            List<VehicleAssignment> assignments = new List<VehicleAssignment>();
+
+            var conn = DBConnectionProvider.GetConnection();
+            var commandText = "sp_get_available_vehicles_by_date";
+
+            var cmd = new SqlCommand(commandText, conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.Add("@p_Start_Date", SqlDbType.DateTime).Value = start;
+            cmd.Parameters.Add("@p_End_Date", SqlDbType.DateTime).Value = end;
+
+
+            try
+            {
+                conn.Open();
+                var reader = cmd.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        assignments.Add(new VehicleAssignment()
+                        {
+                            VIN = reader.GetString(0),
+                            Name = reader.GetString(1),
+                            Make = reader.GetString(2),
+                            Max_Passengers = reader.GetInt32(3)
+                        });
+                    };
+                }
+                if (assignments.Count == 0)
+                {
+                    throw new ArgumentException("No records found");
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw new SystemException("Database Error", ex);
+            }
+
+            return assignments;
+        }
+
+        /// <summary>
+        ///     Get the driver for a route assignment
+        /// </summary>
+        /// <param name="routeID">
+        ///    ID of the route assignment
+        /// </param>
+        /// <returns>
+        ///    Driver object of found driver
+        /// </returns>
+        /// <remarks>
+        ///    Exceptions:
+        ///    <see cref="SystemException">SystemException</see>: Thrown if there is a problem writing to the DB.
+        ///    CONTRIBUTOR: James Williams
+        ///    CREATED: 2024-04-25
+        /// </remarks>
+        public Driver GetRouteAssignmentDriverByRouteAssignmentID(int routeID)
+        {
+            Driver driver = null;
+            var conn = DBConnectionProvider.GetConnection();
+            var commandText = "sp_get_route_assignment_driver_by_route_assignment_id";
+
+            var cmd = new SqlCommand(commandText, conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.Add("@p_Route_Assignment_ID", SqlDbType.Int).Value = routeID;
+            try
+            {
+                conn.Open();
+                var reader = cmd.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        driver = new Driver()
+                        {
+                            Employee_ID = reader.GetInt32(0),
+                            Given_Name = reader.GetString(1),
+                            Family_Name = reader.GetString(2),
+                            Driver_License_Class_ID = reader.GetString(3),
+                            Max_Passenger_Count = reader.GetInt32(4)
+                        };
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw new SystemException("Error accessing data", ex);
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            return driver;
         }
 
         /// <summary>
@@ -399,6 +581,102 @@ namespace DataAccessLayer
             }
 
             return assignments;
+        }
+
+        /// <summary>
+        ///     Update the driver of a Route_Assignment
+        /// </summary>
+        /// <param name="routeAssignmentID">
+        ///    ID of the route assignment
+        /// </param>
+        /// <param name="driverID">
+        ///    ID of the driver
+        /// </param>
+        /// <returns>
+        ///    Int number of rows affected
+        /// </returns>
+        /// <remarks>
+        ///    Exceptions:
+        ///    <see cref="SystemException">SystemException</see>: Thrown if there is a problem writing to the DB.
+        ///    CONTRIBUTOR: James Williams
+        ///    CREATED: 2024-04-25
+        /// </remarks>
+        public int UpdateRouteAssignmentDriver(int routeAssignmentID, int driverID)
+        {
+            int rows = 0;
+            var conn = DBConnectionProvider.GetConnection();
+            var commandText = "sp_update_route_assignment_driver";
+
+            var cmd = new SqlCommand(commandText, conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.Add("@p_Assignment_ID", SqlDbType.Int).Value = routeAssignmentID;
+            cmd.Parameters.Add("@p_Driver_ID", SqlDbType.Int).Value = driverID;
+            try
+            {
+                conn.Open();
+                rows = cmd.ExecuteNonQuery();
+                if (rows == 0)
+                {
+                    throw new ArgumentException("Route assignment not updated");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return rows;
+        }
+
+        /// <summary>
+        ///     Update the vehicle of a Route_Assignment
+        /// </summary>
+        /// <param name="routeAssignmentID">
+        ///    ID of the route assignment
+        /// </param>
+        /// <param name="vin">
+        ///    VIN of the vehicle
+        /// </param>
+        /// <returns>
+        ///    Int number of rows affected
+        /// </returns>
+        /// <remarks>
+        ///    Exceptions:
+        ///    <see cref="SystemException">SystemException</see>: Thrown if there is a problem writing to the DB.
+        ///    CONTRIBUTOR: James Williams
+        ///    CREATED: 2024-04-25
+        /// </remarks>
+        public int UpdateRouteAssignmentVehicle(int routeAssignmentID, string vin)
+        {
+            int rows = 0;
+            var conn = DBConnectionProvider.GetConnection();
+            var commandText = "sp_update_route_assignment_vehicle";
+
+            var cmd = new SqlCommand(commandText, conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.Add("@p_Assignment_ID", SqlDbType.Int).Value = routeAssignmentID;
+            cmd.Parameters.Add("@p_VIN", SqlDbType.NVarChar, 17).Value = vin;
+            try
+            {
+                conn.Open();
+                rows = cmd.ExecuteNonQuery();
+                if (rows == 0)
+                {
+                    throw new ArgumentException("Route assignment not updated");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return rows;
         }
     }
 }
