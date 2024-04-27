@@ -71,6 +71,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DispatchManagerTests.cs" />
+    <Compile Include="DriverMaintenanceReportManagerTests.cs" />
     <Compile Include="LoginManager_Tests.cs" />
     <Compile Include="PartsRequestManagerTests.cs" />
     <Compile Include="PasswordHasher_Tests.cs" />

@@ -55,6 +55,7 @@
     <Compile Include="DBConnectionProvider.cs" />
     <Compile Include="DependentAccessor.cs" />
     <Compile Include="DispatchAccessor.cs" />
+    <Compile Include="DriverMaintenanceReportAccessor.cs" />
     <Compile Include="Helpers\SqlDataReaderHelpers.cs" />
     <Compile Include="LoginAccessor.cs" />
     <Compile Include="PartsRequestAccessor.cs" />

@@ -162,6 +162,8 @@
     <Compile Include="Utilities\PasswordHasher.cs" />
     <Compile Include="Utilities\VerificationCodeGenerator.cs" />
     <Compile Include="VehicleModel\VehicleModelManager.cs" />
+    <Compile Include="Vehicle\Driver_Maintenance_ReportManager.cs" />
+    <Compile Include="Vehicle\IDriverMaintenanceReportManager.cs" />
     <Compile Include="Vehicle\IVehicleManager.cs" />
     <Compile Include="ServiceOrder\ServiceOrderManager.cs" />
     <Compile Include="Vehicle\VehicleManager.cs" />

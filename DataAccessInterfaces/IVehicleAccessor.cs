@@ -271,5 +271,30 @@ namespace DataAccessInterfaces
         ///    CREATED: 2024-04-20
         /// </remarks>
         int AddVehicleChecklist(VehicleChecklist checklist);
+
+        /// <summary>
+        ///     Retrieves VIN/Vehicle number tuples to fill drop downs
+        /// </summary>
+        /// <returns>
+        ///    <see cref="List{Vehicle}">Vehicle</see> List of Vin/Vehicle Number tuples for drop downs
+        /// </returns>
+        /// <remarks>
+        ///    Exceptions:
+        /// <br />
+        ///    <see cref="Exception">Exception</see>: Thrown when error encountered
+        /// <br /><br />
+        ///    
+        /// <br />
+        ///    CREATED: 2024-04-22
+        /// <br />
+        ///     Initial Creation
+        /// <br />
+        ///    Creator: Jonathan Beck
+        /// <br />
+        ///    
+        /// <br />
+        ///    
+        /// </remarks>
+        List<Vehicle> selectVehicleTuplesForDropDown();
     }
 }

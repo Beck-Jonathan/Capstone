@@ -20,6 +20,7 @@ sqlcmd -S localhost -E -i SQL/sp_dependent.sql
 sqlcmd -S localhost -E -i SQL/sp_dependent_accommodation.sql
 sqlcmd -S localhost -E -i SQL/sp_driver.sql
 sqlcmd -S localhost -E -i SQL/sp_driver_license_class.sql
+sqlcmd -S localhost -E -i SQL/sp_driver_maintenance_report.sql
 sqlcmd -S localhost -E -i SQL/sp_driver_unavailable.sql
 sqlcmd -S localhost -E -i SQL/sp_employee.sql
 sqlcmd -S localhost -E -i SQL/sp_employee_role.sql

@@ -721,5 +721,67 @@ namespace DataAccessLayer
             }
             return checklistID;
         }
+
+        /// <summary>
+        ///     Retrieves VIN/Vehicle number tuples to fill drop downs
+        /// </summary>
+        /// <returns>
+        ///    <see cref="List{Vehicle}">Vehicle</see> List of Vin/Vehicle Number tuples for drop downs
+        /// </returns>
+        /// <remarks>
+        ///    Exceptions:
+        /// <br />
+        ///    <see cref="Exception">Exception</see>: Thrown when error encountered
+        /// <br /><br />
+        ///    
+        /// <br />
+        ///    CREATED: 2024-04-22
+        /// <br />
+        ///     Initial Creation
+        /// <br />
+        ///    Creator: Jonathan Beck
+        /// <br />
+        ///    
+        /// <br />
+        ///    
+        /// </remarks>
+        public List<Vehicle> selectVehicleTuplesForDropDown()
+        {
+            List<Vehicle> output = new List<Vehicle>();
+            // start with a connection object
+            var conn = DBConnectionProvider.GetConnection();
+            // set the command text
+            var commandText = "sp_vehicle_vin_and_number_for_dropdown";
+            // create the command object
+            var cmd = new SqlCommand(commandText, conn);
+            // set the command type
+            cmd.CommandType = CommandType.StoredProcedure;
+            // There are no parameters to set or add
+            try
+            {
+                //open the connection 
+                conn.Open();  //execute the command and capture result
+                var reader = cmd.ExecuteReader();
+                //process the results
+                if (reader.HasRows)
+                    while (reader.Read())
+                    {
+                        var _Vehicle = new Vehicle();
+                        _Vehicle.VIN = reader.GetString(0);
+                        _Vehicle.VehicleNumber = reader.GetString(1);
+
+                        output.Add(_Vehicle);
+                    }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return output;
+        }
     }
 }

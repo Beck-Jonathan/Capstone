@@ -28,10 +28,16 @@
                         <li class="m-2">@Html.ActionLink("Routes", "Index", "ActiveRoute", new { area = "" }, new { @class = "nav-link" })</li>
                     }
                     <li class="m-2">@Html.ActionLink("Contact Us", "Contact", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                    @if (User.IsInRole("Driver")|| User.IsInRole("FleetAdmin") || User.IsInRole("Maintenance") || User.IsInRole("Mechanic") || User.IsInRole("Dispatcher"))
+                                            {
+                        <li class="m-2">@Html.ActionLink("View Reports", "Index", "DriverMaintenanceReport", new { area = "" }, new { @class = "nav-link" })</li>
+                    }
+
                     @if (User.IsInRole("Admin"))
                     {
                         <li class="m-2">@Html.ActionLink("User Administration", "Index", "Admin", new { area = "" }, new { @class = "nav-link" })</li>
                     }
+
                 </ul>
             </div>
 

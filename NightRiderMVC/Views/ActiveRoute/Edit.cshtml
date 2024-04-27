@@ -17,30 +17,37 @@
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.RouteId)
 
+    <div class="row mx-3">
+        <div class="form-group col-sm-2">
+            <div class="col-md-offset-2 col-md-10">
+                <p> @Html.ActionLink("Add Report", "Create", "DriverMaintenanceReport") </p>
+            </div>
+         </div>
+    </div>
 
-        <div class="row mx-3">
-            @*<div class="form-group col-sm-2">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Save" class="btn btn-default border-primary" />
-                </div>
-            </div>*@
-            <br />
-            <div class="form-group col-sm-2">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="End Route" name="endRoute" class="btn btn-default border-primary" />
+            <div class="row mx-3">
+                @*<div class="form-group col-sm-2">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Save" class="btn btn-default border-primary" />
+                    </div>
+                </div>*@
+                <br />
+                <div class="form-group col-sm-2">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="End Route" name="endRoute" class="btn btn-default border-primary" />
+                    </div>
                 </div>
             </div>
+
+
+
+        </div>
+        }
+
+        <div>
+            @Html.ActionLink("Back to List", "Index")
         </div>
 
-
-
-    </div>
-}
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+        @section Scripts {
+            @Scripts.Render("~/bundles/jqueryval")
+        }

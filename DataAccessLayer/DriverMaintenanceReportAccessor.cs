@@ -1,0 +1,330 @@
+﻿using DataAccessInterfaces;
+using DataObjects;
+using System;
+using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.Data;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace DataAccessLayer
+{
+    /// <summary>
+    /// AUTHOR: Jonathan Beck
+    /// <br />
+    /// CREATED: 2024-04-17
+    /// <br />
+    /// 
+    ///     Accessor Class for Maintenance Reports
+    /// </summary>
+    /// 
+    /// <remarks>
+    /// UPDATER: [Updater's Name]
+    /// <br />
+    /// UPDATED: xx-xx-xx
+    /// <br />
+    ///     
+    /// </remarks>
+    public class DriverMaintenanceReportAccessor : IDriverMaintenanceReportAccessor
+    {
+        /// <summary>
+        ///     Retrieves a single  Driver Maintenance Report record from the database
+        /// </summary>
+        /// <returns>
+        ///    a single <see cref="DriverMaintenanceReport">DriverMaintenanceReport</see> object
+        /// </returns>
+        /// <remarks>
+        ///    Exceptions:
+        /// <br />
+        ///    <see cref="Exception">Exception</see>: Thrown when error encountered
+        /// <br /><br />
+        ///    CONTRIBUTOR: Jonathan Beck
+        /// <br />
+        ///    CREATED: 2024-04-22
+        /// <br />
+        /// <br />
+        ///    UPDATER: [Updater's Name]
+        /// <br />
+        ///    UPDATED: yyyy-MM-dd
+        /// <br />
+        ///     Initial Creation
+        /// </remarks>
+        public DriverMaintenanceReportVM SelectAllDriverMaintenanceReportsById(int ReportID)
+        {
+            DriverMaintenanceReportVM output = new DriverMaintenanceReportVM();
+            // start with a connection object
+            var conn = DBConnectionProvider.GetConnection();
+            // set the command text
+            var commandText = "sp_get_all_driver_maintenance_report_by_report_id";
+            // create the command object
+            var cmd = new SqlCommand(commandText, conn);
+            // set the command type
+            cmd.CommandType = CommandType.StoredProcedure;
+            // we need to add parameters to the command
+            cmd.Parameters.Add("@Driver_Maintenance_Report_ID", SqlDbType.Int);
+
+            //We need to set the parameter values
+            cmd.Parameters["@Driver_Maintenance_Report_ID"].Value = ReportID;
+            try
+            {
+                //open the connection 
+                conn.Open();  //execute the command and capture result
+                var reader = cmd.ExecuteReader();
+                //process the results
+                if (reader.HasRows)
+                    if (reader.Read())
+                    {
+                        output.DriverMaintenanceReportID = reader.GetInt32(reader.GetOrdinal("Driver_Maintenance_Report_Driver_Maintenance_Report_ID"));
+                        output.DriverID = reader.GetInt32(reader.GetOrdinal("Driver_Maintenance_Report_Driver_ID"));
+                        output.DateTime = reader.GetDateTime(reader.GetOrdinal("Driver_Maintenance_Report_Date_Time"));
+                        output.VIN = reader.GetString(reader.GetOrdinal("Driver_Maintenance_Report_VIN"));
+                        output.Severity = reader.GetString(reader.GetOrdinal("Driver_Maintenance_Report_Severity"));
+                        output.Description = reader.GetString(reader.GetOrdinal("Driver_Maintenance_Report_Description"));
+                        output.Is_Active = reader.GetBoolean(reader.GetOrdinal("Driver_Maintenance_Report_Is_Active"));
+
+
+                        output.Vehicle = new Vehicle();
+                        output.Vehicle.VehicleNumber = reader.GetString(reader.GetOrdinal("Vehicle_Vehicle_Number"));
+                        output.Vehicle.VehicleMileage = reader.GetInt32(reader.GetOrdinal("Vehicle_Vehicle_Mileage"));
+                        output.Vehicle.VehicleLicensePlate = reader.GetString(reader.GetOrdinal("Vehicle_Vehicle_License_Plate"));
+                        output.Vehicle.VehicleType = reader.GetString(reader.GetOrdinal("Vehicle_Vehicle_Type"));
+
+                    }
+                    else
+                    {
+                        throw new ArgumentException("Driver_Maintenance_Report not found");
+                    }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return output;
+        }
+
+
+        /// <summary>
+        ///     Adds a driver maintanance report
+        /// </summary>
+        /// <param name="_Driver_Maintenance_Report">
+        ///    The report we are trying to add to the database
+        /// </param>
+        /// 
+        /// <returns>
+        ///    <see cref="int">bool</see>: 1 if the report was added, 0 otherwise.
+        /// </returns>
+        /// <remarks>
+        ///    Parameters:
+        /// <br />
+        ///    <see cref="DriverMaintenanceReport">DriverMaintenanceReport</see> _Driver_Maintenance_Report: The report generated by the driver
+        /// <br />
+        ///    CONTRIBUTOR: Jonathan Beck
+        /// <br />
+        ///    CREATED: 2024-04-17
+        /// </remarks>
+        public int insertDriverMaintenanceReport(DriverMaintenanceReport _driver_maintenance_report)
+        {
+            int rows = 0;
+            // start with a connection object
+            var conn = DBConnectionProvider.GetConnection();
+            // set the command text
+            var commandText = "sp_insert_driver_maintenance_report";
+            // create the command object
+            var cmd = new SqlCommand(commandText, conn);
+            // set the command type
+            cmd.CommandType = CommandType.StoredProcedure;
+            // we need to add parameters to the command
+            cmd.Parameters.Add("@Driver_ID", SqlDbType.Int);
+            cmd.Parameters.Add("@Date_Time", SqlDbType.DateTime);
+            cmd.Parameters.Add("@VIN", SqlDbType.NVarChar, 17);
+            cmd.Parameters.Add("@Severity", SqlDbType.NVarChar, 20);
+            cmd.Parameters.Add("@Description", SqlDbType.NVarChar, 250);
+            cmd.Parameters.Add("@Is_Active", SqlDbType.Bit);
+
+            //We need to set the parameter values
+            cmd.Parameters["@Driver_ID"].Value = _driver_maintenance_report.DriverID;
+            cmd.Parameters["@Date_Time"].Value = _driver_maintenance_report.DateTime;
+            cmd.Parameters["@VIN"].Value = _driver_maintenance_report.VIN;
+            cmd.Parameters["@Severity"].Value = _driver_maintenance_report.Severity;
+            cmd.Parameters["@Description"].Value = _driver_maintenance_report.Description;
+            cmd.Parameters["@Is_Active"].Value = _driver_maintenance_report.Is_Active;
+            try
+            {
+                //open the connection 
+                conn.Open();  //execute the command and capture result
+                rows = cmd.ExecuteNonQuery();
+            }
+
+            catch (Exception ex)
+            {
+                throw new ApplicationException("Unable to add Record.");
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return rows;
+        }
+        /// <summary>
+        ///     Retrieves all Driver Maintenance Report records from the database
+        /// </summary>
+        /// <returns>
+        ///    List of <see cref="List{DriverMaintenanceReport}">DriverMaintenanceReport</see> objects
+        /// </returns>
+        /// <remarks>
+        ///    Exceptions:
+        /// <br />
+        ///    <see cref="Exception">Exception</see>: Thrown when error encountered
+        /// <br /><br />
+        ///    CONTRIBUTOR: Jonathan Beck
+        /// <br />
+        ///    CREATED: 2024-04-22
+        /// <br />
+        /// <br />
+        ///    UPDATER: [Updater's Name]
+        /// <br />
+        ///    UPDATED: yyyy-MM-dd
+        /// <br />
+        ///     Initial Creation
+        /// </remarks>
+        public List<DriverMaintenanceReportVM> SelectActiveDriverMaintenaceReports()
+        {
+            List<DriverMaintenanceReportVM> results = new List<DriverMaintenanceReportVM>();
+            // start with a connection object
+            var conn = DBConnectionProvider.GetConnection();
+            // set the command text
+            var commandText = "sp_get_driver_maintenance_report";
+            // create the command object
+            var cmd = new SqlCommand(commandText, conn);
+            // set the command type
+            cmd.CommandType = CommandType.StoredProcedure;
+            // There are no parameters to set or add
+            try
+            {
+                //open the connection 
+                conn.Open();  //execute the command and capture result
+                var reader = cmd.ExecuteReader();
+                //process the results
+                if (reader.HasRows)
+                    while (reader.Read())
+                    {
+                        DriverMaintenanceReportVM output = new DriverMaintenanceReportVM();
+                        output.DriverMaintenanceReportID = reader.GetInt32(reader.GetOrdinal("Driver_Maintenance_Report_Driver_Maintenance_Report_ID"));
+                        output.DriverID = reader.GetInt32(reader.GetOrdinal("Driver_Maintenance_Report_Driver_ID"));
+                        output.DateTime = reader.GetDateTime(reader.GetOrdinal("Driver_Maintenance_Report_Date_Time"));
+                        output.VIN = reader.GetString(reader.GetOrdinal("Driver_Maintenance_Report_VIN"));
+                        output.Severity = reader.GetString(reader.GetOrdinal("Driver_Maintenance_Report_Severity"));
+                        output.Description = reader.GetString(reader.GetOrdinal("Driver_Maintenance_Report_Description"));
+                        output.Is_Active = reader.GetBoolean(reader.GetOrdinal("Driver_Maintenance_Report_Is_Active"));
+                        output.Vehicle = new Vehicle();
+
+
+
+                        output.Vehicle.VehicleNumber = reader.GetString(reader.GetOrdinal("Vehicle_Vehicle_Number"));
+                        output.Vehicle.VehicleMileage = reader.GetInt32(reader.GetOrdinal("Vehicle_Vehicle_Mileage"));
+                        output.Vehicle.VehicleLicensePlate = reader.GetString(reader.GetOrdinal("Vehicle_Vehicle_License_Plate"));
+                        output.Vehicle.VehicleType = reader.GetString(reader.GetOrdinal("Vehicle_Vehicle_Type"));
+
+                        results.Add(output);
+                    }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return results;
+        }
+        /// <summary>
+        ///     Retrieves all Driver Maintenance Report records from the database for a particular driver
+        /// </summary>
+        /// <returns>
+        ///    List of <see cref="List{DriverMaintenanceReport}">DriverMaintenanceReport</see> objects related to a particular driver
+        /// </returns>
+        /// <remarks>
+        ///  ///    Parameters:
+        /// <br />
+        ///    <see cref="int">DriverID</see> DriverID: The Driver whose reports we want to view
+        /// <br />
+        ///    Exceptions:
+        /// <br />
+        ///    <see cref="Exception">Exception</see>: Thrown when error encountered
+        /// <br /><br />
+        ///    CONTRIBUTOR: Jonathan Beck
+        /// <br />
+        ///    CREATED: 2024-04-22
+        /// <br />
+        /// <br />
+        ///    UPDATER: [Updater's Name]
+        /// <br />
+        ///    UPDATED: yyyy-MM-dd
+        /// <br />
+        ///     Initial Creation
+        /// </remarks>
+        public List<DriverMaintenanceReportVM> SelectAllDriverMaintenanceReportsByEmployeeID(int DriverID)
+        {
+            List<DriverMaintenanceReportVM> results = new List<DriverMaintenanceReportVM>();
+            // start with a connection object
+            var conn = DBConnectionProvider.GetConnection();
+            // set the command text
+            var commandText = "sp_get_all_driver_maintenance_report_by_employee_id";
+            // create the command object
+            var cmd = new SqlCommand(commandText, conn);
+            // set the command type
+            cmd.CommandType = CommandType.StoredProcedure;
+            // we need to add parameters to the command
+            cmd.Parameters.Add("@Driver_ID", SqlDbType.Int);
+
+
+            //We need to set the parameter values
+            cmd.Parameters["@Driver_ID"].Value = DriverID;
+
+            try
+            {
+                //open the connection 
+                conn.Open();  //execute the command and capture result
+                var reader = cmd.ExecuteReader();
+                //process the results
+                if (reader.HasRows)
+                    while (reader.Read())
+                    {
+
+                        DriverMaintenanceReportVM output = new DriverMaintenanceReportVM();
+                        output.DriverMaintenanceReportID = reader.GetInt32(reader.GetOrdinal("Driver_Maintenance_Report_Driver_Maintenance_Report_ID"));
+                        output.DriverID = reader.GetInt32(reader.GetOrdinal("Driver_Maintenance_Report_Driver_ID"));
+                        output.DateTime = reader.GetDateTime(reader.GetOrdinal("Driver_Maintenance_Report_Date_Time"));
+                        output.VIN = reader.GetString(reader.GetOrdinal("Driver_Maintenance_Report_VIN"));
+                        output.Severity = reader.GetString(reader.GetOrdinal("Driver_Maintenance_Report_Severity"));
+                        output.Description = reader.GetString(reader.GetOrdinal("Driver_Maintenance_Report_Description"));
+                        output.Is_Active = reader.GetBoolean(reader.GetOrdinal("Driver_Maintenance_Report_Is_Active"));
+
+
+                        output.Vehicle = new Vehicle();
+                        output.Vehicle.VehicleNumber = reader.GetString(reader.GetOrdinal("Vehicle_Vehicle_Number"));
+                        output.Vehicle.VehicleMileage = reader.GetInt32(reader.GetOrdinal("Vehicle_Vehicle_Mileage"));
+                        output.Vehicle.VehicleLicensePlate = reader.GetString(reader.GetOrdinal("Vehicle_Vehicle_License_Plate"));
+                        output.Vehicle.VehicleType = reader.GetString(reader.GetOrdinal("Vehicle_Vehicle_Type"));
+
+                        results.Add(output);
+                    }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return results;
+        }
+    }
+}
