@@ -13,7 +13,7 @@
     <Grid Background="{x:Static resources:Statics.BackgroundPage}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
-            <ColumnDefinition Width="5*" />
+            <ColumnDefinition Width="3*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition />
@@ -22,6 +22,7 @@
         <Grid Grid.Row="0" Grid.ColumnSpan="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="2*" />
+                <ColumnDefinition />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
             <Label Background="{x:Static resources:Statics.BackgroundItem}" 
@@ -32,27 +33,42 @@
 
             <Button x:Name="btnSaveChanges" Content="Save Changes" 
                     Background="{x:Static resources:Statics.SecondaryColor}" 
-                    Foreground="{x:Static resources:Statics.ButtonText}" Grid.Column="1" />
+                    Foreground="{x:Static resources:Statics.ButtonText}" Grid.Column="1" Click="btnSaveChanges_Click" />
+            <Button x:Name="btnCancel" Content="Cancel" 
+                    Background="{x:Static resources:Statics.SecondaryColor}" 
+                    Foreground="{x:Static resources:Statics.ButtonText}" Grid.Column="2" Click="btnCancel_Click" />
         </Grid>
         
         <Grid Grid.Row="1" Grid.Column="0">
             <Grid.RowDefinitions>
-                <RowDefinition Height="4*" />
+                <RowDefinition Height="5*" />
+                <RowDefinition />
                 <RowDefinition />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            <DataGrid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" x:Name="datStopList">
-                
+            <DataGrid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" x:Name="datStopList" ItemsSource="{Binding}" MouseDoubleClick="datStopList_MouseDoubleClick"
+                      IsReadOnly="True" HorizontalScrollBarVisibility="Auto" AutoGenerateColumns="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Stop #" Binding="{Binding StopNumber}" />
+                    <DataGridTextColumn Header="Address" Binding="{Binding stop.StreetAddress}" />
+                </DataGrid.Columns>
             </DataGrid>
+
+            <Button x:Name="btnMoveStopUp" Content="+" 
+                    Background="{x:Static resources:Statics.SecondaryColor}" 
+                    Foreground="{x:Static resources:Statics.ButtonText}" Grid.Row="1" Grid.Column="0" Click="btnMoveStopUp_Click"/>
+            <Button x:Name="btnMoveStopDown" Content="-" 
+                    Background="{x:Static resources:Statics.SecondaryColor}" 
+                    Foreground="{x:Static resources:Statics.ButtonText}" Grid.Row="1" Grid.Column="1" Click="btnMoveStopDown_Click"/>
             <Button x:Name="btnAddStop" Content="Add a Stop" 
                     Background="{x:Static resources:Statics.SecondaryColor}" 
-                    Foreground="{x:Static resources:Statics.ButtonText}" Grid.Row="1" Grid.Column="1"/>
-            <Button x:Name="btnDeactivateStopForRoute" Content="Deactivate Selected" 
+                    Foreground="{x:Static resources:Statics.ButtonText}" Grid.Row="2" Grid.Column="1" Click="btnAddStop_Click"/>
+            <Button x:Name="btnDeactivateStopForRoute" Content="Deactivate" 
                     Background="{x:Static resources:Statics.SecondaryColor}" 
-                    Foreground="{x:Static resources:Statics.ButtonText}" Grid.Row="1" Grid.Column="0" />
+                    Foreground="{x:Static resources:Statics.ButtonText}" Grid.Row="2" Grid.Column="0" Click="btnDeactivateStopForRoute_Click" />
         </Grid>
         <Maps:Map x:Name="mapRoute" Grid.Column="1" Grid.Row="1" ZoomLevel="10" />
 

@@ -1,6 +1,7 @@
 ﻿using DataObjects;
 using DataObjects.RouteObjects;
 using LogicLayer.RouteStop;
+using Syncfusion.Windows.Shared;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -61,36 +62,54 @@ namespace NightRiderWPF.RouteStop
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                string activeDays = FormValidationHelper.getActiveDays(
-                    (bool)chkMonday.IsChecked, (bool)chkTuesday.IsChecked, (bool)chkWednesday.IsChecked,
-                    (bool)chkThursday.IsChecked, (bool)chkFriday.IsChecked, (bool)chkSaturday.IsChecked, (bool)chkSunday.IsChecked);
-                
-                RouteVM newRouteVM = new RouteVM()
+            TimeSpan repeatTime;
+            if (TimeSpan.TryParse(txtRouteCycleTime.Text, out repeatTime)){
+                if (repeatTime.Days > 0)
                 {
-                    RouteId = (_route == null ? 0 : _route.RouteId),
-                    RouteName = txtRouteName.Text,
-                    StartTime = new DataObjects.HelperObjects.Time((DateTime)tpStartTime.Value),
-                    EndTime = new DataObjects.HelperObjects.Time((DateTime)tpEndTime.Value),
-                    RepeatTime = TimeSpan.Parse(txtRouteCycleTime.Text),
-                    DaysOfService = new DataObjects.HelperObjects.ActivityWeek(activeDays.ToCharArray())
-                };
-                if (_route == null)
-                {
-                    _routeManager.AddRoute(newRouteVM);
-                    MessageBox.Show("Route successfully added!", "Success!", MessageBoxButton.OK, MessageBoxImage.Information);
-                } else
-                {
-                    _routeManager.EditRoute(_route, newRouteVM);
-                    MessageBox.Show("Route successfully updated!", "Success!", MessageBoxButton.OK, MessageBoxImage.Information);
+                    MessageBox.Show("Cannot support a route that lasts longer than a single day.\n" +
+                        "Please split this into multiple smaller routes.", "Warning",
+                        MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
-            } catch (Exception ex)
+                else
+                {
+                    try
+                    {
+                        string activeDays = FormValidationHelper.getActiveDays(
+                            (bool)chkMonday.IsChecked, (bool)chkTuesday.IsChecked, (bool)chkWednesday.IsChecked,
+                            (bool)chkThursday.IsChecked, (bool)chkFriday.IsChecked, (bool)chkSaturday.IsChecked, (bool)chkSunday.IsChecked);
+
+                        RouteVM newRouteVM = new RouteVM()
+                        {
+                            RouteId = (_route == null ? 0 : _route.RouteId),
+                            RouteName = txtRouteName.Text,
+                            StartTime = new DataObjects.HelperObjects.Time((DateTime)tpStartTime.Value),
+                            EndTime = new DataObjects.HelperObjects.Time((DateTime)tpEndTime.Value),
+                            RepeatTime = repeatTime,
+                            DaysOfService = new DataObjects.HelperObjects.ActivityWeek(activeDays.ToCharArray())
+                        };
+                        if (_route == null)
+                        {
+                            _routeManager.AddRoute(newRouteVM);
+                            MessageBox.Show("Route successfully added!", "Success!", MessageBoxButton.OK, MessageBoxImage.Information);
+                        }
+                        else
+                        {
+                            _routeManager.EditRoute(_route, newRouteVM);
+                            MessageBox.Show("Route successfully updated!", "Success!", MessageBoxButton.OK, MessageBoxImage.Information);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message, "Route not stored", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
+                    this.DialogResult = true;
+                }
+            } else
             {
-                MessageBox.Show(ex.Message, "Route not stored", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
+                MessageBox.Show("Cycle tyme must be of format hh:mm", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                // or other formats, but trying to push the user into a certain way of thinking.
             }
-            this.DialogResult = true;
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)

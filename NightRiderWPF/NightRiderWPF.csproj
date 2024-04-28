@@ -204,6 +204,9 @@
     <Compile Include="RouteStop\AddEditRouteDetail.xaml.cs">
       <DependentUpon>AddEditRouteDetail.xaml</DependentUpon>
     </Compile>
+    <Compile Include="RouteStop\AddStopToRoute.xaml.cs">
+      <DependentUpon>AddStopToRoute.xaml</DependentUpon>
+    </Compile>
     <Compile Include="RouteStop\EditRouteStops.xaml.cs">
       <DependentUpon>EditRouteStops.xaml</DependentUpon>
     </Compile>
@@ -307,6 +310,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="RouteStop\AddEditRouteDetail.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="RouteStop\AddStopToRoute.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

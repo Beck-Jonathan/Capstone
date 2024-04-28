@@ -37,7 +37,12 @@ namespace LogicLayer.RouteStop
         IEnumerable<RouteStopVM> GetRouteStopByRouteId(int routeId);
         int AddRouteStop(RouteStopVM routeStopVM);
         int EditRouteStop(RouteStopVM existingRouteStop, RouteStopVM newRouteStop);
-        int DeactivateRouteStop(int routeStopId);
-        int ActivateRouteStop(int routeStopId);
+        int DeleteRouteStop(RouteStopVM routeStop);
+        /// <summary>
+        /// used to change just the ordinal part of a routestop - to update the list.
+        /// </summary>
+        /// <param name="routeStop"></param>
+        /// <returns></returns>
+        bool UpdateOrdinal(RouteStopVM routeStop);
     }
 }

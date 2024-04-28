@@ -17,7 +17,7 @@ namespace DataAccessInterfaces
         IEnumerable<RouteStopVM> selectRouteStopByRouteId(int routeId);
         int InsertRouteStop(RouteStopVM routeStopVM);
         int UpdateRouteStop(RouteStopVM oldRouteStopVM, RouteStopVM newRouteStopVM);
-        int DeactivateRouteStop(RouteStopVM routeStopVM);
-        int ActivateRouteStop(RouteStopVM routeStopVM);
+        int DeleteRouteStop(RouteStopVM routeStopVM);
+        int UpdateOrdinal(RouteStopVM routeStopVM);
     }
 }

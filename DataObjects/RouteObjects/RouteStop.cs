@@ -17,6 +17,7 @@ namespace DataObjects.RouteObjects
      /// 
     public class RouteStop
     {
+        public int RouteStopId { get; set; }
         public int RouteId { get; set; }
         public int StopId { get; set; }
         public int StopNumber {  get; set; }
