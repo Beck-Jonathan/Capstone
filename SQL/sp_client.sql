@@ -84,38 +84,40 @@ GO
 -- UPDATER: Isabella Rosenbohm
 -- UPDATED: 2/27/24
 -- Edited so no longer needs old data in the stored procedure
+-- UPDATER: Michael Springer
+-- UPDATED: 2024-04-27
 CREATE PROCEDURE [dbo].[sp_update_client]
 (
-	@Client_ID		[int],		                               
-	@GivenName		[nvarchar] (50),					
-	@FamilyName		[nvarchar] (50),
-	@MiddleName		[nvarchar] (50),
-	@DOB			[date],
-	@Email			[nvarchar] (255),
-	@PostalCode		[nvarchar] (9),
-	@City			[nvarchar] (50),
-	@Region			[nvarchar] (50),
-	@Address		[nvarchar] (100),
-	@TextNumber		[nvarchar] (12),
-	@VoiceNumber	[nvarchar] (12),
-	@Active			[bit]
+	@p_Client_ID		[int],		                               
+	@p_GivenName		[nvarchar] (50),					
+	@p_FamilyName		[nvarchar] (50),
+	@p_MiddleName		[nvarchar] (50),
+	@p_DOB			[date],
+	@p_Email			[nvarchar] (255),
+	@p_PostalCode		[nvarchar] (9),
+	@p_City			[nvarchar] (50),
+	@p_Region			[nvarchar] (50),
+	@p_Address		[nvarchar] (100),
+	@p_TextNumber		[nvarchar] (12),
+	@p_VoiceNumber	[nvarchar] (12),
+	@p_Active			[bit]
 )
 AS	
 	BEGIN
 		UPDATE	[Client]
-		SET		[Given_Name]			= @GivenName,
-				[Family_Name]			= @FamilyName,
-				[Middle_Name]			= @MiddleName,
-				[DOB]					= @DOB,
-				[Email]					= @Email,
-				[Postal_Code]			= @PostalCode,
-				[City]					= @City,
-				[Region]				= @Region,
-				[Address]				= @Address,
-				[Text_Number]			= @TextNumber,
-				[Voice_Number]			= @VoiceNumber,
-				[Is_Active]				= @Active
-		WHERE	[Client_ID]				= @Client_ID
+		SET		[Given_Name]			= @p_GivenName,
+				[Family_Name]			= @p_FamilyName,
+				[Middle_Name]			= @p_MiddleName,
+				[DOB]					= @p_DOB,
+				[Email]					= @p_Email,
+				[Postal_Code]			= @p_PostalCode,
+				[City]					= @p_City,
+				[Region]				= @p_Region,
+				[Address]				= @p_Address,
+				[Text_Number]			= @p_TextNumber,
+				[Voice_Number]			= @p_VoiceNumber,
+				[Is_Active]				= @p_Active
+		WHERE	[Client_ID]				= @p_Client_ID
 		RETURN	@@ROWCOUNT
 	END
 GO
@@ -189,5 +191,21 @@ AS
 		SELECT 	[Client_ID],[Given_Name],[Family_Name],[Middle_Name],[DOB],[Email],[Postal_Code],[City],[Region],[Address],[Text_Number],[Voice_Number],[Is_Active]
 		FROM 	[Client] 		
 		WHERE	@Email = [Email]
+	END
+GO
+
+-- AUTHOR: Michael Springer
+-- CREATED: 2024-04-27
+print '' print '*** creating sp_deactivate_client ***'
+GO
+CREATE PROCEDURE [dbo].[sp_deactivate_client]
+(
+	@p_ClientID		[int]
+)
+AS
+	BEGIN
+		UPDATE	[Client]
+		SET		[Is_Active] = 0
+		WHERE	[Client_ID] = @p_ClientID
 	END
 GO

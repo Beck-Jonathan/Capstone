@@ -272,6 +272,33 @@ namespace LogicLayerTests
             Assert.IsFalse(result);
         }
 
+
+        [TestMethod]
+        public void TestDeactivateClientReturnsOne()
+        {
+            // Arrange
+            int expected = 1;
+            int actual = 0;
+
+            // Act
+            actual = _clientManager.DeactivateClient(1);
+
+            // Assert
+            Assert.AreEqual(expected, actual);
+        }
+        [TestMethod]
+        public void TestDeactivateClientReturnsZero()
+        {
+            // Arrange
+            int expected = 0;
+            int actual = 0;
+
+            // Act
+            actual = _clientManager.DeactivateClient(17);
+
+            // Assert
+            Assert.AreEqual(expected, actual);
+        }
     }
     
 }

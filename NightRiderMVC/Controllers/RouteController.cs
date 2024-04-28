@@ -26,7 +26,7 @@ namespace NightRiderMVC.Controllers
     {
         private RouteManager _routeManager;
         private string BingMapsKey = ConfigurationManager.AppSettings["BingMapsKey"];
-        
+
         // GET: Route
         [AllowAnonymous]
         [HttpGet]
@@ -37,11 +37,11 @@ namespace NightRiderMVC.Controllers
 
             _routeManager = new RouteManager();
             IEnumerable<RouteVM> routes = _routeManager.GetRoutesWithStops();
-            ViewBag.RoutesData= JsonConvert.SerializeObject(routes, Formatting.None);
+            ViewBag.RoutesData = JsonConvert.SerializeObject(routes, Formatting.None);
             // used for route tracing
 
 
-           
+
             return View(routes);
         }
     }

@@ -118,5 +118,19 @@ namespace DataAccessFakes
 
             return 1;
         }
+
+        public int DeactivateClient(int id)
+        {
+            int result = 0;
+            foreach (var client in _fakeClientData)
+            {
+                if (client.ClientID == id)
+                {
+                    result = client.IsActive ? 1 : 0;
+                    client.IsActive = false;
+                }
+            }
+            return result;
+        }
     }
 }

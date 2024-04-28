@@ -20,6 +20,11 @@ namespace NightRiderWPF
     /// <summary>
     /// Interaction logic for AdminAddClient.xaml
     /// </summary>
+    /// <remarks>
+    /// UPDATER: Michael Springer
+    /// UPDATED: 2024-04-28
+    ///     Allowed optional zip and phone to accept empty strings since nulls are converted
+    /// </remarks>
     public partial class AdminAddClient : Page
     {
         
@@ -122,17 +127,17 @@ namespace NightRiderWPF
                 MessageBox.Show("Please enter a valid email.");
                 return;
             }
-            if (!FormValidationHelper.IsValidPhoneNumber(voiceNumber) && voiceNumber != null)
+            if (!FormValidationHelper.IsValidPhoneNumber(voiceNumber) && voiceNumber != null && voiceNumber != "")
             {
                 MessageBox.Show("Please enter a valid telephone number.");
                 return;
             }
-            if (!FormValidationHelper.IsValidPhoneNumber(textNumber) && textNumber != null)
+            if (!FormValidationHelper.IsValidPhoneNumber(textNumber) && textNumber != null && voiceNumber != "")
             {
                 MessageBox.Show("Please enter a valid telephone number.");
                 return;
             }
-            if (!FormValidationHelper.IsValidZipCode(postal) && postal != null)
+            if (!FormValidationHelper.IsValidZipCode(postal) && postal != null && postal != "")
             {
                 MessageBox.Show("Please enter a valid postal code.");
                 return;
