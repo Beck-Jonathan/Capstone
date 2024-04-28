@@ -3,6 +3,7 @@ using DataAccessLayer.Helpers;
 using DataObjects;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -19,7 +20,63 @@ namespace DataAccessLayer
     /// </summary>
     public class VehicleModelAccessor : IVehicleModelAccessor
     {
-       /// <summary>
+        /// <summary>
+        ///    Retrieves Vehicle Model by VIN
+        /// </summary>
+        /// <returns>
+        ///    VehicleModel vehicle model object 
+        /// </returns>
+        /// <remarks>
+        ///    CONTRIBUTOR: James Williams
+        /// <br />
+        ///    CREATED: 2024-04-24
+        /// </remarks>
+        public VehicleModel getVehicleModelByVIN(string vin)
+        {
+            VehicleModel vehicleModel = null;
+
+            var conn = DBConnectionProvider.GetConnection();
+            var cmdText = "sp_get_vehicle_models_by_vin";
+            var cmd = new SqlCommand(cmdText, conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.Add("@p_VIN", SqlDbType.NVarChar, 17).Value = vin;
+
+            try
+            {
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    vehicleModel = new VehicleModel()
+                    {
+                        VehicleModelID = reader.GetInt32(0),
+                        VehicleTypeID = reader.GetStringNullable(1),
+                        Name = reader.GetString(2),
+                        Make = reader.GetString(3),
+                        Year = reader.GetInt32(4),
+                        MaxPassengers = reader.GetInt32(5),
+                        IsActive = reader.GetBoolean(6)
+                    };
+                }
+                if (vehicleModel == null)
+                {
+                    throw new ArgumentException("No model found for that VIN");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            return vehicleModel;
+        }
+
+        /// <summary>
         ///     Retrieves all active vehicle models
         /// </summary>
         /// <returns>

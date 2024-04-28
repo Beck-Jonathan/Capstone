@@ -198,17 +198,19 @@ Print '***Create the [dbo].[Route_Stop] table***'
 GO
 CREATE TABLE [dbo].[Route_Stop]
 (
+	[Route_Stop_ID] [int] NOT NULL IDENTITY(100000, 1),
     [Route_ID] [int] NOT NULL,
     [Stop_ID] [int] NOT NULL,
     [Route_Stop_Number] [int] NOT NULL,
     [Start_Offset] [time] NOT NULL,
     [Is_Active] [bit] NOT NULL DEFAULT(1),
-    CONSTRAINT [pk_Route_Stop] PRIMARY KEY ([Route_ID], [Route_Stop_Number]),
+    CONSTRAINT [pk_Route_Stop] PRIMARY KEY ([Route_Stop_ID]),
     CONSTRAINT [fk_Route_Stop_Route_ID] FOREIGN KEY ([Route_ID]) 
 		REFERENCES [dbo].[Route]([Route_ID]),
     CONSTRAINT [fk_Route_Stop_Stop_ID] FOREIGN KEY ([Stop_ID])
 		REFERENCES [dbo].[Stop]([Stop_ID])
 )
+WAITFOR DELAY '00:10';
 GO
 
 /******************

@@ -90,12 +90,8 @@
                             Background="{x:Static resources:Statics.SecondaryColor}" Click="btnMaintenance_Click" Visibility="Collapsed" />
                         <Button Content="Inventory" x:Name="btnInventory" Height="50px" Foreground="{x:Static resources:Statics.ButtonText}"
                             Background="{x:Static resources:Statics.SecondaryColor}" Click="btnInventory_Click" Visibility="Collapsed" />
-                        <Button Content="Driver Scheduling" x:Name="btnDriverSchedules" Height="50px" Foreground="{x:Static resources:Statics.ButtonText}"
-                            Background="{x:Static resources:Statics.SecondaryColor}" Visibility="Collapsed" Click="btnDriverSchedules_Click" />
                         <Button Content="Dispatch" x:Name="btnDispatch" Height="50px" Foreground="{x:Static resources:Statics.ButtonText}"
                             Background="{x:Static resources:Statics.SecondaryColor}" Visibility="Collapsed" Click="btnDispatch_Click" />
-                        <Button Content="Vehicle Scheduling" x:Name="btnVehicleSchedules" Height="50px" Foreground="{x:Static resources:Statics.ButtonText}"
-                            Background="{x:Static resources:Statics.SecondaryColor}" Visibility="Collapsed" Click="btnVehicleSchedules_Click" />
                         <Button Content="Routes" x:Name="btnRoutes" Height="50px" Foreground="{x:Static resources:Statics.ButtonText}"
                             Background="{x:Static resources:Statics.SecondaryColor}" Visibility="Hidden" Click="btnRoutes_Click" />
                         <Button Content="Parts Requests" x:Name="btnPartsRequests" Height="50px" Foreground="{x:Static resources:Statics.ButtonText}"

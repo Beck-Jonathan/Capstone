@@ -204,6 +204,9 @@
     <Compile Include="RouteStop\AddEditRouteDetail.xaml.cs">
       <DependentUpon>AddEditRouteDetail.xaml</DependentUpon>
     </Compile>
+    <Compile Include="RouteStop\AddStopToRoute.xaml.cs">
+      <DependentUpon>AddStopToRoute.xaml</DependentUpon>
+    </Compile>
     <Compile Include="RouteStop\EditRouteStops.xaml.cs">
       <DependentUpon>EditRouteStops.xaml</DependentUpon>
     </Compile>
@@ -310,6 +313,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="RouteStop\AddEditRouteDetail.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="RouteStop\AddStopToRoute.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -474,6 +481,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="WorkOrders\VehicleMaintenancePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="WorkOrders\ViewWorkOrderPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -516,6 +527,9 @@
     </Compile>
     <Compile Include="WorkOrders\UpdateWorkOrder.xaml.cs">
       <DependentUpon>UpdateWorkOrder.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WorkOrders\VehicleMaintenancePage.xaml.cs">
+      <DependentUpon>VehicleMaintenancePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="WorkOrders\ViewWorkOrderPage.xaml.cs">
       <DependentUpon>ViewWorkOrderPage.xaml</DependentUpon>

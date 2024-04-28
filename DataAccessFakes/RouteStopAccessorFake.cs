@@ -22,6 +22,7 @@ namespace DataAccessFakes
             {
                 new RouteStopVM()
                     {
+                    RouteStopId = 1,
                         RouteId = 100001,
                         StopId = 0,
                         StopNumber = 1,
@@ -39,6 +40,7 @@ namespace DataAccessFakes
                     },
                     new RouteStopVM()
                     {
+                        RouteStopId = 2,
                         RouteId = 100001,
                         StopId = 1,
                         StopNumber = 2,
@@ -56,6 +58,7 @@ namespace DataAccessFakes
                     },
                     new RouteStopVM()
                     {
+                        RouteStopId = 3,
                         RouteId = 100002,
                         StopId = 2,
                         StopNumber = 3,
@@ -73,30 +76,18 @@ namespace DataAccessFakes
                     }
             };
         }
-        public int ActivateRouteStop(RouteStopVM routeStopVM)
-        {
-            int result = 0;
-            foreach (RouteStopVM routeStop in _routeStops)
-            {
-                if (routeStop.RouteId == routeStopVM.RouteId &&
-                    routeStop.StopId == routeStopVM.StopId &&
-                    routeStop.StopNumber == routeStopVM.StopNumber)
-                {
-                    routeStop.IsActive = true;
-                    result++;
-                }
-            }
-            return result;
-        }
-
-        public int DeactivateRouteStop(RouteStopVM routeStopVM)
+        /// <summary>
+        /// Author: Nathan Toothaker
+        /// Used to test deleting a RouteStop from the database.
+        /// </summary>
+        /// <param name="routeStopVM">The routeStop object to be deleted.</param>
+        /// <returns></returns>
+        public int DeleteRouteStop(RouteStopVM routeStopVM)
         {
             int result = 0;
             foreach(RouteStopVM routeStop in _routeStops)
             {
-                if(routeStop.RouteId == routeStopVM.RouteId &&
-                    routeStop.StopId == routeStopVM.StopId &&
-                    routeStop.StopNumber == routeStopVM.StopNumber)
+                if(routeStop.RouteStopId == routeStopVM.RouteStopId)
                 {
                     routeStop.IsActive = false;
                     result++;
@@ -104,14 +95,18 @@ namespace DataAccessFakes
             }
             return result;
         }
-
+        /// <summary>
+        /// Author: Nathan Toothaker
+        /// Used to test adding a new routestop object.
+        /// </summary>
+        /// <param name="routeStopVM">The routestop to be added.</param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException">Thrown when routestop already exists.</exception>
         public int InsertRouteStop(RouteStopVM routeStopVM)
         {
             int result = 0;
             if(_routeStops.Where(
-                routeStop => routeStop.RouteId == routeStopVM.RouteId &&
-                    routeStop.StopId == routeStopVM.StopId &&
-                    routeStop.StopNumber == routeStopVM.StopNumber
+                routeStop => routeStop.RouteStopId == routeStopVM.RouteStopId
                 ).Any())
             {
                 throw new ArgumentException("RouteStop already exists!");
@@ -120,10 +115,35 @@ namespace DataAccessFakes
             result = _routeStops.Count;
             return result;
         }
-
+        /// <summary>
+        /// used to get all RouteStops for a given route ID
+        /// </summary>
+        /// <param name="routeId">The ID of the route whose stops we want</param>
+        /// <returns>An <see cref="IEnumerable{T}">IEnumerable of RouteStopVMs</see></returns>
         public IEnumerable<RouteStopVM> selectRouteStopByRouteId(int routeId)
         {
             return _routeStops.Where(routeStop => routeStop.RouteId == routeId).ToList();
+        }
+
+        /// <summary>
+        /// Used to show an example of modifying a routestop entry's ordinal number in teh database.
+        /// </summary>
+        /// <param name="routeStopVM"></param>
+        /// <returns></returns>
+        public int UpdateOrdinal(RouteStopVM routeStopVM)
+        {
+            int result = 0;
+            try { 
+            RouteStopVM stopToUpdate = _routeStops.Where(p => p.RouteStopId == routeStopVM.RouteStopId).First();
+
+                stopToUpdate.StopNumber = routeStopVM.StopNumber;
+                result = 1;
+            } catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return result;
         }
 
         public int UpdateRouteStop(RouteStopVM oldRouteStopVM, RouteStopVM newRouteStopVM)

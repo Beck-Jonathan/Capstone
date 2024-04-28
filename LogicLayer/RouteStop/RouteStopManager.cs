@@ -10,6 +10,11 @@ using DataAccessLayer;
 
 namespace LogicLayer.RouteStop
 {
+    /// <summary>
+    /// AUTHOR: Nathan Toothaker
+    /// DATE: 2024-03-05
+    /// Interaction Logic for Route Stop
+    /// </summary>
     public class RouteStopManager : IRouteStopManager
     {
         private IRouteStopAccessor _routeStopAccessor;
@@ -21,19 +26,46 @@ namespace LogicLayer.RouteStop
         {
             _routeStopAccessor = routeStopAccessor;
         }
-        public int ActivateRouteStop(int routeStopId)
-        {
-            throw new NotImplementedException();
-        }
-
+        /// <summary>
+        /// Adds a routestop relation to the database.
+        /// </summary>
+        /// <param name="routeStopVM">The RouteStop data to be added.</param>
+        /// <returns><see cref="int">The ID of the inserted RouteStop object.</see></returns>
+        /// <exception cref="ApplicationException">Caugh tand rewrapped from the layer below.</exception>
         public int AddRouteStop(RouteStopVM routeStopVM)
         {
-            throw new NotImplementedException();
+            int result = 0;
+
+            try
+            {
+                result = _routeStopAccessor.InsertRouteStop(routeStopVM);
+            } catch (Exception ex)
+            {
+                throw new ApplicationException("Unable to insert", ex);
+            }
+
+            return result;
         }
 
-        public int DeactivateRouteStop(int routeStopId)
+        /// <summary>
+        /// Deletes a routestop relation from the database.
+        /// </summary>
+        /// <param name="routeStopVM">The RouteStop data to be deleted.</param>
+        /// <returns><see cref="int">The number of rows changed.</see></returns>
+        /// <exception cref="ApplicationException">Bubbled up when an error happens in the accessor.</exception>
+        public int DeleteRouteStop(RouteStopVM routeStopVM)
         {
-            throw new NotImplementedException();
+            int result = 0;
+
+            try
+            {
+                result = _routeStopAccessor.DeleteRouteStop(routeStopVM);
+            } catch (Exception ex)
+            {
+                throw new ApplicationException("Unable to delete", ex);
+            }
+
+            return result;
         }
 
         public int EditRouteStop(RouteStopVM existingRouteStop, RouteStopVM newRouteStop)
@@ -73,6 +105,20 @@ namespace LogicLayer.RouteStop
                 throw new ApplicationException("Something went wrong, we're verry sorry!", e);
             }
             return results;
+        }
+
+        public bool UpdateOrdinal(RouteStopVM routeStop)
+        {
+            bool result = false;
+            try
+            {
+                result = (1 == _routeStopAccessor.UpdateOrdinal(routeStop));
+            } catch (Exception ex)
+            {
+                throw new ApplicationException("Unable to update database.", ex);
+            }
+
+            return result;
         }
     }
 }

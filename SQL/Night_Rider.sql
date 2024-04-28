@@ -334,18 +334,24 @@ Print '***Create the [dbo].[Route_Stop] table***'
 go
 CREATE TABLE [dbo].[Route_Stop]
 (
+	[Route_Stop_ID] [int] NOT NULL IDENTITY(100000, 1),
     [Route_ID] [int] NOT NULL,
     [Stop_ID] [int] NOT NULL,
     [Route_Stop_Number] [int] NOT NULL,
-    [Start_Offset] [TIME] NOT NULL,
+    [Start_Offset] [time] NOT NULL,
     [Is_Active] [bit] NOT NULL DEFAULT(1),
-    CONSTRAINT [PK_Route_Stop] PRIMARY KEY ([Route_ID], [Route_Stop_Number]),
-    CONSTRAINT [FK_Route_Stop_Route_ID_Route_Route_ID]
-    FOREIGN KEY ([Route_ID]) REFERENCES [dbo].[Route]([Route_ID]),
-    CONSTRAINT [FK_Route_Stop_Stop_ID_Stop_Stop_ID]
-    FOREIGN KEY ([Stop_ID]) REFERENCES [dbo].[Stop]([Stop_ID])
+    CONSTRAINT [pk_Route_Stop] PRIMARY KEY ([Route_Stop_ID]),
+    CONSTRAINT [fk_Route_Stop_Route_ID] FOREIGN KEY ([Route_ID]) 
+		REFERENCES [dbo].[Route]([Route_ID]),
+    CONSTRAINT [fk_Route_Stop_Stop_ID] FOREIGN KEY ([Stop_ID])
+		REFERENCES [dbo].[Stop]([Stop_ID])
 );
 go
+
+print '' print '*** Creating index on [Route_Stop].[Route_ID] ***'
+GO
+CREATE INDEX idx_Route_Stop__Route_ID ON [dbo].[Route_Stop] (Route_ID);
+GO
 /******************
 Insert Sample Data For The  Route_Stop table
 ***************/

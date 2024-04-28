@@ -102,7 +102,7 @@ CREATE PROCEDURE [dbo].[sp_insert_service_order_and_type]
     @Service_Type_ID NVARCHAR(256),
     @Created_By_Employee_ID INT,
     @Date_Started DATETIME,
-    @Date_Finished DATETIME,
+    -- @Date_Finished DATETIME = null,
     @Service_Description NVARCHAR(256)
 )
 AS
@@ -117,8 +117,8 @@ BEGIN
     END
 
     -- Now insert into Service_Order table
-    INSERT INTO dbo.Service_Order (Service_Order_ID, Service_Order_Version, VIN, Service_Type_ID, Created_By_Employee_ID, Date_Started , Date_Finished )
-    VALUES (@Service_Order_ID, @Service_Order_Version, @VIN, @Service_Type_ID, @Created_By_Employee_ID, @Date_Started, @Date_Finished) ;
+    INSERT INTO dbo.Service_Order (Service_Order_ID, Service_Order_Version, VIN, Service_Type_ID, Created_By_Employee_ID, Date_Started   /* Date_Finished */  )
+    VALUES (@Service_Order_ID, @Service_Order_Version, @VIN, @Service_Type_ID, @Created_By_Employee_ID, @Date_Started /*@Date_Finished*/) ;
 
     RETURN @@ROWCOUNT;
 
@@ -237,4 +237,36 @@ AS
         WHERE [Service_Order].[Is_Active] = 1
 			AND [Service_Order].[Date_Finished] is not null
     END;
+GO
+
+-- Initial Creator: Steven Sanchez
+-- Creation Date: 2024/04/23
+-- Last Modified: 
+-- Modification Description: initial creation
+-- Stored Procedure Description: Select Vehicles by pending Service_Order records
+
+PRINT '*** Creating sp_select_all_vehicles_by_pending_service_orders ***'
+GO
+
+
+CREATE PROCEDURE sp_select_all_vehicles_by_pending_service_orders
+AS
+BEGIN
+    SELECT
+        [Service_Order].[VIN] AS VIN_Number,
+        [Vehicle_Model].[Vehicle_Model_ID],
+        [Vehicle_Model].[Make],
+        [Vehicle_Model].[Name],
+        [Vehicle].[Vehicle_Type_ID],
+        [Vehicle].[Vehicle_Mileage],
+        [Service_Order].[Service_Type_ID] AS Service_Type_ID
+    FROM
+        [dbo].[Service_Order] [Service_Order]
+    INNER JOIN
+        [dbo].[Vehicle] [Vehicle] ON [Service_Order].[VIN] = [Vehicle].[VIN]
+    INNER JOIN
+        [dbo].[Vehicle_Model] [Vehicle_Model] ON [Vehicle].[Vehicle_Model_ID] = [Vehicle_Model].[Vehicle_Model_ID]
+    WHERE
+        [Service_Order].[Date_Finished] IS NULL 
+END
 GO

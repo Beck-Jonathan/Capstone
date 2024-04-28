@@ -41,6 +41,13 @@ namespace NightRiderWPF.RouteStop
             refreshRouteList();
         }
 
+        public RouteList(IRouteManager routeManager)
+        {
+            InitializeComponent();
+            _routeManager = routeManager;
+            refreshRouteList();
+        }
+
         private void refreshRouteList()
         {
             try

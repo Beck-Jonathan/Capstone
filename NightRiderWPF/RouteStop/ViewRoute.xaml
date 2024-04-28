@@ -58,7 +58,7 @@
             </Grid.RowDefinitions>
             <Button Margin="20px" x:Name="btnEditStop" Content="Change Stops" 
                     Height="50px" Background="{x:Static resources:Statics.SecondaryColor}" 
-                    Foreground="{x:Static resources:Statics.ButtonText}" Grid.Row="0" />
+                    Foreground="{x:Static resources:Statics.ButtonText}" Grid.Row="0" Click="btnEditStop_Click" />
             <Button Margin="20px" x:Name="btnEditRoute" Content="Edit Route" 
                     Height="50px" Background="{x:Static resources:Statics.SecondaryColor}" 
                     Foreground="{x:Static resources:Statics.ButtonText}" Grid.Row="1" Click="btnEditRoute_Click" />

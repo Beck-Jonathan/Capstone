@@ -307,5 +307,10 @@ namespace DataAccessFakes
             }
             return result;
         }
+        //Jonathan Beck 2024-04-23
+        public List<Vehicle> selectVehicleTuplesForDropDown()
+        {
+            return fakeVehicles;
+        }
     }
 }

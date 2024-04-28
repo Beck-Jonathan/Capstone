@@ -1,26 +1,17 @@
 ﻿using DataObjects;
 using DataObjects.Assignment;
-using DriverClass = DataObjects.Assignment.Driver;
 using DataObjects.RouteObjects;
 using LogicLayer;
-using LogicLayer.PartsRequest;
 using LogicLayer.RouteAssignment;
 using LogicLayer.RouteStop;
+using NightRiderWPF.RouteStop;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using NightRiderWPF.RouteStop;
+using DriverClass = DataObjects.Assignment.Driver;
 
 
 
@@ -36,6 +27,7 @@ namespace NightRiderWPF
         List<Dispatch> _driverSchedule = null;
         private RouteAssignmentManager _assignmentManager;
         private VehicleModelManager _vehicleModelManager;
+        private EmployeeManager _employeeManager;
         private RouteManager _routeManager;
         List<RouteVM> _routes;
         List<VehicleAssignment> _availableVehicles;
@@ -45,6 +37,10 @@ namespace NightRiderWPF
         int _selectedDriverID;
         int _selectedRouteID;
         string _selectedVIN;
+        Route_Assignment _selectedAssignment;
+        Employee_VM _selectedEmployee;
+        VehicleModel _selectedVehicle;
+        DriverClass _selectedDriver;
         public DispatchHome()
         {
             _assignmentManager = new RouteAssignmentManager();
@@ -55,6 +51,7 @@ namespace NightRiderWPF
             try
             {
                 _allModels = _vehicleModelManager.GetVehicleModels();
+                _employeeManager = new EmployeeManager();
             }
             catch (Exception ex)
             {
@@ -72,6 +69,8 @@ namespace NightRiderWPF
             cboVehicleAddSearchCapacity.SelectedIndex = -1;
             dateStart.DisplayDateStart = DateTime.Today;
             dateEnd.DisplayDateStart = DateTime.Today;
+            dateAssignmnetStart.DisplayDateStart = DateTime.Today;
+            dateAssignmnetEnd.DisplayDateStart = DateTime.Today;
             btnSubmit.IsEnabled = false;
             hideUI();
         }
@@ -80,6 +79,7 @@ namespace NightRiderWPF
         {
             //collapse all grids when Model selection changed to avoid overlapping UI
             hideAllGrids();
+            _selectedAssignment = null;
             if (cboModel.SelectedItem is ComboBoxItem selectedItem)
 
             {
@@ -118,6 +118,7 @@ namespace NightRiderWPF
         //Service cbo selection change event
         private void cboService_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            _selectedAssignment = null;
             hideAllGrids();
             if (cboService.SelectedItem is string selectedItem)
             {
@@ -129,7 +130,7 @@ namespace NightRiderWPF
                 switch (_selectedModel)
                 {
                     // add your grid for your feature here.
-                    
+
                     case "Vehicle":
                         switch (selectedService)
                         {
@@ -162,7 +163,7 @@ namespace NightRiderWPF
                         switch (selectedService)
                         {
                             case "Schedules":
-                                showGrid(gridRouteSchedules);
+                                showGrid(gridRouteAssignments);
                                 break;
                             case "Add To Route":
                                 showGrid(gridAddToRoute);
@@ -199,7 +200,7 @@ namespace NightRiderWPF
             gridVehicleMaintenance.Visibility = Visibility.Collapsed;
             gridDriverSchedules.Visibility = Visibility.Collapsed;
             gridDriverAvailability.Visibility = Visibility.Collapsed;
-            gridRouteSchedules.Visibility = Visibility.Collapsed;
+            gridRouteAssignments.Visibility = Visibility.Collapsed;
             gridCharterSchedules.Visibility = Visibility.Collapsed;
             gridRideServiceSchedules.Visibility = Visibility.Collapsed;
             //add any additional grids here as Visibility.Collapsed
@@ -215,7 +216,7 @@ namespace NightRiderWPF
             gridVehicleMaintenance.Visibility = Visibility.Collapsed;
             gridDriverSchedules.Visibility = Visibility.Collapsed;
             gridDriverAvailability.Visibility = Visibility.Collapsed;
-            gridRouteSchedules.Visibility = Visibility.Collapsed;
+            gridRouteAssignments.Visibility = Visibility.Collapsed;
             gridCharterSchedules.Visibility = Visibility.Collapsed;
             gridRideServiceSchedules.Visibility = Visibility.Collapsed;
             gridAddToRoute.Visibility = Visibility.Collapsed;
@@ -547,11 +548,359 @@ namespace NightRiderWPF
                 MessageBox.Show("Failed to refresh data: \n\n" + ex.Message);
             }
         }
-
+        //button that navigates to Route List
         private void btnVehicleAddViewRoutes_Click(object sender, RoutedEventArgs e)
         {
             RouteList routeList = new RouteList();
             this.NavigationService.Navigate(routeList);
         }
+
+
+        //Change SelectRoute cbo selection action
+        private void cboSelectRoute_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            //reset RouteAssingmnet UI
+            resetRouteAssignmentUI();
+
+            //if the selected Index isn't -1, obtain the routeID from the selection
+            int routeID = 0;
+            if (cboSelectRoute.SelectedIndex != -1)
+            {
+                foreach (var route in _routes)
+                {
+                    if (route.RouteName == cboSelectRoute.SelectedValue.ToString())
+                    {
+                        routeID = route.RouteId;
+                        _selectedRouteID = route.RouteId;
+                        break;
+                    }
+                }
+            }
+            //Enable date searching UI
+            dateAssignmnetStart.IsEnabled = true;
+            dateAssignmnetEnd.IsEnabled = true;
+            btnSearchRouteAssignments.IsEnabled = true;
+
+        }
+
+        //Events tp happen when the RouteAssignments grid visibility is changed
+        private void gridRouteAssignments_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            //Reset UI when grid visibility changed
+            resetRouteAssignmentUI();
+            //Deselect all routes
+            cboSelectRoute.SelectedIndex = -1;
+            try
+            {
+                _routes = (List<RouteVM>)_routeManager.getRoutes();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("There was an error. \n\n" + ex.InnerException.Message);
+            }
+            //Generate list of routes for cbo. Configure UI 
+            List<string> routeNames = _routes.Select(route => route.RouteName).ToList();
+            cboSelectRoute.ItemsSource = routeNames;
+            dateAssignmnetStart.IsEnabled = false;
+            dateAssignmnetEnd.IsEnabled = false;
+            btnSearchRouteAssignments.IsEnabled = false;
+            dataRouteAssignment.Visibility = Visibility.Collapsed;
+        }
+
+        //Event for Search btn in RouteAssignments
+        private void btnSearchRouteAssignments_Click(object sender, RoutedEventArgs e)
+        {
+            //initialize date vars
+            DateTime startDate = DateTime.Now;
+            DateTime endDate = DateTime.Now;
+
+            //Set date vars
+            try
+            {
+                startDate = (DateTime)dateAssignmnetStart.SelectedDate;
+                endDate = (DateTime)dateAssignmnetEnd.SelectedDate;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("You must choose a start and end date");
+            }
+            //Validation of dates       
+            if (startDate == null || endDate == null)
+            {
+                MessageBox.Show("Please define start and end dates");
+                return;
+            }
+            if (startDate > endDate)
+            {
+                MessageBox.Show("Please select a start date greater than or equal to the end date");
+                return;
+            }
+            //Show Route Assignment data-grid if valid dates entered and attempt to populate it
+            dataRouteAssignment.Visibility = Visibility.Visible;
+            try
+            {
+                _currentAssignments = _assignmentManager.GetRouteAssignmentsByRouteIDAndDate(_selectedRouteID, startDate, endDate);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error accessing database assignments\n\n" + ex.InnerException.Message);
+            }
+            dataRouteAssignment.ItemsSource = _currentAssignments;
+
+        }
+
+        //double click event for dataRouteAssignment data-grid
+        private void dataRouteAssignment_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            _selectedEmployee = null;
+            _selectedVehicle = null;
+            try
+            {
+                //attempt to retrieve assignment from double click and extract it's data
+                _selectedAssignment = dataRouteAssignment.SelectedItem as Route_Assignment;
+                if (_selectedAssignment != null)
+                {
+                    _selectedDriverID = _selectedAssignment.DriverID;
+                    _selectedVIN = _selectedAssignment.VIN_Number;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error accessing that assignment");
+            }
+
+            //query database for driver and vehicle model information
+            try
+            {
+                _selectedDriver = _assignmentManager.GetRouteAssignmentDriverByAssignmentID(_selectedAssignment.Assignment_ID);
+                _selectedVehicle = _vehicleModelManager.GetVehicleModelByVIN(_selectedVIN);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error accessing database\n\n" + ex.InnerException.Message);
+            }
+
+            //Display information
+            if (_selectedDriver != null)
+            {
+                txtDriverName.Text = _selectedDriver.Family_Name + ", " + _selectedDriver.Given_Name;
+                txtDriverCapacity.Text = _selectedDriver.Max_Passenger_Count.ToString();
+                txtLicenseClass.Text = _selectedDriver.Driver_License_Class_ID;
+            }
+
+            if (_selectedVehicle != null)
+            {
+                txtAssignmentVIN.Text = _selectedVIN;
+                txtAssignmentVehicleCapacity.Text = _selectedVehicle.MaxPassengers.ToString();
+
+            }
+            //Enable the update buttons
+            btnUpdateDriverAssignment.IsEnabled = true;
+            btnUpdateVehicleAssignment.IsEnabled = true;
+
+        }
+
+        //Button that redirects user to the add to route dispatch feature
+        private void btnAddRouteAssignment_Click(object sender, RoutedEventArgs e)
+        {
+            hideAllGrids();
+            gridAddToRoute.Visibility = Visibility.Visible;
+
+        }
+
+        //Click event for Driver update button
+        private void btnUpdateDriverAssignment_Click(object sender, RoutedEventArgs e)
+        {
+            //Check text content of button and either peform actions or cancel actions
+            if (btnUpdateDriverAssignment.Content.ToString() != "Cancel")
+            {
+                //When button does not == "Cancel"
+                //Hides current datagrid and displays/populates DriverUpdate data grid
+                DateTime start = (DateTime)dateAssignmnetStart.SelectedDate;
+                DateTime end = (DateTime)dateAssignmnetEnd.SelectedDate;
+                _availableDrivers = null;
+                dataRouteAssignment.Visibility = Visibility.Collapsed;
+                dataRouteAssignmentDriverUpdate.Visibility = Visibility.Visible;
+                btnUpdateVehicleAssignment.IsEnabled = false;
+                btnUpdateVehicleAssignment.Content = "Update Vehicle";
+                try
+                {
+                    _availableDrivers = _assignmentManager.GetAvailableDriversByDate(start, end);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error accessing available drivers\n\n" + ex.InnerException.Message);
+                }
+                if (_availableDrivers == null)
+                {
+                    MessageBox.Show("Error accessing available drivers for update");
+                    return;
+                }
+                dataRouteAssignmentDriverUpdate.ItemsSource = _availableDrivers;
+                btnUpdateDriverAssignment.Content = "Cancel";
+            }
+            else
+            {
+                //Button press does == "cancel" just resets UI
+                dataRouteAssignmentDriverUpdate.Visibility = Visibility.Collapsed;
+                dataRouteAssignment.Visibility = Visibility.Visible;
+                btnUpdateDriverAssignment.Content = "Update Driver";
+                btnUpdateVehicleAssignment.IsEnabled = true;
+            }
+        }
+
+        //Click event for Update Vehicle button
+        private void btnUpdateVehicleAssignment_Click(object sender, RoutedEventArgs e)
+        {
+            if (btnUpdateVehicleAssignment.Content.ToString() != "Cancel")
+            {
+                //If button content does not == "Cancel"
+                //Hide current datagrid, display VehicleUpdate data grid and populate it
+                DateTime start = (DateTime)dateAssignmnetStart.SelectedDate;
+                DateTime end = (DateTime)dateAssignmnetEnd.SelectedDate;
+                _availableVehicles = null;
+                dataRouteAssignment.Visibility = Visibility.Collapsed;
+                dataRouteAssignmentVehicleUpdate.Visibility = Visibility.Visible;
+                btnUpdateDriverAssignment.IsEnabled = false;
+                btnUpdateDriverAssignment.Content = "Update Driver";
+                try
+                {
+                    _availableVehicles = _assignmentManager.GetAvailableVehiclesByDate(start, end);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error accessing available vehicles\n\n" + ex.InnerException.Message);
+                }
+                if (_availableVehicles == null)
+                {
+                    MessageBox.Show("Error accessing available vehicles for update");
+                    return;
+                }
+                dataRouteAssignmentVehicleUpdate.ItemsSource = _availableVehicles;
+                btnUpdateVehicleAssignment.Content = "Cancel";
+            }
+            else
+            {
+                //Button content is "Cancel"
+                //Reset UI
+                dataRouteAssignmentVehicleUpdate.Visibility = Visibility.Collapsed;
+                dataRouteAssignment.Visibility = Visibility.Visible;
+                btnUpdateVehicleAssignment.Content = "Update Vehicle";
+                btnUpdateDriverAssignment.IsEnabled = true;
+            }
+        }
+
+        //Double click event on DriverUpdate grid
+        private void dataRouteAssignmentDriverUpdate_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            DriverClass selectedDriver = null;
+            //Attempt to retrieve Driver object from grid double click
+            try
+            {
+                selectedDriver = dataRouteAssignmentDriverUpdate.SelectedItem as DriverClass;
+                //If selected driver's license prevents them from driving the currently assigned vehicle, prompt user
+                if (selectedDriver.Max_Passenger_Count < _selectedVehicle.MaxPassengers)
+                {
+                    MessageBox.Show("This driver can not operate the currently assigned vehicle due to license restrictions.");
+                    return;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Please select driver");
+                return;
+            }
+            //Prompt user if they would like to update driver with the currently selected
+            if (selectedDriver != null)
+            {
+                string message = "Would you like to update driver to: " + selectedDriver.Family_Name + " ," + selectedDriver.Given_Name + "?";
+                var result = MessageBox.Show(message, "Update Driver", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+                //If they choose MessageBox prompt "Yes" attempt to update database
+                if (result == MessageBoxResult.Yes)
+                {
+                    try
+                    {
+                        _assignmentManager.UpdateRouteAssignmentDriver(_selectedAssignment.Assignment_ID, selectedDriver.Employee_ID);
+                        MessageBox.Show("Driver has been successfully updated");
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Update failed\n\n" + ex.InnerException.Message);
+                    }
+
+                }
+                resetRouteAssignmentUI();
+
+            }
+        }
+
+        //reset RouteAssignment UI elements helper method
+        public void resetRouteAssignmentUI()
+        {
+
+            txtDriverName.Clear();
+            txtLicenseClass.Clear();
+            txtDriverCapacity.Clear();
+            txtAssignmentVIN.Clear();
+            txtAssignmentVehicleCapacity.Clear();
+            dateAssignmnetEnd.SelectedDate = DateTime.Now;
+            dateAssignmnetStart.SelectedDate = DateTime.Now;
+            dataRouteAssignmentDriverUpdate.Visibility = Visibility.Collapsed;
+            dataRouteAssignmentVehicleUpdate.Visibility = Visibility.Collapsed;
+            dataRouteAssignment.Visibility = Visibility.Collapsed;
+            btnUpdateDriverAssignment.Content = "Update Driver";
+            btnUpdateVehicleAssignment.Content = "Update Vehicle";
+            btnUpdateVehicleAssignment.IsEnabled = false;
+            btnUpdateDriverAssignment.IsEnabled = false;
+        }
+
+        //Double click even for VehicleUpdate datagrid
+        private void dataRouteAssignmentVehicleUpdate_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            VehicleAssignment vehicleAssignment = null;
+            //Attempt to get VehicleAssignment object from selected datagrid item
+            try
+            {
+                vehicleAssignment = dataRouteAssignmentVehicleUpdate.SelectedItem as VehicleAssignment;
+                //if the selected vehicle can not be driven by driver due to license class limitations, prompt user
+                if (vehicleAssignment.Max_Passengers > _selectedDriver.Max_Passenger_Count)
+                {
+                    MessageBox.Show("Assigned driver does not have the license priviledges to operate this vehicle.");
+                    return;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Please select a vehicle");
+                return;
+            }
+            //Prompt user if they would like to update vehicle with the currently selected
+            if (vehicleAssignment != null)
+            {
+                string message = "Would you like to update driver to: "
+                    + vehicleAssignment.VIN + " " + vehicleAssignment.Name + " "
+                    + vehicleAssignment.Make + "?";
+                var result = MessageBox.Show(message, "Update Vehicle", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+                if (result == MessageBoxResult.Yes)
+                {
+                    try
+                    {
+                        _assignmentManager.UpdateRouteAssignmentVehicle(_selectedAssignment.Assignment_ID, vehicleAssignment.VIN);
+                        MessageBox.Show("Vehicle has been successfully updated");
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Update failed\n\n" + ex.InnerException.Message);
+                    }
+
+                }
+                resetRouteAssignmentUI();
+
+            }
+        }
+
     }
 }

@@ -30,6 +30,10 @@ namespace LogicLayer.RouteAssignment
         List<VehicleAssignment> GetAvailableVehiclesByDateAndPassengerCount(DateTime start, DateTime end, int passengerCount);
         List<Driver> GetAvailableDriversByDateAndPassengerCount(DateTime start, DateTime end, int passengerCount);
         List<Route_Assignment> GetRouteAssignmentsByRouteIDAndDate(int routeID, DateTime start, DateTime end);
-
+        Driver GetRouteAssignmentDriverByAssignmentID(int routeAssignmentID);
+        List<VehicleAssignment> GetAvailableVehiclesByDate(DateTime start, DateTime end);
+        List<Driver> GetAvailableDriversByDate(DateTime start, DateTime end);
+        bool UpdateRouteAssignmentDriver(int routeAssignmentID, int driverID);
+        bool UpdateRouteAssignmentVehicle(int routeAssignmentID, string vin);
     }
 }

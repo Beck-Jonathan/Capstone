@@ -145,5 +145,119 @@ namespace LogicLayerTests
         {
             _routeAssignmentManager.GetRouteAssignmentsByRouteIDAndDate(2, new DateTime(2003, 01, 01), new DateTime(2003, 01, 03));
         }
+
+        [TestMethod]
+        public void GetRouteAssignmentDriverPasses()
+        {
+            Driver expectedDriver = new Driver()
+            {
+                Employee_ID = 1,
+                Given_Name = "Bob",
+                Family_Name = "Trapp",
+                Driver_License_Class_ID = "C",
+                Max_Passenger_Count = 5
+            };
+            Driver actualDriver = null;
+            int routeAssignmentID = 1;
+            actualDriver = _routeAssignmentManager.GetRouteAssignmentDriverByAssignmentID(routeAssignmentID);
+
+            Assert.AreEqual(expectedDriver.Employee_ID, actualDriver.Employee_ID);
+            Assert.AreEqual(expectedDriver.Given_Name, actualDriver.Given_Name);
+            Assert.AreEqual(expectedDriver.Family_Name, actualDriver.Family_Name);
+            Assert.AreEqual(expectedDriver.Driver_License_Class_ID, actualDriver.Driver_License_Class_ID);
+            Assert.AreEqual(expectedDriver.Max_Passenger_Count, actualDriver.Max_Passenger_Count);
+
+        }
+        //Created By: James Williams
+        //Date: 2024-04-26
+        [TestMethod]
+        [ExpectedException(typeof(SystemException))]
+        public void TestGetRouteAssignmentDriversFailsBadRouteIDGivenThrowsException()
+        {
+            int badRouteID = 20;
+            _routeAssignmentManager.GetRouteAssignmentDriverByAssignmentID(badRouteID);
+        }
+        //Created By: James Williams
+        //Date: 2024-04-26
+        [TestMethod]
+        public void GetAvailableDriversByDatePasses()
+        {
+            int expected = 2;
+            int actual = 0;
+
+            List<Driver> drivers = _routeAssignmentManager.GetAvailableDriversByDate(new DateTime(2002, 01, 01), new DateTime(2002, 01, 02));
+
+            actual = drivers.Count();
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        //Created By: James Williams
+        //Date: 2024-04-26
+        [TestMethod]
+        [ExpectedException(typeof(SystemException))]
+        public void GetAvailableDriversByDateFailsBadDatesThrowsException()
+        {
+            DateTime badStart = DateTime.Now.AddMonths(1);
+            DateTime badEnd = DateTime.Now;
+
+            _routeAssignmentManager.GetAvailableDriversByDate(badStart, badEnd);
+        }
+        //Created By: James Williams
+        //Date: 2024-04-26
+        [TestMethod]
+        public void GetAvailableVehiclesByDatePasses()
+        {
+            int expected = 3;
+            int actual = 0;
+
+            List<VehicleAssignment> vehicles = _routeAssignmentManager.GetAvailableVehiclesByDate(new DateTime(2002, 01, 01), new DateTime(2002, 01, 02));
+            actual = vehicles.Count();
+
+            Assert.AreEqual(expected, actual);
+        }
+        //Created By: James Williams
+        //Date: 2024-04-26
+        [TestMethod]
+        [ExpectedException(typeof(SystemException))]
+        public void GetAvailableVehiclesByDateFailsBadDatesThrowsException()
+        {
+            DateTime badStart = DateTime.Now.AddMonths(1);
+            DateTime badEnd = DateTime.Now;
+
+            _routeAssignmentManager.GetAvailableVehiclesByDate(badStart, badEnd);
+        }
+        //Created By: James Williams
+        //Date: 2024-04-26
+        [TestMethod]
+        public void UpdateRouteAssignmentDriverPasses()
+        {
+            Assert.IsTrue(_routeAssignmentManager.UpdateRouteAssignmentDriver(1, 7));
+        }
+        //Created By: James Williams
+        //Date: 2024-04-26
+        [TestMethod]
+        [ExpectedException(typeof(SystemException))]
+        public void UpdateRouteAssignmentDriverFailsThrowsSystemException()
+        {
+            int badRouteID = 20;
+            _routeAssignmentManager.UpdateRouteAssignmentDriver(badRouteID, 4);
+        }
+        //Created By: James Williams
+        //Date: 2024-04-26
+        [TestMethod]
+        [ExpectedException(typeof(SystemException))]
+        public void UpdateRouteAssignmentVehicleFailsThrowsSystemException()
+        {
+            int badRouteID = 20;
+            _routeAssignmentManager.UpdateRouteAssignmentVehicle(badRouteID, "THISISONLYATEST06");
+        }
+        //Created By: James Williams
+        //Date: 2024-04-26
+        [TestMethod]
+        public void UpdateRouteAssignmentVehiclePasses()
+        {
+            Assert.IsTrue(_routeAssignmentManager.UpdateRouteAssignmentVehicle(1, "THISISONLYATEST06"));
+        }
     }
 }

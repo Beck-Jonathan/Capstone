@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using DataAccessFakes;
 using DataObjects;
+using System.Collections.Generic;
 
 namespace LogicLayerTests
 {
@@ -514,6 +515,20 @@ namespace LogicLayerTests
             });
 
             Assert.AreEqual(expectedResult, actualResult);
+        }
+        //Jonathan Beck 2024-04-24
+        [TestMethod]
+        public void testselectVehicleTuplesForDropDownRetreivesAList()
+        {
+            //arrange
+            List<Vehicle> list = null;
+            //act
+            list = _vehicleManager.getVehicleTuplesForDropDown();
+            //assert
+            Assert.IsNotNull(list);
+
+
+
         }
 
     }

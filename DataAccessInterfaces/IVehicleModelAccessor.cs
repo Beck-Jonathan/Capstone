@@ -34,5 +34,18 @@ namespace DataAccessInterfaces
         /// <br />
         ///    <see cref="VehicleModel">VehicleModel</see> vehicleModel: The VehicleModel being inserted
         int InsertVehicleModel(VehicleModel vehicleModel);
+
+        /// <summary>
+        ///    Retrieves Vehicle Model by VIN
+        /// </summary>
+        /// <returns>
+        ///    VehicleModel vehicle model object 
+        /// </returns>
+        /// <remarks>
+        ///    CONTRIBUTOR: James Williams
+        /// <br />
+        ///    CREATED: 2024-04-24
+        /// </remarks>
+        VehicleModel getVehicleModelByVIN(string vin);
     }
 }

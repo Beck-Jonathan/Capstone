@@ -42,7 +42,10 @@ namespace DataObjects
     
     public class Vehicle_CM : Vehicle { 
         //added Jonathan Beck 4/13/2024
-    public List<ServiceOrder_VM> ServiceOrders { get; set; }
-    
+        public List<ServiceOrder_VM> ServiceOrders { get; set; }
+
+        //added Steven Sanchez 4/26/2024
+        public VehicleModelVM vehicleModel { get; set; }
+        public ServiceOrder_VM serviceOrder_VM { get; set; }
     }
 }
