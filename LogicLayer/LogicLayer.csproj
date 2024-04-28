@@ -145,8 +145,6 @@
     <Compile Include="PurchaseOrder\POLineItemsManager.cs" />
     <Compile Include="PurchaseOrder\PurchaseOrderManager.cs" />
     <Compile Include="RouteStop\IRouteStopManager.cs" />
-    <Compile Include="RouteStop\IStopManager.cs" />
-    <Compile Include="RouteStop\RouteManager.cs" />
     <Compile Include="RouteStop\RouteStopManager.cs" />
     <Compile Include="RouteStop\StopManager.cs" />
     <Compile Include="ServiceOrderLineItems\IServiceOrderLineItemsManager.cs" />
