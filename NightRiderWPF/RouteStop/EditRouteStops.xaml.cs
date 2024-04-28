@@ -45,6 +45,7 @@ namespace NightRiderWPF.RouteStop
             if(result == true)
             {
                 MessageBox.Show("Successfully added stop. Data persisted.", "Success!", MessageBoxButton.OK, MessageBoxImage.Information);
+                recompileStopList();
                 DisplayRouteData();
             }
         }
@@ -190,8 +191,10 @@ namespace NightRiderWPF.RouteStop
                     List<RouteStopVM> stops = _route.RouteStops.ToList();
                     _routeStopManager.DeleteRouteStop(current);
                     stops.Remove(current);
+                    _route.RouteStops = stops;
                     recompileStopList();
                     DisplayRouteData();
+                    MessageBox.Show("Stop deactivated successfully.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
                 catch (Exception ex)
                 {
