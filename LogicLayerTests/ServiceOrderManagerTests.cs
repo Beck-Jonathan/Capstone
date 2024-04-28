@@ -63,7 +63,7 @@ namespace LogicLayerTests
         {
             // Arrange
 
-            ServiceOrder serviceOrderToUpdate = new ServiceOrder()
+            ServiceOrder_VM serviceOrderToUpdate = new ServiceOrder_VM()
             {
                 Service_Order_ID = 100000,
                 Critical_Issue = true,
@@ -104,7 +104,7 @@ namespace LogicLayerTests
         public void TestUpdateNonExistingServiceOrderFails()
         {
             // Arrange
-            ServiceOrder serviceOrderToUpdate = new ServiceOrder()
+            ServiceOrder_VM serviceOrderToUpdate = new ServiceOrder_VM()
             {
                 Service_Order_ID = 100010,  // Assuming this ID doesn't exist in the database
                 Critical_Issue = true,

@@ -88,6 +88,8 @@
                             Visibility="Collapsed" />
                         <Button Content="Maintenance" x:Name="btnMaintenance" Height="50px" Foreground="{x:Static resources:Statics.ButtonText}"
                             Background="{x:Static resources:Statics.SecondaryColor}" Click="btnMaintenance_Click" Visibility="Collapsed" />
+                        <Button Content="Scheduled Maintenance" x:Name="btnScheduledMaintenance" Height="50px" Foreground="{x:Static resources:Statics.ButtonText}"
+                            Background="{x:Static resources:Statics.SecondaryColor}" Click="btnScheduledMaintenance_Click" Visibility="Collapsed" />
                         <Button Content="Inventory" x:Name="btnInventory" Height="50px" Foreground="{x:Static resources:Statics.ButtonText}"
                             Background="{x:Static resources:Statics.SecondaryColor}" Click="btnInventory_Click" Visibility="Collapsed" />
                         <Button Content="Dispatch" x:Name="btnDispatch" Height="50px" Foreground="{x:Static resources:Statics.ButtonText}"

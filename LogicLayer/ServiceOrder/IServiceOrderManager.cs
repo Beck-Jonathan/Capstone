@@ -78,7 +78,7 @@ namespace LogicLayer
         /// A new remark should be added for each update to this method.
         /// </remarks>
         /// </update>
-        int UpdateServiceOrder(ServiceOrder serviceOrder);
+        int UpdateServiceOrder(ServiceOrder_VM serviceOrder);
 
         /// <summary>
         /// Creates a service order with the provided details.

@@ -485,6 +485,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="WorkOrders\ViewScheduleWorkOrderPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="WorkOrders\ViewWorkOrderPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -530,6 +534,9 @@
     </Compile>
     <Compile Include="WorkOrders\VehicleMaintenancePage.xaml.cs">
       <DependentUpon>VehicleMaintenancePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WorkOrders\ViewScheduleWorkOrderPage.xaml.cs">
+      <DependentUpon>ViewScheduleWorkOrderPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="WorkOrders\ViewWorkOrderPage.xaml.cs">
       <DependentUpon>ViewWorkOrderPage.xaml</DependentUpon>

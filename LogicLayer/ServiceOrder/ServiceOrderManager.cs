@@ -116,7 +116,7 @@ namespace LogicLayer
         /// <br />
         ///     Initial Creation
         /// </remarks>
-        public int UpdateServiceOrder(ServiceOrder serviceOrder)
+        public int UpdateServiceOrder(ServiceOrder_VM serviceOrder)
         {
             int rowsAffected = 0;
 

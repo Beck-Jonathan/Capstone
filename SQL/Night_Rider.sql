@@ -1006,7 +1006,7 @@ CREATE TABLE [dbo].[Maintenance_Schedule]
     [Vehicle_Model_ID] [int] NOT NULL,
     [Service_Type_ID] [nvarchar] (256) NOT NULL,
     [Frequency_In_Months] [int] NOT NULL,
-    [Frequency_In_Miles] [int]                     ,
+    [Frequency_In_Miles] [int] NOT NULL,
     [Is_Completed] [bit] NOT NULL,
     [Active] [bit] NOT NULL,
     CONSTRAINT [FK_Maintenance_Schedule_Vehicle_Model_id] FOREIGN KEY([Vehicle_Model_ID])
@@ -1035,10 +1035,10 @@ INSERT INTO [dbo].[Maintenance_Schedule]
     )
 VALUES
     (100001, 100001, 'Oil Change', 6, 5000, 0, 1),
-    (100002, 100001, 'All Tire Change', 12, 10000, 1, 1),
-    (100003, 100002, 'Tire Rotation', 18, NULL, 0, 1),
-    (100004, 100003, 'Windshield Replacement', 12, NULL, 0, 1),
-    (100005, 100002, 'Troubleshooting', 6, NULL, 1, 1);
+    (100002, 100001, 'All Tire Change', 12, 10000, 1, 0),
+    (100003, 100002, 'Tire Rotation', 18, 0, 0, 1),
+    (100004, 100003, 'Windshield Replacement', 12, 0, 0, 1),
+    (100005, 100002, 'Troubleshooting', 6, 0, 1, 0);
 GO
 
 

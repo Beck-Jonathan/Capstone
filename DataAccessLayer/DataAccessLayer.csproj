@@ -58,6 +58,7 @@
     <Compile Include="DriverMaintenanceReportAccessor.cs" />
     <Compile Include="Helpers\SqlDataReaderHelpers.cs" />
     <Compile Include="LoginAccessor.cs" />
+    <Compile Include="MaintenanceScheduleAccessor.cs" />
     <Compile Include="PartsRequestAccessor.cs" />
     <Compile Include="Parts_InventoryAccessor.cs" />
     <Compile Include="EmployeeAccessor.cs" />
