@@ -75,6 +75,48 @@ namespace NightRiderWPF
             hideUI();
         }
 
+        public DispatchHome(string gridToDisplay)
+        {
+            _assignmentManager = new RouteAssignmentManager();
+            _vehicleModelManager = new VehicleModelManager();
+            _routes = new List<RouteVM>();
+            _routeManager = new RouteManager();
+            _selectedRouteID = 0;
+            try
+            {
+                _allModels = _vehicleModelManager.GetVehicleModels();
+                _employeeManager = new EmployeeManager();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error\n\n" + ex.InnerException.Message);
+            }
+            InitializeComponent();
+            if (_allModels != null)
+            {
+                var capacities = _allModels.OrderBy(m => m.MaxPassengers).Select(m => m.MaxPassengers).Distinct();
+                foreach (var item in capacities)
+                {
+                    cboVehicleAddSearchCapacity.Items.Add(item);
+                }
+            }
+            cboVehicleAddSearchCapacity.SelectedIndex = -1;
+            dateStart.DisplayDateStart = DateTime.Today;
+            dateEnd.DisplayDateStart = DateTime.Today;
+            dateAssignmnetStart.DisplayDateStart = DateTime.Today;
+            dateAssignmnetEnd.DisplayDateStart = DateTime.Today;
+            btnSubmit.IsEnabled = false;
+            hideUI();
+            if(gridToDisplay == "Update Assignment")
+            {
+                gridRouteAssignments.Visibility = Visibility.Visible;
+            }
+            if(gridToDisplay == "Create Assignment")
+            {
+                gridAddToRoute.Visibility = Visibility.Visible;
+            }
+        }
+
         private void cboModel_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             //collapse all grids when Model selection changed to avoid overlapping UI
