@@ -93,15 +93,26 @@
         </dt>
 
         <dd>
+            
             <ul>
                 @foreach (string r in ViewBag.Roles)
                 {
-                    <li>
+
+
+<li>
                         <strong>
-                            @r @Html.ActionLink("Remove Role", "RemoveRole",
-                           new { Id = Model.Id, Role = r })
+                            @if (r == "Client")
+                            {
+                                 <div>@r</div>
+                            }
+                            else
+                            {
+                                @r @Html.ActionLink("Remove Role", "RemoveRole",
+                            new { Id = Model.Id, Role = r })
+                            }
+
                         </strong>
-                        @if (r == "Administrator")
+                        @if (r == "Admin")
                         {
                             <span style="color: red; font-weight: bold; ">@ViewBag.Error</span>
                         }
@@ -112,14 +123,35 @@
 
         <dd>
             <ul>
+
                 @foreach (string r in ViewBag.NoRoles)
                 {
-                    <li>
-                        <strong>
-                            @r @Html.ActionLink("Add Role", "AddRole",
-                           new { Id = Model.Id, Role = r })
-                        </strong>
-                    </li>
+
+
+
+                    if (ViewBag.Roles.Contains("Client")) { }
+                    else
+                    {
+                        if (r == "Client")
+                        {
+
+                        }
+                        else
+                        {
+                        <li>
+                            <strong>
+
+                               
+                                @r @Html.ActionLink("Add Role", "AddRole",
+                                new { Id = Model.Id, Role = r })
+                                
+
+                            </strong>
+
+                        </li>
+                        }
+                    }
+
                 }
             </ul>
         </dd>
