@@ -174,5 +174,20 @@ namespace LogicLayer
         ///    Initial Creation
         /// </remarks>
         List<ServiceOrder_VM> GetAllIncompleteServiceOrders();
+
+
+        /// <summary>
+        ///     A method that returns vehicles with pending servive orders
+        /// </summary>
+        /// <returns>
+        ///    <see cref="List{Vehicle_CM}">Vehicle_CM</see>: The list of all vehicles with pending service orders.
+        /// </returns>
+        ///    CONTRIBUTOR: Steven Sanchez
+        /// <br />
+        ///    CREATED: 2024-04-26
+        /// <br />
+        ///    Initial Creation
+        /// </remarks>
+        List<Vehicle_CM> GetAllVehiclesWithPendingServiceOrders();
     }
 }

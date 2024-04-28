@@ -127,17 +127,24 @@ namespace NightRiderWPF.Driver
                             systemPushpin.Location = systemLocation;
                             // Get the route line from Bing Maps API
                             BingMapsResponse bingMapsResponse = await _routeAssignmentManager.getRouteLineForRouteAssignmentVM(new List<Route_Assignment_VM> { route });
-                            // Draw the route polyline on the map
-                            MapPolyline line = new MapPolyline();
-                            line.Locations = new LocationCollection();
-                            line.Stroke = Brushes.Black;
-                            line.StrokeThickness = 2;
-                            // Add Bing Maps route coordinates to the polyline
-                            foreach (var coordinateset in bingMapsResponse.ResourceSets[0].resources[0].routePath.line.coordinates)
+                            if (bingMapsResponse != null)
                             {
-                                line.Locations.Add(new Location(((List<double>)coordinateset)[0], ((List<double>)coordinateset)[1]));
+                                // Draw the route polyline on the map
+                                MapPolyline line = new MapPolyline();
+                                line.Locations = new LocationCollection();
+                                line.Stroke = Brushes.Black;
+                                line.StrokeThickness = 2;
+                                // Add Bing Maps route coordinates to the polyline
+                                foreach (var coordinateset in bingMapsResponse.ResourceSets[0].resources[0].routePath.line.coordinates)
+                                {
+                                    line.Locations.Add(new Location(((List<double>)coordinateset)[0], ((List<double>)coordinateset)[1]));
+                                }
+                                mapRoute.Children.Add(line);
                             }
-                            mapRoute.Children.Add(line);
+                            else
+                            {
+                                MessageBox.Show("Bing Maps response is null.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                            }
                         };
                         watcher.Start();
                     }

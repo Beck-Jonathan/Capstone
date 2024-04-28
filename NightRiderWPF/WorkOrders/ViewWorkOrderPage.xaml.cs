@@ -557,5 +557,19 @@ namespace NightRiderWPF.WorkOrders
                 mntcViewWorkOrderPendingDg.Columns[4].CanUserReorder = false;
             }
         }
+
+        private void VehicleListbtn_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                VehicleMaintenancePage vehicleMaintenancePage = new VehicleMaintenancePage();
+                NavigationService.Navigate(vehicleMaintenancePage);
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Error loading vehicle maintenance list page.");
+
+            }
+        }
     }
 }

@@ -80,6 +80,7 @@
         <Grid Grid.Row="3">
             <Button x:Name="mntcViewWorkOrderCloseBtn" Content="Close" Width="100" Height="35" FontSize="14" HorizontalAlignment="Left" Margin="35,0,0,0" Click="mntcViewWorkOrderCloseBtn_Click" />
             <Button x:Name="Addbtn" Grid.Row="4" Grid.Column="0" Height="35" Width="100" Content="Add Work Order" Click="Addbtn_Click" />
+            <Button x:Name="VehicleListbtn" Grid.Row="4" Grid.Column="0" HorizontalAlignment="Right" Margin="30 0 30 0" Height="35" Width="100" Content="Vehicle List" Click="VehicleListbtn_Click" />
         </Grid>
 
 
