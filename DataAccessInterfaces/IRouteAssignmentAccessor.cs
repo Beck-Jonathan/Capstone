@@ -28,5 +28,10 @@ namespace DataAccessInterfaces
         List<VehicleAssignment> GetAvailableVehicles(DateTime start, DateTime end, int passengerCount);
         List<Driver> GetAvailableDrivers(DateTime start, DateTime end, int passengerCount);
         List<Route_Assignment> GetRouteAssignmentsByRouteIDAndDate(int routeID, DateTime start, DateTime end);
+        Driver GetRouteAssignmentDriverByRouteAssignmentID(int routeAssignmentID);
+        List<Driver> GetAvailableDriversByDate(DateTime start, DateTime end);
+        List<VehicleAssignment> GetAvailableVehiclesByDate(DateTime start, DateTime end);
+        int UpdateRouteAssignmentDriver(int routeAssignmentID, int driverID);
+        int UpdateRouteAssignmentVehicle(int routeAssignmentID, string vin);
     }
 }

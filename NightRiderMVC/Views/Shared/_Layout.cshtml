@@ -6,6 +6,7 @@
     <title>@ViewBag.Title - My ASP.NET Application</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    
 
 </head>
 <body>
@@ -17,11 +18,29 @@
             <div class="col-6 collapse navbar-collapse d-sm-inline-flex justify-content-center">
                 <ul class="navbar-nav flex-grow-1 nav-text">
                     <li class="m-2">@Html.ActionLink("Routes and Stops", "Index", "Route", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li class="m-2">@Html.ActionLink("Request a Ride", "Index", "RideRequest", new { area = "" }, new { @class = "nav-link" })</liclass="m-2">
+                    <li class="m-2">@Html.ActionLink("Request a Ride", "Index", "RideRequest", new { area = "" }, new { @class = "nav-link" })</li>
+                    @if (User.IsInRole("Driver") || User.IsInRole("Dispatcher") || User.IsInRole("FleetAdmin") || User.IsInRole("Maintenanace") || User.IsInRole("Mechanic") || User.IsInRole("Operator") || User.IsInRole("PartsPerson"))
+                    {
+                        <li class="m-2">@Html.ActionLink("Checklist", "Create", "VehicleChecklist", new { area = "" }, new { @class = "nav-link" })</li>
+                    }
+                    @if (User.IsInRole("Driver") || User.IsInRole("Dispatcher") || User.IsInRole("FleetAdmin") || User.IsInRole("Operator"))
+                    {
+                        <li class="m-2">@Html.ActionLink("Routes", "Index", "ActiveRoute", new { area = "" }, new { @class = "nav-link" })</li>
+                    }
                     <li class="m-2">@Html.ActionLink("Contact Us", "Contact", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                    @if (User.IsInRole("Driver")|| User.IsInRole("FleetAdmin") || User.IsInRole("Maintenance") || User.IsInRole("Mechanic") || User.IsInRole("Dispatcher"))
+                                            {
+                        <li class="m-2">@Html.ActionLink("View Reports", "Index", "DriverMaintenanceReport", new { area = "" }, new { @class = "nav-link" })</li>
+                    }
+
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <li class="m-2">@Html.ActionLink("User Administration", "Index", "Admin", new { area = "" }, new { @class = "nav-link" })</li>
+                    }
+
                 </ul>
             </div>
-            
+
             <div class=" col-3 collapse navbar-collapse d-sm-inline-flex justify-content-center">
                 @Html.Partial("_LoginPartial")
             </div>
@@ -51,5 +70,14 @@
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
     <script src="@Url.Content("~/Scripts/site.js")" type="text/javascript"></script>
-</body>
+
+    @* Bing Maps API only accessed on Route Index View *@
+    @if (ViewContext.RouteData.Values["controller"].ToString().Equals("Route") &&
+        ViewContext.RouteData.Values["action"].ToString().Equals("Index"))
+    {
+        <script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?key=@ViewBag.BingMapsKey&callback=loadMapScenario' async defer></script>
+        <script src="@Url.Content("~/Scripts/map-handler.js")" type="text/javascript"></script>
+    }
+
+
 </html>

@@ -287,5 +287,62 @@ namespace LogicLayer
 
             return vehicle;
         }
+
+        public int AddVehicleChecklist(VehicleChecklist checklist)
+        {
+            int checklistID = 0;
+
+            try
+            {
+                checklistID = _vehicleAccessor.AddVehicleChecklist(checklist);
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("Unable to add checklist", ex);
+            }
+
+            return checklistID;
+        }
+
+        /// <summary>
+        ///     Retrieves VIN/Vehicle number tuples to fill drop downs
+        /// </summary>
+        /// <returns>
+        ///    <see cref="List{Vehicle}">Vehicle</see> List of Vin/Vehicle Number tuples for drop downs
+        /// </returns>
+        /// <remarks>
+        ///    Exceptions:
+        /// <br />
+        ///    <see cref="Exception">Exception</see>: Thrown when error encountered
+        /// <br /><br />
+        ///    
+        /// <br />
+        ///    CREATED: 2024-04-22
+        /// <br />
+        ///     Initial Creation
+        /// <br />
+        ///    Creator: Jonathan Beck
+        /// <br />
+        ///    
+        /// <br />
+        ///    
+        /// </remarks>
+        public List<Vehicle> getVehicleTuplesForDropDown()
+        {
+            List<Vehicle> results = new List<Vehicle>();
+            try
+            {
+                results = _vehicleAccessor.selectVehicleTuplesForDropDown();
+
+            }
+            catch (Exception ex)
+            {
+
+                throw new ApplicationException("Unable to load select box items", ex);
+            }
+            return results;
+
+
+        }
     }
 }

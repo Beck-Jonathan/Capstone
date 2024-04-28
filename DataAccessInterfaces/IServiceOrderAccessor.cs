@@ -136,6 +136,25 @@ namespace DataAccessInterfaces
         ServiceOrder_VM SelectServiceOrderByServiceOrderID(int serviceOrderID);
 
         /// <summary>
+        /// marks a service order as inactive in the database
+        /// <br/>
+        /// <br/>
+        /// Max Fare 
+        /// Created: 2024-04-01
+        /// </summary>
+        /// <param name="serviceOrder">The Service Order to Deactivate</param>
+        /// <returns></returns>
+        int DeactivateServiceOrder(ServiceOrder_VM serviceOrder);
+        /// <summary>
+        /// marks an inactive service order as active in the database
+        /// <br/>
+        /// <br/>
+        /// Max Fare 
+        /// Created: 2024-04-01
+        /// </summary>
+        /// <param name="serviceOrder">The Service Order to Reactivate</param>
+        /// <returns></returns>
+        int ActivateServiceOrder(ServiceOrder_VM serviceOrder);
         ///     A method that returns sevice orders that are complete
         /// </summary>
         /// <returns>

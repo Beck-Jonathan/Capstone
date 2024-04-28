@@ -18,6 +18,7 @@ namespace LogicLayer
         bool AddVehicleModel(VehicleModelVM vehicleModel);
 
         bool UpdateVehicleModel(VehicleModelVM oldModel, VehicleModelVM newModel);
+        VehicleModel GetVehicleModelByVIN(string vin);
     }
 
     /// <summary>
@@ -159,6 +160,41 @@ namespace LogicLayer
             }
 
             return (updates > 0);
+        }
+
+        /// <summary>
+        ///    Get vehicle model by VIN
+        /// </summary>
+        /// <param name="vin">
+        ///   VIN of the vehicle
+        /// </param>
+        /// <returns>
+        ///   VehicleModel object
+        /// </returns>
+        /// <remarks>
+        ///    Exceptions:
+        ///    <see cref="SystemException">SystemException</see>: Thrown if there is a problem writing to the DB.
+        ///    CONTRIBUTOR: James Williams
+        ///    CREATED: 2024-04-26
+        /// </remarks>
+        public VehicleModel GetVehicleModelByVIN(string vin)
+        {
+            VehicleModel vehicleModel = null;
+
+            try
+            {
+                vehicleModel = _vehicleModelAccessor.getVehicleModelByVIN(vin);
+                if (vehicleModel == null)
+                {
+                    throw new ArgumentException("Error finding Vehicle Model by that VIN");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return vehicleModel;
         }
     }
 }

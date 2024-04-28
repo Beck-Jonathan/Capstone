@@ -284,5 +284,175 @@ namespace LogicLayer.RouteAssignment
             }
             return assignments;
         }
+
+        /// <summary>
+        ///    Get available drivers by route assignment id
+        /// </summary>
+        /// <param name="routeAssignmentID">
+        ///   ID of the route Assignment
+        /// </param>
+        /// <returns>
+        ///   List<Driver> List of driver objects
+        /// </returns>
+        /// <remarks>
+        ///    Exceptions:
+        ///    <see cref="SystemException">SystemException</see>: Thrown if there is a problem writing to the DB.
+        ///    CONTRIBUTOR: James Williams
+        ///    CREATED: 2024-04-26
+        /// </remarks>
+        public Driver GetRouteAssignmentDriverByAssignmentID(int routeAssignmentID)
+        {
+            Driver driver = null;
+            try
+            {
+                driver = _routeAssignmentAccessor.GetRouteAssignmentDriverByRouteAssignmentID(routeAssignmentID);
+                if (driver == null)
+                {
+                    throw new ArgumentException("No driver found");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return driver;
+        }
+        /// <summary>
+        ///    Get available vehicle assignments by date
+        /// </summary>
+        /// <param name="start">
+        ///    DateTime start date
+        /// </param>
+        ///  <param name="end">
+        ///    DateTime end date
+        /// </param>
+        /// <returns>
+        ///   List<VehicleAssignment> List of VehicleAssignment objects
+        /// </returns>
+        /// <remarks>
+        ///    Exceptions:
+        ///    <see cref="SystemException">SystemException</see>: Thrown if there is a problem writing to the DB.
+        ///    CONTRIBUTOR: James Williams
+        ///    CREATED: 2024-04-26
+        /// </remarks>
+        public List<VehicleAssignment> GetAvailableVehiclesByDate(DateTime start, DateTime end)
+        {
+            List<VehicleAssignment> vehicles = new List<VehicleAssignment>();
+            try
+            {
+                vehicles = _routeAssignmentAccessor.GetAvailableVehiclesByDate(start, end);
+                if (vehicles.Count == 0)
+                {
+                    throw new ArgumentException("No available vehicles found");
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw new SystemException("Database error", ex);
+            }
+            return vehicles;
+        }
+        /// <summary>
+        ///    Get available drivers by date
+        /// </summary>
+        /// <param name="start">
+        ///    DateTime start date
+        /// </param>
+        ///  <param name="end">
+        ///    DateTime end date
+        /// </param>
+        /// <returns>
+        ///   List<Driver> List of driver objects
+        /// </returns>
+        /// <remarks>
+        ///    Exceptions:
+        ///    <see cref="SystemException">SystemException</see>: Thrown if there is a problem writing to the DB.
+        ///    CONTRIBUTOR: James Williams
+        ///    CREATED: 2024-04-26
+        /// </remarks>
+        public List<Driver> GetAvailableDriversByDate(DateTime start, DateTime end)
+        {
+            List<Driver> drivers = new List<Driver>();
+            try
+            {
+                drivers = _routeAssignmentAccessor.GetAvailableDriversByDate(start, end);
+                if (drivers.Count == 0)
+                {
+                    throw new ArgumentException("No available drivers found");
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw new SystemException("Database error", ex);
+            }
+            return drivers;
+        }
+        /// <summary>
+        ///    Update Rotue Assignment driver
+        /// </summary>
+        /// <param name="routeAssignmentID">
+        ///    The ID of the route assignment to update
+        /// </param>
+        ///  <param name="driverID">
+        ///    ID of driver to overwrite previous driver in route assignment
+        /// </param>
+        /// <returns>
+        ///    bool, true if result success
+        /// </returns>
+        /// <remarks>
+        ///    Exceptions:
+        ///    <see cref="SystemException">SystemException</see>: Thrown if there is a problem writing to the DB.
+        ///    CONTRIBUTOR: James Williams
+        ///    CREATED: 2024-04-26
+        /// </remarks>
+        public bool UpdateRouteAssignmentDriver(int routeAssignmentID, int driverID)
+        {
+            bool result = false;
+
+            try
+            {
+                result = 1 == _routeAssignmentAccessor.UpdateRouteAssignmentDriver(routeAssignmentID, driverID);
+            }
+            catch (Exception ex)
+            {
+                throw new SystemException("Database error", ex);
+            }
+            return result;
+        }
+
+        /// <summary>
+        ///     Update route assignment vehicle
+        /// </summary>
+        /// <param name="routeAssignmentID">
+        ///    The ID of the route assignment to update
+        /// </param>
+        ///  <param name="vin">
+        ///    VIN of vehicle to overwrite previous vehicle in route assignment
+        /// </param>
+        /// <returns>
+        ///  bool, true if result success
+        /// </returns>
+        /// <remarks>
+        ///    Exceptions:
+        ///    <see cref="SystemException">SystemException</see>: Thrown if there is a problem writing to the DB.
+        ///    CONTRIBUTOR: James Williams
+        ///    CREATED: 2024-04-26
+        /// </remarks>
+        public bool UpdateRouteAssignmentVehicle(int routeAssignmentID, string vin)
+        {
+            bool result = false;
+
+            try
+            {
+                result = 1 == _routeAssignmentAccessor.UpdateRouteAssignmentVehicle(routeAssignmentID, vin);
+            }
+            catch (Exception ex)
+            {
+                throw new SystemException("Database error", ex);
+            }
+            return result;
+        }
     }
 }

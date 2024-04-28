@@ -38,6 +38,11 @@ namespace LogicLayerTests
     ///    Added TestAddClientReturnsTrue and TestAddClientReturnsErrorWithDuplicateData
     ///    Rewrote TestGetClientByIDReturnsCorrectClient, TestGetClientByEmailReturnsCorrectClient,
     ///    and TestGetClientByEmailThrowsExceptionWhenGivenBadData as they were not correctly written
+    /// <br /> <br />
+    /// UPDATER: Michael Springer
+    /// <br />
+    /// UPDATED: 2024-04-25
+    ///     Added TestFindCLient_ReturnsTrueWhenClientFound()  and TestFindCLient_ReturnsFalseWhenClientNotFound()
     /// </remarks>
     [TestClass]
     public class ClientManagerTests
@@ -239,6 +244,34 @@ namespace LogicLayerTests
 
             // no assertion needed; should catch exception
         }
+        [TestMethod]
+        public void TestFindCLient_ReturnsTrueWhenClientFound()
+        {
+            // Arrange
+            string email = "foobar@gmail.com";
+            bool result = false;
+
+            // Act
+            result = _clientManager.FindClient(email);
+
+            // Assert
+            Assert.IsTrue(result);
+        }
+
+        [TestMethod]
+        public void TestFindCLient_ReturnsFalseWhenClientNotFound()
+        {
+            // Arrange
+            string email = "scrandle_randle@fake.com";
+            bool result = true;
+
+            // Act
+            result = _clientManager.FindClient(email);
+
+            // Assert
+            Assert.IsFalse(result);
+        }
+
     }
     
 }

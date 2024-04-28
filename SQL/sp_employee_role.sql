@@ -21,6 +21,32 @@ BEGIN
 END
 GO
 
+
+-- Initial Creator: Jacob Rohr
+-- Creation Date: 2024-23-04
+-- Last Modified: Michael Springer
+-- Modification Description: Initial Creation
+-- Modification Description: Corrected misnamed variables in where clause
+-- 								Added print statements for build and debug
+-- Stored Procedure Description: Delete employee_role record
+
+print '' print '*** creating sp_delete_employee_role ***'
+GO
+CREATE PROCEDURE [dbo].[sp_delete_employee_role]
+(
+	@p_Employee_ID			int,
+	@p_Role_ID				nvarchar(25)
+)
+AS
+BEGIN
+	DELETE FROM [dbo].[Employee_Role]
+	WHERE [Employee_ID] =	@p_Employee_ID
+	AND [Role_ID] = 		@p_Role_ID
+	
+END
+GO
+
+
 -- Initial Creator: James Williams
 -- Creation Date: 2024-02-06
 -- Last Modified: James Williams

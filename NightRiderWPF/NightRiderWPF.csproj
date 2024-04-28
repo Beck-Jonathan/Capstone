@@ -258,6 +258,9 @@
     <Compile Include="VehicleModels\VehicleModelsListPage.xaml.cs">
       <DependentUpon>VehicleModelsListPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Vehicles\VehicleChecklist.xaml.cs">
+      <DependentUpon>VehicleChecklist.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Vehicles\VehicleLookupListPage.xaml.cs">
       <DependentUpon>VehicleLookupListPage.xaml</DependentUpon>
     </Compile>
@@ -443,6 +446,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Employees\AdminCreateNewEmployee.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Vehicles\VehicleChecklist.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

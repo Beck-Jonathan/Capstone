@@ -154,7 +154,10 @@ namespace DataAccessLayer
 
             return routeId;
         }
+
         /// <summary>
+        /// AUTHOR: Michael Springer
+        /// CREATED: 2024-04-19
         ///     Returns a route located by ID.
         /// </summary>
         /// <param name="routeId">The ID of the route to be located.</param>
@@ -171,7 +174,40 @@ namespace DataAccessLayer
 
         public RouteVM selectRouteById(int routeId)
         {
-            throw new NotImplementedException();
+            RouteVM route = null;
+            var conn = DBConnectionProvider.GetConnection();
+            var cmdText = "sp_select_route_by_id";
+            var cmd = new SqlCommand(cmdText, conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            try
+            {
+                conn.Open();
+                var reader = cmd.ExecuteReader();
+                if(reader.HasRows)
+                {
+                    reader.Read();
+                    route = new RouteVM()
+                    {
+                        RouteId = reader.GetInt32(0),
+                        RouteName = reader.GetString(1),
+                        StartTime = new Time(reader.GetDateTime(2)),
+                        RepeatTime = reader.GetTimeSpan(3),
+                        EndTime = new Time(reader.GetDateTime(4)),
+                        DaysOfService = new ActivityWeek(reader.GetString(5).ToCharArray()),
+                        IsActive = true
+                    };
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return route;
         }
         /// <summary>
         ///     Returns the list of routes.

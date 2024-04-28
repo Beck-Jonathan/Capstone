@@ -195,3 +195,21 @@ AS
         WHERE [Vehicle].[VIN] = @VIN
     END
 GO
+
+print ''
+print '*** Create sp_vehicle_vin_and_number_for_dropdown ***'
+GO
+-- Author: Jonathan Beck
+CREATE PROCEDURE [dbo].[sp_vehicle_vin_and_number_for_dropdown]
+   
+AS
+BEGIN
+    select 
+	[VIN],
+	[Vehicle_Number]
+	
+	from [Vehicle]
+    Where [Is_Active] = 1
+    
+END
+GO

@@ -236,5 +236,38 @@ namespace DataAccessInterfaces
         /// </remarks>
         Employee_VM GetEmployeeByEmail(string email);
 
+
+
+        /// <summary>
+        ///     deletes employee role record into database
+        /// </summary>
+        /// <param name="employeeID">
+        ///    The ID of the employee you would like to delete a role from
+        /// </param>
+        /// <param name="role">
+        ///     The role you would like to get rid of 
+        /// </param>
+        /// <returns>
+        ///    <see cref="int"> Number of rows inserted </see>
+        /// </returns>
+        /// <remarks>
+        ///    Parameters:
+        /// <br />
+        ///    <see cref="int">employeeID</see> a: ID of employee to remove roles from
+        /// <br />
+        /// <br />
+        ///    <see cref="string">role</see> a: role to be removed
+        /// <br />
+        ///    Exceptions:
+        ///   <br />
+        ///   <br />
+        ///    <see cref="ApplicationException">ArgumentException</see>: Throws when no roles found
+        /// <br /><br />
+        ///    CONTRIBUTOR: Jacob Rohr
+        /// <br />
+        ///    CREATED: 2024-04-23
+        /// <br />
+        int RemoveEmployeeRoles(int employee_ID, string role);
+
     }
 }

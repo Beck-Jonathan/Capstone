@@ -28,20 +28,38 @@ namespace LogicLayer.RouteStop
     /// UPDATED: 2024-03-26
     /// COMMENTS:
     ///    Added connection to Bing Maps API
+    ///    <br /><br />
+    /// UPDATER: Michael Springer
+    /// UPDATED: 2024-04-19
+    /// COMMENTS: added method for GetRoutesWithStops
     /// </remarks>
     public class RouteManager : IRouteManager
     {
         IRouteAccessor _routeAccessor;
         IBingMapsAccessor _bingMapsAccessor;
+        // Necessary for getroutewithstops
+        IRouteStopAccessor _routeStopAccessor;
+
         public RouteManager()
         {
             _routeAccessor = new RouteAccessor();
             _bingMapsAccessor = new BingMapsAccessor();
+            // Necessary for getroutewithstops
+            _routeStopAccessor = new RouteStopAccessor();
+
         }
         public RouteManager(IRouteAccessor routeAccessor)
         {
             _routeAccessor = routeAccessor;
             _bingMapsAccessor = new BingMapsAccessor();
+
+        }
+        // for testing getRoutesWithStops
+        public RouteManager(IRouteAccessor routeAccessor, IRouteStopAccessor routeStopAccessor)
+        {
+            _routeAccessor = routeAccessor;
+            _bingMapsAccessor = new BingMapsAccessor();
+            _routeStopAccessor = routeStopAccessor;
         }
         /// <summary>
         ///     Activates the route with indicated Id
@@ -188,10 +206,26 @@ namespace LogicLayer.RouteStop
                 throw new ArgumentException("Cannot change a Route's ID.");
             }
         }
-
+        /// <summary>
+        /// AUTHOR: Michael Springer
+        /// CREATED: 2024-04-19
+        /// </summary>
+        /// <param name="routeId"></param>
+        /// <returns></returns>
+        /// <exception cref="ApplicationException"></exception>
         public RouteVM getRouteById(int routeId)
         {
-            throw new NotImplementedException();
+            RouteVM result = null;
+            try
+            {
+                result = _routeAccessor.selectRouteById(routeId);
+                result.RouteStops = _routeStopAccessor.selectRouteStopByRouteId(routeId);
+            }
+            catch (Exception e)
+            {
+                throw new ApplicationException("Route not found", e);
+            }
+            return result;
         }
         /// <summary>
         ///     Returns the list of routes.
@@ -216,6 +250,38 @@ namespace LogicLayer.RouteStop
             {
                 throw new ApplicationException("Something went wrong, we're verry sorry!", e);
             }
+            return results;
+        }
+        /// <summary>
+        /// AUTHOR: Michael Springer
+        /// <br />
+        /// CREATED: 2024-04-19
+        /// <br />
+        ///    Returns routeVM fully populated with RouteStops, which are
+        ///    in turn populated with Stop objects.
+        /// </summary>
+        /// 
+        /// <returns>
+        /// <see cref="IEnummerable{RouteVM}" COllection of RouteVM</see>
+        /// </returns>
+        public IEnumerable<RouteVM> GetRoutesWithStops()
+        {
+            IEnumerable<RouteVM> results = null;
+            try
+            {
+                results = _routeAccessor.selectRoutes();
+                foreach (var route in results)
+                {
+                    // get the IEnumberable<RouteStopVM> for each route
+                    // RouteStopVMs retrieved by this method already contain Stop objects
+                    route.RouteStops =_routeStopAccessor.selectRouteStopByRouteId(route.RouteId);
+                }         
+            }
+            catch(Exception ex)
+            {
+                throw new ApplicationException("Route Data Unavailable", ex);
+            }
+
             return results;
         }
         /// <summary>

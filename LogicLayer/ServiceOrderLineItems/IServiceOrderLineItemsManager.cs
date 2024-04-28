@@ -48,5 +48,16 @@ namespace LogicLayer
         ///     Initial Creation
         /// </remarks>
         List<ServiceOrderLineItems> GetServiceOrderLineItems();
+
+        /// <summary>
+        /// Adds a line item to a service order
+        /// <br />
+        /// <br />
+        ///    Max Fare
+        /// <br />
+        ///    CREATED: 2024-04-01
+        /// </summary>
+        /// <returns><see cref="int">An identifier of this line item</see></returns>
+        int AddServiceOrderLineItem(ServiceOrderLineItems_VM item);
     }
 }

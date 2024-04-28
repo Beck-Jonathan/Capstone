@@ -18,3 +18,28 @@ AS
             FROM   [dbo].[Service_Line_Item]
     END;
 GO
+
+/******************
+Create Insert Service Line Item Stored Procedure
+***************/
+-- Initial Creator: Max Fare
+-- Creation Date: 2024-04-05
+-- Last Modified: 
+-- Modification Description:
+print '' print '*** creating sp_insert_service_order_line_item ***'
+GO
+CREATE PROCEDURE [dbo].[sp_insert_service_order_line_item]
+(
+    @Service_Order_ID       [int],
+    @Service_Order_Version  [int],
+    @Parts_Inventory_ID     [int],
+    @Quantity               [int]
+)
+AS
+    BEGIN
+        INSERT INTO [dbo].[Service_Line_Item]
+        ([Service_Order_ID], [Service_Order_Version], [Parts_Inventory_ID], [Quantity])
+        VALUES
+        (@Service_Order_ID, @Service_Order_Version, @Parts_Inventory_ID, @Quantity)
+    END
+GO

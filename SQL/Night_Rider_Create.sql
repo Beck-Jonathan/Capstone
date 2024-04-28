@@ -28,21 +28,36 @@ Print '***Create the [dbo].[Vendor] table***'
 GO
 CREATE TABLE [dbo].[Vendor]
 (
-    [Vendor_ID] [int] IDENTITY	(100000,1) NOT NULL, /*Vendor name*/
-    [Vendor_Name] [nvarchar](100) NOT NULL, /*The name of the vendors company*/
-    [Vendor_Contact_Given_Name] [nvarchar](50) NOT NULL, /*vendor contact person given name*/
-    [Vendor_Contact_Family_Name] [nvarchar](50) NOT NULL, /*vendor contact person family name*/
-    [Vendor_Contact_Phone_Number] [nvarchar](12) NOT NULL, /*vendor contact phone number*/
-    [Vendor_Contact_Email] [nvarchar](255) NOT NULL, /*vendor contact email*/
-    [Vendor_Phone_Number] [nvarchar](12) NOT NULL, /*vendor main phone number*/
-    [Vendor_Address] [nvarchar](50) NOT NULL, /*vendor address*/
-    [Vendor_Address2] [nvarchar](50) NULL, /*vendor address detail*/
-    [Vendor_City] [nvarchar](20) NOT NULL, /*vendor city*/
-    [Vendor_State] [nvarchar](2) NOT NULL, /*vendor state*/
-    [Vendor_Country] [nvarchar](3) NOT NULL, /*vendor coutry*/
-    [Vendor_Zip] [nvarchar](9) NOT NULL, /*vendor zip*/
-    [Preferred] [bit] DEFAULT 0 NOT NULL, /*is the vendor preferred for ordering from*/
-    [Is_Active] [bit] DEFAULT 1 NOT NULL, /*is the vendor currently in use*/
+    [Vendor_ID] [int] IDENTITY	(100000,1) NOT NULL,
+    /*Vendor name*/
+    [Vendor_Name] [nvarchar](100) NOT NULL,
+    /*The name of the vendors company*/
+    [Vendor_Contact_Given_Name] [nvarchar](50) NOT NULL,
+    /*vendor contact person given name*/
+    [Vendor_Contact_Family_Name] [nvarchar](50) NOT NULL,
+    /*vendor contact person family name*/
+    [Vendor_Contact_Phone_Number] [nvarchar](12) NOT NULL,
+    /*vendor contact phone number*/
+    [Vendor_Contact_Email] [nvarchar](255) NOT NULL,
+    /*vendor contact email*/
+    [Vendor_Phone_Number] [nvarchar](12) NOT NULL,
+    /*vendor main phone number*/
+    [Vendor_Address] [nvarchar](50) NOT NULL,
+    /*vendor address*/
+    [Vendor_Address2] [nvarchar](50) NULL,
+    /*vendor address detail*/
+    [Vendor_City] [nvarchar](20) NOT NULL,
+    /*vendor city*/
+    [Vendor_State] [nvarchar](2) NOT NULL,
+    /*vendor state*/
+    [Vendor_Country] [nvarchar](3) NOT NULL,
+    /*vendor coutry*/
+    [Vendor_Zip] [nvarchar](9) NOT NULL,
+    /*vendor zip*/
+    [Preferred] [bit] DEFAULT 0 NOT NULL,
+    /*is the vendor preferred for ordering from*/
+    [Is_Active] [bit] DEFAULT 1 NOT NULL,
+    /*is the vendor currently in use*/
     CONSTRAINT [pk_Vendor] PRIMARY KEY ([Vendor_ID])
 )
 GO
@@ -127,7 +142,7 @@ CREATE TABLE [dbo].[Purchase_Order_Line_Item]
     [Line_Number] [int] NOT NULL,
     [Line_Item_Name] [nvarchar](30) NULL,
     [Line_Item_Qty] [int] NOT NULL,
-	[Line_Item_Price][money] NOT NULL,
+    [Line_Item_Price][money] NOT NULL,
     [Line_Item_Description] [nvarchar](100) NOT NULL,
     [Is_Active] [bit] NOT NULL DEFAULT(1),
     CONSTRAINT [pk_Purchase_Order_Line_Item] PRIMARY KEY([Purchase_Order_ID], [Parts_Inventory_ID]),
@@ -206,7 +221,8 @@ Print '***Create the [dbo].[Vehicle_Type] table***'
 GO
 CREATE TABLE [dbo].[Vehicle_Type]
 (
-    [Vehicle_Type_ID] [nvarchar](50) NOT NULL, /*a type of vehicle, like bus or van*/
+    [Vehicle_Type_ID] [nvarchar](50) NOT NULL,
+    /*a type of vehicle, like bus or van*/
     [Is_Active] [bit] DEFAULT 1 NOT NULL,
     CONSTRAINT [pk_Vehicle_Type] PRIMARY KEY([Vehicle_Type_ID])
 )
@@ -266,22 +282,23 @@ Create the [dbo].[Employee] table
 print ''
 Print '***Create the [dbo].[Employee] table***' 
 GO
-CREATE TABLE [dbo].[Employee] (
-	[Employee_ID]	[int] IDENTITY(100000, 1) NOT NULL,
-	[Given_Name] 	[nvarchar](50) 	NOT NULL,
-	[Family_Name]	[nvarchar](50) 	NOT NULL,
-	[DOB]			[datetime]		NOT NULL,
-	[Address]		[nvarchar](50) 	NOT NULL,
-	[Address2]		[nvarchar](50) 	NULL,
-	[City]			[nvarchar](20) 	NOT NULL,
-	[State]			[nvarchar](2) 	NOT NULL,
-	[Country]		[nvarchar](3) 	NOT NULL,
-	[Zip]			[nvarchar](9) 	NOT NULL,
-	[Phone_Number]	[nvarchar](20) 	NOT NULL,
-	[Email]			[nvarchar](50) 	NOT NULL,
-	[Position]		[nvarchar](20) 	NOT NULL,
-	[Is_Active]		[bit]			NOT NULL DEFAULT 1,
-	CONSTRAINT [pk_Employee] PRIMARY KEY([Employee_ID])
+CREATE TABLE [dbo].[Employee]
+(
+    [Employee_ID] [int] IDENTITY(100000, 1) NOT NULL,
+    [Given_Name] [nvarchar](50) NOT NULL,
+    [Family_Name] [nvarchar](50) NOT NULL,
+    [DOB] [datetime] NOT NULL,
+    [Address] [nvarchar](50) NOT NULL,
+    [Address2] [nvarchar](50) NULL,
+    [City] [nvarchar](20) NOT NULL,
+    [State] [nvarchar](2) NOT NULL,
+    [Country] [nvarchar](3) NOT NULL,
+    [Zip] [nvarchar](9) NOT NULL,
+    [Phone_Number] [nvarchar](20) NOT NULL,
+    [Email] [nvarchar](50) NOT NULL,
+    [Position] [nvarchar](20) NOT NULL,
+    [Is_Active] [bit] NOT NULL DEFAULT 1,
+    CONSTRAINT [pk_Employee] PRIMARY KEY([Employee_ID])
 )
 GO
 
@@ -293,9 +310,9 @@ Print '***Create the [dbo].[Role] table***'
 GO
 CREATE TABLE [dbo].[Role]
 (
-    [Role_ID] 			[nvarchar](25) NOT NULL,
-	[Role_Description] 	[nvarchar](255) NOT NULL DEFAULT '',
-    [Is_Active] 		[bit] NOT NULL DEFAULT 1,
+    [Role_ID] [nvarchar](25) NOT NULL,
+    [Role_Description] [nvarchar](255) NOT NULL DEFAULT '',
+    [Is_Active] [bit] NOT NULL DEFAULT 1,
     CONSTRAINT 	[pk_Role] PRIMARY KEY ([Role_ID])
 )
 GO
@@ -311,7 +328,7 @@ CREATE TABLE [dbo].[Employee_Role]
     [Employee_ID] [int] NOT NULL,
     [Role_ID] [nvarchar](25) NOT NULL,
     [Is_Active] [bit] NOT NULL DEFAULT 1,
-	CONSTRAINT [pk_Employee_Role] PRIMARY KEY([Employee_ID], [Role_ID]),
+    CONSTRAINT [pk_Employee_Role] PRIMARY KEY([Employee_ID], [Role_ID]),
     CONSTRAINT [fk_Employee_Role_Employee_ID] FOREIGN KEY([Employee_ID])
 		REFERENCES [dbo].[Employee]([Employee_ID]),
     CONSTRAINT [fk_Employee_Role_Role_ID] FOREIGN KEY([Role_ID])
@@ -345,7 +362,7 @@ CREATE TABLE [dbo].[Driver]
     [Employee_ID] [int] NOT NULL,
     [Driver_License_Class_ID] [nvarchar](6) NOT NULL DEFAULT 'c',
     [Is_Active] [bit] NOT NULL DEFAULT 1,
-	CONSTRAINT [pk_Driver] PRIMARY KEY ([Employee_ID]),
+    CONSTRAINT [pk_Driver] PRIMARY KEY ([Employee_ID]),
     CONSTRAINT [fk_Driver_Employee_ID] FOREIGN KEY([Employee_ID])
 		REFERENCES [dbo].[Employee] ([Employee_ID]),
     CONSTRAINT [fk_Driver_Driver_License_Class_ID] FOREIGN KEY([Driver_License_Class_ID])
@@ -402,6 +419,29 @@ CREATE TABLE [dbo].[Route_Assignment]
 GO
 
 /******************
+Create the [dbo].[Route_Fulfillment] table
+***************/
+print ''
+Print '***Create the [dbo].[Route_Fulfillment] table***' 
+GO
+CREATE TABLE [dbo].[Route_Fulfillment]
+(
+    [Assignment_ID] [int] NOT NULL,
+    [Actual_Driver_ID] [int] NOT NULL,
+    [Actual_VIN] [nvarchar](17) NOT NULL,
+    [Start_Time] [datetime] NOT NULL,
+    [End_Time] [datetime] NULL,
+    CONSTRAINT [pk_Route_Fulfillment] PRIMARY KEY([Assignment_ID], [Actual_Driver_ID], [Actual_VIN]),
+    CONSTRAINT [fk_Route_Fulfillment_Assigment_ID] FOREIGN KEY([Assignment_ID])
+        REFERENCES [dbo].[Route_Assignment]([Assignment_ID]),
+    CONSTRAINT [fk_Route_Fulfillment_Driver_ID] FOREIGN KEY([Actual_Driver_ID]) 
+        REFERENCES [dbo].[Driver]([Employee_ID]),
+    CONSTRAINT [fk_Route_Fulfillment_VIN] FOREIGN KEY([Actual_VIN]) 
+        REFERENCES [dbo].[Vehicle]([VIN])
+)
+GO
+
+/******************
 Create the [dbo].[Safety_Report] table
 ***************/
 print ''
@@ -409,14 +449,22 @@ Print '***Create the [dbo].[Safety_Report] table***'
 GO
 CREATE TABLE [dbo].[Safety_Report]
 (
-    [Safety_Report_ID] [int] IDENTITY (100000,1) NOT NULL, /*report identifier*/
-    [Employee_ID] [int] NOT NULL, /*Employee.Employee_ID	id of employee filing report*/
-    [Date] [datetime] NOT NULL, /*date when report is filed*/
-    [Time_Of_Event] [datetime] NOT NULL, /*time of the event*/
-    [Affected_Party] [nvarchar](100) NOT NULL, /*yourself, coworker, passenger, civilian*/
-    [Description] [nvarchar](1000) NULL, /*description of the event*/
-    [Result_In_Injury] [bit] DEFAULT 0 NOT NULL,	/*did this event result in an injury?*/
-    [Is_Active] [bit] DEFAULT 1 NOT NULL, /*is the report still active?*/
+    [Safety_Report_ID] [int] IDENTITY (100000,1) NOT NULL,
+    /*report identifier*/
+    [Employee_ID] [int] NOT NULL,
+    /*Employee.Employee_ID	id of employee filing report*/
+    [Date] [datetime] NOT NULL,
+    /*date when report is filed*/
+    [Time_Of_Event] [datetime] NOT NULL,
+    /*time of the event*/
+    [Affected_Party] [nvarchar](100) NOT NULL,
+    /*yourself, coworker, passenger, civilian*/
+    [Description] [nvarchar](1000) NULL,
+    /*description of the event*/
+    [Result_In_Injury] [bit] DEFAULT 0 NOT NULL,
+    /*did this event result in an injury?*/
+    [Is_Active] [bit] DEFAULT 1 NOT NULL,
+    /*is the report still active?*/
     CONSTRAINT [pk_Safety_Report] PRIMARY KEY ([Safety_Report_ID]),
     CONSTRAINT [fk_Safety_Report_Employee_ID] FOREIGN KEY([Employee_ID]) 
         REFERENCES [dbo].[Employee]([Employee_ID])
@@ -431,16 +479,26 @@ Print '***Create the [dbo].[Refuel_Log] table***'
 GO
 CREATE TABLE [dbo].[Refuel_Log]
 (
-    [Refuel_Log_ID] [int] IDENTITY(100000,1) NOT NULL, /*generated id for refuel*/
-    [Driver_ID] [int] NULL, /*Driver.Employee_ID driver that purchased the fuel*/
-    [VIN] [nvarchar](17) NOT NULL, /*Vehicle.VIN vehicle the fuel was put in*/
-    [Date_Time] [datetime] DEFAULT GETDATE() NOT NULL, /*auto entry as datetime.now date fuel was purchased*/
-    [Mileage] [int] NOT NULL, /*mileage of the vehicle when fueled*/
-    [Fuel_Quantity] [int] NOT NULL, /*amount of fuel purchased*/
-    [Fuel_Price_Per_Gal] [smallmoney] NOT NULL, /*price of the fuel*/
-    [Total_Sale] [smallmoney] NOT NULL, /*sale amount for the fuel*/
-    [Notes] [nvarchar](250) NULL, /*notes from the driver*/
-    [Is_Active] [bit] DEFAULT 1 NOT NULL, /*Active status of this refuel log*/
+    [Refuel_Log_ID] [int] IDENTITY(100000,1) NOT NULL,
+    /*generated id for refuel*/
+    [Driver_ID] [int] NULL,
+    /*Driver.Employee_ID driver that purchased the fuel*/
+    [VIN] [nvarchar](17) NOT NULL,
+    /*Vehicle.VIN vehicle the fuel was put in*/
+    [Date_Time] [datetime] DEFAULT GETDATE() NOT NULL,
+    /*auto entry as datetime.now date fuel was purchased*/
+    [Mileage] [int] NOT NULL,
+    /*mileage of the vehicle when fueled*/
+    [Fuel_Quantity] [int] NOT NULL,
+    /*amount of fuel purchased*/
+    [Fuel_Price_Per_Gal] [smallmoney] NOT NULL,
+    /*price of the fuel*/
+    [Total_Sale] [smallmoney] NOT NULL,
+    /*sale amount for the fuel*/
+    [Notes] [nvarchar](250) NULL,
+    /*notes from the driver*/
+    [Is_Active] [bit] DEFAULT 1 NOT NULL,
+    /*Active status of this refuel log*/
     CONSTRAINT [pk_Refuel_Log] PRIMARY KEY ([Refuel_Log_ID]),
     CONSTRAINT [fk_Refuel_Log_Driver_ID] FOREIGN KEY([Driver_ID])
         REFERENCES [dbo].[Employee]([Employee_ID]),
@@ -841,9 +899,12 @@ CREATE TABLE [dbo].[Client]
     [Middle_Name] [nvarchar] (50) NULL,
     [DOB] [date] NOT NULL,
     [Email] [nvarchar] (255) UNIQUE NOT NULL,
-    [Postal_Code] [nvarchar] (15) NOT NULL, -- getting this column from Zipcode table
-    [City] [nvarchar] (50) NULL,    -- optional, can get city from Zipcode table
-    [Region] [nvarchar] (50) NULL DEFAULT "", -- ignore this column; no longer in use
+    [Postal_Code] [nvarchar] (15) NOT NULL,
+    -- getting this column from Zipcode table
+    [City] [nvarchar] (50) NULL,
+    -- optional, can get city from Zipcode table
+    [Region] [nvarchar] (50) NULL DEFAULT "",
+    -- ignore this column; no longer in use
     [Address] [nvarchar] (100) NULL,
     [Text_Number] [nvarchar] (12) UNIQUE NULL,
     [Voice_Number] [nvarchar] (12) UNIQUE NULL,
@@ -1000,7 +1061,7 @@ CREATE TABLE [dbo].[Dependent]
     [DOB] [DATE] NOT NULL,
     [Gender] [nvarchar](20) NULL,
     [Emergency_Contact] [nvarchar](100) NOT NULL,
-	[Contact_Relationship] 	[nvarchar](100) NOT NULL,
+    [Contact_Relationship] [nvarchar](100) NOT NULL,
     [Emergency_Phone] [nvarchar](12) NOT NULL,
     [Is_Active] [bit] NOT NULL DEFAULT 1,
     CONSTRAINT [pk_Dependent] PRIMARY KEY ([Dependent_ID])
@@ -1016,12 +1077,13 @@ GO
 /******************
 Create the [dbo].[Dependent_Accommodation] table
 ***************/
-print '' 
+print ''
 Print '***Create the [dbo].[Dependent_Accommodation] table***' 
 GO
-CREATE TABLE [dbo].[Dependent_Accommodation] (
+CREATE TABLE [dbo].[Dependent_Accommodation]
+(
     [Dependent_ID] [int] NOT NULL,
-    [Accommodation_ID] [nvarchar](100) NOT NULL,                            
+    [Accommodation_ID] [nvarchar](100) NOT NULL,
     [Is_Active] [bit] NOT NULL DEFAULT 1,
     CONSTRAINT [pk_Dependent_Accommodation] PRIMARY KEY ([Dependent_ID], [Accommodation_ID]),
     CONSTRAINT [fk_Dependent_Accommodation_Dependent_ID] FOREIGN KEY ([Dependent_ID])
@@ -1037,7 +1099,8 @@ Create the [dbo].[Client_Dependent_Role] table
 print ''
 Print '***Create the [dbo].[Client_Dependent_Role] table***' 
 GO
-CREATE TABLE [dbo].[Client_Dependent_Role](
+CREATE TABLE [dbo].[Client_Dependent_Role]
+(
     [Client_ID] [int] NOT NULL,
     [Dependent_ID] [int] NOT NULL,
     [Relationship] [nvarchar](100) NOT NULL,
@@ -1345,7 +1408,7 @@ CREATE TABLE [dbo].[Driver_Maintenance_Report]
     [Severity] [nvarchar](20) NOT NULL DEFAULT 'low',
     [Description] [nvarchar](250) NOT NULL DEFAULT '',
     [Is_Active] [bit] NOT NULL DEFAULT 1
-    CONSTRAINT [pk_Driver_Maintenance_Report] PRIMARY KEY ([Driver_Maintenance_Report_ID]),
+        CONSTRAINT [pk_Driver_Maintenance_Report] PRIMARY KEY ([Driver_Maintenance_Report_ID]),
     CONSTRAINT [fk_Driver_Maintenance_Report_Driver_ID] FOREIGN KEY ([Driver_ID])
         REFERENCES [dbo].[Driver] ([Employee_ID]),
     CONSTRAINT [fk_Driver_Maintenance_Report_VIN] FOREIGN KEY ([VIN])
@@ -1498,7 +1561,8 @@ Create the [dbo].[Password_Reset] table
 ***************/
 print ''
 print '***Create the [dbo].[Password_Reset] table***'
-CREATE TABLE [dbo].[Password_Reset] (
+CREATE TABLE [dbo].[Password_Reset]
+(
     [Password_Reset_ID] [int] IDENTITY(100000,1) NOT NULL,
     [Username] [nvarchar](50) NOT NULL,
     [Request_Datetime] [datetime] NOT NULL DEFAULT CURRENT_TIMESTAMP,

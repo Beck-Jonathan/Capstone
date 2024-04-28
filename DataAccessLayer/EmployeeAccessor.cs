@@ -538,6 +538,66 @@ namespace DataAccessInterfaces
             }
             return employee;
         }
+        /// <summary>
+        ///     deletes employee role record into database
+        /// </summary>
+        /// <param name="employeeID">
+        ///    The ID of the employee you would like to delete a role from
+        /// </param>
+        /// <param name="role">
+        ///     The role you would like to get rid of 
+        /// </param>
+        /// <returns>
+        ///    <see cref="int"> Number of rows inserted </see>
+        /// </returns>
+        /// <remarks>
+        ///    Parameters:
+        /// <br />
+        ///    <see cref="int">employeeID</see> a: ID of employee to remove roles from
+        /// <br />
+        /// <br />
+        ///    <see cref="string">role</see> a: role to be removed
+        /// <br />
+        ///    Exceptions:
+        ///   <br />
+        ///   <br />
+        ///    <see cref="ApplicationException">ArgumentException</see>: Throws when no roles found
+        /// <br /><br />
+        ///    CONTRIBUTOR: Jacob Rohr
+        /// <br />
+        ///    CREATED: 2024-04-23
+        /// <br />
+        public int RemoveEmployeeRoles(int employeeID, string role)
+        {
+            int rows = 0;
+
+            var conn = DBConnectionProvider.GetConnection();
+            var cmdText = "sp_delete_employee_role";
+            var cmd = new SqlCommand(cmdText, conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            cmd.Parameters.Add("@p_Employee_ID", SqlDbType.Int).Value = employeeID;
+            cmd.Parameters.Add("@p_Role_ID", SqlDbType.NVarChar, 25).Value = role;
+
+            try
+            {
+                conn.Open();
+                rows = cmd.ExecuteNonQuery();
+                if (rows == 0)
+                {
+                    throw new ApplicationException("Error removing employee roles");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return rows;
+        }
     }
 }
 // Checked by Nathan Toothaker

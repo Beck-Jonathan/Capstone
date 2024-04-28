@@ -282,3 +282,181 @@ BEGIN
 	END CATCH
 END
 GO
+
+
+/******************
+Create sp_get_available_drivers_by_route_assignment_id
+***************/
+-- Initial Creator: James Williams
+-- Creation Date: 2024-04-25
+-- Last Modified: 
+-- Modification Description: Initial Creation
+-- Stored Procedure Description: Return available drivers by route_assignment_id
+GO
+CREATE PROCEDURE [dbo].[sp_get_route_assignment_driver_by_route_assignment_id]
+(
+	@p_Route_Assignment_ID			[int]
+)
+AS
+BEGIN
+	SELECT
+	e.Employee_ID, e.Given_Name, e.Family_Name, dlc.Driver_License_Class_ID, dlc.Max_Passenger_Count
+	FROM [dbo].[Employee] as e
+	JOIN [dbo].[Driver] as d ON d.Employee_ID = e.Employee_ID
+	JOIN [dbo].[Driver_License_Class] as dlc ON d.Driver_License_Class_ID = dlc.Driver_License_Class_ID
+	JOIN [dbo].[Route_Assignment] as ra ON d.Employee_ID = ra.Driver_ID
+	WHERE @p_Route_Assignment_ID = ra.Assignment_ID
+END
+GO
+
+/******************
+Create sp_get_available_drivers_by_date
+***************/
+-- Initial Creator: James Williams
+-- Creation Date: 2024-04-25
+-- Last Modified: 
+-- Modification Description: Initial Creation
+-- Stored Procedure Description: Return available drivers by date
+PRINT '*** create sp_get_available_drivers_by_date_and_max_capacity ***'
+GO
+
+CREATE PROCEDURE [dbo].[sp_get_available_drivers_by_date]
+    (
+		@p_Start_Date DATETIME,
+		@p_End_Date DATETIME
+		
+	 )
+AS
+BEGIN
+    SELECT DISTINCT 
+        e.Employee_ID,
+        e.Given_Name, 
+        e.Family_Name, 
+        d.Driver_License_Class_ID, 
+        dlc.Max_Passenger_Count
+    FROM [dbo].[Employee] AS e 
+    JOIN [dbo].[Driver] AS d ON d.Employee_ID = e.Employee_ID
+    JOIN [dbo].[Driver_License_Class] AS dlc ON d.Driver_License_Class_ID = dlc.Driver_License_Class_ID
+    LEFT JOIN [dbo].[Driver_Unavailable] AS du ON du.Driver_ID = e.Employee_ID
+	WHERE NOT EXISTS (
+	-- 'SELECT 1' will stop the sub-query if a record is found
+      SELECT 1
+      FROM [dbo].[Driver_Unavailable] AS du2
+	  -- This checks if there is already are any existing unavailbilities for the driver between the p_Start_Date and p_End_Date
+      WHERE du2.Driver_ID = e.Employee_ID AND
+            (
+                @p_Start_Date BETWEEN du2.Start_Datetime AND du2.End_Datetime OR
+                @p_End_Date BETWEEN du2.Start_Datetime AND du2.End_Datetime
+            )
+	)
+	-- see above
+	AND NOT EXISTS (
+      SELECT 1
+      FROM [dbo].[Route_Assignment] AS ra
+      WHERE ra.Driver_ID = e.Employee_ID AND
+            (
+                @p_Start_Date BETWEEN ra.Date_Assignment_Started AND ra.Date_Assignment_Ended OR
+                @p_End_Date BETWEEN ra.Date_Assignment_Started AND ra.Date_Assignment_Ended
+            )
+  )
+
+END;
+GO
+
+/******************
+Create sp_get_available_vehicles_by_date
+***************/
+-- Initial Creator: James Williams
+-- Creation Date: 2024-04-25
+-- Last Modified: 
+-- Modification Description: Initial Creation
+-- Stored Procedure Description: Return available vehicles by date
+print'' print'*** create sp_get_available_vehicles_by_date_and_max_capacity***'
+GO
+CREATE PROCEDURE [dbo].[sp_get_available_vehicles_by_date]
+    (
+		@p_Start_Date 	[DATETIME],
+		@p_End_Date 	[DATETIME]
+     )
+AS
+BEGIN
+    SELECT DISTINCT 
+        v.VIN,
+        vm.Name,
+        vm.Make,
+        vm.Max_Passengers
+    FROM [dbo].[Vehicle] AS v
+    JOIN [dbo].[Vehicle_Model] AS vm ON vm.Vehicle_Model_ID = v.Vehicle_Model_ID
+    LEFT JOIN [dbo].[Vehicle_Unavailable] AS vu ON vu.VIN = v.VIN
+    WHERE NOT EXISTS (
+	    --'SELECT 1' stops the query once a record is found
+		  SELECT 1
+		  FROM [dbo].[Vehicle_Unavailable] AS vu2
+		  WHERE vu2.VIN = v.VIN AND
+		  -- Remove any returned records that already have unavailbilities between the p_Start_Date and p_End_Date
+		  vu2.End_Datetime IS NOT NULL AND
+			(
+				@p_Start_Date BETWEEN vu2.Start_Datetime AND vu2.End_Datetime OR
+				@p_End_Date BETWEEN vu2.Start_Datetime AND vu2.End_Datetime
+			)
+				
+		)
+		-- See Above
+	  AND NOT EXISTS (
+		  SELECT 1
+		  FROM [dbo].[Route_Assignment] AS ra
+		  WHERE ra.VIN = v.VIN AND
+				ra.Date_Assignment_Ended IS NOT NULL AND
+				(
+				  @p_Start_Date BETWEEN ra.Date_Assignment_Started AND ra.Date_Assignment_Ended OR
+				  @p_End_Date BETWEEN ra.Date_Assignment_Started AND ra.Date_Assignment_Ended
+				)
+		)
+END;
+GO
+
+/******************
+Create sp_update_route_assignmet_driver
+***************/
+-- Initial Creator: James Williams
+-- Creation Date: 2024-04-25
+-- Last Modified: 
+-- Modification Description: Initial Creation
+-- Stored Procedure Description: Update Route_Assignment driver
+print'' print'*** creating sp_update_route_assignmet_driver***'
+GO
+CREATE PROCEDURE [dbo].[sp_update_route_assignment_driver]
+(
+	@p_Assignment_ID				[int],
+	@p_Driver_ID					[int]
+)
+AS
+BEGIN
+	UPDATE [dbo].[Route_Assignment]
+	SET [Driver_ID] = @p_Driver_ID
+	WHERE @p_Assignment_ID = [Assignment_ID]
+END
+GO
+
+/******************
+Create sp_update_route_assignmet_vehicle
+***************/
+-- Initial Creator: James Williams
+-- Creation Date: 2024-04-25
+-- Last Modified: 
+-- Modification Description: Initial Creation
+-- Stored Procedure Description: Update Route_Assignment vehicle
+print'' print'*** creating sp_update_route_assignmet_driver***'
+GO
+CREATE PROCEDURE [dbo].[sp_update_route_assignment_vehicle]
+(
+	@p_Assignment_ID			[int],
+	@p_VIN						[nvarchar](17)
+)
+AS
+BEGIN
+	UPDATE [dbo].[Route_Assignment]
+	SET [VIN] = @p_VIN
+	WHERE @p_Assignment_ID = [Assignment_ID]
+END
+GO
