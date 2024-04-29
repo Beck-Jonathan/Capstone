@@ -37,6 +37,7 @@ namespace NightRiderWPF.Inventory
 
         public AddUpdateDeleteParts_Inventory()
         {
+            //Renabled these buttons - Jonathan Beck 2024-4-29
             InitializeComponent();
             _parts_inventoryManager = new Parts_InventoryManager();
             _part = new Parts_Inventory();
@@ -47,6 +48,16 @@ namespace NightRiderWPF.Inventory
             btnAddUpdateParts_Inventory.Content = "Add Part";
             lblParts_InventoryParts_Inventory_ID.Visibility = Visibility.Hidden;
             tbxParts_InventoryParts_Inventory_ID.Visibility = Visibility.Hidden;
+
+            tbxParts_InventoryPart_Name.IsEnabled = true;
+            tbxParts_InventoryPart_Quantity.IsEnabled = true;
+            tbxParts_InventoryItem_Description.IsEnabled = true;
+            tbxParts_InventoryItem_Specifications.IsEnabled = true;
+            tbxParts_InventoryPart_Photo_URL.IsEnabled = true;
+            btnRemoveParts_Inventory.Visibility=Visibility.Hidden;
+            btnOrderParts_Inventory.Visibility=Visibility.Hidden;
+            tbxParts_InventoryStock_Level.IsEnabled = true;
+            tbxParts_Inventory_Unit_Type.IsEnabled = true;
 
         }
         public AddUpdateDeleteParts_Inventory(Parts_Inventory part)
@@ -124,13 +135,15 @@ namespace NightRiderWPF.Inventory
                     if (!String.IsNullOrEmpty(tbxParts_InventoryPart_Quantity.Text)
                         && !String.IsNullOrEmpty(tbxParts_InventoryOrdered_Qty.Text)
                         && !String.IsNullOrEmpty(tbxParts_InventoryStock_Level.Text)
-                        && !String.IsNullOrEmpty(tbxParts_InventoryItem_Specifications.Text)){
+                        && !String.IsNullOrEmpty(tbxParts_InventoryItem_Specifications.Text)
+                        && !String.IsNullOrEmpty(tbxParts_Inventory_Unit_Type.Text)){
                         try
                         { 
                             _part.Item_Specifications = tbxParts_InventoryItem_Specifications.Text;
                             _part.Part_Quantity = Convert.ToInt32(tbxParts_InventoryPart_Quantity.Text);
                             _part.Ordered_Qty = Convert.ToInt32(tbxParts_InventoryOrdered_Qty.Text);
                             _part.Stock_Level = Convert.ToInt32(tbxParts_InventoryStock_Level.Text);
+                            _part.Part_Unit_Type = tbxParts_Inventory_Unit_Type.Text;
                         }
                         catch (Exception)
                         {
