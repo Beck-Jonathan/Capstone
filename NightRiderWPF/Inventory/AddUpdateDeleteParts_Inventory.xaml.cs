@@ -90,7 +90,7 @@ namespace NightRiderWPF.Inventory
         private void btnRemoveParts_Inventory_Click(object sender, RoutedEventArgs e)
         {
             MessageBoxResult result = MessageBox.Show("Are you sure? Part will be removed from active inventory.", 
-                "Remove Part", MessageBoxButton.YesNoCancel, MessageBoxImage.Warning);
+                "Remove Part", MessageBoxButton.YesNo, MessageBoxImage.Warning);
             if(result == MessageBoxResult.Yes) 
             {
                 try
