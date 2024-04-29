@@ -62,9 +62,9 @@
         <TextBox x:Name = "tbxPart_Description" Grid.Column = "8" Grid.Row = "1" Grid.RowSpan="2" TextWrapping="Wrap"  Text=""  Padding="6px" Grid.ColumnSpan="3" IsReadOnly="False" />
 
         <DataGrid Name="datLineItems" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="8" Grid.RowSpan="3"  IsReadOnly="True" SelectionMode="Single" ToolTip="Double-Click an Item to view details" MouseLeftButtonUp="datLineItems_MouseDoubleClick" />
-        <Button Name="btnViewChanges" Margin="4px" Content="View Changes" Grid.Column="10" Grid.Row="5"></Button>
-        <Button Name="btnOrderChange" Margin="4px" Content="Order Change" Grid.Column="10" Grid.Row="6" ></Button>
-        <Button Name="btnCancelOrder" Margin="4px" Content="Cancel Order" Grid.Column="10" Grid.Row="7"></Button>
+        <!-- <Button Name="btnViewChanges" Margin="4px" Content="View Changes" Grid.Column="10" Grid.Row="5"></Button> -->
+        <!-- <Button Name="btnOrderChange" Margin="4px" Content="Order Change" Grid.Column="10" Grid.Row="6" ></Button> -->
+        <Button Name="btnCancelOrder" Margin="4px" Content="Cancel Order" Grid.Column="10" Grid.Row="7" Click="btnCancelOrder_Click"></Button>
         <Button Name="btnAddLineItem" Content="Add Item" Margin="4px" Grid.Column="7" Grid.Row="3" Click="btnAddLineItem_Click" ></Button>
 
         <Button Name="btnBack" Content="Back" Margin="4px" Grid.Column="8" Grid.Row="4" Click="btnBack_Click"></Button>

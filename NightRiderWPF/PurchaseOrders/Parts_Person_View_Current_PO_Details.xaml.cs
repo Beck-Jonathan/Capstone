@@ -107,5 +107,10 @@ namespace NightRiderWPF.PurchsaeOrders
         {
             NavigationService.Navigate(new Parts_Person_View_Purchase_Orders());
         }
+
+        private void btnCancelOrder_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new Parts_Person_View_Purchase_Orders());
+        }
     }
 }

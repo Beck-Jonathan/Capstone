@@ -217,5 +217,10 @@ namespace NightRiderWPF.PurchaseOrders
             MessageBox.Show("Purchase Order # " + result.ToString() + " Added");
             NavigationService.Navigate(new Parts_Person_View_Purchase_Orders());
         }
+
+        private void btnCancelOrder_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new Parts_Person_View_Purchase_Orders());
+        }
     }
 }
