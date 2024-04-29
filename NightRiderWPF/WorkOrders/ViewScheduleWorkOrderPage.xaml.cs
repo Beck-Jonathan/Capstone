@@ -90,6 +90,13 @@ namespace NightRiderWPF.WorkOrders
             {
                 return;
             }
+            foreach (MaintenanceScheduleVM _maintenanceSchedule_VM in _scheduledOrders)
+            {
+                if (_maintenanceSchedule_VM.FrequencyInMiles == 0)
+                {
+                    _maintenanceSchedule_VM.FrequencyInMiles = null;
+                }
+            }
             mntcViewScheduledWorkOrderPendingDg.ItemsSource = _scheduledOrders;
             mntcViewScheduledWorkOrderPendingDg.Columns.RemoveAt(0);
             mntcViewScheduledWorkOrderPendingDg.Columns.RemoveAt(0);
@@ -129,6 +136,13 @@ namespace NightRiderWPF.WorkOrders
                 {
                     return;
                 }
+                foreach (MaintenanceScheduleVM _maintenanceSchedule_VM in _scheduledOrders)
+                {
+                    if (_maintenanceSchedule_VM.FrequencyInMiles == 0)
+                    {
+                        _maintenanceSchedule_VM.FrequencyInMiles = null;
+                    }
+                }
                 mntcViewScheduledWorkOrderPendingDg.ItemsSource = _scheduledOrders;
                 mntcViewScheduledWorkOrderPendingDg.Columns.RemoveAt(0);
                 mntcViewScheduledWorkOrderPendingDg.Columns.RemoveAt(0);
@@ -148,6 +162,13 @@ namespace NightRiderWPF.WorkOrders
                 if (_scheduledOrders.Count.Equals(0))
                 {
                     return;
+                }
+                foreach (MaintenanceScheduleVM _maintenanceSchedule_VM in _scheduledOrders)
+                {
+                    if (_maintenanceSchedule_VM.FrequencyInMiles == 0)
+                    {
+                        _maintenanceSchedule_VM.FrequencyInMiles = null;
+                    }
                 }
                 mntcViewScheduledWorkOrderPendingDg.ItemsSource = _scheduledOrders;
                 mntcViewScheduledWorkOrderPendingDg.Columns.RemoveAt(0);
@@ -193,6 +214,13 @@ namespace NightRiderWPF.WorkOrders
                 if (_searchedScheduledOrders.Count.Equals(0))
                 {
                     return;
+                }
+                foreach (MaintenanceScheduleVM _maintenanceSchedule_VM in _scheduledOrders)
+                {
+                    if (_maintenanceSchedule_VM.FrequencyInMiles == 0)
+                    {
+                        _maintenanceSchedule_VM.FrequencyInMiles = null;
+                    }
                 }
                 _maintenanceScheduleManager = new MaintenanceScheduleManager();
                 mntcViewScheduledWorkOrderPendingDg.ItemsSource = _searchedScheduledOrders;
