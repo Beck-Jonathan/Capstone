@@ -322,7 +322,7 @@ namespace DataAccessLayer
                             Created_By_Employee_ID = reader.GetInt32(4),
                             Serviced_By_Employee_ID = reader.GetInt32(5),
                             Date_Started = reader.GetDateTime(6),
-                            Date_Finished = reader.GetDateTime(7),
+                            Date_Finished = reader.IsDBNull(7) ? DateTime.MinValue : reader.GetDateTime(7),
                             Is_Active = reader.GetBoolean(8),
                             Critical_Issue = reader.GetBoolean(9)
                         };
@@ -338,7 +338,7 @@ namespace DataAccessLayer
                             Service_Type_ID = reader.GetString(3),
                             Created_By_Employee_ID = reader.GetInt32(4),
                             Date_Started = reader.GetDateTime(6),
-                            Date_Finished = reader.GetDateTime(7),
+                            Date_Finished = reader.IsDBNull(7) ? DateTime.MinValue : reader.GetDateTime(7),
                             Is_Active = reader.GetBoolean(8),
                             Critical_Issue = reader.GetBoolean(9),
                             Service_Description = reader.GetString(10),
