@@ -2693,23 +2693,24 @@ CREATE TABLE [dbo].[Ride]
 (
     [Ride_ID] [int] IDENTITY(100000, 1),
     [Client_ID] [int] NOT NULL,
-    [Service_ID] [nvarchar](20) NOT NULL,
-    [Service_Assignment_ID] [int] NULL,
+    [Operation] [nvarchar](63) NOT NULL,
+    [Driver_ID] [int] NULL,
+    [VIN] [nvarchar](17) NULL,
     [Pickup_Location] [nvarchar](255) NOT NULL,
     [Dropoff_Location] [nvarchar](255) NOT NULL,
     [Scheduled_Pickup_Time] [datetime] NULL,
     [Estimated_Dropoff_Time] [datetime] NULL,
     [Actual_Pickup_Time] [datetime] NULL,
     [Actual_Dropoff_Time] [datetime] NULL,
-    [Requested] [bit] NOT NULL,
+    [Requested] [bit] NOT NULL DEFAULT(0),
     [Is_Active] [bit] NOT NULL DEFAULT(1),
     CONSTRAINT [PK_Ride] PRIMARY KEY([Ride_ID]),
     CONSTRAINT [FK_Ride_Client_ID_Client_Client_ID]
     FOREIGN KEY([Client_ID]) REFERENCES [dbo].[Client]([Client_ID]),
-    CONSTRAINT [FK_Ride_Service_ID_Service_Service_ID]
-    FOREIGN KEY([Service_ID]) REFERENCES [dbo].[Service]([Service_ID]),
-    CONSTRAINT [FK_Ride_Service_Assignment_ID_Service_Assignment_Service_Assignment_ID]
-    FOREIGN KEY([Service_Assignment_ID]) REFERENCES [dbo].[Service_Assignment]([Service_Assignment_ID])
+    CONSTRAINT [FK_Ride_Driver_ID_Employee_Employee_ID]
+    FOREIGN KEY([Driver_ID]) REFERENCES [dbo].[Employee]([Employee_ID]),
+    CONSTRAINT [FK_Ride_VIN_Vehicle_VIN]
+    FOREIGN KEY([VIN]) REFERENCES [dbo].[Vehicle]([VIN])
 );
 go
 
@@ -2717,9 +2718,19 @@ go
 Insert Sample Data For The  Ride table
 ***************/
 print ''
+Print '***Insert Sample Data For The Ride table***' 
+GO
+INSERT INTO [dbo].[Ride]
+    ([Client_ID], [Operation],[Driver_ID], [VIN], [Pickup_Location], [Dropoff_Location], [Scheduled_Pickup_Time], [Estimated_Dropoff_Time], [Actual_Pickup_Time], [Actual_Dropoff_Time], [Requested], [Is_Active])
+VALUES
+    (100000, 'operation a', 100000, '1C4RJFAG5FC123456', '1500 Rock Ave', '330 Apple Rd', '14:30', '15:30', '14:32', '16:01', 1, 1),
+	(100000, 'operation a', 100000, '1C4RJFAG5FC123456', '330 Apple Rd', '1500 Rock Ave', '18:00', '19:00', '18:02', '18:56', 1, 1),
+	(100001, 'operation b', 100002, '1HGCM82633A123456', '2175 Town Rd', '7800 1st Ave', '2:00', '2:45', '2:00', '2:44', 1, 1),
+	(100002, 'operation a', 100001, '5XYZH4AG4JH123456', '800 Old Brick Rd', '200 Eagle St', '4:30', '5:00', '4:36', '5:05', 1, 1),
+	(100003, 'operation c', 100000, '1C4RJFAG5FC123456', '1200 8th St', '200 Eagle St', '8:00', '9:00', '8:01', '9:12', 1, 1)
+GO
 Print '***Create the [dbo].[Source] table***' 
- GO
-
+GO
 
 CREATE TABLE [dbo].[Source](
 

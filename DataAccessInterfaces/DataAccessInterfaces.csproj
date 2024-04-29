@@ -52,6 +52,7 @@
     <Compile Include="IDependentAccessor.cs" />
     <Compile Include="IDispatchAccessor.cs" />
     <Compile Include="IPartsRequestAccessor.cs" />
+    <Compile Include="IRideAccessor.cs" />
     <Compile Include="IRouteAccessor.cs" />
     <Compile Include="IPasswordResetAccessor.cs" />
     <Compile Include="IPOLineItemsAccessor.cs" />
@@ -79,6 +80,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

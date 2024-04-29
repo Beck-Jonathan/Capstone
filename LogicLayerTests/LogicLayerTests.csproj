@@ -79,6 +79,7 @@
     <Compile Include="POlineItemsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DependentManagerTests.cs" />
+    <Compile Include="RideManager_Tests.cs" />
     <Compile Include="RouteAssignmentManagerTests.cs" />
     <Compile Include="RouteManagerTests.cs" />
     <Compile Include="PurchaseOrderTests.cs" />
@@ -96,6 +97,7 @@
     <Compile Include="RoleManagerTests.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

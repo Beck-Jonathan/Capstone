@@ -1,0 +1,123 @@
+﻿@model IEnumerable<DataObjects.Ride_VM>
+
+@{
+    ViewBag.value = "Index";
+}
+
+<h2>Schedule Rides</h2>
+
+@foreach (var ride in Model)
+{
+    if (ride.IsActive)
+    {
+        <a href="@Url.Action("Edit", "RideSchedule", new { rideID = ride.RideID })" class="text-dark text-decoration-none">
+            <div class="card my-2">
+                <div class="card-body d-flex flex-row justify-content-between">
+                    <div class="d-flex flex-column justify-content-center fs-3">@ride.ScheduledPickupTime</div>
+                    <div class="d-flex flex-column justify-content-center fs-4">@ride.Operation</div>
+                    <div class="d-flex flex-column">
+                        <div class="fs-4">@ride.PickupLocation</div>
+                        <div class="fs-4">@ride.DropoffLocation</div>
+                    </div>
+                </div>
+            </div>
+        </a>
+    }
+    else
+    {
+        <div class="card my-2" style="background-color:#DDDDDD">
+            <div class="card-header"> Canceled </div>
+            <div class="card-body d-flex flex-row justify-content-between">
+                <div class="d-flex flex-column justify-content-center fs-3">@ride.ScheduledPickupTime</div>
+                <div class="d-flex flex-column justify-content-center fs-4">@ride.Operation</div>
+                <div class="d-flex flex-column">
+                    <div class="fs-4">@ride.PickupLocation</div>
+                    <div class="fs-4">@ride.DropoffLocation</div>
+                </div>
+            </div>
+        </div>
+    }
+}
+
+<hr />
+
+<h2>Operations</h2>
+
+<div class="d-flex flex-wrap flex-row justify-content-start">
+    <div class="card me-4 mb-4">
+        <div class="card-header">Yellich Taxis</div>
+        <div class="card-img mx-3 my-4">
+            <a href="https://unsplash.com/photos/yellow-taxi-cab-on-street-during-daytime-lopl80HjSPs?utm_content=creditShareLink&utm_medium=referral&utm_source=unsplash">
+                <img src="~/Content/Images/yellich-taxis.jpg" alt="Image from Maxime Doré at https://unsplash.com/" width="200" height="200" />
+            </a>
+        </div>
+        <div class="card-body d-flex flex-row justify-content-center d-flex flex-row justify-content-center">
+            <form method="get" action="@Url.Action("Create", "RideSchedule")">
+                <input type="hidden" name="operation" value="Yellich Taxis" />
+                <input type="submit" class="btn btn-primary" value="Schedule" />
+            </form>
+        </div>
+    </div>
+
+    <div class="card me-4 mb-4">
+        <div class="card-header">Luxury Limos</div>
+        <div class="card-img mx-3 my-4">
+            <a href="https://unsplash.com/photos/silver-limousine-near-hotel-gt3MCrNSyqs?utm_content=creditShareLink&utm_medium=referral&utm_source=unsplash">
+                <img src="~/Content/Images/luxury-limos.jpg" alt="Image from Jon Tyson at https://unsplash.com/" width="200" height="200" />
+            </a>
+        </div>
+        <div class="card-body d-flex flex-row justify-content-center">
+            <form method="get" action="@Url.Action("Create", "RideSchedule")">
+                <input type="hidden" name="operation" value="Luxury Limos" />
+                <input type="submit" class="btn btn-primary" value="Schedule" />
+            </form>
+        </div>
+    </div>
+
+    <div class="card me-4 mb-4">
+        <div class="card-header">City Wide Buses</div>
+        <div class="card-img mx-3 my-4">
+            <a href="https://unsplash.com/photos/yellow-and-black-bus-on-road-at-daytime-jtpcrnqP2Mc?utm_content=creditShareLink&utm_medium=referral&utm_source=unsplash">
+                <img src="~/Content/Images/city-wide-buses.jpg" alt="Image from Teddy O at https://unsplash.com/" width="200" height="200" />
+            </a>
+        </div>
+        <div class="card-body d-flex flex-row justify-content-center">
+            <form method="get" action="@Url.Action("Create", "RideSchedule")">
+                <input type="hidden" name="operation" value="City Wide Buses" />
+                <input type="submit" class="btn btn-primary" value="Schedule" />
+            </form>
+        </div>
+    </div>
+
+    <div class="card me-4 mb-4">
+        <div class="card-header">Independent Rides</div>
+        <div class="card-img mx-3 my-4">
+            <a href="https://unsplash.com/photos/man-in-black-jacket-driving-car-during-daytime-a8r2KKLSntA?utm_content=creditShareLink&utm_medium=referral&utm_source=unsplash">
+                <img src="~/Content/Images/independent-rides.jpg" alt="Image from Thibault Penin at https://unsplash.com/" width="200" height="200" />
+            </a>
+        </div>
+        <div class="card-body d-flex flex-row justify-content-center">
+            <form method="get" action="@Url.Action("Create", "RideSchedule")">
+                <input type="hidden" name="operation" value="Independent Rides" />
+                <input type="submit" class="btn btn-primary" value="Schedule" />
+            </form>
+        </div>
+    </div>
+
+    <div class="card me-4 mb-4">
+        <div class="card-header">Holiday Shuttle Buses</div>
+        <div class="card-img mx-3 my-4">
+            <a href="https://unsplash.com/photos/white-and-red-bus-on-road-during-night-time-XhtyLAKtGv8?utm_content=creditShareLink&utm_medium=referral&utm_source=unsplash">
+                <img src="~/Content/Images/holiday_shuttle_buses.jpg" alt="Image from Steve Pancrate at https://unsplash.com/" width="200" height="200" />
+            </a>
+        </div>
+        <div class="card-body d-flex flex-row justify-content-center">
+            <form method="get" action="@Url.Action("Create", "RideSchedule")">
+                <input type="hidden" name="operation" value="Holiday Shuttle Buses" />
+                <input type="submit" class="btn btn-primary" value="Schedule" />
+            </form>
+        </div>
+    </div>
+
+</div>
+

@@ -132,6 +132,7 @@
     <Compile Include="Inventory\SourceManager.cs" />
     <Compile Include="PartsRequest\IPartsRequestsManager.cs" />
     <Compile Include="PartsRequest\PartsRequestManager.cs" />
+    <Compile Include="Ride\RideManager.cs" />
     <Compile Include="RouteAssignment\IRouteAssignmentManager.cs" />
     <Compile Include="RouteAssignment\RouteAssignmentManager.cs" />
     <Compile Include="RouteStop\IRouteManager.cs" />

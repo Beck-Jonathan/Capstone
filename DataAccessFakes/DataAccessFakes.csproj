@@ -59,6 +59,7 @@
     <Compile Include="POLineItems_Fakes.cs" />
     <Compile Include="PRLineItems_Fakes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RideAccessorFake.cs" />
     <Compile Include="RouteAccessorFakes.cs" />
     <Compile Include="Purchase_Order_Fakes.cs" />
     <Compile Include="RouteAssignmentAccessorFake.cs" />
@@ -82,6 +83,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
