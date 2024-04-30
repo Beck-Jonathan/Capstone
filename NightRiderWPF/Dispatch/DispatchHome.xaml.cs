@@ -136,19 +136,13 @@ namespace NightRiderWPF
                 switch (_selectedModel)
                 {
                     case "Vehicle":
-                        generateCBO(new[] { "Schedules", "Add To Route", "Maintenance" });
+                        generateCBO(new[] { "Add To Route" });
                         break;
                     case "Driver":
-                        generateCBO(new[] { "Schedules", "Add To Route", "Availability" });
+                        generateCBO(new[] { "Schedules", "Add To Route" });
                         break;
                     case "Route":
                         generateCBO(new[] { "Schedules", "Add To Route" });
-                        break;
-                    case "Charter":
-                        generateCBO(new[] { "Schedules" });
-                        break;
-                    case "Ride Service":
-                        generateCBO(new[] { "Schedules" });
                         break;
                     default:
                         break;
@@ -176,12 +170,6 @@ namespace NightRiderWPF
                     case "Vehicle":
                         switch (selectedService)
                         {
-                            case "Schedules":
-                                showGrid(gridVehicleSchedules);
-                                break;
-                            case "Maintenance":
-                                showGrid(gridVehicleMaintenance);
-                                break;
                             case "Add To Route":
                                 showGrid(gridAddToRoute);
                                 break;
@@ -192,9 +180,6 @@ namespace NightRiderWPF
                         {
                             case "Schedules":
                                 showGrid(gridDriverSchedules);
-                                break;
-                            case "Availability":
-                                showGrid(gridDriverAvailability);
                                 break;
                             case "Add To Route":
                                 showGrid(gridAddToRoute);
@@ -209,22 +194,6 @@ namespace NightRiderWPF
                                 break;
                             case "Add To Route":
                                 showGrid(gridAddToRoute);
-                                break;
-                        }
-                        break;
-                    case "Charter":
-                        switch (selectedService)
-                        {
-                            case "Schedules":
-                                showGrid(gridCharterSchedules);
-                                break;
-                        }
-                        break;
-                    case "Ride Service":
-                        switch (selectedService)
-                        {
-                            case "Schedules":
-                                showGrid(gridRideServiceSchedules);
                                 break;
                         }
                         break;
