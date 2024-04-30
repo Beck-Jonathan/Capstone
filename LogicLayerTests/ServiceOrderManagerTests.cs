@@ -63,7 +63,7 @@ namespace LogicLayerTests
         {
             // Arrange
 
-            ServiceOrder serviceOrderToUpdate = new ServiceOrder()
+            ServiceOrder_VM serviceOrderToUpdate = new ServiceOrder_VM()
             {
                 Service_Order_ID = 100000,
                 Critical_Issue = true,
@@ -104,7 +104,7 @@ namespace LogicLayerTests
         public void TestUpdateNonExistingServiceOrderFails()
         {
             // Arrange
-            ServiceOrder serviceOrderToUpdate = new ServiceOrder()
+            ServiceOrder_VM serviceOrderToUpdate = new ServiceOrder_VM()
             {
                 Service_Order_ID = 100010,  // Assuming this ID doesn't exist in the database
                 Critical_Issue = true,
@@ -297,6 +297,15 @@ namespace LogicLayerTests
             Assert.AreEqual(expected, actual);
         }
 
+        /// <summary>
+        /// Test that Gets All service types method passes.
+        /// </summary>
+        /// <remarks>
+        ///    CONTRIBUTOR: Steven Sanchez
+        /// <br />
+        ///    CREATED: 2024-04-26
+        /// <br />
+        /// </remarks>
         [TestMethod]
         public void TestGetAllServiceTypesCountPasses()
         {
@@ -310,6 +319,15 @@ namespace LogicLayerTests
             Assert.AreEqual(expected, actual);
         }
 
+        /// <summary>
+        /// Test that Gets All Service type method fails.
+        /// </summary>
+        /// <remarks>
+        ///    CONTRIBUTOR: Steven Sanchez
+        /// <br />
+        ///    CREATED: 2024-04-26
+        /// <br />
+        /// </remarks>
         [TestMethod]
         public void TestGetAllServiceTypesCountFails()
         {
@@ -321,6 +339,50 @@ namespace LogicLayerTests
 
             // Assert
             Assert.AreNotEqual(expected, actual);
+        }
+
+        /// <summary>
+        /// Test that Gets All Vehicles With Pending Service Orders method passes.
+        /// </summary>
+        /// <remarks>
+        ///    CONTRIBUTOR: Steven Sanchez
+        /// <br />
+        ///    CREATED: 2024-04-26
+        /// <br />
+        /// </remarks>
+        [TestMethod]
+        public void TestGetAllVehiclesWithPendingServiceOrdersPasses()
+        {
+            // Arrange
+            int expectedCount = 2;
+
+            // Act
+            int actualCount = _serviceOrderManager.GetAllVehiclesWithPendingServiceOrders().Count;
+
+            // Assert
+            Assert.AreEqual(expectedCount, actualCount);
+        }
+
+        /// <summary>
+        /// Test that Gets All Vehicles With Pending Service Orders method fails.
+        /// </summary>
+        /// <remarks>
+        ///    CONTRIBUTOR: Steven Sanchez
+        /// <br />
+        ///    CREATED: 2024-04-26
+        /// <br />
+        /// </remarks>
+        [TestMethod]
+        public void TestGetAllVehiclesWithPendingServiceOrdersFails()
+        {
+            // Arrange
+            int expectedCount = 3;
+
+            // Act
+            int actualCount = _serviceOrderManager.GetAllVehiclesWithPendingServiceOrders().Count;
+
+            // Assert
+            Assert.AreNotEqual(expectedCount, actualCount);
         }
     }
 }

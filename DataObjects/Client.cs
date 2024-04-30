@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,21 +30,27 @@ namespace DataObjects
     /// 
     ///     
     /// </remarks>
-    public class Client
+    public partial class Client
     {
         public int ClientID { get; set; }
+       [Required]
         public string GivenName { get; set; }
+       [Required]
         public string FamilyName { get; set; }
         public string MiddleName { get; set; }
         public DateTime DOB { get; set; }
+       [Required]
         public string Email { get; set; }
+        [RegularExpression(@"^\d{5}(-\d{4})?$", ErrorMessage = "Invalid Zip")]
         public string PostalCode { get; set; }
         public string City { get; set; }
         public string Region { get; set; }
         public string Address { get; set; }
+       [RegularExpression(@"^\d{10}$|^\d{3}-\d{3}-\d{4}$|^\(\d{3}\)\s?\d{3}-\d{4}$", ErrorMessage = "Enter a valid 10-digit phone number")]
         public string TextNumber { get; set; }
+       [RegularExpression(@"^\d{10}$|^\d{3}-\d{3}-\d{4}$|^\(\d{3}\)\s?\d{3}-\d{4}$", ErrorMessage = "Enter a valid 10-digit phone number")]
         public string VoiceNumber { get; set; }
-        public bool IsActive { get; set; }
+        public bool IsActive { get; set; }  
     }
 
     /// <inheritdoc/>

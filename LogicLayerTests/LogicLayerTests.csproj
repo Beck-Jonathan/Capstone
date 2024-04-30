@@ -73,6 +73,7 @@
     <Compile Include="DispatchManagerTests.cs" />
     <Compile Include="DriverMaintenanceReportManagerTests.cs" />
     <Compile Include="LoginManager_Tests.cs" />
+    <Compile Include="MaintenanceScheduleManagerTests.cs" />
     <Compile Include="PartsRequestManagerTests.cs" />
     <Compile Include="PasswordHasher_Tests.cs" />
     <Compile Include="Parts_Inventory_Tests.cs" />

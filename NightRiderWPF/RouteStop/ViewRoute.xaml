@@ -62,13 +62,28 @@
             <Button Margin="20px" x:Name="btnEditRoute" Content="Edit Route" 
                     Height="50px" Background="{x:Static resources:Statics.SecondaryColor}" 
                     Foreground="{x:Static resources:Statics.ButtonText}" Grid.Row="1" Click="btnEditRoute_Click" />
-            <Button Margin="20px" x:Name="btnAssignVehicleAndDriver" Content="Create Assignment" 
+            <Button Margin="20px" x:Name="btnAssignVehicleAndDriver" 
                     Height="50px" Background="{x:Static resources:Statics.SecondaryColor}" 
-                    Foreground="{x:Static resources:Statics.ButtonText}" Grid.Row="2" />
+                    Foreground="{x:Static resources:Statics.ButtonText}" Grid.Row="2" HorizontalContentAlignment="Center" Click="btnAssignVehicleAndDriver_Click">
+                <TextBlock TextAlignment="Center" x:Name="txtCreateAssignment">
+                    Create<LineBreak/>Assignment
+                </TextBlock>
+            </Button>
+            <Button Margin="20px" x:Name="btnUdateAssignment" 
+                    Height="50px" Background="{x:Static resources:Statics.SecondaryColor}" 
+                    Foreground="{x:Static resources:Statics.ButtonText}" Grid.Row="3" HorizontalContentAlignment="Center" Click="btnUdateAssignment_Click">
+                <TextBlock TextAlignment="Center" x:Name="txtUpdateAssignment">
+                    Update<LineBreak/>Assignment
+                </TextBlock>
+            </Button>
             <Button Margin="20px" Height="50px" x:Name="btnBackToRouteList"
-                    Content="Back to Route List" Grid.Row="4" 
+                     Grid.Row="4" 
                     Foreground="{x:Static resources:Statics.ButtonText}"
-                    Background="{x:Static resources:Statics.SecondaryColor}" Click="btnBackToRouteList_Click"/>
+                    Background="{x:Static resources:Statics.SecondaryColor}" Click="btnBackToRouteList_Click">
+                <TextBlock TextAlignment="Center">
+                    Back To<LineBreak/>Route List
+                </TextBlock>
+            </Button>
         </Grid>
         <Maps:Map x:Name="mapRoute" Grid.Column="1" Grid.Row="1" ZoomLevel="10" />
 

@@ -348,5 +348,71 @@ namespace DataAccessFakes
             List<ServiceOrder_VM> incompleteServiceOrders = _fakeServiceOrders.Where(serviceOrder => serviceOrder.Date_Finished < serviceOrder.Date_Started).ToList();
             return incompleteServiceOrders;
         }
+
+        /// <summary>
+        ///     A method that returns list of fake vehicles with pending service orders
+        /// </summary>
+        /// <returns>
+        ///    <see cref="List{Vehicle_CM}">Vehicle_CM</see>: The list of all vehicles with pending service orders.
+        /// </returns>
+        ///    CONTRIBUTOR: Steven Sanchez
+        /// <br />
+        ///    CREATED: 2024-04-26
+        /// <br />
+        ///    Initial Creation
+        /// </remarks>
+        public List<Vehicle_CM> GetAllVehiclesWithPendingServiceOrders()
+        {
+            List<Vehicle_CM> vehiclesWithPendingServiceOrders = new List<Vehicle_CM>();
+
+            Vehicle_CM vehicle1 = new Vehicle_CM
+            {
+                VIN = "2GNALDEK9C6340800",
+                VehicleModelID = 1,
+                VehicleMake = "Toyota",
+                VehicleModel = "Corolla",
+                VehicleMileage = 50000,
+                VehicleType = "Sedan",
+                ServiceOrders = new List<ServiceOrder_VM>
+                {
+                    new ServiceOrder_VM
+                    {
+                        Service_Order_ID = 100001,
+                        Critical_Issue = false,
+                        Service_Type_ID = "Oil Change",
+                        Service_Description = "Perform routine oil change",
+                        Date_Started = DateTime.Today.AddDays(-7),
+                        Date_Finished = DateTime.MinValue
+                    }
+                }
+            };
+
+            Vehicle_CM vehicle2 = new Vehicle_CM
+            {
+                VIN = "JTLZE4FEXB1123437",
+                VehicleModelID = 2,
+                VehicleMake = "Honda",
+                VehicleModel = "Accord",
+                VehicleMileage = 60000,
+                VehicleType = "Sedan",
+                ServiceOrders = new List<ServiceOrder_VM>
+                {
+                    new ServiceOrder_VM
+                    {
+                        Service_Order_ID = 100002,
+                        Critical_Issue = true,
+                        Service_Type_ID = "Brake Inspection",
+                        Service_Description = "Inspect and replace brake pads if necessary",
+                        Date_Started = DateTime.Today.AddDays(-14),
+                        Date_Finished = DateTime.MinValue
+                    }
+                }
+            };
+
+            vehiclesWithPendingServiceOrders.Add(vehicle1);
+            vehiclesWithPendingServiceOrders.Add(vehicle2);
+
+            return vehiclesWithPendingServiceOrders;
+        }
     }
 }

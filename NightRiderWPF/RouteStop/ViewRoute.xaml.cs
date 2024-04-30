@@ -195,5 +195,15 @@ namespace NightRiderWPF.RouteStop
         {
             NavigationService.Navigate(new EditRouteStops(_route, _routeStopManager, _routeManager));
         }
+
+        private void btnAssignVehicleAndDriver_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new DispatchHome("Create Assignment"));
+        }
+
+        private void btnUdateAssignment_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new DispatchHome("Update Assignment"));
+        }
     }
 }

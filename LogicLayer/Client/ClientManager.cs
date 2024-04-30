@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using DataAccessInterfaces;
 using DataAccessLayer;
 using DataObjects;
+using Microsoft.Win32;
 
 namespace LogicLayer
 {
@@ -45,10 +46,25 @@ namespace LogicLayer
 
             return result;
         }
-
-        public void DeactivateClient(int id)
+        /// <summary>
+        /// AUTHOR: Michael Springer
+        /// DATE: 2024-04-27
+        /// Deactivates the Client
+        /// </summary>
+        /// <param name="id"></param>
+        /// <exception cref="NotImplementedException"></exception>
+        public int DeactivateClient(int id)
         {
-            throw new NotImplementedException();
+            int result = 0;
+            try
+            {
+                result = _clientAccessor.DeactivateClient(id);
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("Error deactivating account", ex);
+            }
+            return result;
         }
 
         /// <summary>
@@ -175,10 +191,6 @@ namespace LogicLayer
             }
             return client;
         }
-
-
-
-
 
         public IEnumerable<DataObjects.Client> GetClients()
         {

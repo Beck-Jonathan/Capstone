@@ -153,7 +153,7 @@ namespace NightRiderMVC.Controllers
         {
             const int MIN_VALID_CLIENT_ID = 100000;
             // effectivley const but DateTime is a struct and can't be declared as const
-            DateTime DEFAULT_DOB = new DateTime(1973, 4, 5);
+            DateTime DEFAULT_DOB = new DateTime(1970, 1, 1);
 
             //JACOBS NOTES FOR PERSONAL COMPREHENSION TO PREVENT INSANSITY
 
@@ -207,33 +207,37 @@ namespace NightRiderMVC.Controllers
                     }
                     else if (clientMgr.FindClient(model.Email))
                     {
-                        var placeholderUsername = loginMgr.GetClientUserNameByEmail(model.Email);
-                        var oldUser = loginMgr.AuthenticateClient(placeholderUsername, model.Password);
-                        var user = new ApplicationUser
-                        {
-                            //populate these fields with existing data from olduser
-                            GivenName = oldUser.GivenName,
-                            FamilyName = oldUser.FamilyName,
-                            ClientID = oldUser.ClientID,
+                        // ALL CLIENTS WILL REGISTER THROUGH THE MVC SITE
+                        //var placeholderUsername = loginMgr.GetClientUserNameByEmail(model.Email);
+                        //var oldUser = loginMgr.AuthenticateClient(model.Email, model.Password);
+                        //var user = new ApplicationUser
+                        //{
+                        //    //populate these fields with existing data from olduser
+                        //    GivenName = oldUser.GivenName,
+                        //    FamilyName = oldUser.FamilyName,
+                        //    ClientID = oldUser.ClientID,
 
-                            //populate these fields normally
-                            UserName = model.Email,
-                            Email = model.Email
-                        };
-                        //create the user with the identity system UserManager Normally
-                        var result = await UserManager.CreateAsync(user, model.Password);
-                        if (result.Succeeded)
-                        {
-                            //use the oldUser.Roles list to add internally assigned roles to the user
-                            //Commented out because Clients dont really have implemented roles.
-                            //foreach (var role in oldUser.Roles)
-                            //{
-                            //    UserManager.AddToRole(user.Id, role.ClientRoleID);
-                            //}
-                            await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-                            return RedirectToAction("Index", "Home");
-                        }
-                        AddErrors(result);
+                        //    //populate these fields normally
+                        //    UserName = model.Email,
+                        //    Email = model.Email
+                        //};
+                        ////create the user with the identity system UserManager Normally
+                        //var result = await UserManager.CreateAsync(user, model.Password);
+                        //if (result.Succeeded)
+                        //{
+                        //    //use the oldUser.Roles list to add internally assigned roles to the user
+                        //    //Commented out because Clients dont really have implemented roles.
+                        //    //foreach (var role in oldUser.Roles)
+                        //    //{
+                        //    //    UserManager.AddToRole(user.Id, role.ClientRoleID);
+                        //    //}
+                        //    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                        //    return RedirectToAction("Index", "Home");
+                        //}
+                        //AddErrors(result);
+                        ViewBag.RegisterErrorMessage = "An account with that email already exists. Please login.";
+                        return View(model);
+
                     }
                     else // if not existing user create a user with the client role
                     {

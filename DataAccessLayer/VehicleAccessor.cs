@@ -567,7 +567,7 @@ namespace DataAccessLayer
                         _Service_Order.Created_By_Employee_ID = reader.GetInt32(4);
                         _Service_Order.Serviced_By_Employee_ID = reader.IsDBNull(5) ? 0 : reader.GetInt32(5);
                         _Service_Order.Date_Started = reader.GetDateTime(6);
-                        _Service_Order.Date_Finished = reader.GetDateTime(7);
+                        _Service_Order.Date_Finished = reader.IsDBNull(7) ? DateTime.MinValue : reader.GetDateTime(7);
                         _Service_Order.Is_Active = reader.GetBoolean(8);
                         _Service_Order.Critical_Issue = reader.GetBoolean(9);
                         output.Add(_Service_Order);

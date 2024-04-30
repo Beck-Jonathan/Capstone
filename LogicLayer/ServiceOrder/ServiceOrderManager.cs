@@ -116,7 +116,7 @@ namespace LogicLayer
         /// <br />
         ///     Initial Creation
         /// </remarks>
-        public int UpdateServiceOrder(ServiceOrder serviceOrder)
+        public int UpdateServiceOrder(ServiceOrder_VM serviceOrder)
         {
             int rowsAffected = 0;
 
@@ -388,6 +388,33 @@ namespace LogicLayer
             }
 
             return serviceOrders;
+        }
+
+        /// <summary>
+        ///     A method that returns list of vehicles with pending sevice orders 
+        /// </summary>
+        /// <returns>
+        ///    <see cref="List{Vehicle_CM}">Vehicle_CM</see>: The list of all vehicles with pending service orders.
+        /// </returns>
+        ///    CONTRIBUTOR: Steven Sanchez
+        /// <br />
+        ///    CREATED: 2024-04-26
+        /// <br />
+        ///    Initial Creation
+        /// </remarks>
+        public List<Vehicle_CM> GetAllVehiclesWithPendingServiceOrders()
+        {
+            List<Vehicle_CM> vehicle_CMs = null;
+
+            try
+            {
+                vehicle_CMs = _serviceOrderAccessor.GetAllVehiclesWithPendingServiceOrders();
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("Failed getting all vehicles with pending Service orders", ex);
+            }
+            return vehicle_CMs;
         }
     }
 }
