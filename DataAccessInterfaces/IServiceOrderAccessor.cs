@@ -201,5 +201,19 @@ namespace DataAccessInterfaces
         /// Update comments go here.
         /// </summary>
         List<Vehicle_CM> GetAllVehiclesWithPendingServiceOrders();
+
+        /// <summary>
+        /// Gets the next available service order id
+        /// <br/>
+        /// 
+        /// <br/>
+        /// <br/>
+        /// Jonathan Beck 
+        /// Created: 2024-04-30
+        /// </summary>
+        /// 
+        /// <returns><see cref="int">A number representing the next available service order id</see></returns>
+
+        int getNextID();
     }
 }

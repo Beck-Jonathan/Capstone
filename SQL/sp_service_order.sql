@@ -270,3 +270,24 @@ BEGIN
         [Service_Order].[Date_Finished] IS NULL 
 END
 GO
+
+-- Initial Creator: Jonathan Beck
+-- Creation Date: 2024/04/30
+-- Last Modified: 
+-- Modification Description: initial creation
+-- Stored Procedure Description: Select max id
+
+PRINT '*** Creating sp_select_max_service_order_id ***'
+GO
+
+
+CREATE PROCEDURE sp_select_max_service_order_id
+AS
+BEGIN
+    SELECT
+        MAX (Service_Order_ID)
+    FROM
+        [dbo].[Service_Order]
+    
+END
+GO

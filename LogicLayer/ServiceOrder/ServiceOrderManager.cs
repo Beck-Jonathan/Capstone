@@ -416,5 +416,40 @@ namespace LogicLayer
             }
             return vehicle_CMs;
         }
+
+        /// <summary>
+        /// Gets the next available service order id
+        /// <br/>
+        /// 
+        /// <br/>
+        /// <br/>
+        /// Jonathan Beck 
+        /// Created: 2024-04-30
+        /// </summary>
+        /// 
+        /// <returns><see cref="int">A number representing the next available service order id</see></returns>
+
+        public int getNextID()
+        {
+            int result = 0;
+
+            try
+            {
+                result = _serviceOrderAccessor.getNextID();
+                if (result == 0)
+                {
+                    throw new ApplicationException("ID not loaded");
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw new ApplicationException("Unable to load id", ex);
+            }
+
+            return result;
+
+        }
+
     }
 }

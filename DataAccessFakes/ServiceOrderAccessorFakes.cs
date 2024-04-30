@@ -66,7 +66,7 @@ namespace DataAccessFakes
             _fakeServiceOrders.Add(new ServiceOrder_VM()
             {
                 VIN = "JTLZE4FEXB1123437",
-                Service_Order_ID = 100002,
+                Service_Order_ID = 100003,
                 Critical_Issue = false,
                 Service_Type_ID = "Brake Pad ",
                 Service_Description = "brake pads with OEM pads",
@@ -413,6 +413,22 @@ namespace DataAccessFakes
             vehiclesWithPendingServiceOrders.Add(vehicle2);
 
             return vehiclesWithPendingServiceOrders;
+        }
+
+        public int getNextID()
+        {
+            int max = 0;
+            foreach (ServiceOrder s in _fakeServiceOrders)
+            {
+                if (s.Service_Order_ID > max)
+                {
+                    max = s.Service_Order_ID;
+                }
+
+            }
+
+
+            return max;
         }
     }
 }

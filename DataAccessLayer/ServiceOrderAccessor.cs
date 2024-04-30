@@ -598,5 +598,47 @@ namespace DataAccessLayer
             }
             return vehicles;
         }
+
+        /// <summary>
+        /// Gets the next available service order id
+        /// <br/>
+        /// 
+        /// <br/>
+        /// <br/>
+        /// Jonathan Beck 
+        /// Created: 2024-04-30
+        /// </summary>
+        /// 
+        /// <returns><see cref="int">A number representing the next available service order id</see></returns>
+        public int getNextID()
+        {
+            int result = 0;
+
+            var conn = DBConnectionProvider.GetConnection();
+            var cmdText = "sp_select_max_service_order_id";
+            var cmd = new SqlCommand(cmdText, conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            try
+            {
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    //if no records the reutrn max returns a null from the db, which means our first record will be 100000.
+                    result = reader.IsDBNull(0) ? 100000 : reader.GetInt32(0);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return result;
+        }
     }
 }

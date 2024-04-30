@@ -384,5 +384,22 @@ namespace LogicLayerTests
             // Assert
             Assert.AreNotEqual(expectedCount, actualCount);
         }
+
+        [TestMethod]
+        public void TestGetMaxIdReturnsMaxID()
+        {
+            //arrange
+            int actual = 0;
+            int expected = 99999 + _serviceOrderManager.GetALlServiceOrders().Count;
+
+            //act
+            actual = _serviceOrderManager.getNextID();
+
+            //assert
+
+            Assert.AreEqual(expected, actual);
+
+
+        }
     }
 }

@@ -50,20 +50,13 @@ namespace NightRiderWPF.WorkOrders
                 // Populate Created_by_employee text box
                 CreatedBytxt.Text = Authentication.AuthenticatedEmployee.Employee_ID.ToString();
                 // Populate Service Order ID text box
-                var serviceOrders = _serviceOrderManager.GetALlServiceOrders();
-                var sortedServiceOrders = serviceOrders.OrderByDescending(o => o.Service_Order_ID).ToList();
+                //var serviceOrders = _serviceOrderManager.GetALlServiceOrders();
+                //var sortedServiceOrders = serviceOrders.OrderByDescending(o => o.Service_Order_ID).ToList();
 
-                if (sortedServiceOrders.Count > 0)
-                {
-                    // Get the last Service Order ID
-                    int lastServiceOrderID = sortedServiceOrders[0].Service_Order_ID;
+                //Since this returns the max existing, we need to do +1 to get the next available.
+                int nextServiceOrderID = _serviceOrderManager.getNextID() + 1;
+                ServiceIDtxt.Text = nextServiceOrderID.ToString();
 
-                    // Increment by 1 to get the next Service Order ID
-                    int nextServiceOrderID = lastServiceOrderID + 1;
-
-                    // Set the next Service Order ID to the textbox
-                    ServiceIDtxt.Text = nextServiceOrderID.ToString();
-                }
             }
             catch (Exception ex)
             {
@@ -159,11 +152,24 @@ namespace NightRiderWPF.WorkOrders
             };
             try
             {
-                _serviceOrderManager.CreateServiceOrder(serviceOrder);
-                MessageBox.Show("Service Order created successfully.");
-                ClearForm();
-                ViewWorkOrderList viewPage = new ViewWorkOrderList();
-                NavigationService.Navigate(viewPage);
+                bool result = _serviceOrderManager.CreateServiceOrder(serviceOrder);
+                if (result)
+                {
+                    MessageBox.Show("Service Order created successfully.");
+                    ClearForm();
+                    ViewWorkOrderList viewPage = new ViewWorkOrderList();
+                    NavigationService.Navigate(viewPage);
+                }
+                else
+                {
+
+                    int nextServiceOrderID = _serviceOrderManager.getNextID() + 1;
+                    ServiceIDtxt.Text = nextServiceOrderID.ToString();
+                    serviceOrder.Service_Order_ID = nextServiceOrderID;
+                    MessageBox.Show("Unable to add order, please try again");
+
+                }
+
             }
             catch (Exception ex)
             {
