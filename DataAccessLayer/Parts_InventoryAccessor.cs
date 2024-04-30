@@ -306,6 +306,7 @@ namespace DataAccessLayer
         /// </summary>
         /// <param name="newPart">The new part to be added</param>
         /// <returns><see cref="int">The ID of the newly created part record</see></returns>
+        /// Modified 2024-04-28 - Jonathan Beck - AddedPArt unit type
         public int InsertParts_Inventory(Parts_Inventory newPart)
         {
             int id = 0;
@@ -327,6 +328,9 @@ namespace DataAccessLayer
             cmd.Parameters.Add("@Part_Photo_URL", SqlDbType.NVarChar, 255);
             cmd.Parameters.Add("@Ordered_Qty", SqlDbType.Int);
             cmd.Parameters.Add("@Stock_Level", SqlDbType.Int);
+            cmd.Parameters.Add("@Part_Unit_Type", SqlDbType.NVarChar, 50);
+
+
             // give the parameter a value
             cmd.Parameters["@Part_Name"].Value = newPart.Part_Name;
             cmd.Parameters["@Part_Quantity"].Value = newPart.Part_Quantity;
@@ -335,6 +339,8 @@ namespace DataAccessLayer
             cmd.Parameters["@Part_Photo_URL"].Value = newPart.Part_Photo_URL;
             cmd.Parameters["@Ordered_Qty"].Value = newPart.Ordered_Qty;
             cmd.Parameters["@Stock_Level"].Value = newPart.Stock_Level;
+            cmd.Parameters["@Part_Unit_Type"].Value = newPart.Stock_Level;
+
 
             try
             {

@@ -153,6 +153,7 @@ GO
 Create the insert_part stored procedure
 ***************/
 -- AUTHOR: Max Fare
+-- Updated Jonathan Beck 04-29-2024 Added @parp_unit_type
 print '' print '*** creating sp_insert_part ***'
 GO
 CREATE PROCEDURE [dbo].[sp_insert_part]
@@ -163,7 +164,8 @@ CREATE PROCEDURE [dbo].[sp_insert_part]
     @Item_Specifications [nvarchar](MAX),
     @Part_Photo_URL [nvarchar](255),
     @Ordered_Qty [int],
-    @Stock_Level [int]
+    @Stock_Level [int],
+	@Part_Unit_Type [nvarchar] (50)
 )
 AS
     BEGIN
@@ -176,7 +178,10 @@ AS
         [Item_Specifications],
         [Part_Photo_URL],
         [Ordered_Qty],
-        [Stock_Level]
+        [Stock_Level],
+		[Part_Unit_Type]
+		
+		
     )
     VALUES(
         @Part_Name,
@@ -185,7 +190,8 @@ AS
         @Item_Specifications,
         @Part_Photo_URL,
         @Ordered_Qty,
-        @Stock_Level
+        @Stock_Level,
+		@Part_Unit_Type
     )
     SET @p_Parts_Inventory_ID = SCOPE_IDENTITY();
     SELECT @p_Parts_Inventory_ID AS 'Parts_Inventory_ID';
