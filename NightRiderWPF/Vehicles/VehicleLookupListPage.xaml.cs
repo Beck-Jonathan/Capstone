@@ -38,6 +38,9 @@ namespace NightRiderWPF.Vehicles
     /// UPDATER: Chris Baenizger
     /// UPDATED: 2024-02-23
     /// Added implementation for deactivate vehicle.
+    /// UPDATER: Chris Baenziger
+    /// UPDATED: 2024-04-29
+    /// Fixes for display/add/update problems and crashes
     /// </remarks>
     public partial class VehicleLookupListPage : Page
     {

@@ -331,7 +331,14 @@ namespace DataAccessLayer
                     vehicle.VehicleDescription = reader.GetString(8);
                     vehicle.DateEntered = reader.GetDateTime(9);
                     vehicle.MaxPassengers = reader.GetInt32(10);
-                    vehicle.VehicleType = reader.GetString(11);
+                    if (reader.IsDBNull(11))
+                    {
+                        vehicle.VehicleType = "";
+                    }
+                    else
+                    {
+                        vehicle.VehicleType = reader.GetString(11);
+                    }
                     vehicle.Rental = reader.GetBoolean(12);
 
                     // [Is_Active](13)
@@ -371,7 +378,6 @@ namespace DataAccessLayer
             cmd.Parameters.Add("@OldVehicle_License_Plate", SqlDbType.NVarChar, 10);
             cmd.Parameters.Add("@OldDescription", SqlDbType.NVarChar, 256);
             cmd.Parameters.Add("@OldDate_Entered", SqlDbType.Date);
-            cmd.Parameters.Add("@OldVehicle_Type_ID", SqlDbType.NVarChar, 50);
             cmd.Parameters.Add("@OldRental", SqlDbType.Bit);
             cmd.Parameters.Add("@OldMax_Passengers", SqlDbType.Int);
             // new data paremeters
@@ -394,7 +400,6 @@ namespace DataAccessLayer
             cmd.Parameters["@OldVehicle_License_Plate"].Value = oldVehicle.VehicleLicensePlate;
             cmd.Parameters["@OldDescription"].Value = oldVehicle.VehicleDescription;
             cmd.Parameters["@OldDate_Entered"].Value = oldVehicle.DateEntered.Date;
-            cmd.Parameters["@OldVehicle_Type_ID"].Value = oldVehicle.VehicleType;
             cmd.Parameters["@OldRental"].Value = oldVehicle.Rental;
             cmd.Parameters["@OldMax_Passengers"].Value = oldVehicle.MaxPassengers;
             // new data values

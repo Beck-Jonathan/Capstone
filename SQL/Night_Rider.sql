@@ -334,7 +334,7 @@ Print '***Create the [dbo].[Route_Stop] table***'
 go
 CREATE TABLE [dbo].[Route_Stop]
 (
-	[Route_Stop_ID] [int] NOT NULL IDENTITY(100000, 1),
+    [Route_Stop_ID] [int] NOT NULL IDENTITY(100000, 1),
     [Route_ID] [int] NOT NULL,
     [Stop_ID] [int] NOT NULL,
     [Route_Stop_Number] [int] NOT NULL,
@@ -348,7 +348,8 @@ CREATE TABLE [dbo].[Route_Stop]
 );
 go
 
-print '' print '*** Creating index on [Route_Stop].[Route_ID] ***'
+print ''
+print '*** Creating index on [Route_Stop].[Route_ID] ***'
 GO
 CREATE INDEX idx_Route_Stop__Route_ID ON [dbo].[Route_Stop] (Route_ID);
 GO
@@ -466,8 +467,6 @@ CREATE TABLE [dbo].[Vehicle]
     -- Used ak_... for ones that are 
     --unique like Jims example for dotnet2
     CONSTRAINT [AK_Vehicle_Number] UNIQUE ([Vehicle_Number]),
-    CONSTRAINT [FK_Vehicle_Vehicle_Type] FOREIGN KEY ([Vehicle_Type_ID]) 
-        REFERENCES [Vehicle_Type]([Vehicle_Type_ID]),
     CONSTRAINT [FK_Vehicle_Vehicle_Model] FOREIGN KEY ([Vehicle_Model_ID])
         REFERENCES [dbo].[Vehicle_Model]([Vehicle_Model_ID])
 )
@@ -1008,7 +1007,7 @@ CREATE TABLE [dbo].[Maintenance_Schedule]
     [Frequency_In_Months] [int] NOT NULL,
     [Frequency_In_Miles] [int] NOT NULL,
     [Time_Last_Completed] [datetime] NOT NULL,
-    [Active] [bit] DEFAULT 1    NOT NULL,
+    [Active] [bit] DEFAULT 1 NOT NULL,
     CONSTRAINT [FK_Maintenance_Schedule_Vehicle_Model_id] FOREIGN KEY([Vehicle_Model_ID])
     	REFERENCES [dbo].[Vehicle_Model]([Vehicle_Model_ID]),
     CONSTRAINT [FK_Maintenance_Schedule_Service_Type_ID] FOREIGN KEY ([Service_Type_ID])
