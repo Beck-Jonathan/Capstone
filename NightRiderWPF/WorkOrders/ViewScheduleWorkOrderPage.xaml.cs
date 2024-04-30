@@ -1,6 +1,7 @@
 ﻿using DataObjects;
 using LogicLayer;
 using LogicLayer.ServiceOrder;
+using NightRiderWPF.Maintenance;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -207,6 +208,19 @@ namespace NightRiderWPF.WorkOrders
                 mntcViewScheduledWorkOrderPendingDg.Columns[4].IsReadOnly = true;
                 mntcViewScheduledWorkOrderPendingDg.Columns[5].IsReadOnly = true;
 
+            }
+        }
+
+        private void Addbtn_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                NavigationService.Navigate(new AddEditDeleteScheduledMaintenance());
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show("Something went wrong", ex.Message);
             }
         }
     }

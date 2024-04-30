@@ -1002,13 +1002,13 @@ Print '***Create the [dbo].[Maintenance_Schedule] table***'
 
 CREATE TABLE [dbo].[Maintenance_Schedule]
 (
-    [Maintenance_Schedule_ID] [int] NOT NULL,
+    [Maintenance_Schedule_ID] [int] IDENTITY	(100000,1) NOT NULL,
     [Vehicle_Model_ID] [int] NOT NULL,
     [Service_Type_ID] [nvarchar] (256) NOT NULL,
     [Frequency_In_Months] [int] NOT NULL,
     [Frequency_In_Miles] [int] NOT NULL,
-    [Is_Completed] [bit] NOT NULL,
-    [Active] [bit] NOT NULL,
+    [Time_Last_Completed] [datetime] NOT NULL,
+    [Active] [bit] DEFAULT 1    NOT NULL,
     CONSTRAINT [FK_Maintenance_Schedule_Vehicle_Model_id] FOREIGN KEY([Vehicle_Model_ID])
     	REFERENCES [dbo].[Vehicle_Model]([Vehicle_Model_ID]),
     CONSTRAINT [FK_Maintenance_Schedule_Service_Type_ID] FOREIGN KEY ([Service_Type_ID])
@@ -1025,20 +1025,19 @@ print '*** maintenance schedule test records ***'
 GO
 INSERT INTO [dbo].[Maintenance_Schedule]
     (
-    [Maintenance_Schedule_ID],
     [Vehicle_Model_ID],
     [Service_Type_ID],
     [Frequency_In_Months],
     [Frequency_In_Miles],
-    [Is_Completed],
+    [Time_Last_Completed],
     [Active]
     )
 VALUES
-    (100001, 100001, 'Oil Change', 6, 5000, 0, 1),
-    (100002, 100001, 'All Tire Change', 12, 10000, 1, 0),
-    (100003, 100002, 'Tire Rotation', 18, 0, 0, 1),
-    (100004, 100003, 'Windshield Replacement', 12, 0, 0, 1),
-    (100005, 100002, 'Troubleshooting', 6, 0, 1, 0);
+    (100001, 'Oil Change', 6, 5000, '2023-02-06', 1),
+    (100001, 'All Tire Change', 12, 10000, '2023-04-20', 0),
+    (100002, 'Tire Rotation', 18, 0, '2023-07-16', 1),
+    (100003, 'Windshield Replacement', 12, 0, '2023-11-25', 1),
+    (100002, 'Troubleshooting', 6, 0, '2024-02-10', 0);
 GO
 
 

@@ -64,7 +64,7 @@
         </Grid>
 
         <Grid Grid.Row="3">
-            <Button x:Name="Addbtn" Grid.Row="4" Grid.Column="0" Height="35" Width="100" Content="Add Work Order" />
+            <Button x:Name="Addbtn" Grid.Row="4" Grid.Column="0" Height="35" Width="100" Content="Add Work Order" Click="Addbtn_Click" />
         </Grid>
 
 

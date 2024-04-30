@@ -55,5 +55,16 @@ namespace DataAccessInterfaces
         ///    Initial Creation
         /// </remarks>
         List<MaintenanceScheduleVM> SelectAllMaintenanceSchedule();
+        /// <summary>
+        /// Adds a MaintenanceSchedule record, returning the ID of the created record
+        /// </summary>
+        /// <param name="maintenance">the record data to add</param>
+        /// <returns>The ID of the created record</returns>
+        /// <remarks>
+        ///     Creator: Max Fare
+        ///     Date: 2024-03-29
+        /// </remarks>
+        int CreateMaintenanceSchedule(MaintenanceScheduleVM maintenance);
+
     }
 }

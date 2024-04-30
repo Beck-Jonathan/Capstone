@@ -149,7 +149,7 @@
     <Compile Include="RouteStop\StopManager.cs" />
     <Compile Include="ServiceOrderLineItems\IServiceOrderLineItemsManager.cs" />
     <Compile Include="ServiceOrderLineItems\ServiceOrderLineItemsManager.cs" />
-    <Compile Include="ServiceOrder\IMaintenanceScheduleManager.cs" />
+    <Compile Include="ServiceOrder\MaintenanceScheduleManager.cs" />
     <Compile Include="ServiceOrder\IServiceOrderManager.cs" />
     <Compile Include="AppData\Authentication.cs" />
     <Compile Include="Login\LoginManager.cs" />
@@ -158,7 +158,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="ServiceOrder\MaintenanceScheduleManager.cs" />
+    <Compile Include="ServiceOrder\IMaintenanceScheduleManager.cs" />
     <Compile Include="Utilities\PasswordHasher.cs" />
     <Compile Include="Utilities\VerificationCodeGenerator.cs" />
     <Compile Include="VehicleModel\VehicleModelManager.cs" />

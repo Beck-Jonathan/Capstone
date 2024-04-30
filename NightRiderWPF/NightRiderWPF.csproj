@@ -469,6 +469,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="WorkOrders\AddEditDeleteScheduledMaintenance.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="WorkOrders\CompleteWorkOrderPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -522,6 +526,9 @@
     </Compile>
     <Compile Include="Vendors\ViewAllVendors.xaml.cs">
       <DependentUpon>ViewAllVendors.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WorkOrders\AddEditDeleteScheduledMaintenance.xaml.cs">
+      <DependentUpon>AddEditDeleteScheduledMaintenance.xaml</DependentUpon>
     </Compile>
     <Compile Include="WorkOrders\CompleteWorkOrderPage.xaml.cs">
       <DependentUpon>CompleteWorkOrderPage.xaml</DependentUpon>
