@@ -56,6 +56,7 @@ namespace DataObjects
         [DisplayName("Time")]
         public TimeSpan ScheduledTime { get; set; }
 
+        // This method allows us to separate the date and time inputs in the view
         public void CalculatePickupTime()
         {
             int scheduledYear = ScheduledDate.Year;

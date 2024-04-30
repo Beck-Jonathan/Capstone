@@ -71,7 +71,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DispatchManagerTests.cs" />
+    <Compile Include="DriverMaintenanceReportManagerTests.cs" />
     <Compile Include="LoginManager_Tests.cs" />
+    <Compile Include="MaintenanceScheduleManagerTests.cs" />
     <Compile Include="PartsRequestManagerTests.cs" />
     <Compile Include="PasswordHasher_Tests.cs" />
     <Compile Include="Parts_Inventory_Tests.cs" />
@@ -88,6 +90,8 @@
     <Compile Include="SourceManagerTests.cs" />
     <Compile Include="StopManagerTests.cs" />
     <Compile Include="ClientDependentRoleManagerTests.cs" />
+    <Compile Include="ServiceOrderLineItemsManagerTests.cs" />
+    <Compile Include="ActiveRouteManagerTests.cs" />
     <Compile Include="VehicleModelManager_Tests.cs" />
     <Compile Include="VendorManagerTests.cs" />
     <Compile Include="VerificationCodeGenerator_Tests.cs" />

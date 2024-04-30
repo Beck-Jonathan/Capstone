@@ -47,10 +47,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IActiveRouteAccessor.cs" />
     <Compile Include="IBingMapsAccessor.cs" />
     <Compile Include="IClientDependentRoleAccessor.cs" />
     <Compile Include="IDependentAccessor.cs" />
     <Compile Include="IDispatchAccessor.cs" />
+    <Compile Include="IDriverMaintenanceReportAccessor.cs" />
+    <Compile Include="IMaintenanceScheduleAccessor.cs" />
     <Compile Include="IPartsRequestAccessor.cs" />
     <Compile Include="IRideAccessor.cs" />
     <Compile Include="IRouteAccessor.cs" />

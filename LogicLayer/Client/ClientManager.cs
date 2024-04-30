@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using DataAccessInterfaces;
 using DataAccessLayer;
 using DataObjects;
+using Microsoft.Win32;
 
 namespace LogicLayer
 {
@@ -45,10 +46,25 @@ namespace LogicLayer
 
             return result;
         }
-
-        public void DeactivateClient(int id)
+        /// <summary>
+        /// AUTHOR: Michael Springer
+        /// DATE: 2024-04-27
+        /// Deactivates the Client
+        /// </summary>
+        /// <param name="id"></param>
+        /// <exception cref="NotImplementedException"></exception>
+        public int DeactivateClient(int id)
         {
-            throw new NotImplementedException();
+            int result = 0;
+            try
+            {
+                result = _clientAccessor.DeactivateClient(id);
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("Error deactivating account", ex);
+            }
+            return result;
         }
 
         /// <summary>
@@ -102,7 +118,7 @@ namespace LogicLayer
             catch (Exception ex)
             {
 
-                throw new ApplicationException("Unable to access clients.", ex);
+                throw new ApplicationException("Unable to access clients", ex);
             }
             return clients;
         }
@@ -184,6 +200,35 @@ namespace LogicLayer
         public IEnumerable<DataObjects.Client> GetInactiveClients()
         {
             throw new NotImplementedException();
+        }
+        /// <summary>
+        /// AUTHOR: Michael Springer
+        /// CREATED: 2024-04-24
+        /// Checks if a client exists
+        /// <param name="email"></param>
+        /// <returns></returns>
+        /// <exception cref="ApplicationException"></exception>
+        public bool FindClient(string email)
+        {
+            try
+            {
+                return _clientAccessor.SelectClientByEmail(email) != null;
+            }
+            catch (ApplicationException ax)
+            {
+                if (ax.Message == "Client not found")
+                {
+                    return false;
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("Database Error", ex);
+            }
         }
     }
 }

@@ -293,5 +293,24 @@ namespace DataAccessFakes
             }
             return null;
         }
+
+        public int AddVehicleChecklist(VehicleChecklist checklist)
+        {
+            int result = 0;
+            if (checklist.VIN == fakeVehicle.VIN)
+            {
+                result = 100001;
+            }
+            else
+            {
+                throw new ApplicationException("Error creating checklist.");
+            }
+            return result;
+        }
+        //Jonathan Beck 2024-04-23
+        public List<Vehicle> selectVehicleTuplesForDropDown()
+        {
+            return fakeVehicles;
+        }
     }
 }

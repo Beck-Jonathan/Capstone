@@ -91,5 +91,42 @@ namespace DataAccessLayer
             }
             return serviceOrderLineItems;
         }
+
+        /// <summary>
+        /// Inserts a new record into the service order line item table
+        /// <br />
+        /// <br />
+        ///    Creator: Max Fare
+        /// <br />
+        ///    CREATED: 2024-04-05
+        /// </summary>
+        /// <param name="item">The line item to add</param>
+        /// <returns>The number of rows affected</returns>
+        public int InsertServiceOrderLineItem(ServiceOrderLineItems_VM item)
+        {
+            int rows = 0;
+            var conn = DBConnectionProvider.GetConnection();
+            var cmdText = "sp_insert_service_order_line_item";
+            var cmd = new SqlCommand(cmdText, conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            cmd.Parameters.AddWithValue("@Service_Order_ID", item.Service_Order_ID);
+            cmd.Parameters.AddWithValue("@Service_Order_Version", item.Service_Order_Version);
+            cmd.Parameters.AddWithValue("@Parts_Inventory_ID", item.Parts_Inventory_ID);
+            cmd.Parameters.AddWithValue("@Quantity", item.Quantity);
+
+            try
+            {
+                conn.Open();
+                rows = cmd.ExecuteNonQuery();
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally { conn.Close(); }
+            return rows;
+        }
     }
 }

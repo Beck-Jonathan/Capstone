@@ -251,12 +251,16 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ActiveRouteController.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\ClientController.cs" />
+    <Compile Include="Controllers\DriverMaintenanceReportController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\RideRequestController.cs" />
     <Compile Include="Controllers\RideScheduleController.cs" />
     <Compile Include="Controllers\RouteController.cs" />
+    <Compile Include="Controllers\VehicleChecklistController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -320,6 +324,17 @@
     <Content Include="Views\RideSchedule\Create.cshtml" />
     <Content Include="Views\RideSchedule\Edit.cshtml" />
     <Content Include="Views\RideSchedule\Index.cshtml" />
+    <Content Include="Views\Admin\Details.cshtml" />
+    <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\Account\RegisterEmployeeUser.cshtml" />
+    <Content Include="Views\VehicleChecklist\Create.cshtml" />
+    <Content Include="Views\ActiveRoute\Create.cshtml" />
+    <Content Include="Views\ActiveRoute\Edit.cshtml" />
+    <Content Include="Views\ActiveRoute\Index.cshtml" />
+    <Content Include="Views\DriverMaintenanceReport\Index.cshtml" />
+    <Content Include="Views\DriverMaintenanceReport\Details.cshtml" />
+    <Content Include="Views\DriverMaintenanceReport\Create.cshtml" />
+    <Content Include="Views\DriverMaintenanceReport\Error.cshtml" />
     <Resource Include="Content\Images\NightRider-01.png" />
     <Resource Include="Content\Images\NightRider-02.png" />
     <Content Include="Content\Images\jumbo_bus.jpg" />

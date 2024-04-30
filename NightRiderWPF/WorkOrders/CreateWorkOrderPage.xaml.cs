@@ -146,12 +146,6 @@ namespace NightRiderWPF.WorkOrders
                 return;
             }
 
-            if (DateFinishedpkr.SelectedDate == null)
-            {
-                MessageBox.Show("Please select an anticipated date to finish.");
-                return;
-            }
-
             // Create a new ServiceOrder_VM object with data from the form
             ServiceOrder_VM serviceOrder = new ServiceOrder_VM()
             {
@@ -161,7 +155,6 @@ namespace NightRiderWPF.WorkOrders
                 Service_Type_ID = ServiceTypeIDcbo.SelectedValue.ToString(),
                 Created_By_Employee_ID = int.Parse(CreatedBytxt.Text),
                 Date_Started = DateStartedpkr.SelectedDate ?? DateTime.MinValue,
-                Date_Finished = DateFinishedpkr.SelectedDate ?? DateTime.MinValue,
                 Service_Description = ServiceDescriptiontxt.Text
             };
             try
@@ -186,7 +179,6 @@ namespace NightRiderWPF.WorkOrders
             ServiceTypeIDcbo.SelectedIndex = -1;
             CreatedBytxt.Text = "";
             DateStartedpkr.SelectedDate = null;
-            DateFinishedpkr.SelectedDate = null;
             ServiceDescriptiontxt.Text = "";
         }
 

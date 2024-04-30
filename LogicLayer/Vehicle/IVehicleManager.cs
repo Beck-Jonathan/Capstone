@@ -245,5 +245,44 @@ namespace LogicLayer
         ///     Initial Creation
         /// </remarks>
         Vehicle GetVehicleByVIN(string VIN);
+
+        /// <summary>
+        ///     Add a vehicle checklist to the database.
+        /// </summary>
+        /// <returns>
+        ///    <see cref="int">int</see>: The ID for the new checklist.
+        /// </returns>
+        /// <remarks>
+        ///    Exceptions:
+        ///    <see cref="ApplicationException">ApplicationException</see>: Thrown if there is a problem creating the checklist.
+        ///    CONTRIBUTOR: Chris Baenziger
+        ///    CREATED: 2024-04-20
+        /// </remarks>
+        int AddVehicleChecklist(VehicleChecklist checklist);
+
+        /// <summary>
+        ///     Retrieves VIN/Vehicle number tuples to fill drop downs
+        /// </summary>
+        /// <returns>
+        ///    <see cref="List{Vehicle}">Vehicle</see> List of Vin/Vehicle Number tuples for drop downs
+        /// </returns>
+        /// <remarks>
+        ///    Exceptions:
+        /// <br />
+        ///    <see cref="Exception">Exception</see>: Thrown when error encountered
+        /// <br /><br />
+        ///    
+        /// <br />
+        ///    CREATED: 2024-04-22
+        /// <br />
+        ///     Initial Creation
+        /// <br />
+        ///    Creator: Jonathan Beck
+        /// <br />
+        ///    
+        /// <br />
+        ///    
+        /// </remarks>
+        List<Vehicle> getVehicleTuplesForDropDown();
     }
 }

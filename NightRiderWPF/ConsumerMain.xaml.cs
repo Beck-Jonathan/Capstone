@@ -120,6 +120,22 @@ namespace NightRiderWPF
                 PageViewer.Navigate(new ViewWorkOrderList());
             }
         }
+
+        private void btnScheduledMaintenance_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button btn && btn.Name == "btnScheduledMaintenance")
+            {
+                foreach (var child in stackMainNav.Children)
+                {
+                    if (child is Button button)
+                    {
+                        button.Background = Statics.SecondaryColor;
+                    }
+                }
+                btn.Background = Statics.PrimaryColor;
+                PageViewer.Navigate(new ViewScheduleWorkOrderPage());
+            }
+        }
         private void btnInventory_Click(object sender, RoutedEventArgs e)
         {
             if (sender is Button btn && btn.Name == "btnInventory")
@@ -210,9 +226,8 @@ namespace NightRiderWPF
                         btnVehicles.Visibility = Visibility.Visible;
                         btnVehicleModels.Visibility = Visibility.Visible;
                         btnMaintenance.Visibility = Visibility.Visible;
+                        btnScheduledMaintenance.Visibility = Visibility.Visible;
                         btnInventory.Visibility = Visibility.Visible;
-                        btnDriverSchedules.Visibility = Visibility.Visible;
-                        btnVehicleSchedules.Visibility = Visibility.Visible;
                         btnRoutes.Visibility = Visibility.Visible;
                         btnPartsRequests.Visibility = Visibility.Visible;
                         btn_profile.Visibility = Visibility.Visible;
@@ -222,8 +237,8 @@ namespace NightRiderWPF
                     case "FleetAdmin":
                         btnVehicles.Visibility= Visibility.Visible;
                         btnVehicleModels.Visibility = Visibility.Visible;
-                        btnVehicleSchedules.Visibility= Visibility.Visible;
                         btnMaintenance.Visibility= Visibility.Visible;
+                        btnScheduledMaintenance.Visibility = Visibility.Visible;
                         btnPartsRequests.Visibility = Visibility.Visible;
                         btn_profile.Visibility = Visibility.Visible;
                         btnDispatch.Visibility = Visibility.Visible;
@@ -242,6 +257,7 @@ namespace NightRiderWPF
                     case "PartsPerson":
                         btnInventory.Visibility = Visibility.Visible;
                         btnMaintenance.Visibility = Visibility.Visible;
+                        btnScheduledMaintenance.Visibility = Visibility.Visible;
                         btnPartsRequests.Visibility = Visibility.Visible;
                         btn_profile.Visibility = Visibility.Visible;
                         break;
@@ -255,8 +271,6 @@ namespace NightRiderWPF
                         break;
                     case "Dispatcher":
                         btnVehicles.Visibility = Visibility.Visible;
-                        btnDriverSchedules.Visibility = Visibility.Visible;
-                        btnVehicleSchedules.Visibility = Visibility.Visible;
                         btnRoutes.Visibility = Visibility.Visible;
                         btnPartsRequests.Visibility = Visibility.Visible;
                         btn_profile.Visibility = Visibility.Visible;
@@ -327,37 +341,7 @@ namespace NightRiderWPF
         }
 
 
-        private void btnDriverSchedules_Click(object sender, RoutedEventArgs e)
-        {
-            if (sender is Button btn && btn.Name == "btnDriverSchedules")
-            {
-                foreach (var child in stackMainNav.Children)
-                {
-                    if (child is Button button)
-                    {
-                        button.Background = Statics.SecondaryColor;
-                    }
-                }
-                btn.Background = Statics.PrimaryColor;
-                // PageViewer.Navigate(new DriverSchedulesPage());
-            }
-        }
 
-        private void btnVehicleSchedules_Click(object sender, RoutedEventArgs e)
-        {
-            if (sender is Button btn && btn.Name == "btnVehicleSchedules")
-            {
-                foreach (var child in stackMainNav.Children)
-                {
-                    if (child is Button button)
-                    {
-                        button.Background = Statics.SecondaryColor;
-                    }
-                }
-                btn.Background = Statics.PrimaryColor;
-                // PageViewer.Navigate(new VehicleSchedulesPage());
-            }
-        }
 
         private void btnRoutes_Click(object sender, RoutedEventArgs e)
         {

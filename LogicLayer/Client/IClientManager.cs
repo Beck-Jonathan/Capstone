@@ -94,7 +94,28 @@ namespace LogicLayer
         Client_VM GetClientByEmail(string email);
         IEnumerable<DataObjects.Client> GetInactiveClients();
         int EditClient(Client_VM newClient);
-        void DeactivateClient(int id);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <remarks>
+        /// UPDATER: Michael Springer
+        /// UPDATED: 2024-04-27
+        ///     changed return type to int
+        /// </remarks>
+        /// <returns></returns>
+        int DeactivateClient(int id);
         void ActivateClient(int id);
+        /// <summary>
+        /// Returns a bool if client exist
+        /// </summary>
+        /// <param name="email">client's email</param>
+        /// <returns></returns>
+        /// <remarks>
+        /// AUTHOR: Michael Springer
+        /// CREATED: 2024-04-24
+        /// </remarks>
+        bool FindClient(string email);
+
     }
 }

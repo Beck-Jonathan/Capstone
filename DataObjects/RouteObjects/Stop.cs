@@ -24,5 +24,10 @@ namespace DataObjects.RouteObjects
         public decimal Latitude { get; set; }
         public decimal Longitude { get; set; }
         public bool IsActive {  get; set; }
+
+        public override string ToString()
+        {
+            return StreetAddress;
+        }
     }
 }

@@ -2,23 +2,28 @@
  * Created at 2024-04-06
  * @author Michael Springer
  * @summary script for handling general js across the site
- * 
+ * UPDATED: 2024-04-27: alert for account registration,
+ *      modal for profile update
+ *      modal for account delete
  */
 "use strict";
 
 $(document).ready(function () {
 
     /**
-     * MODAL HANDLING SECTION
+     * MODAL AND ALERT HANDLING SECTION
      */
 
     // cookie notice
     showCookieNoticeForSession();
 
-    
+    // account already registered notice
+    showAccountAlreadyRegisteredNotice();
 
+    // client profile update notice
+    showProfileUpdateNotice();
 
-
+    showDeleteAccountNotice();
 
 })
 
@@ -31,4 +36,28 @@ function showCookieNoticeForSession() {
     if (showCookieNotice) {
         $('#mdl-cookie').modal('show');
     }
+}
+
+/**
+ * Shows the account already registered notice modal on the register view
+  */
+function showAccountAlreadyRegisteredNotice() {
+    var registrationMessage = $('#modal-message').text();
+    if (registrationMessage != '' && registrationMessage != null) {
+        $('#mdl-register-error').modal('show');
+    }
+}
+
+function showProfileUpdateNotice() {
+    var profileUpdateMessage = $('#mdl-update-result').text();
+    if (profileUpdateMessage != '' && profileUpdateMessage != null) {
+        $('#mdl-profile-update').modal('show');
+    }
+}
+
+function showDeleteAccountNotice() {
+    $('#btn-client-delete').on('click', function () {
+        $('#mdl-profile-delete').modal('show');
+    });
+
 }

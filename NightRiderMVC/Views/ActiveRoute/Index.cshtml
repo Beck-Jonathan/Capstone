@@ -1,0 +1,58 @@
+﻿@model IEnumerable<DataObjects.RouteObjects.Route_Assignment>
+
+@{
+    ViewBag.Title = "Route List";
+}
+
+<h2>Route List</h2>
+<p>Driver ID: @ViewBag.DriverID</p>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Route_ID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.VIN_Number)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Date_Assignment_Started)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Date_Assignment_Ended)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Route_ID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VIN_Number)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date_Assignment_Started)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date_Assignment_Ended)
+            </td>
+            <td>
+                @*@Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) | *@
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @*@Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ }) *@
+                @Html.ActionLink("Start Route", "Create", new
+                {
+                    routeID = item.Route_ID,
+                    assignmentID = item.Assignment_ID,
+                    VIN = item.VIN_Number,
+                    driver = item.DriverID
+                })
+            </td>
+        </tr>
+    }
+
+</table>
+

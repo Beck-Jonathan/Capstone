@@ -38,6 +38,11 @@ namespace LogicLayerTests
     ///    Added TestAddClientReturnsTrue and TestAddClientReturnsErrorWithDuplicateData
     ///    Rewrote TestGetClientByIDReturnsCorrectClient, TestGetClientByEmailReturnsCorrectClient,
     ///    and TestGetClientByEmailThrowsExceptionWhenGivenBadData as they were not correctly written
+    /// <br /> <br />
+    /// UPDATER: Michael Springer
+    /// <br />
+    /// UPDATED: 2024-04-25
+    ///     Added TestFindCLient_ReturnsTrueWhenClientFound()  and TestFindCLient_ReturnsFalseWhenClientNotFound()
     /// </remarks>
     [TestClass]
     public class ClientManagerTests
@@ -238,6 +243,61 @@ namespace LogicLayerTests
             acutalID = _clientManager.GetClientByEmail(email).ClientID; 
 
             // no assertion needed; should catch exception
+        }
+        [TestMethod]
+        public void TestFindCLient_ReturnsTrueWhenClientFound()
+        {
+            // Arrange
+            string email = "foobar@gmail.com";
+            bool result = false;
+
+            // Act
+            result = _clientManager.FindClient(email);
+
+            // Assert
+            Assert.IsTrue(result);
+        }
+
+        [TestMethod]
+        public void TestFindCLient_ReturnsFalseWhenClientNotFound()
+        {
+            // Arrange
+            string email = "scrandle_randle@fake.com";
+            bool result = true;
+
+            // Act
+            result = _clientManager.FindClient(email);
+
+            // Assert
+            Assert.IsFalse(result);
+        }
+
+
+        [TestMethod]
+        public void TestDeactivateClientReturnsOne()
+        {
+            // Arrange
+            int expected = 1;
+            int actual = 0;
+
+            // Act
+            actual = _clientManager.DeactivateClient(1);
+
+            // Assert
+            Assert.AreEqual(expected, actual);
+        }
+        [TestMethod]
+        public void TestDeactivateClientReturnsZero()
+        {
+            // Arrange
+            int expected = 0;
+            int actual = 0;
+
+            // Act
+            actual = _clientManager.DeactivateClient(17);
+
+            // Assert
+            Assert.AreEqual(expected, actual);
         }
     }
     

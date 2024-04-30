@@ -288,12 +288,6 @@ namespace NightRiderWPF.Vehicles
                             txtVehicleDescription.Focus();
                             return;
                         }
-                        if (cmbVehicleType.Text.Equals(""))
-                        {
-                            MessageBox.Show("Please enter a vehicle type.", "Invalid Type", MessageBoxButton.OK, MessageBoxImage.Error);
-                            txtVehicleDescription.Focus();
-                            return;
-                        }
 
                         // convert input to new Vehicle object
                         _vehicle = new Vehicle()
@@ -301,7 +295,10 @@ namespace NightRiderWPF.Vehicles
                             VIN = txtVIN.Text,
                             VehicleNumber = txtVehicleNumber.Text,
                             VehicleMileage = int.Parse(txtVehicleMileage.Text),
-                            VehicleModelID = _vehicle.VehicleModelID,
+                            VehicleModelID = _vehicleModels.Single(x => x.Make == cmbVehicleMake.Text &&
+                                                                        x.Name == cmbVehicleModel.Text &&
+                                                                        x.Year == int.Parse(cmbVehicleYear.Text))
+                                                           .VehicleModelID,
                             VehicleLicensePlate = txtVehicleLicensePlate.Text,
                             VehicleYear = int.Parse(cmbVehicleYear.Text),
                             DateEntered = DateTime.Now.Date,
@@ -316,8 +313,16 @@ namespace NightRiderWPF.Vehicles
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show("There was a problem adding the vehicle.\n" + ex.InnerException.Message, "Add Vehicle Error",
+                        if (ex.InnerException != null)
+                        {
+                            MessageBox.Show("There was a problem adding the vehicle.\n" + ex.InnerException.Message, "Add Vehicle Error",
                             MessageBoxButton.OK, MessageBoxImage.Error);
+                        }
+                        else
+                        {
+                            MessageBox.Show("There was a problem adding the vehicle.", "Add Vehicle Error",
+                            MessageBoxButton.OK, MessageBoxImage.Error);
+                        }
                     }
                     if (result == true)
                     {
@@ -377,12 +382,6 @@ namespace NightRiderWPF.Vehicles
                         if (txtVehicleDescription.Text.Equals(""))
                         {
                             MessageBox.Show("Please enter a description.", "Invalid Description", MessageBoxButton.OK, MessageBoxImage.Error);
-                            txtVehicleDescription.Focus();
-                            return;
-                        }
-                        if (cmbVehicleType.Text.Equals(""))
-                        {
-                            MessageBox.Show("Please enter a vehicle type.", "Invalid Type", MessageBoxButton.OK, MessageBoxImage.Error);
                             txtVehicleDescription.Focus();
                             return;
                         }
@@ -449,7 +448,8 @@ namespace NightRiderWPF.Vehicles
             else if (btnAddUpdate.Content.Equals("Cancel"))
             {
                 // returns to 
-                if (_pageType.Equals("display")) {
+                if (_pageType.Equals("display"))
+                {
                     if (NavigationService.CanGoBack)
                     {
                         NavigationService.GoBack();
@@ -517,10 +517,8 @@ namespace NightRiderWPF.Vehicles
                 cmbVehicleYear.SelectedItem = null;
                 cmbVehicleYear.ItemsSource = null;
             }
-            else if (make != _vehicle.VehicleMake)
+            else
             {
-                _vehicle.VehicleMake = make;
-
                 FillVehicleModelOptions();
             }
         }
@@ -535,17 +533,31 @@ namespace NightRiderWPF.Vehicles
                 cmbVehicleYear.SelectedItem = null;
                 cmbVehicleYear.ItemsSource = null;
             }
-            else if (model != _vehicle.VehicleModel)
+            else
             {
-                _vehicle.VehicleModel = model;
-
                 FillVehicleYearOptions();
+            }
+        }
+
+        private void cmbVehicleYear_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            string year = cmbVehicleYear.SelectedItem as string; // int.Parse(cmbVehicleYear.SelectedItem.ToString());
+
+            if (string.IsNullOrWhiteSpace(year))
+            {
+                cmbVehicleType.IsEnabled = false;
+                cmbVehicleType.SelectedItem = null;
+                cmbVehicleType.ItemsSource = null;
+            }
+            else
+            {
+                FillVehicleTypeOptions();
             }
         }
 
         private void FillVehicleModelOptions()
         {
-            var models = _vehicleModels.Where(x => x.Make == _vehicle.VehicleMake)
+            var models = _vehicleModels.Where(x => x.Make == cmbVehicleMake.SelectedItem.ToString())
                                        .Select(x => x.Name);
 
             cmbVehicleModel.ItemsSource = models;
@@ -566,7 +578,7 @@ namespace NightRiderWPF.Vehicles
 
         private void FillVehicleYearOptions()
         {
-            var years = _vehicleModels.Where(x => x.Make == _vehicle.VehicleMake && x.Name == _vehicle.VehicleModel)
+            var years = _vehicleModels.Where(x => x.Make == cmbVehicleMake.SelectedItem.ToString() && x.Name == cmbVehicleModel.SelectedItem.ToString())
                                       .Select(x => x.Year.ToString());
 
             cmbVehicleYear.ItemsSource = years;
@@ -578,12 +590,32 @@ namespace NightRiderWPF.Vehicles
             }
             else
             {
-                _vehicle.VehicleYear = Int32.Parse(years.Single());
+                //_vehicle.VehicleYear = Int32.Parse(years.Single());
 
                 cmbVehicleYear.IsEnabled = false;
                 cmbVehicleYear.SelectedIndex = 0;
             }
         }
+
+        private void FillVehicleTypeOptions()
+        {
+            var type = _vehicleModels.Where(x => x.Make == cmbVehicleMake.SelectedItem.ToString() && x.Name == cmbVehicleModel.SelectedItem.ToString() && x.Year.ToString() == cmbVehicleYear.SelectedItem.ToString())
+                                      .Select(x => x.VehicleTypeID);
+
+            cmbVehicleType.ItemsSource = type;
+
+            if (type.Count() > 1)
+            {
+                cmbVehicleType.SelectedItem = null;
+                cmbVehicleType.IsEnabled = true;
+            }
+            else
+            {
+                cmbVehicleType.IsEnabled = false;
+                cmbVehicleType.SelectedIndex = 0;
+            }
+        }
+
         //Jonathan Beck 2024-04-13
         //Get all service orders and load a new "ViewWorkOrderList" window
         private void btnWorkOrders_Click(object sender, RoutedEventArgs e)
@@ -591,7 +623,7 @@ namespace NightRiderWPF.Vehicles
             List<ServiceOrder_VM> orders = new List<ServiceOrder_VM>();
             try
             {
-                orders=_vehicleManager.getAllService_OrderByVIN(_vehicle.VIN);
+                orders = _vehicleManager.getAllService_OrderByVIN(_vehicle.VIN);
             }
             catch (Exception)
             {
@@ -600,5 +632,7 @@ namespace NightRiderWPF.Vehicles
             }
             NavigationService.Navigate(new WorkOrders.ViewWorkOrderList(orders));
         }
+
+
     }
 }

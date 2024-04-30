@@ -203,7 +203,7 @@ namespace DataAccessLayer
             cmd.Parameters.AddWithValue("@Service_Type_ID", serviceOrder.Service_Type_ID);
             cmd.Parameters.AddWithValue("@Created_By_Employee_ID", serviceOrder.Created_By_Employee_ID);
             cmd.Parameters.AddWithValue("@Date_Started", serviceOrder.Date_Started);
-            cmd.Parameters.AddWithValue("@Date_Finished", serviceOrder.Date_Finished);
+            // cmd.Parameters.AddWithValue("@Date_Finished", serviceOrder.Date_Finished);
             cmd.Parameters.AddWithValue("@Service_Description", serviceOrder.Service_Description);
             try
             {
@@ -322,7 +322,7 @@ namespace DataAccessLayer
                             Created_By_Employee_ID = reader.GetInt32(4),
                             Serviced_By_Employee_ID = reader.GetInt32(5),
                             Date_Started = reader.GetDateTime(6),
-                            Date_Finished = reader.GetDateTime(7),
+                            Date_Finished = reader.IsDBNull(7) ? DateTime.MinValue : reader.GetDateTime(7),
                             Is_Active = reader.GetBoolean(8),
                             Critical_Issue = reader.GetBoolean(9)
                         };
@@ -338,7 +338,7 @@ namespace DataAccessLayer
                             Service_Type_ID = reader.GetString(3),
                             Created_By_Employee_ID = reader.GetInt32(4),
                             Date_Started = reader.GetDateTime(6),
-                            Date_Finished = reader.GetDateTime(7),
+                            Date_Finished = reader.IsDBNull(7) ? DateTime.MinValue : reader.GetDateTime(7),
                             Is_Active = reader.GetBoolean(8),
                             Critical_Issue = reader.GetBoolean(9),
                             Service_Description = reader.GetString(10),
@@ -364,6 +364,38 @@ namespace DataAccessLayer
         }
 
         /// <summary>
+        /// changes the active field in the database for the given service order,
+        ///  <br/>
+        /// making active = false
+        /// <br />
+        /// <br />
+        ///    Creator: Max Fare
+        /// <br />
+        ///    CREATED: 2024-04-05
+        /// </summary>
+        /// <param name="serviceOrder">The service order to deactivate</param>
+        /// <returns>the number of rows affected in the database</returns>
+        public int DeactivateServiceOrder(ServiceOrder_VM serviceOrder)
+        {
+            int rows = 0;
+            var conn = DBConnectionProvider.GetConnection();
+            var cmdText = "sp_deactivate_service_order";
+            var cmd = new SqlCommand(cmdText, conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            cmd.Parameters.AddWithValue("@Service_Order_ID", serviceOrder.Service_Order_ID);
+            cmd.Parameters.AddWithValue("@Version", serviceOrder.Service_Order_Version);
+            try
+            {
+                conn.Open();
+                rows = cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return rows;
+        }
         ///     A method that returns sevice orders that are complete
         /// </summary>
         /// <returns>
@@ -416,6 +448,39 @@ namespace DataAccessLayer
                 conn.Close();
             }
             return serviceOrders;
+        }
+        /// <summary>
+        /// changes the active field in the database for the given service order,
+        /// <br/>
+        /// making active = true
+        /// <br />
+        /// <br />
+        ///    Creator: Max Fare
+        /// <br />
+        ///    CREATED: 2024-04-05
+        /// </summary>
+        /// <param name="serviceOrder">The service order to activate</param>
+        /// <returns>the number of rows affected in the database</returns>
+        public int ActivateServiceOrder(ServiceOrder_VM serviceOrder)
+        {
+            int rows = 0;
+            var conn = DBConnectionProvider.GetConnection();
+            var cmdText = "sp_activate_service_order";
+            var cmd = new SqlCommand(cmdText, conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            cmd.Parameters.AddWithValue("@Service_Order_ID", serviceOrder.Service_Order_ID);
+            cmd.Parameters.AddWithValue("@Version", serviceOrder.Service_Order_Version);
+            try
+            {
+                conn.Open();
+                rows = cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return rows;
         }
 
         /// <summary>
@@ -471,6 +536,67 @@ namespace DataAccessLayer
                 conn.Close();
             }
             return serviceOrders;
+        }
+
+        /// <summary>
+        ///     A method that executes the stored procedure and 
+        ///     returns a list of vehicles with pending service orders
+        /// </summary>
+        /// <returns>
+        ///    <see cref="List{Vehicle_CM}">Vehicle_CM</see>: The list of all vehicles with pending service orders.
+        /// </returns>
+        ///    CONTRIBUTOR: Steven Sanchez
+        /// <br />
+        ///    CREATED: 2024-04-26
+        /// <br />
+        ///    Initial Creation
+        /// </remarks>
+
+        public List<Vehicle_CM> GetAllVehiclesWithPendingServiceOrders()
+        {
+            List<Vehicle_CM> vehicles = new List<Vehicle_CM>();
+
+            var conn = DBConnectionProvider.GetConnection();
+            var cmdText = "sp_select_all_vehicles_by_pending_service_orders";
+            var cmd = new SqlCommand(cmdText, conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            try
+            {
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    Vehicle_CM vehicle = new Vehicle_CM()
+                    {
+                        VIN = reader.GetString(0),
+                        VehicleModelID = reader.GetInt32(1),
+                        VehicleMake = reader.GetString(2),
+                        vehicleModel = new VehicleModelVM()
+                        {
+                            Name = reader.GetString(3),
+                        },
+                        VehicleType = reader.GetString(4),
+                        VehicleMileage = reader.GetInt32(5),
+
+                        serviceOrder_VM = new ServiceOrder_VM()
+                        {
+                            Service_Type_ID = reader.GetString(6),
+                        }
+                    };
+                    vehicles.Add(vehicle);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return vehicles;
         }
     }
 }

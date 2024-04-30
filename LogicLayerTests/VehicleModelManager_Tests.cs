@@ -193,6 +193,29 @@ namespace LogicLayerTests
                 x.IsActive == y.IsActive;
         }
 
+        //Created By: James Williams
+        //Date: 2024-04-26
+        [TestMethod]
+        public void TestGetVehicleModelByVINPasses()
+        {
+            string vin = "aaaabbbbcccceeee0";
+            int expectedModelID = 100003;
+            int actualModelID = 0;
 
+            VehicleModel vehicleModel = _vehicleModelManager.GetVehicleModelByVIN(vin);
+            actualModelID = vehicleModel.VehicleModelID;
+
+            Assert.AreEqual(expectedModelID, actualModelID);
+        }
+        //Created By: James Williams
+        //Date: 2024-04-26
+        [TestMethod]
+        [ExpectedException(typeof(SystemException))]
+        public void TestGetVehicleModelByVINFailesThrowsSystemException()
+        {
+            //supply a vin that doesn't exist in the fake data file
+            string vin = "fakefakefakefake1";
+            VehicleModel vm = _vehicleModelManager.GetVehicleModelByVIN(vin);
+        }
     }
 }

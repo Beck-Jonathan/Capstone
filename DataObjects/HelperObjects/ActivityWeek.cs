@@ -103,6 +103,11 @@ namespace DataObjects.HelperObjects
         /// </returns>
         /// <remarks>
         ///    CONTRIBUTOR: Nathan Toothaker
+        ///    <br /><br />
+        ///    UPDATED: 2024-04-26<br />
+        ///    UPDATED BY: Nathan Toothaker<br />
+        ///    UPDATE NOTES: <br />
+        ///    Added error check in case there are no active days.
         /// </remarks>
         public override string ToString()
         {
@@ -135,7 +140,10 @@ namespace DataObjects.HelperObjects
             {
                 result += "Sun/";
             }
-            result = result.Substring(0, result.Length - 1);
+            if (result.Length > 0)
+            {
+                result = result.Substring(0, result.Length - 1);
+            }
             return result;
         }
 

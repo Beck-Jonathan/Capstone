@@ -136,6 +136,25 @@ namespace DataAccessInterfaces
         ServiceOrder_VM SelectServiceOrderByServiceOrderID(int serviceOrderID);
 
         /// <summary>
+        /// marks a service order as inactive in the database
+        /// <br/>
+        /// <br/>
+        /// Max Fare 
+        /// Created: 2024-04-01
+        /// </summary>
+        /// <param name="serviceOrder">The Service Order to Deactivate</param>
+        /// <returns></returns>
+        int DeactivateServiceOrder(ServiceOrder_VM serviceOrder);
+        /// <summary>
+        /// marks an inactive service order as active in the database
+        /// <br/>
+        /// <br/>
+        /// Max Fare 
+        /// Created: 2024-04-01
+        /// </summary>
+        /// <param name="serviceOrder">The Service Order to Reactivate</param>
+        /// <returns></returns>
+        int ActivateServiceOrder(ServiceOrder_VM serviceOrder);
         ///     A method that returns sevice orders that are complete
         /// </summary>
         /// <returns>
@@ -162,5 +181,25 @@ namespace DataAccessInterfaces
         ///    Initial Creation
         /// </remarks>
         List<ServiceOrder_VM> GetAllIncompleteServiceOrders();
+
+        /// <summary>
+        /// A method to retrieve all vehicles with pending service orders.
+        /// </summary>
+        /// <returns>
+        /// A list of vehicles with pending service orders.
+        /// </returns>
+        /// <remarks>
+        /// If no records are returned or an exception occurs, an empty list is returned.
+        /// </remarks>
+        /// <contributor>
+        ///     Steven Sanchez
+        /// </contributor>
+        /// <created>2024-04-26</created>
+        /// <updated>yyyy-MM-dd</updated>
+        /// <update>
+        /// <summary>
+        /// Update comments go here.
+        /// </summary>
+        List<Vehicle_CM> GetAllVehiclesWithPendingServiceOrders();
     }
 }

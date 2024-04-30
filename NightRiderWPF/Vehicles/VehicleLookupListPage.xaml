@@ -42,7 +42,7 @@
         </Grid>
 
         <Grid Grid.Row="1" Grid.Column="3">
-            <Button x:Name="addRentalBtn" Content="Add Rental"
+            <Button x:Name="addRentalBtn" Content="Add Checklist"
                     Width="125" Height="35" BorderThickness="1,1,2,2" Margin="130,0,0,0" Click="addRentalBtn_Click" />
         </Grid>
 

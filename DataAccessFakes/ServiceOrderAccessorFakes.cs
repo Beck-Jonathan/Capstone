@@ -26,7 +26,6 @@ namespace DataAccessFakes
     public class ServiceOrderAccessorFakes : IServiceOrderAccessor
     {
         private List<ServiceOrder_VM> _fakeServiceOrders = new List<ServiceOrder_VM>();
-        private ServiceOrder_VM _fakeCompleteServiceOrders = new ServiceOrder_VM();
         private List<ServiceOrder> _updatedServiceOrders = new List<ServiceOrder>();
         private Parts_Inventory_Fakes _fakePartsInventory = new Parts_Inventory_Fakes();
 
@@ -39,6 +38,7 @@ namespace DataAccessFakes
                 Critical_Issue = true,
                 Service_Type_ID = "Windshield Wiper Replacement",
                 Service_Description = "Replace the windshield wipers with OEM wipers",
+                Is_Active = true,
                 Date_Started = new DateTime(2024, 02, 10),
                 Date_Finished = new DateTime(2024, 02, 11)
             });            
@@ -49,18 +49,20 @@ namespace DataAccessFakes
                 Critical_Issue = false,
                 Service_Type_ID = "Brake Pad Replacement",
                 Service_Description = "Replace the brake pads with OEM pads",
+                Is_Active = true,
                 Date_Started = new DateTime(2024, 02, 10)
             });
-            _fakeCompleteServiceOrders = new ServiceOrder_VM()
+            _fakeServiceOrders.Add(new ServiceOrder_VM()
             {
-                VIN = "JTLZE4FEXB1123437",
-                Service_Order_ID = 100000,
+                VIN = "JTLZE4FEXB1123456",
+                Service_Order_ID = 100002,
                 Critical_Issue = true,
                 Service_Type_ID = "Windshield Wiper Replacement",
                 Service_Description = "Replace the windshield wipers with OEM wipers",
+                Is_Active = false
                 //vehicle = _fakeVehicle.SelectVehicleForLookupList(),
                 //partsInventory = _fakePartsInventory.selectAllParts_Inventory()
-            };
+            });
             _fakeServiceOrders.Add(new ServiceOrder_VM()
             {
                 VIN = "JTLZE4FEXB1123437",
@@ -233,14 +235,14 @@ namespace DataAccessFakes
         {
             try
             {
-                if (serviceOrderID == _fakeCompleteServiceOrders.Service_Order_ID)
+                foreach (var order in _fakeServiceOrders)
                 {
-                    return _fakeCompleteServiceOrders;
+                    if (serviceOrderID == order.Service_Order_ID)
+                    {
+                        return order;
+                    }
                 }
-                else
-                {
-                    throw new ArgumentException("No record with that ID found.");
-                }
+                throw new ArgumentException("No record with that ID found.");
 
             }
             catch (Exception ex)
@@ -248,6 +250,68 @@ namespace DataAccessFakes
                 throw ex;
             }
 
+        }
+        
+        /// <summary>
+        /// Checks the active status of the given order, the deactivates it
+        /// </summary>
+        /// <param name="serviceOrder"></param>
+        /// <returns>the number of records affected, should only be 1 or 0</returns>
+        /// <exception cref="ApplicationException"></exception>
+        /// <remarks>
+        /// <br/>
+        /// Created By: Max Fare
+        /// Date: 2024-04-20
+        /// </remarks>
+        public int DeactivateServiceOrder(ServiceOrder_VM serviceOrder)
+        {
+            for (int i = 0; i < _fakeServiceOrders.Count; i++)
+            {
+                if (serviceOrder.Service_Order_ID == _fakeServiceOrders[i].Service_Order_ID)
+                {
+                    if (_fakeServiceOrders[i].Is_Active)
+                    {
+                        _fakeServiceOrders[i].Is_Active = false;
+                        return 1;
+                    }
+                    else
+                    {
+                        return 0;
+                    }
+                }
+            }
+            throw new ApplicationException("no service order matching the one given exists");
+        }
+        /// <summary>
+        /// Checks the active status of the given order, the activates it
+        /// </summary>
+        /// <param name="serviceOrder"></param>
+        /// <returns>the number of records affected, should only be 1 or 0</returns>
+        /// <exception cref="ApplicationException"></exception>
+        /// <remarks>
+        /// <br/>
+        /// Created By: Max Fare
+        /// Date: 2024-04-20
+        /// </remarks>
+        public int ActivateServiceOrder(ServiceOrder_VM serviceOrder)
+        {
+            for (int i = 0; i < _fakeServiceOrders.Count; i++)
+            {
+                if (serviceOrder.Service_Order_ID == _fakeServiceOrders[i].Service_Order_ID)
+                {
+                    if (_fakeServiceOrders[i].Is_Active)
+                    {
+                        return 0;
+                    }
+                    else
+                    {
+                        _fakeServiceOrders[i].Is_Active = true;
+                        return 1;
+                    }
+
+                };
+            }
+            throw new ApplicationException("no service order matching the one given exists");
         }
 
         /// <summary>
@@ -283,6 +347,72 @@ namespace DataAccessFakes
         {
             List<ServiceOrder_VM> incompleteServiceOrders = _fakeServiceOrders.Where(serviceOrder => serviceOrder.Date_Finished < serviceOrder.Date_Started).ToList();
             return incompleteServiceOrders;
+        }
+
+        /// <summary>
+        ///     A method that returns list of fake vehicles with pending service orders
+        /// </summary>
+        /// <returns>
+        ///    <see cref="List{Vehicle_CM}">Vehicle_CM</see>: The list of all vehicles with pending service orders.
+        /// </returns>
+        ///    CONTRIBUTOR: Steven Sanchez
+        /// <br />
+        ///    CREATED: 2024-04-26
+        /// <br />
+        ///    Initial Creation
+        /// </remarks>
+        public List<Vehicle_CM> GetAllVehiclesWithPendingServiceOrders()
+        {
+            List<Vehicle_CM> vehiclesWithPendingServiceOrders = new List<Vehicle_CM>();
+
+            Vehicle_CM vehicle1 = new Vehicle_CM
+            {
+                VIN = "2GNALDEK9C6340800",
+                VehicleModelID = 1,
+                VehicleMake = "Toyota",
+                VehicleModel = "Corolla",
+                VehicleMileage = 50000,
+                VehicleType = "Sedan",
+                ServiceOrders = new List<ServiceOrder_VM>
+                {
+                    new ServiceOrder_VM
+                    {
+                        Service_Order_ID = 100001,
+                        Critical_Issue = false,
+                        Service_Type_ID = "Oil Change",
+                        Service_Description = "Perform routine oil change",
+                        Date_Started = DateTime.Today.AddDays(-7),
+                        Date_Finished = DateTime.MinValue
+                    }
+                }
+            };
+
+            Vehicle_CM vehicle2 = new Vehicle_CM
+            {
+                VIN = "JTLZE4FEXB1123437",
+                VehicleModelID = 2,
+                VehicleMake = "Honda",
+                VehicleModel = "Accord",
+                VehicleMileage = 60000,
+                VehicleType = "Sedan",
+                ServiceOrders = new List<ServiceOrder_VM>
+                {
+                    new ServiceOrder_VM
+                    {
+                        Service_Order_ID = 100002,
+                        Critical_Issue = true,
+                        Service_Type_ID = "Brake Inspection",
+                        Service_Description = "Inspect and replace brake pads if necessary",
+                        Date_Started = DateTime.Today.AddDays(-14),
+                        Date_Finished = DateTime.MinValue
+                    }
+                }
+            };
+
+            vehiclesWithPendingServiceOrders.Add(vehicle1);
+            vehiclesWithPendingServiceOrders.Add(vehicle2);
+
+            return vehiclesWithPendingServiceOrders;
         }
     }
 }

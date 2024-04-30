@@ -47,11 +47,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ActiveRouteAccessorFakes.cs" />
     <Compile Include="ClientDependentRoleAccessorFake.cs" />
     <Compile Include="DependentAccessorFake.cs" />
     <Compile Include="DispatchAccessorFakes.cs" />
+    <Compile Include="DriverMaintenanceReportFakes.cs" />
     <Compile Include="LoginAccessorFake.cs" />
     <Compile Include="ClientAccessorFake.cs" />
+    <Compile Include="MaintenanceScheduleAccessorFake.cs" />
     <Compile Include="PartsRequestAccessorFake.cs" />
     <Compile Include="Parts_Inventory_Fakes.cs" />
     <Compile Include="EmployeeAccessorFake.cs" />
@@ -65,6 +68,7 @@
     <Compile Include="RouteAssignmentAccessorFake.cs" />
     <Compile Include="RouteStopAccessorFake.cs" />
     <Compile Include="ServiceOrderAccessorFakes.cs" />
+    <Compile Include="ServiceOrderLineItemsFakes.cs" />
     <Compile Include="SourceAccessorFakes.cs" />
     <Compile Include="StopAccessorFakes.cs" />
     <Compile Include="VehicleAccessorFakes.cs" />

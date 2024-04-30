@@ -1,0 +1,559 @@
+﻿<Page x:Class="NightRiderWPF.Vehicles.VehicleChecklist"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:NightRiderWPF.Vehicles"
+      mc:Ignorable="d" 
+      d:DesignHeight="850" d:DesignWidth="1050"
+      Title="VehicleChecklist" Loaded="Page_Loaded">
+
+    <Grid Background="LightGray" Grid.Column="1" Height="570px" Width="800px">
+        <!--Main Grid-->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20px" />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition Height="20px" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20px" />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition Width="20px" />
+        </Grid.ColumnDefinitions>
+        <!--END Main Grid-->
+
+        <!--Vehicle Info Grid-->
+        <Grid Grid.Row="1" Grid.Column="1" Grid.RowSpan="2">
+            <!--Vehicle Info Rows-->
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <!--Vehicle Info Columns-->
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <!--Vehicle Info Contents-->
+            <Label x:Name="lblVehicle" Content="Vehicle" Grid.Row="0" FontSize="20" FontWeight="Bold"
+                VerticalContentAlignment="Center" HorizontalContentAlignment="Right"></Label>
+            <ComboBox x:Name="cmbVehicle" Grid.Row="0" Grid.Column="1" Margin="5px 5px 5px 5px"
+                VerticalContentAlignment="Center" Padding="10px 00px 0px 0px" FontSize="14"></ComboBox>
+            <Label x:Name="lblEmployee" Content="Employee" Grid.Row="1" FontSize="20" FontWeight="Bold"
+                VerticalContentAlignment="Center" HorizontalContentAlignment="Right"></Label>
+            <ComboBox x:Name="cmbEmployee" Grid.Row="1" Grid.Column="1" Margin="5px 5px 5px 5px"
+                VerticalContentAlignment="Center" Padding="10px 00px 0px 0px" FontSize="14"></ComboBox>
+            <Label x:Name="lblMileage" Content="Mileage" Grid.Row="3" FontSize="20" FontWeight="Bold"
+                VerticalContentAlignment="Center" HorizontalContentAlignment="Right"></Label>
+            <TextBox x:Name="txtMileage" Grid.Row="3" Grid.Column="1" Margin="5px 5px 5px 5px"
+                VerticalContentAlignment="Center" Padding="10px 00px 0px 0px" FontSize="14"></TextBox>
+
+            <Label x:Name="lblFuelLevel" Content="Fuel Level" Grid.Row="4" FontSize="20" FontWeight="Bold"
+                VerticalContentAlignment="Center" HorizontalContentAlignment="Right"></Label>
+            <ComboBox x:Name="cmbFuelLevel" Grid.Row="4" Grid.Column="1" Margin="5px 5px 5px 5px"
+                VerticalContentAlignment="Center" Padding="10px 00px 0px 0px" FontSize="14">
+                <ComboBoxItem Content="Full"></ComboBoxItem>
+                <ComboBoxItem Content="3/4"></ComboBoxItem>
+                <ComboBoxItem Content="Half"></ComboBoxItem>
+                <ComboBoxItem Content="1/4"></ComboBoxItem>
+                <ComboBoxItem Content="Low"></ComboBoxItem>
+                <ComboBoxItem Content="Empty"></ComboBoxItem>
+            </ComboBox>
+
+        </Grid>
+        <!--END Vehicle Info Grid-->
+
+        <!--Checkbox Grid-->
+        <Grid Grid.Row="1" Grid.Column="2" Grid.RowSpan="2" Grid.ColumnSpan="2">
+            <!--Checkbox Rows-->
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <!--Checkbox Columns-->
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="10px" />
+                <ColumnDefinition />
+                <ColumnDefinition Width="50px" />
+                <ColumnDefinition Width="10px" />
+                <ColumnDefinition />
+                <ColumnDefinition Width="50px" />
+            </Grid.ColumnDefinitions>
+
+            <!--Checkbox Grid Contents-->
+            <Label x:Name="lblClean" Content="Clean" Grid.Row="0" Grid.Column="1" FontSize="20" FontWeight="Bold"
+                VerticalContentAlignment="Center" HorizontalContentAlignment="Right"></Label>
+            <CheckBox x:Name="ckbClean" Grid.Row="0" Grid.Column="2" Margin="5px 0px 0px 0px"
+                VerticalContentAlignment="Center" Padding="0px 0px 0px 0px">
+                <CheckBox.LayoutTransform>
+                    <ScaleTransform ScaleX="1.25" ScaleY="1.25" />
+                </CheckBox.LayoutTransform>
+            </CheckBox>
+
+            <Label x:Name="lblPedals" Content="Pedals" Grid.Row="1" Grid.Column="1" FontSize="20" FontWeight="Bold"
+    VerticalContentAlignment="Center" HorizontalContentAlignment="Right"></Label>
+            <CheckBox x:Name="ckbPedals" Grid.Row="1" Grid.Column="2" Margin="5px 0px 0px 0px"
+    VerticalContentAlignment="Center" Padding="0px 0px 0px 0px">
+                <CheckBox.LayoutTransform>
+                    <ScaleTransform ScaleX="1.25" ScaleY="1.25" />
+                </CheckBox.LayoutTransform>
+            </CheckBox>
+
+            <Label x:Name="lblDash" Content="Dash" Grid.Row="2" Grid.Column="1" FontSize="20" FontWeight="Bold"
+    VerticalContentAlignment="Center" HorizontalContentAlignment="Right"></Label>
+            <CheckBox x:Name="ckbDash" Grid.Row="2" Grid.Column="2" Margin="5px 0px 0px 0px"
+    VerticalContentAlignment="Center" Padding="0px 0px 0px 0px">
+                <CheckBox.LayoutTransform>
+                    <ScaleTransform ScaleX="1.25" ScaleY="1.25" />
+                </CheckBox.LayoutTransform>
+            </CheckBox>
+
+            <Label x:Name="lblSteering" Content="Steering" Grid.Row="3" Grid.Column="1" FontSize="20" FontWeight="Bold"
+    VerticalContentAlignment="Center" HorizontalContentAlignment="Right"></Label>
+            <CheckBox x:Name="ckbSteering" Grid.Row="3" Grid.Column="2" Margin="5px 0px 0px 0px"
+    VerticalContentAlignment="Center" Padding="0px 0px 0px 0px">
+                <CheckBox.LayoutTransform>
+                    <ScaleTransform ScaleX="1.25" ScaleY="1.25" />
+                </CheckBox.LayoutTransform>
+            </CheckBox>
+
+            <Label x:Name="lblClimate" Content="Climate Controls" Grid.Row="5" Grid.Column="1" FontSize="20" FontWeight="Bold"
+    VerticalContentAlignment="Center" HorizontalContentAlignment="Right"></Label>
+            <CheckBox x:Name="ckbClimate" Grid.Row="5" Grid.Column="2" Margin="5px 0px 0px 0px"
+    VerticalContentAlignment="Center" Padding="0px 0px 0px 0px">
+                <CheckBox.LayoutTransform>
+                    <ScaleTransform ScaleX="1.25" ScaleY="1.25" />
+                </CheckBox.LayoutTransform>
+            </CheckBox>
+
+            <Label x:Name="lblMirrorDS" Content="Mirror" Grid.Row="4" Grid.Column="1" FontSize="20" FontWeight="Bold"
+    VerticalContentAlignment="Center" HorizontalContentAlignment="Right"></Label>
+            <CheckBox x:Name="ckbMirrorDS" Grid.Row="4" Grid.Column="2" Margin="5px 0px 0px 0px"
+    VerticalContentAlignment="Center" Padding="0px 0px 0px 0px" RenderTransformOrigin="0.5,0.5">
+                <CheckBox.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform/>
+                        <TranslateTransform X="0" Y="-10"/>
+                    </TransformGroup>
+                </CheckBox.RenderTransform>
+                <CheckBox.LayoutTransform>
+                    <ScaleTransform ScaleX="1.25" ScaleY="1.25" />
+                </CheckBox.LayoutTransform>
+            </CheckBox>
+
+            <Label x:Name="lblMirrorPS" Content="Mirror" Grid.Row="4" Grid.Column="1" FontSize="20" FontWeight="Bold"
+VerticalContentAlignment="Center" HorizontalContentAlignment="Right"></Label>
+            <CheckBox x:Name="ckbMirrorPS" Grid.Row="4" Grid.Column="2" Margin="5px 0px 0px 0px"
+VerticalContentAlignment="Center" Padding="0px 0px 0px 0px" RenderTransformOrigin="0.5,0.5">
+                <CheckBox.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform/>
+                        <TranslateTransform Y="-10" X="20"/>
+                    </TransformGroup>
+                </CheckBox.RenderTransform>
+                <CheckBox.LayoutTransform>
+                    <ScaleTransform ScaleX="1.25" ScaleY="1.25" />
+                </CheckBox.LayoutTransform>
+            </CheckBox>
+
+            <Label x:Name="lblMirrorRV" Content="Mirror" Grid.Row="4" Grid.Column="1" FontSize="20" FontWeight="Bold"
+VerticalContentAlignment="Center" HorizontalContentAlignment="Right"></Label>
+            <CheckBox x:Name="ckbMirrorRV" Grid.Row="4" Grid.Column="2" Margin="5px 0px 0px 0px"
+VerticalContentAlignment="Center" Padding="0px 0px 0px 0px" RenderTransformOrigin="0.5,0.5">
+                <CheckBox.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform/>
+                        <TranslateTransform X="10" Y="10"/>
+                    </TransformGroup>
+                </CheckBox.RenderTransform>
+                <CheckBox.LayoutTransform>
+                    <ScaleTransform ScaleX="1.25" ScaleY="1.25" />
+                </CheckBox.LayoutTransform>
+            </CheckBox>
+
+            <Label x:Name="lblTirePressure" Content="Tire Pressure" Grid.Row="9" Grid.Column="4" FontSize="20" FontWeight="Bold"
+    VerticalContentAlignment="Center" HorizontalContentAlignment="Right"></Label>
+            <CheckBox x:Name="ckbDFTirePressure" Grid.Row="9" Grid.Column="5" Margin="5px 0px 0px 0px"
+    VerticalContentAlignment="Center" Padding="0px 0px 0px 0px" RenderTransformOrigin="0.5,0.5">
+                <CheckBox.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform/>
+                        <TranslateTransform Y="-10"/>
+                    </TransformGroup>
+                </CheckBox.RenderTransform>
+                <CheckBox.LayoutTransform>
+                    <ScaleTransform ScaleX="1.25" ScaleY="1.25" />
+                </CheckBox.LayoutTransform>
+            </CheckBox>
+            <CheckBox x:Name="ckbPFTirePressure" Grid.Row="9" Grid.Column="5" Margin="5px 0px 0px 0px"
+VerticalContentAlignment="Center" Padding="0px 0px 0px 0px" RenderTransformOrigin="0.5,0.5">
+                <CheckBox.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform/>
+                        <TranslateTransform X="20" Y="-10"/>
+                    </TransformGroup>
+                </CheckBox.RenderTransform>
+                <CheckBox.LayoutTransform>
+                    <ScaleTransform ScaleX="1.25" ScaleY="1.25" />
+                </CheckBox.LayoutTransform>
+            </CheckBox>
+            <CheckBox x:Name="ckbDRTirePressure" Grid.Row="9" Grid.Column="5" Margin="5px 0px 0px 0px"
+VerticalContentAlignment="Center" Padding="0px 0px 0px 0px" RenderTransformOrigin="0.5,0.5">
+                <CheckBox.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform/>
+                        <TranslateTransform X="0" Y="10"/>
+                    </TransformGroup>
+                </CheckBox.RenderTransform>
+                <CheckBox.LayoutTransform>
+                    <ScaleTransform ScaleX="1.25" ScaleY="1.25" />
+                </CheckBox.LayoutTransform>
+            </CheckBox>
+            <CheckBox x:Name="ckbPRTirePressure" Grid.Row="9" Grid.Column="5" Margin="5px 0px 0px 0px"
+VerticalContentAlignment="Center" Padding="0px 0px 0px 0px" RenderTransformOrigin="0.5,0.5">
+                <CheckBox.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform/>
+                        <TranslateTransform X="20" Y="10"/>
+                    </TransformGroup>
+                </CheckBox.RenderTransform>
+                <CheckBox.LayoutTransform>
+                    <ScaleTransform ScaleX="1.25" ScaleY="1.25" />
+                </CheckBox.LayoutTransform>
+            </CheckBox>
+
+            <Label x:Name="lblTurnSignals" Content="Turn Signals" Grid.Row="6" Grid.Column="1" FontSize="20" FontWeight="Bold"
+    VerticalContentAlignment="Center" HorizontalContentAlignment="Right"></Label>
+            <CheckBox x:Name="ckbDFTurnSignals" Grid.Row="6" Grid.Column="2" Margin="5px 0px 0px 0px"
+    VerticalContentAlignment="Center" Padding="0px 0px 0px 0px" RenderTransformOrigin="0.5,0.5">
+                <CheckBox.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform/>
+                        <TranslateTransform Y="-10"/>
+                    </TransformGroup>
+                </CheckBox.RenderTransform>
+                <CheckBox.LayoutTransform>
+                    <ScaleTransform ScaleX="1.25" ScaleY="1.25" />
+                </CheckBox.LayoutTransform>
+            </CheckBox>
+            <CheckBox x:Name="ckbPFTurnSignals" Grid.Row="6" Grid.Column="2" Margin="5px 0px 0px 0px"
+VerticalContentAlignment="Center" Padding="0px 0px 0px 0px" RenderTransformOrigin="0.5,0.5">
+                <CheckBox.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform/>
+                        <TranslateTransform X="20" Y="-10"/>
+                    </TransformGroup>
+                </CheckBox.RenderTransform>
+                <CheckBox.LayoutTransform>
+                    <ScaleTransform ScaleX="1.25" ScaleY="1.25" />
+                </CheckBox.LayoutTransform>
+            </CheckBox>
+            <CheckBox x:Name="ckbDRTurnSignals" Grid.Row="6" Grid.Column="2" Margin="5px 0px 0px 0px"
+VerticalContentAlignment="Center" Padding="0px 0px 0px 0px" RenderTransformOrigin="0.5,0.5">
+                <CheckBox.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform/>
+                        <TranslateTransform Y="10"/>
+                    </TransformGroup>
+                </CheckBox.RenderTransform>
+                <CheckBox.LayoutTransform>
+                    <ScaleTransform ScaleX="1.25" ScaleY="1.25" />
+                </CheckBox.LayoutTransform>
+            </CheckBox>
+            <CheckBox x:Name="ckbPRTurnSignals" Grid.Row="6" Grid.Column="2" Margin="5px 0px 0px 0px"
+VerticalContentAlignment="Center" Padding="0px 0px 0px 0px" RenderTransformOrigin="0.5,0.5">
+                <CheckBox.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform/>
+                        <TranslateTransform X="20" Y="10"/>
+                    </TransformGroup>
+                </CheckBox.RenderTransform>
+                <CheckBox.LayoutTransform>
+                    <ScaleTransform ScaleX="1.25" ScaleY="1.25" />
+                </CheckBox.LayoutTransform>
+            </CheckBox>
+
+            <Label x:Name="lblBreaklights" Content="Break Lights" Grid.Row="7" Grid.Column="1" FontSize="20" FontWeight="Bold"
+    VerticalContentAlignment="Center" HorizontalContentAlignment="Right"></Label>
+            <CheckBox x:Name="ckbDriverBreaklights" Grid.Row="7" Grid.Column="2" Margin="5px 0px 0px 0px"
+    VerticalContentAlignment="Center" Padding="0px 0px 0px 0px">
+                <CheckBox.LayoutTransform>
+                    <ScaleTransform ScaleX="1.25" ScaleY="1.25" />
+                </CheckBox.LayoutTransform>
+            </CheckBox>
+            <CheckBox x:Name="ckbPassengerBreaklights" Grid.Row="7" Grid.Column="2" Margin="5px 0px 0px 0px"
+VerticalContentAlignment="Center" Padding="0px 0px 0px 0px" RenderTransformOrigin="0.5,0.5">
+                <CheckBox.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform/>
+                        <TranslateTransform X="20"/>
+                    </TransformGroup>
+                </CheckBox.RenderTransform>
+                <CheckBox.LayoutTransform>
+                    <ScaleTransform ScaleX="1.25" ScaleY="1.25" />
+                </CheckBox.LayoutTransform>
+            </CheckBox>
+
+            <Label x:Name="lblHeadlights" Content="Head Lights" Grid.Row="8" Grid.Column="1" FontSize="20" FontWeight="Bold"
+    VerticalContentAlignment="Center" HorizontalContentAlignment="Right"></Label>
+            <CheckBox x:Name="ckbDriverHeadlights" Grid.Row="8" Grid.Column="2" Margin="5px 0px 0px 0px"
+    VerticalContentAlignment="Center" Padding="0px 0px 0px 0px">
+                <CheckBox.LayoutTransform>
+                    <ScaleTransform ScaleX="1.25" ScaleY="1.25" />
+                </CheckBox.LayoutTransform>
+            </CheckBox>
+            <CheckBox x:Name="ckbPassengerHeadlights" Grid.Row="8" Grid.Column="2" Margin="5px 0px 0px 0px"
+VerticalContentAlignment="Center" Padding="0px 0px 0px 0px" RenderTransformOrigin="0.5,0.5">
+                <CheckBox.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform/>
+                        <TranslateTransform X="20"/>
+                    </TransformGroup>
+                </CheckBox.RenderTransform>
+                <CheckBox.LayoutTransform>
+                    <ScaleTransform ScaleX="1.25" ScaleY="1.25" />
+                </CheckBox.LayoutTransform>
+            </CheckBox>
+
+            <Label x:Name="lblTaillights" Content="Tail Lights" Grid.Row="9" Grid.Column="1" FontSize="20" FontWeight="Bold"
+    VerticalContentAlignment="Center" HorizontalContentAlignment="Right"></Label>
+            <CheckBox x:Name="ckbDirverTaillights" Grid.Row="9" Grid.Column="2" Margin="5px 0px 0px 0px"
+    VerticalContentAlignment="Center" Padding="0px 0px 0px 0px">
+                <CheckBox.LayoutTransform>
+                    <ScaleTransform ScaleX="1.25" ScaleY="1.25" />
+                </CheckBox.LayoutTransform>
+            </CheckBox>
+            <CheckBox x:Name="ckbPassengerTaillights" Grid.Row="9" Grid.Column="2" Margin="5px 0px 0px 0px"
+VerticalContentAlignment="Center" Padding="0px 0px 0px 0px" RenderTransformOrigin="0.5,0.5">
+                <CheckBox.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform/>
+                        <TranslateTransform X="20"/>
+                    </TransformGroup>
+                </CheckBox.RenderTransform>
+                <CheckBox.LayoutTransform>
+                    <ScaleTransform ScaleX="1.25" ScaleY="1.25" />
+                </CheckBox.LayoutTransform>
+            </CheckBox>
+
+            <Label x:Name="lblWipers" Content="Wipers" Grid.Row="0" Grid.Column="4" FontSize="20" FontWeight="Bold"
+    VerticalContentAlignment="Center" HorizontalContentAlignment="Right"></Label>
+            <CheckBox x:Name="ckbDriverWipers" Grid.Row="0" Grid.Column="5" Margin="5px 0px 0px 0px"
+    VerticalContentAlignment="Center" Padding="0px 0px 0px 0px" RenderTransformOrigin="0.5,0.5">
+                <CheckBox.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform/>
+                        <TranslateTransform X="0" Y="-5"/>
+                    </TransformGroup>
+                </CheckBox.RenderTransform>
+                <CheckBox.LayoutTransform>
+                    <ScaleTransform ScaleX="1.25" ScaleY="1.25" />
+                </CheckBox.LayoutTransform>
+            </CheckBox>
+            <CheckBox x:Name="ckbPassengerWipers" Grid.Row="0" Grid.Column="5" Margin="5px 0px 0px 0px"
+VerticalContentAlignment="Center" Padding="0px 0px 0px 0px" RenderTransformOrigin="0.5,0.5">
+                <CheckBox.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform/>
+                        <TranslateTransform X="20" Y="-5"/>
+                    </TransformGroup>
+                </CheckBox.RenderTransform>
+                <CheckBox.LayoutTransform>
+                    <ScaleTransform ScaleX="1.25" ScaleY="1.25" />
+                </CheckBox.LayoutTransform>
+            </CheckBox>
+            <CheckBox x:Name="ckbRearWipers" Grid.Row="0" Grid.Column="5" Margin="5px 0px 0px 0px"
+VerticalContentAlignment="Center" Padding="0px 0px 0px 0px" RenderTransformOrigin="0.5,0.5">
+                <CheckBox.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform/>
+                        <TranslateTransform X="10" Y="13"/>
+                    </TransformGroup>
+                </CheckBox.RenderTransform>
+                <CheckBox.LayoutTransform>
+                    <ScaleTransform ScaleX="1.25" ScaleY="1.25" />
+                </CheckBox.LayoutTransform>
+            </CheckBox>
+
+            <Label x:Name="lblSeatBelts" Content="Seat Belts" Grid.Row="1" Grid.Column="4" FontSize="20" FontWeight="Bold"
+    VerticalContentAlignment="Center" HorizontalContentAlignment="Right"></Label>
+            <CheckBox x:Name="ckbSeatBelts" Grid.Row="1" Grid.Column="5" Margin="5px 0px 0px 0px"
+    VerticalContentAlignment="Center" Padding="0px 0px 0px 0px">
+                <CheckBox.LayoutTransform>
+                    <ScaleTransform ScaleX="1.25" ScaleY="1.25" />
+                </CheckBox.LayoutTransform>
+            </CheckBox>
+
+            <Label x:Name="lblFireExtinguisher" Content="Fire Extinguisher" Grid.Row="2" Grid.Column="4" FontSize="20" FontWeight="Bold"
+    VerticalContentAlignment="Center" HorizontalContentAlignment="Right"></Label>
+            <CheckBox x:Name="ckbFireExtinguisher" Grid.Row="2" Grid.Column="5" Margin="5px 0px 0px 0px"
+    VerticalContentAlignment="Center" Padding="0px 0px 0px 0px">
+                <CheckBox.LayoutTransform>
+                    <ScaleTransform ScaleX="1.25" ScaleY="1.25" />
+                </CheckBox.LayoutTransform>
+            </CheckBox>
+
+            <Label x:Name="lblAirbags" Content="Airbags" Grid.Row="3" Grid.Column="4" FontSize="20" FontWeight="Bold"
+VerticalContentAlignment="Center" HorizontalContentAlignment="Right"></Label>
+            <CheckBox x:Name="ckbAirbags" Grid.Row="3" Grid.Column="5" Margin="5px 0px 0px 0px"
+VerticalContentAlignment="Center" Padding="0px 0px 0px 0px">
+                <CheckBox.LayoutTransform>
+                    <ScaleTransform ScaleX="1.25" ScaleY="1.25" />
+                </CheckBox.LayoutTransform>
+            </CheckBox>
+
+            <Label x:Name="lblFirstAidKit" Content="First Aid Kit" Grid.Row="4" Grid.Column="4" FontSize="20" FontWeight="Bold"
+VerticalContentAlignment="Center" HorizontalContentAlignment="Right"></Label>
+            <CheckBox x:Name="ckbFirstAidKit" Grid.Row="4" Grid.Column="5" Margin="5px 0px 0px 0px"
+VerticalContentAlignment="Center" Padding="0px 0px 0px 0px">
+                <CheckBox.LayoutTransform>
+                    <ScaleTransform ScaleX="1.25" ScaleY="1.25" />
+                </CheckBox.LayoutTransform>
+            </CheckBox>
+
+            <Label x:Name="lblEmergencyKit" Content="Emergency Kit" Grid.Row="5" Grid.Column="4" FontSize="20" FontWeight="Bold"
+VerticalContentAlignment="Center" HorizontalContentAlignment="Right"></Label>
+            <CheckBox x:Name="ckbEmergencyKit" Grid.Row="5" Grid.Column="5" Margin="5px 0px 0px 0px"
+VerticalContentAlignment="Center" Padding="0px 0px 0px 0px">
+                <CheckBox.LayoutTransform>
+                    <ScaleTransform ScaleX="1.25" ScaleY="1.25" />
+                </CheckBox.LayoutTransform>
+            </CheckBox>
+
+            <Label x:Name="lblBreaks" Content="Breaks" Grid.Row="6" Grid.Column="4" FontSize="20" FontWeight="Bold"
+VerticalContentAlignment="Center" HorizontalContentAlignment="Right"></Label>
+            <CheckBox x:Name="ckbBreaks" Grid.Row="6" Grid.Column="5" Margin="5px 0px 0px 0px"
+VerticalContentAlignment="Center" Padding="0px 0px 0px 0px">
+                <CheckBox.LayoutTransform>
+                    <ScaleTransform ScaleX="1.25" ScaleY="1.25" />
+                </CheckBox.LayoutTransform>
+            </CheckBox>
+
+            <Label x:Name="lblAccelerator" Content="Accelerator" Grid.Row="7" Grid.Column="4" FontSize="20" FontWeight="Bold"
+VerticalContentAlignment="Center" HorizontalContentAlignment="Right"></Label>
+            <CheckBox x:Name="ckbAccelerator" Grid.Row="7" Grid.Column="5" Margin="5px 0px 0px 0px"
+VerticalContentAlignment="Center" Padding="0px 0px 0px 0px">
+                <CheckBox.LayoutTransform>
+                    <ScaleTransform ScaleX="1.25" ScaleY="1.25" />
+                </CheckBox.LayoutTransform>
+            </CheckBox>
+
+            <Label x:Name="lblClutch" Content="Clutch" Grid.Row="8" Grid.Column="4" FontSize="20" FontWeight="Bold"
+VerticalContentAlignment="Center" HorizontalContentAlignment="Right"></Label>
+            <CheckBox x:Name="ckbClutch" Grid.Row="8" Grid.Column="5" Margin="5px 0px 0px 0px"
+VerticalContentAlignment="Center" Padding="0px 0px 0px 0px">
+                <CheckBox.LayoutTransform>
+                    <ScaleTransform ScaleX="1.25" ScaleY="1.25" />
+                </CheckBox.LayoutTransform>
+            </CheckBox>
+
+        </Grid>
+        <!--END Checkbox Grid-->
+
+        <!--Control Buttons-->
+        <Grid Grid.Row="3" Grid.Column="1">
+            <!--Control Buttons Rows-->
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <!--Control Buttons Columns-->
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <!--Control Buttons Contents-->
+            <Button Grid.Row="1" Grid.Column="0" x:Name="btnSubmit" Content="Submit" Margin="5px" FontWeight="Bold"
+            Background="Gray" Foreground="AliceBlue" FontSize="14" Click="btnSubmit_Click" ></Button>
+            <Button Grid.Row="3" Grid.Column="0" x:Name="btnCancel" Content="Cancel" Margin="5px" FontWeight="Bold"
+            Background="Gray" Foreground="AliceBlue" FontSize="14" Click="btnCancel_Click" ></Button>
+
+        </Grid>
+        <!--END Control Buttons-->
+
+        <!--Notes-->
+        <Grid Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="2">
+            <!--Notes Rows-->
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40px" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <!--Notes Columns-->
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="10px" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <!--Notes Contents-->
+            <Label x:Name="lblCosmeticDamage" Content="Cosmetic Damage" Grid.Row="0" Grid.Column="0" FontSize="20" FontWeight="Bold"
+                VerticalContentAlignment="Center" HorizontalContentAlignment="Center"></Label>
+            <TextBox x:Name="txtCosmeticDamage" Grid.Row="1" Grid.Column="0" Margin="5px 5px 5px 5px"
+                VerticalContentAlignment="Center" Padding="10px 00px 0px 0px" FontSize="14" MaxLength="500"></TextBox>
+            <Label x:Name="lblNotes" Content="Notes" Grid.Row="0" Grid.Column="2" FontSize="20" FontWeight="Bold"
+                VerticalContentAlignment="Center" HorizontalContentAlignment="Center"></Label>
+            <TextBox x:Name="txtNotes" Grid.Row="1" Grid.Column="2" Margin="5px 5px 5px 5px"
+                VerticalContentAlignment="Center" Padding="10px 00px 0px 0px" FontSize="14" MaxLength="1000"></TextBox>
+
+        </Grid>
+        <!--END Notes-->
+
+    </Grid>
+</Page>

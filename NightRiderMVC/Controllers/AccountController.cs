@@ -1,10 +1,12 @@
 ﻿using System;
+using System.CodeDom;
 using System.Globalization;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using DataObjects;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
@@ -149,6 +151,10 @@ namespace NightRiderMVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
+            const int MIN_VALID_CLIENT_ID = 100000;
+            // effectivley const but DateTime is a struct and can't be declared as const
+            DateTime DEFAULT_DOB = new DateTime(1970, 1, 1);
+
             //JACOBS NOTES FOR PERSONAL COMPREHENSION TO PREVENT INSANSITY
 
             //If an id exists, that means a login exists for it. 
@@ -199,54 +205,81 @@ namespace NightRiderMVC.Controllers
                         }
                         AddErrors(result);
                     }
-                    else if (clientMgr.GetClientByEmail(model.Email).ClientID >= 100000)
+                    else if (clientMgr.FindClient(model.Email))
                     {
-                        var placeholderUsername = loginMgr.GetClientUserNameByEmail(model.Email);
-                        var oldUser = loginMgr.AuthenticateClient(placeholderUsername, model.Password);
-                        var user = new ApplicationUser
-                        {
-                            //populate these fields with existing data from olduser
-                            GivenName = oldUser.GivenName,
-                            FamilyName = oldUser.FamilyName,
-                            ClientID = oldUser.ClientID,
+                        // ALL CLIENTS WILL REGISTER THROUGH THE MVC SITE
+                        //var placeholderUsername = loginMgr.GetClientUserNameByEmail(model.Email);
+                        //var oldUser = loginMgr.AuthenticateClient(model.Email, model.Password);
+                        //var user = new ApplicationUser
+                        //{
+                        //    //populate these fields with existing data from olduser
+                        //    GivenName = oldUser.GivenName,
+                        //    FamilyName = oldUser.FamilyName,
+                        //    ClientID = oldUser.ClientID,
 
-                            //populate these fields normally
-                            UserName = model.Email,
-                            Email = model.Email
-                        };
-                        //create the user with the identity system UserManager Normally
-                        var result = await UserManager.CreateAsync(user, model.Password);
-                        if (result.Succeeded)
-                        {
-                            //use the oldUser.Roles list to add internally assigned roles to the user
-                            //Commented out because Clients dont really have implemented roles.
-                            //foreach (var role in oldUser.Roles)
-                            //{
-                            //    UserManager.AddToRole(user.Id, role.ClientRoleID);
-                            //}
-                            await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-                            return RedirectToAction("Index", "Home");
-                        }
-                        AddErrors(result);
+                        //    //populate these fields normally
+                        //    UserName = model.Email,
+                        //    Email = model.Email
+                        //};
+                        ////create the user with the identity system UserManager Normally
+                        //var result = await UserManager.CreateAsync(user, model.Password);
+                        //if (result.Succeeded)
+                        //{
+                        //    //use the oldUser.Roles list to add internally assigned roles to the user
+                        //    //Commented out because Clients dont really have implemented roles.
+                        //    //foreach (var role in oldUser.Roles)
+                        //    //{
+                        //    //    UserManager.AddToRole(user.Id, role.ClientRoleID);
+                        //    //}
+                        //    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                        //    return RedirectToAction("Index", "Home");
+                        //}
+                        //AddErrors(result);
+                        ViewBag.RegisterErrorMessage = "An account with that email already exists. Please login.";
+                        return View(model);
+
                     }
-                    else // if not existing user create a user without roles
+                    else // if not existing user create a user with the client role
                     {
-                        var user = new ApplicationUser
+                        // new client object for the Client Table
+                        var client = new DataObjects.Client_VM()
                         {
-                            //we will uncomment the following two lines of code later once our view model
-                            // and our view are updated to ask for them:
-                            //GivenName = model.GivenName,
-                            //FamilyName = model.FamilyName,
-                            UserName = model.Email,
-                            Email = model.Email
+                            GivenName = model.GivenName,
+                            FamilyName = model.FamilyName,
+                            Email = model.Email,
+                            DOB = DEFAULT_DOB
                         };
-                        var result = await UserManager.CreateAsync(user, model.Password);
-                        if (result.Succeeded)
+                        //set an invalid clientId
+                        int newClientId = 0;
+                        // add that client to the table
+                        clientMgr.AddClient(client);
+                        // get id of the client we just added
+                        newClientId = clientMgr.GetClientByEmail(model.Email).ClientID;
+                        // if that worked, make an ASPUser for the client
+                        if(newClientId >= MIN_VALID_CLIENT_ID)
                         {
-                            await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-                            return RedirectToAction("Index", "Home");
+                            var user = new ApplicationUser
+                            {
+                                
+                                ClientID = newClientId,
+                                GivenName = model.GivenName,
+                                FamilyName = model.FamilyName,
+                                UserName = model.Email,
+                                Email = model.Email
+                                
+                            };
+                            var result = await UserManager.CreateAsync(user, model.Password);
+                            if (result.Succeeded)
+                            {
+                                // assign the client role to the user
+                                UserManager.AddToRole(user.Id, "Client");
+
+                                await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                                return RedirectToAction("Index", "Home");
+
+                            }
+                            AddErrors(result);
                         }
-                        AddErrors(result);
                     }
                 }
                 catch (Exception ex)
@@ -489,6 +522,87 @@ namespace NightRiderMVC.Controllers
         {
             return View();
         }
+
+
+        //GET: /Account/RegisterEmployeeUser
+        [Authorize(Roles = "Admin")]
+        public ActionResult RegisterEmployeeUser()
+        {
+            return View();
+        }
+
+        //POST: /Acount/RegisterEmployeeUser
+        [HttpPost]
+        [Authorize(Roles="Admin")]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> RegisterEmployeeUser(RegisterEmployeeViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                //check to see if this user is in the existing database
+                LogicLayer.EmployeeManager empMgr = new LogicLayer.EmployeeManager();
+                LogicLayer.LoginManager loginMgr = new LogicLayer.LoginManager();
+                try
+                {
+                    if (empMgr.GetEmployeeByEmail(model.Email).Employee_ID >= 100000)
+                    {
+                        // if this user already exists we need to use the regular register method
+                        return RedirectToAction("Register", "Account");
+                    }
+                    else // if not existing user create a user without roles
+                    {
+                        var employee = new DataObjects.Employee_VM()
+                        {
+                            //these fields needed by sp_insert_user
+                            Email = model.Email,
+                            Given_Name = model.GivenName,
+                            Family_Name = model.FamilyName,
+                            Phone_Number = model.PhoneNumber,
+                            DOB = new DateTime(1973, 4, 5),
+                            Address = "",
+                            City = "",
+                            State = "",
+                            Country = "",
+                            Zip = "",
+                            Position = "",
+                            
+
+                        };
+                        if (empMgr.AddEmployee(employee) >= 100000) //add the dataobjects.user to employee
+                        {
+                            
+                            var employeeID = empMgr.RetrieveEmployeeIDFromEmail(model.Email);
+                            var login = loginMgr.AddEmployeeLogin(model.Email, employeeID);
+                            var user = new ApplicationUser // if it worked create an identity user
+                            {
+                                EmployeeID = employeeID,
+                                GivenName = model.GivenName,
+                                FamilyName = model.FamilyName,
+                                UserName = model.Email,
+                                Email = model.Email,
+                            };
+                            var result = await UserManager.CreateAsync(user, "newuser");
+                            if (result.Succeeded)
+                            {
+                                return RedirectToAction("Index", "Admin");
+                            }
+                            AddErrors(result);
+
+                        }
+
+                    }
+                }
+                catch (Exception ex)
+                {
+                    //creating old user failed probably because authenticate user failed
+                    return View(model);
+                }
+                //modelstate was not valid
+            }
+            return View(model);
+        }
+
+
 
         protected override void Dispose(bool disposing)
         {

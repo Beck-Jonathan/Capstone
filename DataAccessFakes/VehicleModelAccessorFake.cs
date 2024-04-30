@@ -18,7 +18,7 @@ namespace DataAccessFakes
     public class VehicleModelAccessorFake : IVehicleModelAccessor
     {
         List<VehicleModel> _fakeVehicleModelData;
-
+        List<Vehicle> _fakeVehicles = null;
         /// <summary>
         ///     Instantiates a fake vehicle model accessor; 
         ///     accepts a collection of vehicle model objects mimicking a data source.
@@ -31,6 +31,12 @@ namespace DataAccessFakes
         public VehicleModelAccessorFake(List<VehicleModel> fakeVehicleModelData)
         {
             _fakeVehicleModelData = fakeVehicleModelData;
+            _fakeVehicles = new List<Vehicle>();
+            _fakeVehicles.Add(new Vehicle { VIN = "aaaabbbbcccceeee0", VehicleModelID = 100003 });
+            _fakeVehicles.Add(new Vehicle { VIN = "aaaabbbbcccceeee1", VehicleModelID = 100004 });
+            _fakeVehicles.Add(new Vehicle { VIN = "aaaabbbbcccceeee2", VehicleModelID = 100005 });
+            _fakeVehicles.Add(new Vehicle { VIN = "aaaabbbbcccceeee3", VehicleModelID = 100007 });
+        
         }
 
         /// <summary>
@@ -67,6 +73,44 @@ namespace DataAccessFakes
             _fakeVehicleModelData.Add(vehicleModel);
 
             return 1;
+        }
+
+        /// <summary>
+        ///     Retreives VehicleModel by vin
+        /// </summary>
+        /// <param name="vin">
+        ///    The Vehicle vin
+        /// </param>
+        /// <returns>
+        ///    <see cref="VehicleModel"></see>: The VehicleModel retrieved from the datafakes
+        /// </returns>
+        /// <remarks>
+        ///    Author: James Williams
+        /// 
+        public VehicleModel getVehicleModelByVIN(string vin)
+        {
+            Vehicle selectedVehicle = null;
+            VehicleModel vm = null;
+            foreach (var vehicle in _fakeVehicles)
+            {
+                if (vehicle.VIN == vin)
+                {
+                    selectedVehicle = vehicle;
+                }
+            }
+            if (selectedVehicle == null)
+            {
+                throw new SystemException();
+            }
+            foreach (var model in _fakeVehicleModelData)
+            {
+                if (model.VehicleModelID == selectedVehicle.VehicleModelID)
+                {
+                    vm = model;
+                }
+            }
+
+            return vm;
         }
     }
 }

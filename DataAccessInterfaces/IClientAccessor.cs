@@ -42,6 +42,10 @@ namespace DataAccessInterfaces
     /// UPDATER: Isabella Rosenbohm <br/>
     /// UPDATED: 2024-02-27 <br/>
     ///     Rewrote UpdateClient method so it no longer needs Old data params as Client_ID should be sufficient
+    ///     
+    /// UPDATER: Michael Springer <br />
+    /// Updated 2024-04-27
+    ///     Added DeactivateClient method
     /// </remarks>
 
     public interface IClientAccessor
@@ -139,5 +143,14 @@ namespace DataAccessInterfaces
         int UpdateClient(Client_VM newClient);
         int UpdateClientByIdAsInactive(int id);
         int UpdateClientByIdAsActive(int id);
+        /// <summary>
+        /// AUTHOR: Michael Springer
+        /// DATE: 2024-04-27
+        ///   Sets client to inactive
+        ///    
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        int DeactivateClient(int id);
     }
 }

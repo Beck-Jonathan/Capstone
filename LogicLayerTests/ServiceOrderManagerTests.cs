@@ -3,6 +3,7 @@ using DataObjects;
 using LogicLayer;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Collections.Generic;
 
 namespace LogicLayerTests
 {
@@ -20,7 +21,7 @@ namespace LogicLayerTests
         [TestMethod]
         public void TestGetAllServiceOrderCountPasses()
         {
-            int expected = 3;
+            int expected = 4;
             int actual = _serviceOrderManager.GetALlServiceOrders().Count;
 
             Assert.AreEqual(expected, actual);
@@ -62,7 +63,7 @@ namespace LogicLayerTests
         {
             // Arrange
 
-            ServiceOrder serviceOrderToUpdate = new ServiceOrder()
+            ServiceOrder_VM serviceOrderToUpdate = new ServiceOrder_VM()
             {
                 Service_Order_ID = 100000,
                 Critical_Issue = true,
@@ -103,7 +104,7 @@ namespace LogicLayerTests
         public void TestUpdateNonExistingServiceOrderFails()
         {
             // Arrange
-            ServiceOrder serviceOrderToUpdate = new ServiceOrder()
+            ServiceOrder_VM serviceOrderToUpdate = new ServiceOrder_VM()
             {
                 Service_Order_ID = 100010,  // Assuming this ID doesn't exist in the database
                 Critical_Issue = true,
@@ -211,7 +212,7 @@ namespace LogicLayerTests
         {
             var expected = new ServiceOrder_VM()
             {
-                VIN = "JTLZE4FEXB1123437"
+                VIN = "2GNALDEK9C6340800"
             };
             var actual = _serviceOrderManager.SelectServiceOrderByServiceOrderID(100000);
 
@@ -220,11 +221,46 @@ namespace LogicLayerTests
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
-        public void TestSelectServiceOrderByServiceOrderIDReturnsAVehicle()
+        public void TestSelectServiceOrderByBadServiceOrderIDReturnsAnException()
         {
             var actual = _serviceOrderManager.SelectServiceOrderByServiceOrderID(100010);
         }
 
+        [TestMethod]
+        [ExpectedException(typeof(ApplicationException))]
+        public void TestCompleteServiceOrderFailsGivenDeactivatedServiceOrder()
+        {
+            int actual = 0;
+            var order = new ServiceOrder_VM()
+            {
+                Service_Order_ID = 100000
+            };
+
+            actual = _serviceOrderManager.CompleteServiceOrder(order);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ApplicationException))]
+        public void TestCompleteServiceOrderFailsWithIncorrectPartData()
+        {
+            //fails if the partID is not supplied, or if the part
+            //ID given does not corrospond with a part in the DB
+            int actual = 0;
+            var order = new ServiceOrder_VM()
+            {
+                Service_Order_ID = 100000,
+                serviceOrderLineItems = new List<ServiceOrderLineItems>()
+                {
+                    new ServiceOrderLineItems()
+                    {
+                        Service_Order_ID = 100000,
+                        Parts_Inventory_ID = 99999999
+                    }
+                }
+            };
+
+            actual = _serviceOrderManager.CompleteServiceOrder(order);
+        }
         /// <summary>
         /// Tests that the GetAllCompleteServiceOrders method works.
         /// </summary>
@@ -261,6 +297,15 @@ namespace LogicLayerTests
             Assert.AreEqual(expected, actual);
         }
 
+        /// <summary>
+        /// Test that Gets All service types method passes.
+        /// </summary>
+        /// <remarks>
+        ///    CONTRIBUTOR: Steven Sanchez
+        /// <br />
+        ///    CREATED: 2024-04-26
+        /// <br />
+        /// </remarks>
         [TestMethod]
         public void TestGetAllServiceTypesCountPasses()
         {
@@ -274,6 +319,15 @@ namespace LogicLayerTests
             Assert.AreEqual(expected, actual);
         }
 
+        /// <summary>
+        /// Test that Gets All Service type method fails.
+        /// </summary>
+        /// <remarks>
+        ///    CONTRIBUTOR: Steven Sanchez
+        /// <br />
+        ///    CREATED: 2024-04-26
+        /// <br />
+        /// </remarks>
         [TestMethod]
         public void TestGetAllServiceTypesCountFails()
         {
@@ -285,6 +339,50 @@ namespace LogicLayerTests
 
             // Assert
             Assert.AreNotEqual(expected, actual);
+        }
+
+        /// <summary>
+        /// Test that Gets All Vehicles With Pending Service Orders method passes.
+        /// </summary>
+        /// <remarks>
+        ///    CONTRIBUTOR: Steven Sanchez
+        /// <br />
+        ///    CREATED: 2024-04-26
+        /// <br />
+        /// </remarks>
+        [TestMethod]
+        public void TestGetAllVehiclesWithPendingServiceOrdersPasses()
+        {
+            // Arrange
+            int expectedCount = 2;
+
+            // Act
+            int actualCount = _serviceOrderManager.GetAllVehiclesWithPendingServiceOrders().Count;
+
+            // Assert
+            Assert.AreEqual(expectedCount, actualCount);
+        }
+
+        /// <summary>
+        /// Test that Gets All Vehicles With Pending Service Orders method fails.
+        /// </summary>
+        /// <remarks>
+        ///    CONTRIBUTOR: Steven Sanchez
+        /// <br />
+        ///    CREATED: 2024-04-26
+        /// <br />
+        /// </remarks>
+        [TestMethod]
+        public void TestGetAllVehiclesWithPendingServiceOrdersFails()
+        {
+            // Arrange
+            int expectedCount = 3;
+
+            // Act
+            int actualCount = _serviceOrderManager.GetAllVehiclesWithPendingServiceOrders().Count;
+
+            // Assert
+            Assert.AreNotEqual(expectedCount, actualCount);
         }
     }
 }

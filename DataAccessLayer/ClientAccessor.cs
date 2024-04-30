@@ -11,7 +11,11 @@ using System.Net;
 using System.IO.Ports;
 
 namespace DataAccessLayer
-{
+{   ///<remarks>
+    ///     UPDATER: Michael Springer <br />
+    ///     UPDATED: 2024-03-27 <br />
+    ///         Creation of client now sets status to active by default <br />
+    ///</remarks>
     /// <inheritdoc/>
     public class ClientAccessor : IClientAccessor
     {
@@ -39,16 +43,16 @@ namespace DataAccessLayer
 
             cmd.Parameters["@p_GivenName"].Value = client.GivenName;
             cmd.Parameters["@p_FamilyName"].Value = client.FamilyName;
-            cmd.Parameters["@p_MiddleName"].Value = client.MiddleName;
+            cmd.Parameters["@p_MiddleName"].Value = client.MiddleName ?? Convert.DBNull;
             cmd.Parameters["@p_DOB"].Value = client.DOB;
             cmd.Parameters["@p_Email"].Value = client.Email;
-            cmd.Parameters["@p_PostalCode"].Value = client.PostalCode;
-            cmd.Parameters["@p_City"].Value = client.City;
-            cmd.Parameters["@p_Region"].Value = client.Region;
-            cmd.Parameters["@p_Address"].Value = client.Address;
-            cmd.Parameters["@p_TextNumber"].Value = client.TextNumber;
-            cmd.Parameters["@p_VoiceNumber"].Value = client.VoiceNumber;
-            cmd.Parameters["@p_Active"].Value = client.IsActive;
+            cmd.Parameters["@p_PostalCode"].Value = client.PostalCode ?? Convert.DBNull;
+            cmd.Parameters["@p_City"].Value = client.City ?? Convert.DBNull;
+            cmd.Parameters["@p_Region"].Value = client.Region ?? Convert.DBNull;
+            cmd.Parameters["@p_Address"].Value = client.Address ?? Convert.DBNull;
+            cmd.Parameters["@p_TextNumber"].Value = client.TextNumber ?? Convert.DBNull;
+            cmd.Parameters["@p_VoiceNumber"].Value = client.VoiceNumber ?? Convert.DBNull;
+            cmd.Parameters["@p_Active"].Value = true;
 
             try
             {
@@ -66,7 +70,13 @@ namespace DataAccessLayer
             }
             return rows;
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        /// <remarks>
+        /// Updated to allow null values
+        /// </remarks>
         public IEnumerable<Client_VM> SelectAllClients()
         {
             List<Client_VM> clients = new List<Client_VM>();
@@ -89,15 +99,15 @@ namespace DataAccessLayer
                             ClientID = reader.GetInt32(0),
                             GivenName = reader.GetString(1),
                             FamilyName = reader.GetString(2),
-                            MiddleName = reader.GetString(3),
+                            MiddleName = reader.IsDBNull(3) ? null : reader.GetString(3),
                             DOB = reader.GetDateTime(4),
                             Email = reader.GetString(5),
-                            City = reader.GetString(6),
-                            Region = reader.GetString(7),
-                            Address = reader.GetString(8),
-                            TextNumber = reader.GetString(9),
-                            VoiceNumber = reader.GetString(10),
-                            PostalCode = reader.GetString(11),
+                            City = reader.IsDBNull(6) ? null : reader.GetString(6),
+                            Region = reader.IsDBNull(7) ? null : reader.GetString(7),
+                            Address = reader.IsDBNull(8) ? null : reader.GetString(8),
+                            TextNumber = reader.IsDBNull(9) ? null : reader.GetString(9),
+                            VoiceNumber = reader.IsDBNull(10) ? null : reader.GetString(10),
+                            PostalCode = reader.IsDBNull(11) ? null : reader.GetString(11),
                             IsActive = reader.GetBoolean(12)
                         });
                     }
@@ -134,6 +144,7 @@ namespace DataAccessLayer
         ///     Updater: Michael Springer <br />
         ///     Updated 2024-03-26 <br />
         ///         removed @ from cmdText 
+        ///         Allowed for null values in nullable fields
         /// </remarks>
         public Client_VM SelectClientById(int id)
         {
@@ -161,18 +172,18 @@ namespace DataAccessLayer
                         clientVM.MiddleName = reader.IsDBNull(3) ? null : reader.GetString(3);
                         clientVM.DOB = reader.GetDateTime(4);
                         clientVM.Email = reader.GetString(5);
-                        clientVM.PostalCode = reader.GetString(6);
-                        clientVM.City = reader.GetString(7);
-                        clientVM.Region = reader.GetString(8);
-                        clientVM.Address = reader.GetString(9);
-                        clientVM.TextNumber = reader.GetString(10);
-                        clientVM.VoiceNumber = reader.GetString(11);
+                        clientVM.PostalCode = reader.IsDBNull(6) ? null : reader.GetString(6);
+                        clientVM.City = reader.IsDBNull(7) ? null : reader.GetString(7);
+                        clientVM.Region = reader.IsDBNull(8) ? null : reader.GetString(8);
+                        clientVM.Address = reader.IsDBNull(9) ? null : reader.GetString(9);
+                        clientVM.TextNumber = reader.IsDBNull(10) ? null : reader.GetString(10);
+                        clientVM.VoiceNumber = reader.IsDBNull(11) ? null : reader.GetString(11);
 
                     }
                 }
                 else
                 {
-                    throw new ApplicationException("Client not found.");
+                    throw new ApplicationException("Client not found");
                 }
             }
             catch (Exception ex)
@@ -210,6 +221,10 @@ namespace DataAccessLayer
         ///     Updater: Michael Springer <br />
         ///     Updated 2024-03-26 <br />
         ///         removed @ from cmdText 
+        /// <br /><br />
+        ///     UPDATER: Michael Springer
+        ///     UPDATED: 2024-004-26
+        ///     allowed querying nullable values
         /// </remarks>
         public Client_VM SelectClientByEmail(string email)
         {
@@ -237,18 +252,18 @@ namespace DataAccessLayer
                         clientVM.MiddleName = reader.IsDBNull(3) ? null : reader.GetString(3);
                         clientVM.DOB = reader.GetDateTime(4);
                         clientVM.Email = reader.GetString(5);
-                        clientVM.PostalCode = reader.GetString(6);
-                        clientVM.City = reader.GetString(7);
-                        clientVM.Region = reader.GetString(8);
-                        clientVM.Address = reader.GetString(9);
-                        clientVM.TextNumber = reader.GetString(10);
-                        clientVM.VoiceNumber = reader.GetString(11);
+                        clientVM.PostalCode = reader.IsDBNull(6) ? null : reader.GetString(6);
+                        clientVM.City = reader.IsDBNull(7) ? null : reader.GetString(7);
+                        clientVM.Region = reader.IsDBNull(8) ? null : reader.GetString(8);
+                        clientVM.Address = reader.IsDBNull(9) ? null : reader.GetString(9);
+                        clientVM.TextNumber = reader.IsDBNull(10) ? null : reader.GetString(10);
+                        clientVM.VoiceNumber = reader.IsDBNull(11) ? null : reader.GetString(11);
 
                     }
                 }
                 else
                 {
-                    throw new ApplicationException("Client not found.");
+                    throw new ApplicationException("Client not found");
                 }
             }
             catch (Exception ex)
@@ -298,6 +313,12 @@ namespace DataAccessLayer
         /// UPDATER: Isabella Rosenbohm <br/>
         /// UPDATED: 2024-02-27 <br/>
         ///     Rewrote UpdateClient method so it no longer needs Old data params as Client_ID should be sufficient
+        /// <br /><br />
+        /// UPDATER: Michael Springer
+        /// UPDATED: 2024-04-27
+        ///     Modified method to explicitly accept null values;
+        ///     Set acttive to true by default
+        /// 
         /// </remarks>
         public int UpdateClient(Client_VM client)
         {
@@ -311,19 +332,47 @@ namespace DataAccessLayer
 
             cmd.CommandType = CommandType.StoredProcedure;
 
-            cmd.Parameters.AddWithValue(@"Client_ID", client.ClientID);
-            cmd.Parameters.AddWithValue(@"GivenName", client.GivenName);
-            cmd.Parameters.AddWithValue(@"FamilyName", client.FamilyName);
-            cmd.Parameters.AddWithValue(@"MiddleName", client.MiddleName);
-            cmd.Parameters.AddWithValue(@"DOB", client.DOB);
-            cmd.Parameters.AddWithValue(@"Email", client.Email);
-            cmd.Parameters.AddWithValue(@"PostalCode", client.PostalCode);
-            cmd.Parameters.AddWithValue(@"City", client.City);
-            cmd.Parameters.AddWithValue(@"Region", client.Region);
-            cmd.Parameters.AddWithValue(@"Address", client.Address);
-            cmd.Parameters.AddWithValue(@"TextNumber", client.TextNumber);
-            cmd.Parameters.AddWithValue(@"VoiceNumber", client.VoiceNumber);
-            cmd.Parameters.AddWithValue(@"Active", client.IsActive);
+            cmd.Parameters.Add("@p_Client_ID", SqlDbType.Int);
+            cmd.Parameters.Add("@p_GivenName", SqlDbType.NVarChar, 50);
+            cmd.Parameters.Add("@p_FamilyName", SqlDbType.NVarChar, 50);
+            cmd.Parameters.Add("@p_MiddleName", SqlDbType.NVarChar, 50);
+            cmd.Parameters.Add("@p_DOB", SqlDbType.Date);
+            cmd.Parameters.Add("@p_Email", SqlDbType.NVarChar, 255);
+            cmd.Parameters.Add("@p_PostalCode", SqlDbType.NVarChar, 9);
+            cmd.Parameters.Add("@p_City", SqlDbType.NVarChar, 50);
+            cmd.Parameters.Add("@p_Region", SqlDbType.NVarChar, 50);
+            cmd.Parameters.Add("@p_Address", SqlDbType.NVarChar, 100);
+            cmd.Parameters.Add("@p_TextNumber", SqlDbType.NVarChar, 12);
+            cmd.Parameters.Add("@p_VoiceNumber", SqlDbType.NVarChar, 12);
+            cmd.Parameters.Add("@p_Active", SqlDbType.Bit);
+
+            cmd.Parameters["@p_Client_ID"].Value = client.ClientID;
+            cmd.Parameters["@p_GivenName"].Value = client.GivenName;
+            cmd.Parameters["@p_FamilyName"].Value = client.FamilyName;
+            cmd.Parameters["@p_MiddleName"].Value = client.MiddleName ?? Convert.DBNull;
+            cmd.Parameters["@p_DOB"].Value = client.DOB;
+            cmd.Parameters["@p_Email"].Value = client.Email;
+            cmd.Parameters["@p_PostalCode"].Value = client.PostalCode ?? Convert.DBNull;
+            cmd.Parameters["@p_City"].Value = client.City ?? Convert.DBNull;
+            cmd.Parameters["@p_Region"].Value = client.Region ?? Convert.DBNull;
+            cmd.Parameters["@p_Address"].Value = client.Address ?? Convert.DBNull;
+            cmd.Parameters["@p_TextNumber"].Value = client.TextNumber ?? Convert.DBNull;
+            cmd.Parameters["@p_VoiceNumber"].Value = client.VoiceNumber ?? Convert.DBNull;
+            cmd.Parameters["@p_Active"].Value = true ;
+
+            //cmd.Parameters.AddWithValue(@"Client_ID", client.ClientID);
+            //cmd.Parameters.AddWithValue(@"GivenName", client.GivenName);
+            //cmd.Parameters.AddWithValue(@"FamilyName", client.FamilyName);
+            //cmd.Parameters.AddWithValue(@"MiddleName", client.MiddleName);
+            //cmd.Parameters.AddWithValue(@"DOB", client.DOB);
+            //cmd.Parameters.AddWithValue(@"Email", client.Email);
+            //cmd.Parameters.AddWithValue(@"PostalCode", client.PostalCode);
+            //cmd.Parameters.AddWithValue(@"City", client.City);
+            //cmd.Parameters.AddWithValue(@"Region", client.Region);
+            //cmd.Parameters.AddWithValue(@"Address", client.Address);
+            //cmd.Parameters.AddWithValue(@"TextNumber", client.TextNumber);
+            //cmd.Parameters.AddWithValue(@"VoiceNumber", client.VoiceNumber);
+            //cmd.Parameters.AddWithValue(@"Active", client.IsActive);
 
             try
             {
@@ -357,6 +406,36 @@ namespace DataAccessLayer
         public int UpdateClientByIdAsInactive(int id)
         {
             throw new NotImplementedException();
+        }
+        /// <summary>
+        /// AUTHOR: Michael Springer
+        /// DATE: 2024-04-27
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        /// <exception cref="ApplicationException"></exception>
+        public int DeactivateClient(int id)
+        {
+            int rows = 0;
+            var conn = DBConnectionProvider.GetConnection();
+            var cmdText = "sp_deactivate_client";
+            var cmd = new SqlCommand(cmdText, conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@p_ClientID", id);
+            try
+            {
+                conn.Open();
+                rows = cmd.ExecuteNonQuery();
+            }
+            catch(Exception ex)
+            {
+                throw new ApplicationException("Error deactivating account", ex);
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return rows;
         }
     }
 }

@@ -150,16 +150,19 @@ namespace NightRiderWPF.RouteStop
                 {
                     try
                     {
-                        BingMapsResponse bingMapsResponse = await _routeManager.getRouteLine(_route);
-                        MapPolyline line = new MapPolyline();
-                        line.Locations = new LocationCollection();
-                        line.Stroke = Brushes.Black;
-                        line.StrokeThickness = 2;
-                        foreach (var coordinateset in bingMapsResponse.ResourceSets[0].resources[0].routePath.line.coordinates)
+                        if (_route.RouteStops.Count() > 1)
                         {
-                            line.Locations.Add(new Location(((List<double>)coordinateset)[0], ((List<double>)coordinateset)[1]));
+                            BingMapsResponse bingMapsResponse = await _routeManager.getRouteLine(_route);
+                            MapPolyline line = new MapPolyline();
+                            line.Locations = new LocationCollection();
+                            line.Stroke = Brushes.Black;
+                            line.StrokeThickness = 2;
+                            foreach (var coordinateset in bingMapsResponse.ResourceSets[0].resources[0].routePath.line.coordinates)
+                            {
+                                line.Locations.Add(new Location(((List<double>)coordinateset)[0], ((List<double>)coordinateset)[1]));
+                            }
+                            mapRoute.Children.Add(line);
                         }
-                        mapRoute.Children.Add(line);
                     }
                     catch (Exception ex)
                     {
@@ -185,10 +188,22 @@ namespace NightRiderWPF.RouteStop
 
         private void btnBackToRouteList_Click(object sender, RoutedEventArgs e)
         {
-            if (NavigationService.CanGoBack)
-            {
-                NavigationService.GoBack();
-            }
+            NavigationService.Navigate(new RouteList(_routeManager));
+        }
+
+        private void btnEditStop_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new EditRouteStops(_route, _routeStopManager, _routeManager));
+        }
+
+        private void btnAssignVehicleAndDriver_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new DispatchHome("Create Assignment"));
+        }
+
+        private void btnUdateAssignment_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new DispatchHome("Update Assignment"));
         }
     }
 }

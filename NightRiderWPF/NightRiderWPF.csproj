@@ -204,6 +204,9 @@
     <Compile Include="RouteStop\AddEditRouteDetail.xaml.cs">
       <DependentUpon>AddEditRouteDetail.xaml</DependentUpon>
     </Compile>
+    <Compile Include="RouteStop\AddStopToRoute.xaml.cs">
+      <DependentUpon>AddStopToRoute.xaml</DependentUpon>
+    </Compile>
     <Compile Include="RouteStop\EditRouteStops.xaml.cs">
       <DependentUpon>EditRouteStops.xaml</DependentUpon>
     </Compile>
@@ -254,6 +257,9 @@
     </Compile>
     <Compile Include="VehicleModels\VehicleModelsListPage.xaml.cs">
       <DependentUpon>VehicleModelsListPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Vehicles\VehicleChecklist.xaml.cs">
+      <DependentUpon>VehicleChecklist.xaml</DependentUpon>
     </Compile>
     <Compile Include="Vehicles\VehicleLookupListPage.xaml.cs">
       <DependentUpon>VehicleLookupListPage.xaml</DependentUpon>
@@ -307,6 +313,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="RouteStop\AddEditRouteDetail.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="RouteStop\AddStopToRoute.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -439,6 +449,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Vehicles\VehicleChecklist.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Vehicles\VehicleLookupListPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -464,6 +478,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="WorkOrders\UpdateWorkOrder.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WorkOrders\VehicleMaintenancePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WorkOrders\ViewScheduleWorkOrderPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -509,6 +531,12 @@
     </Compile>
     <Compile Include="WorkOrders\UpdateWorkOrder.xaml.cs">
       <DependentUpon>UpdateWorkOrder.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WorkOrders\VehicleMaintenancePage.xaml.cs">
+      <DependentUpon>VehicleMaintenancePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WorkOrders\ViewScheduleWorkOrderPage.xaml.cs">
+      <DependentUpon>ViewScheduleWorkOrderPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="WorkOrders\ViewWorkOrderPage.xaml.cs">
       <DependentUpon>ViewWorkOrderPage.xaml</DependentUpon>

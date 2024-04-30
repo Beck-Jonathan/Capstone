@@ -79,3 +79,21 @@ BEGIN
   WHERE [Is_Active] = 1;
 END;
 GO
+
+
+--Author: James Williams
+print '' print'*** create sp_get_vehicle_models_by_vin ***'
+GO
+CREATE PROCEDURE [dbo].[sp_get_vehicle_models_by_vin]
+(
+	@p_VIN		[nvarchar](17)
+)
+AS
+BEGIN
+	SELECT 	[vm].[Vehicle_Model_ID], [vm].[Vehicle_Type_ID], [vm].[Name], 
+	[vm].[Make], [vm].[Year], [vm].[Max_Passengers], [vm].[Is_Active]
+	FROM	[dbo].[Vehicle_Model] as vm
+	JOIN	[dbo].[Vehicle] as v ON [v].[Vehicle_Model_ID] = [vm].[Vehicle_Model_ID]
+	WHERE	@p_VIN = [v].[VIN]
+END
+GO

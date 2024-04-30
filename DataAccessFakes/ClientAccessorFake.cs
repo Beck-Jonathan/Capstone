@@ -24,6 +24,10 @@ namespace DataAccessFakes
     /// UPDATER: Isabella Rosenbohm <br/>
     /// UPDATED: 2024-02-27
     ///     Changed UpdateClient intake param from newClient to client
+    /// <br />
+    /// UPDATER: Michael Springer
+    /// UPDATED: 2024-04-025
+    ///     Modified Exception messages for consistency
     /// </remarks>
 
     public class ClientAccessorFake : IClientAccessor
@@ -69,7 +73,7 @@ namespace DataAccessFakes
             }
             catch (Exception ex)
             {
-                throw new ApplicationException();
+                throw new ApplicationException("Client not found");
             }
 
             return client;
@@ -113,6 +117,20 @@ namespace DataAccessFakes
             _fakeClientData.Single(client => client.ClientID == id).IsActive = false;
 
             return 1;
+        }
+
+        public int DeactivateClient(int id)
+        {
+            int result = 0;
+            foreach (var client in _fakeClientData)
+            {
+                if (client.ClientID == id)
+                {
+                    result = client.IsActive ? 1 : 0;
+                    client.IsActive = false;
+                }
+            }
+            return result;
         }
     }
 }

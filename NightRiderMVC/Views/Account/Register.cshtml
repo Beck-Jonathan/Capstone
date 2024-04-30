@@ -12,6 +12,20 @@
         <h4>Create a new account.</h4>
         <hr />
         @Html.ValidationSummary("", new { @class = "text-danger" })
+
+        <div class="row">
+            @Html.LabelFor(m => m.GivenName, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.GivenName, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="row">
+            @Html.LabelFor(m => m.FamilyName, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.FamilyName, new { @class = "form-control" })
+            </div>
+        </div>
+
         <div class="row">
             @Html.LabelFor(m => m.Email, new { @class = "col-md-2 col-form-label" })
             <div class="col-md-10">
@@ -36,8 +50,27 @@
             </div>
         </div>
     }
-</main>
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+        @* Alert Modal *@
+    <div class="modal fade" id="mdl-register-error" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Registration Error</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body align-content-center">
+                    <div id="modal-message">@ViewBag.RegisterErrorMessage</div>
+                    
+                    <p>If you have already registered, you can log in @Html.ActionLink("here", "Login", "Account").</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">I Agree</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    }

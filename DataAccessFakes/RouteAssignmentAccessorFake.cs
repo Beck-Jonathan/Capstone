@@ -5,8 +5,6 @@ using DataObjects.RouteObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DataAccessFakes
 {
@@ -348,6 +346,137 @@ namespace DataAccessFakes
                 throw new SystemException("No routes found");
             }
             return routeAssignments;
+        }
+        //Created By: James Williams
+        //Date: 2024-04-26
+        public Driver GetRouteAssignmentDriverByRouteAssignmentID(int routeAssignmentID)
+        {
+            Driver driverAssignment = null;
+            int driverID = 0;
+            foreach (var assignment in _assignments)
+            {
+                if (assignment.Assignment_ID == routeAssignmentID)
+                {
+                    driverID = assignment.DriverID;
+                    break;
+                }
+            }
+            if (driverID == 0)
+            {
+                throw new SystemException("No assingments found");
+            }
+            foreach (var driver in _drivers)
+            {
+                if (driver.Employee_ID == driverID)
+                {
+                    driverAssignment = driver;
+                    break;
+                }
+            }
+            return driverAssignment;
+        }
+        //Created By: James Williams
+        //Date: 2024-04-26
+        public List<Driver> GetAvailableDriversByDate(DateTime start, DateTime end)
+        {
+            List<DriverUnavailability> unavailabilities = new List<DriverUnavailability>();
+            List<Driver> availableDrivers = new List<Driver>();
+
+            if (start > end)
+            {
+                throw new SystemException("Start date must be less than or equal to end date");
+            }
+            //This checks for overlapping dates between a driver's
+            //unavailabilities and dates entered.
+            foreach (var driver in _driverUnavailablities)
+            {
+                if ((driver.StartDate <= start && start <= driver.EndDate) ||
+                    (driver.StartDate <= end && end <= driver.EndDate))
+                {
+                    unavailabilities.Add(driver);
+                }
+            }
+
+            foreach (var driver in _drivers)
+            {
+                //This checks if there are any unavailabilities and if not,
+                //Then checks the driver's max passenger count agains the passenger count needed
+                if (!unavailabilities.Any(availability => availability.DriverID == driver.Employee_ID))
+                {
+                    availableDrivers.Add(driver);
+                }
+            }
+            return availableDrivers;
+        }
+        //Created By: James Williams
+        //Date: 2024-04-26
+        public List<VehicleAssignment> GetAvailableVehiclesByDate(DateTime start, DateTime end)
+        {
+            List<VehicleUnavailability> unavailabilities = new List<VehicleUnavailability>();
+            List<VehicleAssignment> availableVehicles = new List<VehicleAssignment>();
+            if (start > end)
+            {
+                throw new SystemException("Start date must be less than end date");
+            }
+            foreach (var availability in _vehicleUnavailabilities)
+            {
+                if ((availability.Start_Date <= start && start <= availability.End_Date) ||
+                    (availability.Start_Date <= end && end <= availability.End_Date))
+                {
+                    foreach (var vehicle in _vehicles)
+                    {
+                        availableVehicles.Add(vehicle);
+                    }
+                }
+            }
+
+            if (availableVehicles.Count == 0)
+            {
+                throw new SystemException("No available vehicles");
+            }
+            return availableVehicles;
+        }
+        //Created By: James Williams
+        //Date: 2024-04-26
+        public int UpdateRouteAssignmentDriver(int routeAssignmentID, int driverID)
+        {
+            int rows = 0;
+            foreach (var assignment in _assignments)
+            {
+                if (assignment.Assignment_ID == routeAssignmentID)
+                {
+                    assignment.DriverID = driverID;
+                    rows++;
+                    break;
+                }
+            }
+            if (rows == 0)
+            {
+                throw new SystemException("Route not found");
+            }
+            return rows;
+        }
+        //Created By: James Williams
+        //Date: 2024-04-26
+        public int UpdateRouteAssignmentVehicle(int routeAssignmentID, string vin)
+        {
+            int rows = 0;
+
+            foreach (var assignment in _assignments)
+            {
+                if (assignment.Assignment_ID == routeAssignmentID)
+                {
+                    assignment.VIN_Number = vin;
+
+                    rows++;
+                    break;
+                }
+            }
+            if (rows == 0)
+            {
+                throw new SystemException("Route Assignment not found");
+            }
+            return rows;
         }
     }
 }
