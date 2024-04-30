@@ -1,6 +1,7 @@
 ﻿using DataObjects;
 using LogicLayer;
 using LogicLayer.ServiceOrder;
+using NightRiderWPF.Maintenance;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -90,6 +91,13 @@ namespace NightRiderWPF.WorkOrders
             {
                 return;
             }
+            foreach (MaintenanceScheduleVM _maintenanceSchedule_VM in _scheduledOrders)
+            {
+                if (_maintenanceSchedule_VM.FrequencyInMiles == 0)
+                {
+                    _maintenanceSchedule_VM.FrequencyInMiles = null;
+                }
+            }
             mntcViewScheduledWorkOrderPendingDg.ItemsSource = _scheduledOrders;
             mntcViewScheduledWorkOrderPendingDg.Columns.RemoveAt(0);
             mntcViewScheduledWorkOrderPendingDg.Columns.RemoveAt(0);
@@ -129,6 +137,13 @@ namespace NightRiderWPF.WorkOrders
                 {
                     return;
                 }
+                foreach (MaintenanceScheduleVM _maintenanceSchedule_VM in _scheduledOrders)
+                {
+                    if (_maintenanceSchedule_VM.FrequencyInMiles == 0)
+                    {
+                        _maintenanceSchedule_VM.FrequencyInMiles = null;
+                    }
+                }
                 mntcViewScheduledWorkOrderPendingDg.ItemsSource = _scheduledOrders;
                 mntcViewScheduledWorkOrderPendingDg.Columns.RemoveAt(0);
                 mntcViewScheduledWorkOrderPendingDg.Columns.RemoveAt(0);
@@ -148,6 +163,13 @@ namespace NightRiderWPF.WorkOrders
                 if (_scheduledOrders.Count.Equals(0))
                 {
                     return;
+                }
+                foreach (MaintenanceScheduleVM _maintenanceSchedule_VM in _scheduledOrders)
+                {
+                    if (_maintenanceSchedule_VM.FrequencyInMiles == 0)
+                    {
+                        _maintenanceSchedule_VM.FrequencyInMiles = null;
+                    }
                 }
                 mntcViewScheduledWorkOrderPendingDg.ItemsSource = _scheduledOrders;
                 mntcViewScheduledWorkOrderPendingDg.Columns.RemoveAt(0);
@@ -194,6 +216,13 @@ namespace NightRiderWPF.WorkOrders
                 {
                     return;
                 }
+                foreach (MaintenanceScheduleVM _maintenanceSchedule_VM in _scheduledOrders)
+                {
+                    if (_maintenanceSchedule_VM.FrequencyInMiles == 0)
+                    {
+                        _maintenanceSchedule_VM.FrequencyInMiles = null;
+                    }
+                }
                 _maintenanceScheduleManager = new MaintenanceScheduleManager();
                 mntcViewScheduledWorkOrderPendingDg.ItemsSource = _searchedScheduledOrders;
                 mntcViewScheduledWorkOrderPendingDg.Columns.RemoveAt(0);
@@ -207,6 +236,19 @@ namespace NightRiderWPF.WorkOrders
                 mntcViewScheduledWorkOrderPendingDg.Columns[4].IsReadOnly = true;
                 mntcViewScheduledWorkOrderPendingDg.Columns[5].IsReadOnly = true;
 
+            }
+        }
+
+        private void Addbtn_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                NavigationService.Navigate(new AddEditDeleteScheduledMaintenance());
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show("Something went wrong", ex.Message);
             }
         }
     }

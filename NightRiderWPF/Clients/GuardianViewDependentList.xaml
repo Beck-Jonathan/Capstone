@@ -73,7 +73,7 @@
             </DataGrid>
         </Grid>
         <Grid Grid.Row="3">
-
+            <Button x:Name="btnBackButton" Width="100" Height="28" Content="Back" HorizontalAlignment="Left" Margin="38 0 0 0" Click="btnBackButton_Click"/>
         </Grid>
     </Grid>
 </Page>

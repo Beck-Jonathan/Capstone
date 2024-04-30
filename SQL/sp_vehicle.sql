@@ -96,7 +96,6 @@ CREATE PROCEDURE [dbo].[sp_update_vehicle]
     @OldVehicle_Mileage        [int],
     @OldVehicle_Model_ID        [int],
     @OldVehicle_License_Plate  [nvarchar](10),
-    @OldVehicle_Type_ID        [nvarchar](50),
     @OldDate_Entered           [date],
     @OldDescription            [nvarchar](256),
     @OldRental                 [bit],
@@ -128,7 +127,6 @@ BEGIN
         AND @OldVehicle_Mileage = [Vehicle_Mileage]
         AND @OldVehicle_Model_ID = [Vehicle].[Vehicle_Model_ID]
         AND @OldVehicle_License_Plate = [Vehicle_License_Plate]
-        AND @OldVehicle_Type_ID = [Vehicle_Type_ID]
         AND @OldDescription = [Description]
         AND @OldDate_Entered = [Date_Entered]
         AND @OldRental = [Rental];
@@ -175,25 +173,26 @@ Create sp_select_vehicle_by_vin Stored Procedure
 -- Creation Date: 2024-03-24
 -- Modification Description: Initial Creation
 -- Stored Procedure Description: Select a Vehicle record by the VIN.
-print '' print '*** creating sp_select_vehicle_by_vin ***'
+print ''
+print '*** creating sp_select_vehicle_by_vin ***'
 GO
 CREATE PROCEDURE [dbo].[sp_select_vehicle_by_vin]
     @VIN [nvarchar](17)
-AS 
-    BEGIN
-        SELECT  [Vehicle_Number],
-                [Vehicle_Mileage],
-                [Vehicle_License_Plate],
-                [Vehicle_Model_ID],
-                [Vehicle_Type_ID],
-                [Date_Entered],
-                [Description],
-                [Maintenance_Notes],
-                [Rental],
-                [Is_Active]
-        FROM  [dbo].[Vehicle]
-        WHERE [Vehicle].[VIN] = @VIN
-    END
+AS
+BEGIN
+    SELECT [Vehicle_Number],
+        [Vehicle_Mileage],
+        [Vehicle_License_Plate],
+        [Vehicle_Model_ID],
+        [Vehicle_Type_ID],
+        [Date_Entered],
+        [Description],
+        [Maintenance_Notes],
+        [Rental],
+        [Is_Active]
+    FROM [dbo].[Vehicle]
+    WHERE [Vehicle].[VIN] = @VIN
+END
 GO
 
 print ''
@@ -201,15 +200,15 @@ print '*** Create sp_vehicle_vin_and_number_for_dropdown ***'
 GO
 -- Author: Jonathan Beck
 CREATE PROCEDURE [dbo].[sp_vehicle_vin_and_number_for_dropdown]
-   
+
 AS
 BEGIN
-    select 
-	[VIN],
-	[Vehicle_Number]
-	
-	from [Vehicle]
+    select
+        [VIN],
+        [Vehicle_Number]
+
+    from [Vehicle]
     Where [Is_Active] = 1
-    
+
 END
 GO

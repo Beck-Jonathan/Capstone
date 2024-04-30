@@ -12,8 +12,8 @@ namespace DataObjects
         public int ModelID { get; set; }
         public string ServiceTypeID { get; set; }
         public int FrequencyInMonths { get; set; }
-        public int FrequencyInMiles { get; set; }
-        public bool IsCompleted { get; set; }
+        public int? FrequencyInMiles { get; set; }
+        public DateTime TimeLastCompleted { get; set; }
         public bool IsActive { get; set; }
     }
 

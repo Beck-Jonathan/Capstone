@@ -45,7 +45,7 @@ namespace DataAccessLayer
                         maintenanceSchedule.ServiceTypeID = reader.GetString(2);
                         maintenanceSchedule.FrequencyInMonths = reader.GetInt32(3);
                         maintenanceSchedule.FrequencyInMiles = reader.GetInt32(4);
-                        maintenanceSchedule.IsCompleted = reader.GetBoolean(5);
+                        maintenanceSchedule.TimeLastCompleted = reader.GetDateTime(5);
                         maintenanceSchedule.IsActive = reader.GetBoolean(6);
 
                         maintenanceScheduleVM.Add(maintenanceSchedule);
@@ -96,7 +96,7 @@ namespace DataAccessLayer
                         maintenanceSchedule.ServiceTypeID = reader.GetString(2);
                         maintenanceSchedule.FrequencyInMonths = reader.GetInt32(3);
                         maintenanceSchedule.FrequencyInMiles = reader.GetInt32(4);
-                        maintenanceSchedule.IsCompleted = reader.GetBoolean(5);
+                        maintenanceSchedule.TimeLastCompleted = reader.GetDateTime(5);
                         maintenanceSchedule.IsActive = reader.GetBoolean(6);
 
                         maintenanceScheduleVM.Add(maintenanceSchedule);
@@ -147,7 +147,7 @@ namespace DataAccessLayer
                         maintenanceSchedule.ServiceTypeID = reader.GetString(2);
                         maintenanceSchedule.FrequencyInMonths = reader.GetInt32(3);
                         maintenanceSchedule.FrequencyInMiles = reader.GetInt32(4);
-                        maintenanceSchedule.IsCompleted = reader.GetBoolean(5);
+                        maintenanceSchedule.TimeLastCompleted = reader.GetDateTime(5);
                         maintenanceSchedule.IsActive = reader.GetBoolean(6);
 
                         maintenanceScheduleVM.Add(maintenanceSchedule);
@@ -163,6 +163,55 @@ namespace DataAccessLayer
             }
 
             return maintenanceScheduleVM;
+        }
+
+        /// <summary>
+        /// Max Fare
+        /// Created: 2024-03-02
+        /// Adds the given record to the database, which assigns an ID number to this 
+        /// </summary>
+        /// <param name="maintenance">The record data to add to the database</param>
+        /// <returns>The ID number of the record added</returns>
+        /// <exception cref="SqlException">If the database encounters an error with the data</exception>
+        public int CreateMaintenanceSchedule(MaintenanceScheduleVM maintenance)
+        {
+            int id = -1;
+            var conn = DBConnectionProvider.GetConnection();
+
+            // set the command text
+            var commandText = "sp_insert_maintenance_schedule";
+            // create the command object
+            var cmd = new SqlCommand(commandText, conn);
+            // set the command type
+            cmd.CommandType = CommandType.StoredProcedure;
+            // we need to add parameters to the command
+            cmd.Parameters.Add("@ModelID", SqlDbType.Int);
+            cmd.Parameters.Add("@ServiceTypeID", SqlDbType.NVarChar, 256);
+            cmd.Parameters.Add("@FrequencyInMonths", SqlDbType.Int);
+            cmd.Parameters.Add("@FrequencyInMiles", SqlDbType.Int);
+            cmd.Parameters.Add("@TimeLastCompleted", SqlDbType.DateTime);
+
+            //add values to parameters
+            cmd.Parameters["@ModelID"].Value = maintenance.ModelID;
+            cmd.Parameters["@ServiceTypeID"].Value = maintenance.ServiceTypeID;
+            cmd.Parameters["@FrequencyInMonths"].Value = maintenance.FrequencyInMonths;
+            cmd.Parameters["@FrequencyInMiles"].Value = maintenance.FrequencyInMiles;
+            cmd.Parameters["@TimeLastCompleted"].Value = maintenance.TimeLastCompleted;
+            try
+            {
+                conn.Open();
+                id = Convert.ToInt32(cmd.ExecuteScalar());
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return id;
         }
     }
 }

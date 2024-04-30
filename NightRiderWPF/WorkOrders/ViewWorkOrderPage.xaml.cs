@@ -68,12 +68,14 @@ namespace NightRiderWPF.WorkOrders
                 {
                     _serviceOrderManager = new ServiceOrderManager();
                     _serviceOrders = new List<ServiceOrder_VM>(_serviceOrderManager.GetALlServiceOrders());
+                    
 
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Error Occured: " + ex.Message);
+                    return;
                 }
+                
             }
             List<dynamic> dataObjects = new List<dynamic>();
             foreach (ServiceOrder_VM serviceOrder in _serviceOrders)
@@ -105,6 +107,10 @@ namespace NightRiderWPF.WorkOrders
 
 
             mntcViewWorkOrderPendingDg.ItemsSource = dataObjects;
+            if (dataObjects.Count() == 0)
+            {
+                return;
+            }
             mntcViewWorkOrderPendingDg.Columns[0].DisplayIndex = 4;
             mntcViewWorkOrderPendingDg.Columns[1].DisplayIndex = 4;
             mntcViewWorkOrderPendingDg.Columns[0].Header = "";
@@ -134,6 +140,10 @@ namespace NightRiderWPF.WorkOrders
             {
                 //remake the list same as above
                 List<dynamic> dataObjects = new List<dynamic>();
+                if (_serviceOrders == null)
+                {
+                    return;
+                }
                 foreach (ServiceOrder_VM serviceOrder in _serviceOrders)
                 {
                     bool criticalIssue = serviceOrder.Critical_Issue;
@@ -162,6 +172,10 @@ namespace NightRiderWPF.WorkOrders
 
 
                 mntcViewWorkOrderPendingDg.ItemsSource = dataObjects;
+                if (dataObjects.Count() == 0)
+                {
+                    return;
+                }
                 mntcViewWorkOrderPendingDg.Columns[0].DisplayIndex = 4;
                 mntcViewWorkOrderPendingDg.Columns[1].DisplayIndex = 4;
                 mntcViewWorkOrderPendingDg.Columns[0].Header = "";
@@ -188,6 +202,10 @@ namespace NightRiderWPF.WorkOrders
             {
                 //make a new list based the search box
                 List<dynamic> dataObjects = new List<dynamic>();
+                if (_serviceOrders == null)
+                {
+                    return;
+                }
                 foreach (ServiceOrder_VM serviceOrder in _serviceOrders)
 
                 {
@@ -374,12 +392,18 @@ namespace NightRiderWPF.WorkOrders
                 {
                     _serviceOrderManager = new ServiceOrderManager();
                     _serviceOrders = new List<ServiceOrder_VM>(_serviceOrderManager.GetAllCompleteServiceOrders());
+                    if (_serviceOrders.Count == 0)
+                    {
+                        MessageBox.Show("There Are No Completed Work Orders");
+                        return;
+                    }
 
                 }
                 catch (Exception ex)
                 {
-                    throw ex;
+                    return;
                 }
+                
                 List<dynamic> dataObjects = new List<dynamic>();
                 foreach (ServiceOrder_VM serviceOrder in _serviceOrders)
                 {
@@ -437,12 +461,18 @@ namespace NightRiderWPF.WorkOrders
                 {
                     _serviceOrderManager = new ServiceOrderManager();
                     _serviceOrders = new List<ServiceOrder_VM>(_serviceOrderManager.GetAllIncompleteServiceOrders());
+                    if (_serviceOrders.Count == 0)
+                    {
+                        MessageBox.Show("There Are No Incomplete Work Orders");
+                        return;
+                    }
 
                 }
                 catch (Exception ex)
                 {
-                    throw ex;
+                    return;
                 }
+                
                 List<dynamic> dataObjects = new List<dynamic>();
                 foreach (ServiceOrder_VM serviceOrder in _serviceOrders)
                 {
@@ -499,12 +529,18 @@ namespace NightRiderWPF.WorkOrders
                 {
                     _serviceOrderManager = new ServiceOrderManager();
                     _serviceOrders = new List<ServiceOrder_VM>(_serviceOrderManager.GetALlServiceOrders());
+                    if (_serviceOrders.Count == 0)
+                    {
+                        MessageBox.Show("There Are No Work Orders");
+                        return;
+                    }
 
                 }
                 catch (Exception ex)
                 {
-                    throw ex;
+                    return;
                 }
+                
                 List<dynamic> dataObjects = new List<dynamic>();
                 foreach (ServiceOrder_VM serviceOrder in _serviceOrders)
                 {

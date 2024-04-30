@@ -32,7 +32,7 @@ namespace LogicLayerTests
         [TestMethod]
         public void GetAllCompleteMaintenanceSchedulesTest()
         {
-            int excpectedCount = 2;
+            int excpectedCount = 1;
             int actual = _maintenanceScheduleManager.GetAllCompleteMaintenanceSchedules().Count;
 
             Assert.AreEqual(excpectedCount, actual);
@@ -41,7 +41,7 @@ namespace LogicLayerTests
         [TestMethod]
         public void GetAllIncompleteMaintenanceSchedulesTest()
         {
-            int excpectedCount = 1;
+            int excpectedCount = 2;
             int actual = _maintenanceScheduleManager.GetAllIncompleteMaintenanceSchedules().Count;
 
             Assert.AreEqual(excpectedCount, actual);
@@ -54,6 +54,43 @@ namespace LogicLayerTests
             int actual = _maintenanceScheduleManager.GetAllMaintenanceSchedules().Count;
 
             Assert.AreEqual(excpectedCount, actual);
+        }
+
+        [TestMethod]
+        public void TestAddMaintenanceScheduleReturnsCorrectID()
+        {
+            //arrange
+            int actual = -1;
+            int expected = 4;
+            MaintenanceScheduleVM schedule = new MaintenanceScheduleVM()
+            {
+                ModelID = 1,
+                ServiceTypeID = "Tire Change",
+                FrequencyInMonths = 6,
+                FrequencyInMiles = null,
+                TimeLastCompleted = DateTime.Today
+            };
+            //act
+            actual = _maintenanceScheduleManager.AddScheduledMaintenance(schedule);
+            //assert
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void TestAddMaintenanceScheduleFailsWithIncompleteData()
+        {
+            //arrange
+            int actual = -1;
+            MaintenanceScheduleVM schedule = new MaintenanceScheduleVM()
+            {
+                FrequencyInMiles = null,
+                TimeLastCompleted = DateTime.Today
+            };
+            //act
+            actual = _maintenanceScheduleManager.AddScheduledMaintenance(schedule);
+            //assert
+
         }
     }
 }

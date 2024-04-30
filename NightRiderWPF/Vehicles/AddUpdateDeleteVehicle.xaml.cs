@@ -37,6 +37,9 @@ namespace NightRiderWPF.Vehicles
     /// /// UPDATER: Jonathan Beck
     /// UPDATED: 2024-04-13
     /// Implement added btnWorkOrders and it's click event.
+    /// UPDATER: Chris Baenziger
+    /// UPDATED: 2024-04-29
+    /// Fixes for display/add/update problems and crashes
     /// </remarks>
 
     public partial class AddUpdateDeleteVehicle : Page
@@ -53,8 +56,8 @@ namespace NightRiderWPF.Vehicles
         {
             _pageType = "add";
             InitializeComponent();
-            UpdateDisplay();
             _vehicleModelManager = vehicleModelManager;
+            UpdateDisplay();
         }
 
         // Vehicle view, shows vehicle information and has update button
@@ -64,8 +67,9 @@ namespace NightRiderWPF.Vehicles
             _vehicle = vehicle;
             _pageType = "display";
             InitializeComponent();
-            UpdateDisplay();
             _vehicleModelManager = vehicleModelManager;
+            _vehicleModels = _vehicleModelManager.GetVehicleModels();
+            UpdateDisplay();
         }
 
         private void UpdateDisplay()
@@ -84,8 +88,10 @@ namespace NightRiderWPF.Vehicles
                     txtDateEntered.IsEnabled = false;
                     txtSeatCount.IsEnabled = false;
                     cmbVehicleType.IsEnabled = false;
+                    cmbVehicleType.Visibility = Visibility.Hidden;
                     ckbRental.IsEnabled = false;
 
+                    btnWorkOrders.IsEnabled = false;
                     btnSubmit.IsEnabled = false;
                     btnSubmit.Visibility = Visibility.Hidden;
                     btnAddUpdate.IsEnabled = true;
@@ -108,8 +114,10 @@ namespace NightRiderWPF.Vehicles
                     txtDateEntered.IsEnabled = false;
                     txtSeatCount.IsEnabled = false;
                     cmbVehicleType.IsEnabled = false;
+                    cmbVehicleType.Visibility = Visibility.Hidden;
                     ckbRental.IsEnabled = false;
 
+                    btnWorkOrders.IsEnabled = true;
                     btnSubmit.IsEnabled = false;
                     btnSubmit.Visibility = Visibility.Hidden;
                     btnAddUpdate.IsEnabled = true;
@@ -133,9 +141,11 @@ namespace NightRiderWPF.Vehicles
                     txtVehicleDescription.IsEnabled = true;
                     txtDateEntered.IsEnabled = false;
                     txtSeatCount.IsEnabled = true;
-                    cmbVehicleType.IsEnabled = true;
+                    cmbVehicleType.IsEnabled = false;
+                    cmbVehicleType.Visibility = Visibility.Hidden;
                     ckbRental.IsEnabled = true;
 
+                    btnWorkOrders.IsEnabled = true;
                     btnSubmit.IsEnabled = true;
                     btnSubmit.Visibility = Visibility.Visible;
                     btnAddUpdate.IsEnabled = true;
@@ -153,9 +163,11 @@ namespace NightRiderWPF.Vehicles
                     txtVehicleDescription.IsEnabled = true;
                     txtDateEntered.IsEnabled = false;
                     txtSeatCount.IsEnabled = true;
-                    cmbVehicleType.IsEnabled = true;
+                    cmbVehicleType.IsEnabled = false;
+                    cmbVehicleType.Visibility = Visibility.Hidden;
                     ckbRental.IsEnabled = true;
 
+                    btnWorkOrders.IsEnabled = false;
                     btnSubmit.IsEnabled = true;
                     btnSubmit.Visibility = Visibility.Visible;
                     btnAddUpdate.IsEnabled = true;
@@ -187,15 +199,30 @@ namespace NightRiderWPF.Vehicles
             {
                 txtVehicleNumber.Text = _vehicle.VehicleNumber.ToString();
                 txtVIN.Text = _vehicle.VIN;
-                cmbVehicleMake.SelectedItem = _vehicle.VehicleMake;
-                cmbVehicleModel.SelectedItem = _vehicle.VehicleModel;
-                cmbVehicleYear.SelectedItem = _vehicle.VehicleYear.ToString();
+                cmbVehicleMake.ItemsSource = _vehicleModels.Where(x => x.Make == _vehicle.VehicleMake).Select(x => x.Make).Distinct();
+                cmbVehicleMake.SelectedIndex = 0;
+                cmbVehicleModel.ItemsSource = _vehicleModels.Where(x => x.Name == _vehicle.VehicleModel).Select(x => x.Name).Distinct();
+                cmbVehicleModel.SelectedIndex = 0;
+                cmbVehicleYear.ItemsSource = _vehicleModels.Where(x => x.Year == _vehicle.VehicleYear).Select(x => x.Year).Distinct();
+                cmbVehicleYear.SelectedIndex = 0;
                 txtVehicleMileage.Text = _vehicle.VehicleMileage.ToString();
                 txtVehicleLicensePlate.Text = _vehicle.VehicleLicensePlate;
                 txtVehicleDescription.Text = _vehicle.VehicleDescription;
-                txtDateEntered.Text = _vehicle.DateEntered.ToString();
+                txtDateEntered.Text = _vehicle.DateEntered.ToShortDateString();
                 txtSeatCount.Text = _vehicle.MaxPassengers.ToString();
-                cmbVehicleType.Text = _vehicle.VehicleType;
+                if (_vehicle.VehicleType != null)
+                {
+                    cmbVehicleType.ItemsSource = _vehicle.VehicleType;
+                    cmbVehicleType.SelectedIndex = 0;
+                }
+                else
+                {
+                    cmbVehicleType.ItemsSource = _vehicleModels.Where(
+                                x => x.Make == cmbVehicleMake.SelectedItem.ToString() &&
+                                x.Name == cmbVehicleModel.SelectedItem.ToString() &&
+                                x.Year.ToString() == cmbVehicleYear.SelectedItem.ToString())
+                                .Select(x => x.VehicleTypeID).Distinct();
+                }
                 ckbRental.IsChecked = _vehicle.Rental;
             }
         }
@@ -206,23 +233,29 @@ namespace NightRiderWPF.Vehicles
 
             try
             {
-                _vehicleModels = _vehicleModelManager.GetVehicleModels();
-                cmbVehicleMake.ItemsSource = _vehicleModels.Select(vehicleModel => vehicleModel.Make);
-                if (_vehicle != null && _vehicle.VehicleMake != null)
+                if (_vehicleModels == null)
                 {
-                    cmbVehicleModel.ItemsSource = _vehicleModels.Where(x => x.Make == _vehicle.VehicleMake)
-                                                                .Select(vehicleModel => vehicleModel.Name);
+                    _vehicleModels = _vehicleModelManager.GetVehicleModels();
+                }
+                cmbVehicleMake.ItemsSource = _vehicleModels.Select(vehicleMake => vehicleMake.Make).Distinct();
 
-                    if (_vehicle.VehicleModel != null)
-                    {
-                        cmbVehicleYear.ItemsSource = _vehicleModels.Where(x => x.Name == _vehicle.VehicleModel)
-                                                                   .Select(vehicleModel => vehicleModel.Year.ToString());
-                    }
-                }
-                else
-                {
-                    cmbVehicleModel.IsEnabled = false;
-                }
+                //_vehicleModels = _vehicleModelManager.GetVehicleModels();
+                //cmbVehicleMake.ItemsSource = _vehicleModels.Select(vehicleModel => vehicleModel.Make);
+                //if (_vehicle != null && _vehicle.VehicleMake != null)
+                //{
+                //    cmbVehicleModel.ItemsSource = _vehicleModels.Where(x => x.Make == _vehicle.VehicleMake)
+                //                                                .Select(vehicleModel => vehicleModel.Name);
+
+                //    if (_vehicle.VehicleModel != null)
+                //    {
+                //        cmbVehicleYear.ItemsSource = _vehicleModels.Where(x => x.Name == _vehicle.VehicleModel)
+                //                                                   .Select(vehicleModel => vehicleModel.Year.ToString());
+                //    }
+                //}
+                //else
+                //{
+                //    cmbVehicleModel.IsEnabled = false;
+                //}
             }
             catch (Exception)
             {
@@ -328,8 +361,13 @@ namespace NightRiderWPF.Vehicles
                     {
                         MessageBox.Show("Vehicle was added to the database.", "Vehicle Added",
                             MessageBoxButton.OK, MessageBoxImage.Information);
-                        _pageType = "display";
-                        UpdateDisplay();
+                        if (NavigationService.CanGoBack)
+                        {
+                            NavigationService.GoBack();
+                        }
+                        //_pageType = "display";
+                        //UpdateDisplay();
+
                     }
                     break;
 
@@ -509,7 +547,7 @@ namespace NightRiderWPF.Vehicles
 
             if (string.IsNullOrWhiteSpace(make))
             {
-                cmbVehicleYear.IsEnabled = false;
+                cmbVehicleModel.IsEnabled = false;
                 cmbVehicleModel.SelectedItem = null;
                 cmbVehicleModel.ItemsSource = null;
 
@@ -558,14 +596,14 @@ namespace NightRiderWPF.Vehicles
         private void FillVehicleModelOptions()
         {
             var models = _vehicleModels.Where(x => x.Make == cmbVehicleMake.SelectedItem.ToString())
-                                       .Select(x => x.Name);
+                                       .Select(x => x.Name).Distinct();
 
             cmbVehicleModel.ItemsSource = models;
 
             if (models.Count() > 1)
             {
-                cmbVehicleYear.SelectedItem = null;
-                cmbVehicleYear.IsEnabled = true;
+                cmbVehicleModel.SelectedItem = null;
+                cmbVehicleModel.IsEnabled = true;
             }
             else
             {
@@ -579,7 +617,7 @@ namespace NightRiderWPF.Vehicles
         private void FillVehicleYearOptions()
         {
             var years = _vehicleModels.Where(x => x.Make == cmbVehicleMake.SelectedItem.ToString() && x.Name == cmbVehicleModel.SelectedItem.ToString())
-                                      .Select(x => x.Year.ToString());
+                                      .Select(x => x.Year.ToString()).Distinct();
 
             cmbVehicleYear.ItemsSource = years;
 
@@ -600,7 +638,7 @@ namespace NightRiderWPF.Vehicles
         private void FillVehicleTypeOptions()
         {
             var type = _vehicleModels.Where(x => x.Make == cmbVehicleMake.SelectedItem.ToString() && x.Name == cmbVehicleModel.SelectedItem.ToString() && x.Year.ToString() == cmbVehicleYear.SelectedItem.ToString())
-                                      .Select(x => x.VehicleTypeID);
+                                      .Select(x => x.VehicleTypeID).Distinct();
 
             cmbVehicleType.ItemsSource = type;
 
@@ -627,8 +665,8 @@ namespace NightRiderWPF.Vehicles
             }
             catch (Exception)
             {
-
-                throw;
+                MessageBox.Show("There was a problem loading work orders.", "Work order error",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
             }
             NavigationService.Navigate(new WorkOrders.ViewWorkOrderList(orders));
         }

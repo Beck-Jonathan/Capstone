@@ -27,7 +27,7 @@
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @*<div class="form-group">
-                @Html.LabelFor(model => model.ChecklistID, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.ChecklistID, htmlAttributes: new { @class = "control-label col-md-12" })
                 <div class="col-md-10">
                     @Html.EditorFor(model => model.ChecklistID, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.ChecklistID, "", new { @class = "text-danger" })
@@ -35,7 +35,7 @@
             </div>*@
 
         @*<div class="form-group">
-                @Html.LabelFor(model => model.EmployeeID, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.EmployeeID, htmlAttributes: new { @class = "control-label col-md-12" })
                 <div class="col-md-10">
                     @Html.EditorFor(model => model.EmployeeID, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.EmployeeID, "", new { @class = "text-danger" })
@@ -43,7 +43,7 @@
             </div>*@
 
         <div class="form-group mt-2">
-            @Html.LabelFor(model => model.EmployeeID, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.EmployeeID, htmlAttributes: new { @class = "control-label col-md-12" })
             <div class="col-md-10">
                 @Html.DisplayFor(model => model.EmployeeID, new { htmlAttributes = new { @class = "form-control" } })
                 @*@Html.DropDownListFor(model => model.EmployeeID,
@@ -55,7 +55,7 @@
         </div>
 
         @*<div class="form-group">
-                @Html.LabelFor(model => model.VIN, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.VIN, htmlAttributes: new { @class = "control-label col-md-12" })
                 <div class="col-md-10">
                     @Html.EditorFor(model => model.VIN, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.VIN, "", new { @class = "text-danger" })
@@ -63,7 +63,7 @@
             </div>*@
 
         <div class="form-group mt-2">
-            @Html.LabelFor(model => model.VIN, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.VIN, htmlAttributes: new { @class = "control-label col-md-12" })
             <div class="col-md-10">
                 @Html.DropDownListFor(model => model.VIN,
                     vehicleList,
@@ -74,7 +74,7 @@
         </div>
 
         <div class="form-group mt-2">
-            @Html.LabelFor(model => model.Mileage, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Mileage, htmlAttributes: new { @class = "control-label col-md-12" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Mileage, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Mileage, "", new { @class = "text-danger" })
@@ -82,7 +82,7 @@
         </div>
 
         @*<div class="form-group">
-                @Html.LabelFor(model => model.FuelLevel, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.FuelLevel, htmlAttributes: new { @class = "control-label col-md-12" })
                 <div class="col-md-10">
                     @Html.EditorFor(model => model.FuelLevel, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.FuelLevel, "", new { @class = "text-danger" })
@@ -90,7 +90,7 @@
             </div>*@
 
         <div class="form-group mt-2">
-            @Html.LabelFor(model => model.FuelLevel, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.FuelLevel, htmlAttributes: new { @class = "control-label col-md-12" })
             <div class="col-md-10">
                 @Html.DropDownListFor(model => model.FuelLevel,
                     fuelLevel,
@@ -101,10 +101,10 @@
         </div>
 
         <div class="row mt-4">
-            <div class="col-2">
+            <div class="col-md-2">
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.Clean, htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.LabelFor(model => model.Clean, htmlAttributes: new { @class = "control-label col-md-12" })
                     <div class="col-md-10">
                         <div class="checkbox">
                             @Html.EditorFor(model => model.Clean)
@@ -114,7 +114,7 @@
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.Pedals, htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.LabelFor(model => model.Pedals, htmlAttributes: new { @class = "control-label col-md-12" })
                     <div class="col-md-10">
                         <div class="checkbox">
                             @Html.EditorFor(model => model.Pedals)
@@ -124,7 +124,7 @@
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.Dash, htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.LabelFor(model => model.Dash, htmlAttributes: new { @class = "control-label col-md-12" })
                     <div class="col-md-10">
                         <div class="checkbox">
                             @Html.EditorFor(model => model.Dash)
@@ -134,7 +134,7 @@
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.Steering, htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.LabelFor(model => model.Steering, htmlAttributes: new { @class = "control-label col-md-12" })
                     <div class="col-md-10">
                         <div class="checkbox">
                             @Html.EditorFor(model => model.Steering)
@@ -144,7 +144,7 @@
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.AC_Heat, htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.LabelFor(model => model.AC_Heat, htmlAttributes: new { @class = "control-label col-md-12" })
                     <div class="col-md-10">
                         <div class="checkbox">
                             @Html.EditorFor(model => model.AC_Heat)
@@ -154,7 +154,7 @@
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.MirrorDS, htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.LabelFor(model => model.MirrorDS, htmlAttributes: new { @class = "control-label col-md-12" })
                     <div class="col-md-10">
                         <div class="checkbox">
                             @Html.EditorFor(model => model.MirrorDS)
@@ -165,7 +165,7 @@
 
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.MirrorPS, htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.LabelFor(model => model.MirrorPS, htmlAttributes: new { @class = "control-label col-md-12" })
                     <div class="col-md-10">
                         <div class="checkbox">
                             @Html.EditorFor(model => model.MirrorPS)
@@ -175,7 +175,7 @@
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.MirrorRV, htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.LabelFor(model => model.MirrorRV, htmlAttributes: new { @class = "control-label col-md-12" })
                     <div class="col-md-10">
                         <div class="checkbox">
                             @Html.EditorFor(model => model.MirrorRV)
@@ -185,10 +185,10 @@
                 </div>
 
             </div> @*End col-2 DIV*@
-            <div class="col-2">
+            <div class="col-md-2">
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.Tire_Pressure_DF, htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.LabelFor(model => model.Tire_Pressure_DF, htmlAttributes: new { @class = "control-label col-md-12" })
                     <div class="col-md-10">
                         <div class="checkbox">
                             @Html.EditorFor(model => model.Tire_Pressure_DF)
@@ -198,7 +198,7 @@
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.Tire_Pressure_PF, htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.LabelFor(model => model.Tire_Pressure_PF, htmlAttributes: new { @class = "control-label col-md-12" })
                     <div class="col-md-10">
                         <div class="checkbox">
                             @Html.EditorFor(model => model.Tire_Pressure_PF)
@@ -208,7 +208,7 @@
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.Tire_Pressure_DR, htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.LabelFor(model => model.Tire_Pressure_DR, htmlAttributes: new { @class = "control-label col-md-12" })
                     <div class="col-md-10">
                         <div class="checkbox">
                             @Html.EditorFor(model => model.Tire_Pressure_DR)
@@ -218,7 +218,7 @@
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.Tire_Pressure_PR, htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.LabelFor(model => model.Tire_Pressure_PR, htmlAttributes: new { @class = "control-label col-md-12" })
                     <div class="col-md-10">
                         <div class="checkbox">
                             @Html.EditorFor(model => model.Tire_Pressure_PR)
@@ -228,7 +228,7 @@
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.Blinker_DF, htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.LabelFor(model => model.Blinker_DF, htmlAttributes: new { @class = "control-label col-md-12" })
                     <div class="col-md-10">
                         <div class="checkbox">
                             @Html.EditorFor(model => model.Blinker_DF)
@@ -238,7 +238,7 @@
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.Blinker_PF, htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.LabelFor(model => model.Blinker_PF, htmlAttributes: new { @class = "control-label col-md-12" })
                     <div class="col-md-10">
                         <div class="checkbox">
                             @Html.EditorFor(model => model.Blinker_PF)
@@ -248,7 +248,7 @@
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.Blinker_DR, htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.LabelFor(model => model.Blinker_DR, htmlAttributes: new { @class = "control-label col-md-12" })
                     <div class="col-md-10">
                         <div class="checkbox">
                             @Html.EditorFor(model => model.Blinker_DR)
@@ -258,7 +258,7 @@
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.Blinker_PR, htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.LabelFor(model => model.Blinker_PR, htmlAttributes: new { @class = "control-label col-md-12" })
                     <div class="col-md-10">
                         <div class="checkbox">
                             @Html.EditorFor(model => model.Blinker_PR)
@@ -268,10 +268,10 @@
                 </div>
 
             </div> @*End col-2 DIV*@
-            <div class="col-2">
+            <div class="col-md-2">
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.Breaklight_DR, htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.LabelFor(model => model.Breaklight_DR, htmlAttributes: new { @class = "control-label col-md-12" })
                     <div class="col-md-10">
                         <div class="checkbox">
                             @Html.EditorFor(model => model.Breaklight_DR)
@@ -281,7 +281,7 @@
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.Breaklight_PR, htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.LabelFor(model => model.Breaklight_PR, htmlAttributes: new { @class = "control-label col-md-12" })
                     <div class="col-md-10">
                         <div class="checkbox">
                             @Html.EditorFor(model => model.Breaklight_PR)
@@ -291,7 +291,7 @@
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.Headlight_Driver, htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.LabelFor(model => model.Headlight_Driver, htmlAttributes: new { @class = "control-label col-md-12" })
                     <div class="col-md-10">
                         <div class="checkbox">
                             @Html.EditorFor(model => model.Headlight_Driver)
@@ -301,7 +301,7 @@
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.Headlight_Passenger, htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.LabelFor(model => model.Headlight_Passenger, htmlAttributes: new { @class = "control-label col-md-12" })
                     <div class="col-md-10">
                         <div class="checkbox">
                             @Html.EditorFor(model => model.Headlight_Passenger)
@@ -311,7 +311,7 @@
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.TailLight_Driver, htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.LabelFor(model => model.TailLight_Driver, htmlAttributes: new { @class = "control-label col-md-12" })
                     <div class="col-md-10">
                         <div class="checkbox">
                             @Html.EditorFor(model => model.TailLight_Driver)
@@ -321,7 +321,7 @@
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.TailLight_Passenger, htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.LabelFor(model => model.TailLight_Passenger, htmlAttributes: new { @class = "control-label col-md-12" })
                     <div class="col-md-10">
                         <div class="checkbox">
                             @Html.EditorFor(model => model.TailLight_Passenger)
@@ -331,10 +331,10 @@
                 </div>
 
             </div> @*End col-2 DIV*@
-            <div class="col-2">
+            <div class="col-md-2">
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.Wiper_Driver, htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.LabelFor(model => model.Wiper_Driver, htmlAttributes: new { @class = "control-label col-md-12" })
                     <div class="col-md-10">
                         <div class="checkbox">
                             @Html.EditorFor(model => model.Wiper_Driver)
@@ -344,7 +344,7 @@
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.Wiper_Passenger, htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.LabelFor(model => model.Wiper_Passenger, htmlAttributes: new { @class = "control-label col-md-12" })
                     <div class="col-md-10">
                         <div class="checkbox">
                             @Html.EditorFor(model => model.Wiper_Passenger)
@@ -354,7 +354,7 @@
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.Wiper_Rear, htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.LabelFor(model => model.Wiper_Rear, htmlAttributes: new { @class = "control-label col-md-12" })
                     <div class="col-md-10">
                         <div class="checkbox">
                             @Html.EditorFor(model => model.Wiper_Rear)
@@ -364,7 +364,7 @@
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.SeatBelts, htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.LabelFor(model => model.SeatBelts, htmlAttributes: new { @class = "control-label col-md-12" })
                     <div class="col-md-10">
                         <div class="checkbox">
                             @Html.EditorFor(model => model.SeatBelts)
@@ -374,7 +374,7 @@
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.FireExtinguisher, htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.LabelFor(model => model.FireExtinguisher, htmlAttributes: new { @class = "control-label col-md-12" })
                     <div class="col-md-10">
                         <div class="checkbox">
                             @Html.EditorFor(model => model.FireExtinguisher)
@@ -384,10 +384,10 @@
                 </div>
 
             </div> @*End col-2 DIV*@
-            <div class="col-2">
+            <div class="col-md-2">
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.Airbags, htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.LabelFor(model => model.Airbags, htmlAttributes: new { @class = "control-label col-md-12" })
                     <div class="col-md-10">
                         <div class="checkbox">
                             @Html.EditorFor(model => model.Airbags)
@@ -397,7 +397,7 @@
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.FirstAid, htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.LabelFor(model => model.FirstAid, htmlAttributes: new { @class = "control-label col-md-12" })
                     <div class="col-md-10">
                         <div class="checkbox">
                             @Html.EditorFor(model => model.FirstAid)
@@ -407,7 +407,7 @@
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.EmergencyKit, htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.LabelFor(model => model.EmergencyKit, htmlAttributes: new { @class = "control-label col-md-12" })
                     <div class="col-md-10">
                         <div class="checkbox">
                             @Html.EditorFor(model => model.EmergencyKit)
@@ -417,7 +417,7 @@
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.Breaks, htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.LabelFor(model => model.Breaks, htmlAttributes: new { @class = "control-label col-md-12" })
                     <div class="col-md-10">
                         <div class="checkbox">
                             @Html.EditorFor(model => model.Breaks)
@@ -427,7 +427,7 @@
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.Accelerator, htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.LabelFor(model => model.Accelerator, htmlAttributes: new { @class = "control-label col-md-12" })
                     <div class="col-md-10">
                         <div class="checkbox">
                             @Html.EditorFor(model => model.Accelerator)
@@ -437,7 +437,7 @@
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.Clutch, htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.LabelFor(model => model.Clutch, htmlAttributes: new { @class = "control-label col-md-12" })
                     <div class="col-md-10">
                         <div class="checkbox">
                             @Html.EditorFor(model => model.Clutch)
@@ -450,7 +450,7 @@
         </div> @*End Row DIV*@
 
         <div class="form-group mt-2">
-            @Html.LabelFor(model => model.Cosmetic, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Cosmetic, htmlAttributes: new { @class = "control-label col-md-12" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Cosmetic, new { htmlAttributes = new { @class = "form-control align-text-top" } })
                 @Html.ValidationMessageFor(model => model.Cosmetic, "", new { @class = "text-danger" })
@@ -458,7 +458,7 @@
         </div>
 
         <div class="form-group mt-2">
-            @Html.LabelFor(model => model.Notes, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Notes, htmlAttributes: new { @class = "control-label col-md-12" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Notes, new { htmlAttributes = new { @class = "form-control align-text-top" } })
                 @Html.ValidationMessageFor(model => model.Notes, "", new { @class = "text-danger" })

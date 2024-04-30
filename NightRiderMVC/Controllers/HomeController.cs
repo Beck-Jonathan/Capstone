@@ -68,7 +68,7 @@ namespace NightRiderMVC.Controllers
         /// </remarks>
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
+            ViewBag.Message = "Kirkwood Community College";
 
             return View();
         }

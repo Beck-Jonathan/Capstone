@@ -43,6 +43,7 @@ namespace NightRiderWPF.PartsRequests
         IPartsRequestsManager _partsRequestManager = null;
         Parts_Request parts_Request = null;
         IVendorManager _vendorManager = null;
+        int i;
 
         /// <summary>
         /// AUTHOR: Everett DeVaux
@@ -138,6 +139,7 @@ namespace NightRiderWPF.PartsRequests
         /// </summary>
         private void btnAddToOrder_Click(object sender, RoutedEventArgs e)
         {
+            
             if (cmbVendors.SelectedIndex == -1)
             {
                 MessageBox.Show("no vendors are selected", "No Vendors", MessageBoxButton.OK, MessageBoxImage.Warning);
@@ -146,6 +148,11 @@ namespace NightRiderWPF.PartsRequests
             else if (txtLineNumber.Text == null)
             {
                 MessageBox.Show("No Line Number Was Provided", "No Line Number", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+            if (txtLineNumber.Text == "" || !int.TryParse(txtLineNumber.Text, out i))
+            {
+                MessageBox.Show("Line Number " + txtLineNumber.Text + " isn't a Number", "Invalid Line Number", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
             else
@@ -157,7 +164,8 @@ namespace NightRiderWPF.PartsRequests
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.InnerException.Message, ex.Message, MessageBoxButton.OK, MessageBoxImage.Error);
+                    
+                    MessageBox.Show("One Input was Invalid", ex.Message, MessageBoxButton.OK, MessageBoxImage.Error);
                 }
                 this.NavigationService.GoBack();
             }

@@ -160,6 +160,22 @@ namespace NightRiderWPF.PurchaseOrders
 
         private void btnAddLineItem_Click(object sender, RoutedEventArgs e)
         {
+            if (!cbxParts_InventoryPart_Name.Text.isNotEmptyOrNull())
+            {
+                MessageBox.Show("Please pick an item");
+                return;
+            }
+
+            if (!tbxPart_Description.Text.isNotEmptyOrNull()) {
+                MessageBox.Show("Please add a description");
+                return;
+            }
+            if (!tbxParts_InventoryPart_Quantity.Text.isNotEmptyOrNull())
+            {
+                MessageBox.Show("Please add a Quantity");
+                return;
+            }
+
             if (cbxParts_InventoryPart_Name.Text.isNotEmptyOrNull()
                 && tbxParts_InventoryPart_Quantity.Text.isNotEmptyOrNull()
                 && tbxPart_Description.Text.isNotEmptyOrNull()
@@ -204,6 +220,10 @@ namespace NightRiderWPF.PurchaseOrders
         /// </summary>
         private void btnDone_Click(object sender, RoutedEventArgs e)
         {
+
+            if (_passed.pOLineItems.Count == 0) {
+                MessageBox.Show("Please add line items");
+            }
             int result = 0;
             try
             {
