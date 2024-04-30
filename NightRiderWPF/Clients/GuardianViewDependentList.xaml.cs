@@ -172,5 +172,17 @@ namespace NightRiderWPF.Clients
         {
 
         }
+
+        private void btnBackButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.NavigationService.CanGoBack)
+            {
+                this.NavigationService.GoBack();
+            }
+            else
+            {
+                MessageBox.Show("No page to go back to.");
+            }
+        }
     }
 }
