@@ -68,16 +68,14 @@ namespace NightRiderWPF.WorkOrders
                 {
                     _serviceOrderManager = new ServiceOrderManager();
                     _serviceOrders = new List<ServiceOrder_VM>(_serviceOrderManager.GetALlServiceOrders());
-                    if (_serviceOrders.Count == 0)
-                    {
-                        return;
-                    }
+                    
 
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Error Occured: " + ex.Message);
+                    return;
                 }
+                
             }
             List<dynamic> dataObjects = new List<dynamic>();
             foreach (ServiceOrder_VM serviceOrder in _serviceOrders)
@@ -142,6 +140,10 @@ namespace NightRiderWPF.WorkOrders
             {
                 //remake the list same as above
                 List<dynamic> dataObjects = new List<dynamic>();
+                if (_serviceOrders == null)
+                {
+                    return;
+                }
                 foreach (ServiceOrder_VM serviceOrder in _serviceOrders)
                 {
                     bool criticalIssue = serviceOrder.Critical_Issue;
@@ -200,6 +202,10 @@ namespace NightRiderWPF.WorkOrders
             {
                 //make a new list based the search box
                 List<dynamic> dataObjects = new List<dynamic>();
+                if (_serviceOrders == null)
+                {
+                    return;
+                }
                 foreach (ServiceOrder_VM serviceOrder in _serviceOrders)
 
                 {
@@ -395,8 +401,9 @@ namespace NightRiderWPF.WorkOrders
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Error Occured: " + ex.Message);
+                    return;
                 }
+                
                 List<dynamic> dataObjects = new List<dynamic>();
                 foreach (ServiceOrder_VM serviceOrder in _serviceOrders)
                 {
@@ -463,8 +470,9 @@ namespace NightRiderWPF.WorkOrders
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Error Occured: " + ex.Message);
+                    return;
                 }
+                
                 List<dynamic> dataObjects = new List<dynamic>();
                 foreach (ServiceOrder_VM serviceOrder in _serviceOrders)
                 {
@@ -530,8 +538,9 @@ namespace NightRiderWPF.WorkOrders
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Error Occured: " + ex.Message);
+                    return;
                 }
+                
                 List<dynamic> dataObjects = new List<dynamic>();
                 foreach (ServiceOrder_VM serviceOrder in _serviceOrders)
                 {
