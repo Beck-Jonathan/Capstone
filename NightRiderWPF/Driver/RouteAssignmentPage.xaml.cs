@@ -92,6 +92,7 @@ namespace NightRiderWPF.Driver
         ///     information on a map, including stops 
         ///     and the driver's current location.
         /// </summary>
+        private bool _errorMessageShown = false;
         private void ShowSelectedRouteOnMap(Route_Assignment_VM route)
         {
             _mapRoute.Children.Clear();
@@ -122,35 +123,50 @@ namespace NightRiderWPF.Driver
                         GeoCoordinateWatcher watcher = new GeoCoordinateWatcher();
                         watcher.PositionChanged += async (sender, e) =>
                         {
-                            var coord = e.Position.Location;
-                            Location systemLocation = new Location(coord.Latitude, coord.Longitude);
-                            systemPushpin.Location = systemLocation;
-                            // Get the route line from Bing Maps API
-                            BingMapsResponse bingMapsResponse = await _routeAssignmentManager.getRouteLineForRouteAssignmentVM(new List<Route_Assignment_VM> { route });
-                            if (bingMapsResponse != null)
+                            try
                             {
-                                // Draw the route polyline on the map
-                                MapPolyline line = new MapPolyline();
-                                line.Locations = new LocationCollection();
-                                line.Stroke = Brushes.Black;
-                                line.StrokeThickness = 2;
-                                // Add Bing Maps route coordinates to the polyline
-                                foreach (var coordinateset in bingMapsResponse.ResourceSets[0].resources[0].routePath.line.coordinates)
+                                var coord = e.Position.Location;
+                                Location systemLocation = new Location(coord.Latitude, coord.Longitude);
+                                systemPushpin.Location = systemLocation;
+                                // Get the route line from Bing Maps API
+                                BingMapsResponse bingMapsResponse = await _routeAssignmentManager.getRouteLineForRouteAssignmentVM(new List<Route_Assignment_VM> { route });
+                                if (bingMapsResponse != null)
                                 {
-                                    line.Locations.Add(new Location(((List<double>)coordinateset)[0], ((List<double>)coordinateset)[1]));
+                                    // Draw the route polyline on the map
+                                    MapPolyline line = new MapPolyline();
+                                    line.Locations = new LocationCollection();
+                                    line.Stroke = Brushes.Black;
+                                    line.StrokeThickness = 2;
+                                    // Add Bing Maps route coordinates to the polyline
+                                    foreach (var coordinateset in bingMapsResponse.ResourceSets[0].resources[0].routePath.line.coordinates)
+                                    {
+                                        line.Locations.Add(new Location(((List<double>)coordinateset)[0], ((List<double>)coordinateset)[1]));
+                                    }
+                                    mapRoute.Children.Add(line);
                                 }
-                                mapRoute.Children.Add(line);
+                                else
+                                {
+                                    MessageBox.Show("Bing Maps response is null.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                                }
                             }
-                            else
+                            catch (Exception ex)
                             {
-                                MessageBox.Show("Bing Maps response is null.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                                if (!_errorMessageShown)
+                                {
+                                    _errorMessageShown = true; 
+                                    MessageBox.Show("An error occurred while fetching route line: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                                }
+                            }
+                            finally
+                            {
+                                _errorMessageShown = false;
                             }
                         };
                         watcher.Start();
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show("Error getting system's location: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        MessageBox.Show("An error occurred while setting up the map: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                 }
             }
