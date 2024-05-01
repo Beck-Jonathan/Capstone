@@ -133,8 +133,8 @@ namespace NightRiderWPF.Vehicles
 
                 dynamic vehicleListDynamic = new
                 {
-                    PropertyOne = VehicleMake,
-                    PropertyTwo = VehicleNumber,
+                    PropertyOne = VehicleNumber,
+                    PropertyTwo = VehicleMake,
                     PropertyThree = VehicleModel,
                     PropertyFour = MaxPassengers,
                     PropertyFive = VehicleMileage,

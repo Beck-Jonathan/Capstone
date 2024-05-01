@@ -270,13 +270,14 @@ namespace DataAccessLayer
                     {
                         output.Add(new Vehicle()
                         {
-                            VehicleMake = reader.GetString(0),
-                            VehicleNumber = reader.GetString(1),
-                            VehicleModelID = reader.GetInt32(2),
-                            MaxPassengers = reader.GetInt32(3),
-                            VehicleMileage = reader.GetInt32(4),
-                            VehicleDescription = reader.GetString(5),
-                            VIN = reader.GetString(9),
+                            VehicleNumber = reader.GetString(0),
+                            VehicleMake = reader.GetString(1),
+                            VehicleModel = reader.GetString(2),
+                            VehicleModelID = reader.GetInt32(3),
+                            MaxPassengers = reader.GetInt32(4),
+                            VehicleMileage = reader.GetInt32(5),
+                            VehicleDescription = reader.GetString(6),
+                            VIN = reader.GetString(10),
                         });
                     }
                 }

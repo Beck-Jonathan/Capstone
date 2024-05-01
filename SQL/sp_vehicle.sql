@@ -51,6 +51,7 @@ BEGIN
     SELECT
         [Vehicle].[Vehicle_Number],
         [Vehicle_Model].[Make],
+        [Vehicle_Model].[Name],
         [Vehicle_Model].[Vehicle_Model_ID],
         [Vehicle_Model].[Max_Passengers],
         [Vehicle].[Vehicle_Mileage],
