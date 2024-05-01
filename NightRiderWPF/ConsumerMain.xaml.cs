@@ -270,10 +270,10 @@ namespace NightRiderWPF
                         btn_profile.Visibility = Visibility.Visible;
                         break;
                     case "Dispatcher":
-                        btnVehicles.Visibility = Visibility.Visible;
                         btnRoutes.Visibility = Visibility.Visible;
-                        btnPartsRequests.Visibility = Visibility.Visible;
                         btn_profile.Visibility = Visibility.Visible;
+                        btnDispatch.Visibility = Visibility.Visible;
+                        
                         break;
                     default: break;
                 }
