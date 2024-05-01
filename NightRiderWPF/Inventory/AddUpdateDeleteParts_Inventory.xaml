@@ -82,8 +82,8 @@
 
         <Button x:Name="btnBack" Grid.Column="9" Grid.Row="12" Content="Back" Height="40px" Margin="0 2" Click="btnBck_Click" />
 
-        <Button x:Name="btnAddUpdateParts_Inventory" Grid.Column="9" Grid.Row="9" Content="Edit " Height="40px" HorizontalAlignment="Left" Width="100" Margin="0 2" Click="btnAddUpdateParts_Inventory_Click" />
-        <Button x:Name="btnOrderParts_Inventory" Grid.Column="9" Grid.Row="7" Content="Order" Height="40px" Margin="0 2"/>
+        <!--<Button x:Name="btnAddUpdateParts_Inventory" Grid.Column="9" Grid.Row="9" Content="Edit " Height="40px" HorizontalAlignment="Left" Width="100" Margin="0 2" Click="btnAddUpdateParts_Inventory_Click" />-->
+        <!--<Button x:Name="btnOrderParts_Inventory" Grid.Column="9" Grid.Row="7" Content="Order" Height="40px" Margin="0 2"/>-->
         
         <Button x:Name="btnRemoveParts_Inventory" Grid.Column="9" Grid.Row="11" Content="Remove" Height="40px" 
                 Margin="0 2"  Click="btnRemoveParts_Inventory_Click" />

@@ -45,7 +45,7 @@ namespace NightRiderWPF.Inventory
             tbxParts_InventoryPart_Quantity.Text = "0";
             tbxParts_InventoryOrdered_Qty.Text = "0";
             tbxParts_InventoryStock_Level.Text = "0";
-            btnAddUpdateParts_Inventory.Content = "Add Part";
+            //btnAddUpdateParts_Inventory.Content = "Add Part";
             lblParts_InventoryParts_Inventory_ID.Visibility = Visibility.Hidden;
             tbxParts_InventoryParts_Inventory_ID.Visibility = Visibility.Hidden;
 
@@ -55,7 +55,7 @@ namespace NightRiderWPF.Inventory
             tbxParts_InventoryItem_Specifications.IsEnabled = true;
             tbxParts_InventoryPart_Photo_URL.IsEnabled = true;
             btnRemoveParts_Inventory.Visibility=Visibility.Hidden;
-            btnOrderParts_Inventory.Visibility=Visibility.Hidden;
+            //btnOrderParts_Inventory.Visibility=Visibility.Hidden;
             tbxParts_InventoryStock_Level.IsEnabled = true;
             tbxParts_Inventory_Unit_Type.IsEnabled = true;
 

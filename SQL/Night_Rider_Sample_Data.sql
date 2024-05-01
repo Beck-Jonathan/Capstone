@@ -227,7 +227,7 @@ INSERT INTO [dbo].[Employee]
 VALUES
 		('John', 'Smith', '2006-11-01',
         '132 Nowhere Ave', 'Suffolk', 'VA', 'USA',
-        '23432', '11575011049', 'John@company.com', 'Mechanic'),
+        '23432', '1575011049', 'John@company.com', 'Mechanic'),
 		('Dylan', 'Linkelvetch', '1953-02-07',
         '158 Real Pl', 'Iowa City', 'IA', 'USA',
         '52245', '3191231234', 'Dylan@company.com', 'Driver'),
@@ -251,7 +251,7 @@ VALUES
         '75751', '5710150113', 'Theseus@company.com', 'PositionName'),
 		('Trisha', 'Hallows', '1988-06-06',
         '132 Nowhere Ave', 'Baton Rouge', 'LA', 'USA',
-        '70801', '22575011049', 'Trisha@company.com', 'PositionName'),
+        '70801', '2257501049', 'Trisha@company.com', 'PositionName'),
 		('Justin', 'Time', '2002-12-25',
         '510 Clock Circle', 'Boulevard', 'CA', 'USA',
         '91905', '5961924091', 'Justin@company.com', 'PositionName')

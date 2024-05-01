@@ -401,7 +401,10 @@ namespace NightRiderWPF.WorkOrders
                 }
                 catch (Exception ex)
                 {
-                    return;
+                    if (ex.GetType() == typeof(ArgumentException))
+                    {
+                        _serviceOrders = new List<ServiceOrder_VM>();
+                    }
                 }
                 
                 List<dynamic> dataObjects = new List<dynamic>();
@@ -432,28 +435,76 @@ namespace NightRiderWPF.WorkOrders
                     dataObjects.Add(myDynamic);
                 }
 
-                mntcViewWorkOrderPendingDg.ItemsSource = dataObjects;
-                mntcViewWorkOrderPendingDg.Columns[0].DisplayIndex = 4;
-                mntcViewWorkOrderPendingDg.Columns[1].DisplayIndex = 4;
-                mntcViewWorkOrderPendingDg.Columns[0].Header = "";
-                mntcViewWorkOrderPendingDg.Columns[0].Width = 120;
-                mntcViewWorkOrderPendingDg.Columns[0].CanUserReorder = false;
-                mntcViewWorkOrderPendingDg.Columns[0].IsReadOnly = true;
-                mntcViewWorkOrderPendingDg.Columns[1].Header = "";
-                mntcViewWorkOrderPendingDg.Columns[1].Width = 127;
-                mntcViewWorkOrderPendingDg.Columns[1].CanUserReorder = false;
-                mntcViewWorkOrderPendingDg.Columns[1].IsReadOnly = true;
-                mntcViewWorkOrderPendingDg.Columns[2].Header = "High Priority";
-                mntcViewWorkOrderPendingDg.Columns[2].Width = 76;
-                mntcViewWorkOrderPendingDg.Columns[2].CanUserReorder = false;
-                mntcViewWorkOrderPendingDg.Columns[2].IsReadOnly = true;
-                mntcViewWorkOrderPendingDg.Columns[3].Header = "Service Type";
-                mntcViewWorkOrderPendingDg.Columns[3].Width = 150;
-                mntcViewWorkOrderPendingDg.Columns[3].CanUserReorder = false;
-                mntcViewWorkOrderPendingDg.Columns[4].Header = "Service Description";
-                mntcViewWorkOrderPendingDg.Columns[4].Width = 236;
-                mntcViewWorkOrderPendingDg.Columns[4].CanUserReorder = false;
+                
 
+                if(dataObjects.Count != 0)
+                {
+                    mntcViewWorkOrderPendingDg.ItemsSource = dataObjects;
+                    mntcViewWorkOrderPendingDg.Columns[0].Visibility = Visibility.Visible;
+                    mntcViewWorkOrderPendingDg.Columns[1].Visibility = Visibility.Hidden;
+                    mntcViewWorkOrderPendingDg.Columns[5].Visibility = Visibility.Hidden;
+                    mntcViewWorkOrderPendingDg.Columns[6].Visibility = Visibility.Hidden;
+                    mntcViewWorkOrderPendingDg.Columns[7].Visibility = Visibility.Hidden;
+                    mntcViewWorkOrderPendingDg.Columns[0].DisplayIndex = 4;
+                    mntcViewWorkOrderPendingDg.Columns[1].DisplayIndex = 4;
+                    mntcViewWorkOrderPendingDg.Columns[0].Header = "";
+                    mntcViewWorkOrderPendingDg.Columns[0].Width = 120;
+                    mntcViewWorkOrderPendingDg.Columns[0].CanUserReorder = false;
+                    mntcViewWorkOrderPendingDg.Columns[0].IsReadOnly = true;
+                    mntcViewWorkOrderPendingDg.Columns[1].Header = "";
+                    mntcViewWorkOrderPendingDg.Columns[1].Width = 127;
+                    mntcViewWorkOrderPendingDg.Columns[1].CanUserReorder = false;
+                    mntcViewWorkOrderPendingDg.Columns[1].IsReadOnly = true;
+                    mntcViewWorkOrderPendingDg.Columns[2].Header = "High Priority";
+                    mntcViewWorkOrderPendingDg.Columns[2].Width = 76;
+                    mntcViewWorkOrderPendingDg.Columns[2].CanUserReorder = false;
+                    mntcViewWorkOrderPendingDg.Columns[2].IsReadOnly = true;
+                    mntcViewWorkOrderPendingDg.Columns[3].Header = "Service Type";
+                    mntcViewWorkOrderPendingDg.Columns[3].Width = 150;
+                    mntcViewWorkOrderPendingDg.Columns[3].CanUserReorder = false;
+                    mntcViewWorkOrderPendingDg.Columns[4].Header = "Service Description";
+                    mntcViewWorkOrderPendingDg.Columns[4].Width = 236;
+                    mntcViewWorkOrderPendingDg.Columns[4].CanUserReorder = false;
+                }
+                else
+                {
+                    dataObjects = new List<dynamic>();
+                    dynamic myDynamic = new
+                    {
+                        PropertyOne = true,
+                        PropertyTwo = "Null",
+                        PropertyThree = "No Complete Service Orders"
+                    };
+                    
+                    dataObjects.Add(myDynamic);
+
+                    mntcViewWorkOrderPendingDg.ItemsSource = dataObjects;
+                    mntcViewWorkOrderPendingDg.Columns[0].Visibility = Visibility.Hidden;
+                    mntcViewWorkOrderPendingDg.Columns[1].Visibility = Visibility.Hidden;
+                    mntcViewWorkOrderPendingDg.Columns[0].DisplayIndex = 4;
+                    mntcViewWorkOrderPendingDg.Columns[1].DisplayIndex = 4;
+                    mntcViewWorkOrderPendingDg.Columns[0].Header = "";
+                    mntcViewWorkOrderPendingDg.Columns[0].Width = 120;
+                    mntcViewWorkOrderPendingDg.Columns[0].CanUserReorder = false;
+                    mntcViewWorkOrderPendingDg.Columns[0].IsReadOnly = true;
+                    mntcViewWorkOrderPendingDg.Columns[1].Header = "";
+                    mntcViewWorkOrderPendingDg.Columns[1].Width = 127;
+                    mntcViewWorkOrderPendingDg.Columns[1].CanUserReorder = false;
+                    mntcViewWorkOrderPendingDg.Columns[1].IsReadOnly = true;
+                    mntcViewWorkOrderPendingDg.Columns[2].Header = "High Priority";
+                    mntcViewWorkOrderPendingDg.Columns[2].Width = 76;
+                    mntcViewWorkOrderPendingDg.Columns[2].CanUserReorder = false;
+                    mntcViewWorkOrderPendingDg.Columns[2].IsReadOnly = true;
+                    mntcViewWorkOrderPendingDg.Columns[3].Header = "Service Type";
+                    mntcViewWorkOrderPendingDg.Columns[3].Width = 150;
+                    mntcViewWorkOrderPendingDg.Columns[3].CanUserReorder = false;
+                    mntcViewWorkOrderPendingDg.Columns[4].Header = "Service Description";
+                    mntcViewWorkOrderPendingDg.Columns[4].Width = 236;
+                    mntcViewWorkOrderPendingDg.Columns[4].CanUserReorder = false;
+
+                }
+                
+                mntcViewWorkOrderPendingDg.Items.Refresh();
             }
             else if (selectedValue == "Incomplete")
             {
@@ -470,7 +521,10 @@ namespace NightRiderWPF.WorkOrders
                 }
                 catch (Exception ex)
                 {
-                    return;
+                    if (ex.GetType() == typeof(ArgumentException))
+                    {
+                        _serviceOrders = new List<ServiceOrder_VM>();
+                    }
                 }
                 
                 List<dynamic> dataObjects = new List<dynamic>();
@@ -501,27 +555,74 @@ namespace NightRiderWPF.WorkOrders
                     dataObjects.Add(myDynamic);
                 }
 
-                mntcViewWorkOrderPendingDg.ItemsSource = dataObjects;
-                mntcViewWorkOrderPendingDg.Columns[0].DisplayIndex = 4;
-                mntcViewWorkOrderPendingDg.Columns[1].DisplayIndex = 4;
-                mntcViewWorkOrderPendingDg.Columns[0].Header = "";
-                mntcViewWorkOrderPendingDg.Columns[0].Width = 120;
-                mntcViewWorkOrderPendingDg.Columns[0].CanUserReorder = false;
-                mntcViewWorkOrderPendingDg.Columns[0].IsReadOnly = true;
-                mntcViewWorkOrderPendingDg.Columns[1].Header = "";
-                mntcViewWorkOrderPendingDg.Columns[1].Width = 127;
-                mntcViewWorkOrderPendingDg.Columns[1].CanUserReorder = false;
-                mntcViewWorkOrderPendingDg.Columns[1].IsReadOnly = true;
-                mntcViewWorkOrderPendingDg.Columns[2].Header = "High Priority";
-                mntcViewWorkOrderPendingDg.Columns[2].Width = 76;
-                mntcViewWorkOrderPendingDg.Columns[2].CanUserReorder = false;
-                mntcViewWorkOrderPendingDg.Columns[2].IsReadOnly = true;
-                mntcViewWorkOrderPendingDg.Columns[3].Header = "Service Type";
-                mntcViewWorkOrderPendingDg.Columns[3].Width = 150;
-                mntcViewWorkOrderPendingDg.Columns[3].CanUserReorder = false;
-                mntcViewWorkOrderPendingDg.Columns[4].Header = "Service Description";
-                mntcViewWorkOrderPendingDg.Columns[4].Width = 236;
-                mntcViewWorkOrderPendingDg.Columns[4].CanUserReorder = false;
+                if (dataObjects.Count != 0)
+                {
+                    mntcViewWorkOrderPendingDg.ItemsSource = dataObjects;
+                    mntcViewWorkOrderPendingDg.Columns[0].Visibility = Visibility.Visible;
+                    mntcViewWorkOrderPendingDg.Columns[1].Visibility = Visibility.Visible;
+                    mntcViewWorkOrderPendingDg.Columns[5].Visibility = Visibility.Hidden;
+                    mntcViewWorkOrderPendingDg.Columns[6].Visibility = Visibility.Hidden;
+                    mntcViewWorkOrderPendingDg.Columns[7].Visibility = Visibility.Hidden;
+                    mntcViewWorkOrderPendingDg.Columns[0].DisplayIndex = 4;
+                    mntcViewWorkOrderPendingDg.Columns[1].DisplayIndex = 4;
+                    mntcViewWorkOrderPendingDg.Columns[0].Header = "";
+                    mntcViewWorkOrderPendingDg.Columns[0].Width = 120;
+                    mntcViewWorkOrderPendingDg.Columns[0].CanUserReorder = false;
+                    mntcViewWorkOrderPendingDg.Columns[0].IsReadOnly = true;
+                    mntcViewWorkOrderPendingDg.Columns[1].Header = "";
+                    mntcViewWorkOrderPendingDg.Columns[1].Width = 127;
+                    mntcViewWorkOrderPendingDg.Columns[1].CanUserReorder = false;
+                    mntcViewWorkOrderPendingDg.Columns[1].IsReadOnly = true;
+                    mntcViewWorkOrderPendingDg.Columns[2].Header = "High Priority";
+                    mntcViewWorkOrderPendingDg.Columns[2].Width = 76;
+                    mntcViewWorkOrderPendingDg.Columns[2].CanUserReorder = false;
+                    mntcViewWorkOrderPendingDg.Columns[2].IsReadOnly = true;
+                    mntcViewWorkOrderPendingDg.Columns[3].Header = "Service Type";
+                    mntcViewWorkOrderPendingDg.Columns[3].Width = 150;
+                    mntcViewWorkOrderPendingDg.Columns[3].CanUserReorder = false;
+                    mntcViewWorkOrderPendingDg.Columns[4].Header = "Service Description";
+                    mntcViewWorkOrderPendingDg.Columns[4].Width = 236;
+                    mntcViewWorkOrderPendingDg.Columns[4].CanUserReorder = false;
+                }
+                else
+                {
+                    dataObjects = new List<dynamic>();
+                    dynamic myDynamic = new
+                    {
+                        PropertyOne = true,
+                        PropertyTwo = "Null",
+                        PropertyThree = "No Incomplete Service Orders"
+                    };
+
+                    dataObjects.Add(myDynamic);
+
+                    mntcViewWorkOrderPendingDg.ItemsSource = dataObjects;
+                    mntcViewWorkOrderPendingDg.Columns[0].Visibility = Visibility.Hidden;
+                    mntcViewWorkOrderPendingDg.Columns[1].Visibility = Visibility.Hidden;
+                    mntcViewWorkOrderPendingDg.Columns[0].DisplayIndex = 4;
+                    mntcViewWorkOrderPendingDg.Columns[1].DisplayIndex = 4;
+                    mntcViewWorkOrderPendingDg.Columns[0].Header = "";
+                    mntcViewWorkOrderPendingDg.Columns[0].Width = 120;
+                    mntcViewWorkOrderPendingDg.Columns[0].CanUserReorder = false;
+                    mntcViewWorkOrderPendingDg.Columns[0].IsReadOnly = true;
+                    mntcViewWorkOrderPendingDg.Columns[1].Header = "";
+                    mntcViewWorkOrderPendingDg.Columns[1].Width = 127;
+                    mntcViewWorkOrderPendingDg.Columns[1].CanUserReorder = false;
+                    mntcViewWorkOrderPendingDg.Columns[1].IsReadOnly = true;
+                    mntcViewWorkOrderPendingDg.Columns[2].Header = "High Priority";
+                    mntcViewWorkOrderPendingDg.Columns[2].Width = 76;
+                    mntcViewWorkOrderPendingDg.Columns[2].CanUserReorder = false;
+                    mntcViewWorkOrderPendingDg.Columns[2].IsReadOnly = true;
+                    mntcViewWorkOrderPendingDg.Columns[3].Header = "Service Type";
+                    mntcViewWorkOrderPendingDg.Columns[3].Width = 150;
+                    mntcViewWorkOrderPendingDg.Columns[3].CanUserReorder = false;
+                    mntcViewWorkOrderPendingDg.Columns[4].Header = "Service Description";
+                    mntcViewWorkOrderPendingDg.Columns[4].Width = 236;
+                    mntcViewWorkOrderPendingDg.Columns[4].CanUserReorder = false;
+
+                }
+
+                mntcViewWorkOrderPendingDg.Items.Refresh();
             }
             else
             {
@@ -538,7 +639,10 @@ namespace NightRiderWPF.WorkOrders
                 }
                 catch (Exception ex)
                 {
-                    return;
+                    if (ex.GetType() == typeof(ArgumentException))
+                    {
+                        _serviceOrders = new List<ServiceOrder_VM>();
+                    }
                 }
                 
                 List<dynamic> dataObjects = new List<dynamic>();
@@ -570,28 +674,76 @@ namespace NightRiderWPF.WorkOrders
                 }
 
 
-                mntcViewWorkOrderPendingDg.ItemsSource = dataObjects;
-                mntcViewWorkOrderPendingDg.Columns[0].DisplayIndex = 4;
-                mntcViewWorkOrderPendingDg.Columns[1].DisplayIndex = 4;
-                mntcViewWorkOrderPendingDg.Columns[0].Header = "";
-                mntcViewWorkOrderPendingDg.Columns[0].Width = 120;
-                mntcViewWorkOrderPendingDg.Columns[0].CanUserReorder = false;
-                mntcViewWorkOrderPendingDg.Columns[0].IsReadOnly = true;
-                mntcViewWorkOrderPendingDg.Columns[1].Header = "";
-                mntcViewWorkOrderPendingDg.Columns[1].Width = 127;
-                mntcViewWorkOrderPendingDg.Columns[1].CanUserReorder = false;
-                mntcViewWorkOrderPendingDg.Columns[1].IsReadOnly = true;
-                mntcViewWorkOrderPendingDg.Columns[2].Header = "High Priority";
-                mntcViewWorkOrderPendingDg.Columns[2].Width = 76;
-                mntcViewWorkOrderPendingDg.Columns[2].CanUserReorder = false;
-                mntcViewWorkOrderPendingDg.Columns[2].IsReadOnly = true;
-                mntcViewWorkOrderPendingDg.Columns[3].Header = "Service Type";
-                mntcViewWorkOrderPendingDg.Columns[3].Width = 150;
-                mntcViewWorkOrderPendingDg.Columns[3].CanUserReorder = false;
-                mntcViewWorkOrderPendingDg.Columns[4].Header = "Service Description";
-                mntcViewWorkOrderPendingDg.Columns[4].Width = 236;
-                mntcViewWorkOrderPendingDg.Columns[4].CanUserReorder = false;
+                if (dataObjects.Count != 0)
+                {
+                    mntcViewWorkOrderPendingDg.ItemsSource = dataObjects;
+                    mntcViewWorkOrderPendingDg.Columns[0].Visibility = Visibility.Visible;
+                    mntcViewWorkOrderPendingDg.Columns[1].Visibility = Visibility.Visible;
+                    mntcViewWorkOrderPendingDg.Columns[5].Visibility = Visibility.Hidden;
+                    mntcViewWorkOrderPendingDg.Columns[6].Visibility = Visibility.Hidden;
+                    mntcViewWorkOrderPendingDg.Columns[7].Visibility = Visibility.Hidden;
+                    mntcViewWorkOrderPendingDg.Columns[0].DisplayIndex = 4;
+                    mntcViewWorkOrderPendingDg.Columns[1].DisplayIndex = 4;
+                    mntcViewWorkOrderPendingDg.Columns[0].Header = "";
+                    mntcViewWorkOrderPendingDg.Columns[0].Width = 120;
+                    mntcViewWorkOrderPendingDg.Columns[0].CanUserReorder = false;
+                    mntcViewWorkOrderPendingDg.Columns[0].IsReadOnly = true;
+                    mntcViewWorkOrderPendingDg.Columns[1].Header = "";
+                    mntcViewWorkOrderPendingDg.Columns[1].Width = 127;
+                    mntcViewWorkOrderPendingDg.Columns[1].CanUserReorder = false;
+                    mntcViewWorkOrderPendingDg.Columns[1].IsReadOnly = true;
+                    mntcViewWorkOrderPendingDg.Columns[2].Header = "High Priority";
+                    mntcViewWorkOrderPendingDg.Columns[2].Width = 76;
+                    mntcViewWorkOrderPendingDg.Columns[2].CanUserReorder = false;
+                    mntcViewWorkOrderPendingDg.Columns[2].IsReadOnly = true;
+                    mntcViewWorkOrderPendingDg.Columns[3].Header = "Service Type";
+                    mntcViewWorkOrderPendingDg.Columns[3].Width = 150;
+                    mntcViewWorkOrderPendingDg.Columns[3].CanUserReorder = false;
+                    mntcViewWorkOrderPendingDg.Columns[4].Header = "Service Description";
+                    mntcViewWorkOrderPendingDg.Columns[4].Width = 236;
+                    mntcViewWorkOrderPendingDg.Columns[4].CanUserReorder = false;
+                }
+                else
+                {
+                    dataObjects = new List<dynamic>();
+                    dynamic myDynamic = new
+                    {
+                        PropertyOne = true,
+                        PropertyTwo = "Null",
+                        PropertyThree = "No Complete Service Orders"
+                    };
+
+                    dataObjects.Add(myDynamic);
+
+                    mntcViewWorkOrderPendingDg.ItemsSource = dataObjects;
+                    mntcViewWorkOrderPendingDg.Columns[0].Visibility = Visibility.Hidden;
+                    mntcViewWorkOrderPendingDg.Columns[1].Visibility = Visibility.Hidden;
+                    mntcViewWorkOrderPendingDg.Columns[0].DisplayIndex = 4;
+                    mntcViewWorkOrderPendingDg.Columns[1].DisplayIndex = 4;
+                    mntcViewWorkOrderPendingDg.Columns[0].Header = "";
+                    mntcViewWorkOrderPendingDg.Columns[0].Width = 120;
+                    mntcViewWorkOrderPendingDg.Columns[0].CanUserReorder = false;
+                    mntcViewWorkOrderPendingDg.Columns[0].IsReadOnly = true;
+                    mntcViewWorkOrderPendingDg.Columns[1].Header = "";
+                    mntcViewWorkOrderPendingDg.Columns[1].Width = 127;
+                    mntcViewWorkOrderPendingDg.Columns[1].CanUserReorder = false;
+                    mntcViewWorkOrderPendingDg.Columns[1].IsReadOnly = true;
+                    mntcViewWorkOrderPendingDg.Columns[2].Header = "High Priority";
+                    mntcViewWorkOrderPendingDg.Columns[2].Width = 76;
+                    mntcViewWorkOrderPendingDg.Columns[2].CanUserReorder = false;
+                    mntcViewWorkOrderPendingDg.Columns[2].IsReadOnly = true;
+                    mntcViewWorkOrderPendingDg.Columns[3].Header = "Service Type";
+                    mntcViewWorkOrderPendingDg.Columns[3].Width = 150;
+                    mntcViewWorkOrderPendingDg.Columns[3].CanUserReorder = false;
+                    mntcViewWorkOrderPendingDg.Columns[4].Header = "Service Description";
+                    mntcViewWorkOrderPendingDg.Columns[4].Width = 236;
+                    mntcViewWorkOrderPendingDg.Columns[4].CanUserReorder = false;
+
+                }
+
+                mntcViewWorkOrderPendingDg.Items.Refresh();
             }
+
         }
 
         private void VehicleListbtn_Click(object sender, RoutedEventArgs e)

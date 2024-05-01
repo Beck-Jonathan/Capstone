@@ -54,7 +54,7 @@
 
 
         <Button x:Name="btnBack" Grid.Column="2" Grid.Row="4" Content="Back" Click="btnBack_Click"></Button>
-        <Button x:Name="btnArchivelist" Grid.Column="6" Grid.Row="4" Content="Archive List"></Button>
+        <!--<Button x:Name="btnArchivelist" Grid.Column="6" Grid.Row="4" Content="Archive List"></Button>-->
         <Button x:Name="btnViewVendors" Grid.Column="7" Grid.Row="4" Content="View Vendors" Click="btnViewVendors_Click"></Button>
         <Button x:Name="btnOrders" Grid.Column="3" Grid.Row="4" Content="Orders" Click="btnOrders_Click"></Button>
     </Grid>
