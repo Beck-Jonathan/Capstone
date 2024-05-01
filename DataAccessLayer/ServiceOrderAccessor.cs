@@ -62,7 +62,7 @@ namespace DataAccessLayer
             List<ServiceOrder_VM> serviceOrders = new List<ServiceOrder_VM>();
 
             var conn = DBConnectionProvider.GetConnection();
-            var cmdText = "sp_select_all_active_service_orders";
+            var cmdText = "sp_select_all_service_orders";
             var cmd = new SqlCommand(cmdText, conn);
             cmd.CommandType = CommandType.StoredProcedure;
 

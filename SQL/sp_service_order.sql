@@ -9,9 +9,9 @@ Create sp_select_all_active_service_orders Stored Procedure
 -- Last Modified: Ben Collins
 -- Modification Description: Initial Creation
 -- Stored Procedure Description: Select all active Service_Order records
-print '' print '*** creating sp_select_all_active_service_orders ***'
+print '' print '*** creating sp_select_all_service_orders ***'
 GO
-CREATE PROCEDURE [dbo].[sp_select_all_active_service_orders]
+CREATE PROCEDURE [dbo].[sp_select_all_service_orders]
 AS 
     BEGIN
         SELECT  [Service_Order].[VIN],
@@ -21,7 +21,6 @@ AS
                 [Service_Type].[Service_Description]
         FROM   [dbo].[Service_Order]
         INNER JOIN [dbo].[Service_Type] ON [Service_Order].[Service_Type_ID] = [Service_Type].[Service_Type_ID]
-        WHERE [Service_Order].[Is_Active] = 1
     END;
 GO
 
@@ -216,7 +215,6 @@ AS
         FROM   [dbo].[Service_Order]
         INNER JOIN [dbo].[Service_Type] ON [Service_Order].[Service_Type_ID] = [Service_Type].[Service_Type_ID]
         WHERE [Service_Order].[Is_Active] = 1
-			AND [Service_Order].[Date_Finished] is null
     END;
 GO
 
@@ -234,8 +232,7 @@ AS
                 [Service_Type].[Service_Description]
         FROM   [dbo].[Service_Order]
         INNER JOIN [dbo].[Service_Type] ON [Service_Order].[Service_Type_ID] = [Service_Type].[Service_Type_ID]
-        WHERE [Service_Order].[Is_Active] = 1
-			AND [Service_Order].[Date_Finished] is not null
+        WHERE [Service_Order].[Is_Active] = 0
     END;
 GO
 
