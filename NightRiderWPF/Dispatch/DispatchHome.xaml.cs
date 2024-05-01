@@ -107,11 +107,11 @@ namespace NightRiderWPF
             dateAssignmnetEnd.DisplayDateStart = DateTime.Today;
             btnSubmit.IsEnabled = false;
             hideUI();
-            if(gridToDisplay == "Update Assignment")
+            if (gridToDisplay == "Update Assignment")
             {
                 gridRouteAssignments.Visibility = Visibility.Visible;
             }
-            if(gridToDisplay == "Create Assignment")
+            if (gridToDisplay == "Create Assignment")
             {
                 gridAddToRoute.Visibility = Visibility.Visible;
             }
@@ -684,8 +684,15 @@ namespace NightRiderWPF
             //query database for driver and vehicle model information
             try
             {
-                _selectedDriver = _assignmentManager.GetRouteAssignmentDriverByAssignmentID(_selectedAssignment.Assignment_ID);
-                _selectedVehicle = _vehicleModelManager.GetVehicleModelByVIN(_selectedVIN);
+                if (dataRouteAssignment.SelectedItem != null)
+                {
+                    _selectedDriver = _assignmentManager.GetRouteAssignmentDriverByAssignmentID(_selectedAssignment.Assignment_ID);
+                    _selectedVehicle = _vehicleModelManager.GetVehicleModelByVIN(_selectedVIN);
+                }
+                else
+                {
+                    return;
+                }
             }
             catch (Exception ex)
             {
@@ -811,10 +818,13 @@ namespace NightRiderWPF
             {
                 selectedDriver = dataRouteAssignmentDriverUpdate.SelectedItem as DriverClass;
                 //If selected driver's license prevents them from driving the currently assigned vehicle, prompt user
-                if (selectedDriver.Max_Passenger_Count < _selectedVehicle.MaxPassengers)
+                if (dataRouteAssignmentDriverUpdate.SelectedItem != null)
                 {
-                    MessageBox.Show("This driver can not operate the currently assigned vehicle due to license restrictions.");
-                    return;
+                    if (selectedDriver.Max_Passenger_Count < _selectedVehicle.MaxPassengers)
+                    {
+                        MessageBox.Show("This driver can not operate the currently assigned vehicle due to license restrictions.");
+                        return;
+                    }
                 }
             }
             catch (Exception ex)
@@ -875,11 +885,14 @@ namespace NightRiderWPF
             try
             {
                 vehicleAssignment = dataRouteAssignmentVehicleUpdate.SelectedItem as VehicleAssignment;
-                //if the selected vehicle can not be driven by driver due to license class limitations, prompt user
-                if (vehicleAssignment.Max_Passengers > _selectedDriver.Max_Passenger_Count)
+                if (dataRouteAssignmentVehicleUpdate.SelectedItem != null)
                 {
-                    MessageBox.Show("Assigned driver does not have the license priviledges to operate this vehicle.");
-                    return;
+                    //if the selected vehicle can not be driven by driver due to license class limitations, prompt user
+                    if (vehicleAssignment.Max_Passengers > _selectedDriver.Max_Passenger_Count)
+                    {
+                        MessageBox.Show("Assigned driver does not have the license priviledges to operate this vehicle.");
+                        return;
+                    }
                 }
             }
             catch (Exception ex)
