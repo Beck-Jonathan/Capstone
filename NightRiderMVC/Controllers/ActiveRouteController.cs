@@ -1,4 +1,5 @@
 ﻿using DataObjects.RouteObjects;
+using DataObjects.HelperObjects;
 using DataObjects;
 using LogicLayer.RouteAssignment;
 using LogicLayer.RouteStop;
@@ -8,9 +9,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Routing;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.AspNet.Identity;
+using Microsoft.Maps.MapControl.WPF;
 using NightRiderMVC.Models;
+using Newtonsoft.Json;
+using System.Configuration;
 
 namespace NightRiderMVC.Controllers
 {
@@ -23,6 +28,7 @@ namespace NightRiderMVC.Controllers
         IVehicleManager _vehicleManager = new VehicleManager();
         int _currentUserID = 0;
         ActiveRoute _activeRoute = null;
+        private string BingMapsKey = ConfigurationManager.AppSettings["BingMapsKey"];
 
         // GET: ActiveRoute
         public ActionResult Index()
@@ -33,7 +39,8 @@ namespace NightRiderMVC.Controllers
                 ViewBag.user = System.Web.HttpContext.Current.User.Identity.GetUserId();
                 ApplicationUserManager userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
                 ApplicationUser user = userManager.FindById(System.Web.HttpContext.Current.User.Identity.GetUserId());
-                if(user.EmployeeID != null) { 
+                if (user.EmployeeID != null)
+                {
                     _currentUserID = (int)user.EmployeeID;
                 }
                 else
@@ -46,7 +53,7 @@ namespace NightRiderMVC.Controllers
             {
                 return View();
             }
-            
+
             // Get list of assigned routes
             IEnumerable<Route_Assignment_VM> routes = _routeAssignmentManager.GetAllRouteAssignmentByDriverID(_currentUserID);
             List<Route_Assignment> routeAssignements = new List<Route_Assignment>();
@@ -59,6 +66,8 @@ namespace NightRiderMVC.Controllers
                 //    routeAssignements.Add(tempRoute);
                 //}
             }
+
+            Session["routes"] = routes;
 
             ViewBag.RoutesVM = routes;
             ViewBag.DriverID = _currentUserID;
@@ -78,7 +87,7 @@ namespace NightRiderMVC.Controllers
                 List<SelectListItem> vehicleList = new List<SelectListItem>();
                 foreach (var vehicle in _vehicleManager.VehicleLookupList())
                 {
-                    vehicleList.Add(new SelectListItem() { Text = vehicle.VehicleMake, Value = vehicle.VIN });
+                    vehicleList.Add(new SelectListItem() { Text = vehicle.VehicleNumber, Value = vehicle.VIN });
                 }
                 ViewBag.VehicleList = vehicleList;
             }
@@ -96,6 +105,7 @@ namespace NightRiderMVC.Controllers
             // RouteVM route = null;
             try
             {
+                Session["routeID"] = routeID;
                 // display the route to start
                 // route = _routeManager.getRouteById(routeID);
 
@@ -159,12 +169,32 @@ namespace NightRiderMVC.Controllers
         // GET: ActiveRoute/Edit/5
         public ActionResult Edit()
         {
-            // TODO: Display route information
-            ActiveRoute activeRoute = (ActiveRoute)Session["activeRoute"];
-            // RouteVM routeVM = (RouteVM)Session["route"];
+            try
+            {
+                ViewBag.BingMapsKey = BingMapsKey;
+                // TODO: Display route information
+                ActiveRoute activeRoute = (ActiveRoute)Session["activeRoute"];
+                IEnumerable<Route_Assignment_VM> routes = (IEnumerable<Route_Assignment_VM>)Session["routes"];
+                //int routeID = routes.Where(r => r.Assignment_ID == activeRoute.AssignmentID).Select(s => s.Route_ID).First();
+                int routeID = (int)Session["routeID"];
+                // RouteVM routeVM = (RouteVM)Session["route"];
+                RouteVM route = _routeManager.GetRoutesWithStops().Where(s => s.RouteId == routeID).First();
+                IEnumerable<RouteVM> routsForMap = _routeManager.GetRoutesWithStops();
 
-            // TODO: End route, redirect to checklist
-            return View();
+                ViewBag.RouteName = route.RouteName;
+                ViewBag.RouteID = routeID;
+                ViewBag.StartTime = route.StartTime;
+                ViewBag.EndTime = route.EndTime;
+                ViewBag.RepeatTime = route.RepeatTime;
+
+                ViewBag.RoutesData = JsonConvert.SerializeObject(routsForMap, Formatting.None);
+                // TODO: End route, redirect to checklist
+                return View(route);
+            }
+            catch
+            {
+                return View();
+            }
         }
 
         // POST: ActiveRoute/Edit/5

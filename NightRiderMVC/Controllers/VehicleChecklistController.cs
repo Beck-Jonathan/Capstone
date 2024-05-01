@@ -62,7 +62,7 @@ namespace NightRiderMVC.Controllers
                 List<SelectListItem> vehicleList = new List<SelectListItem>();
                 foreach (var vehicle in _vehicleManager.VehicleLookupList())
                 {
-                    vehicleList.Add(new SelectListItem() { Text = vehicle.VehicleMake, Value = vehicle.VIN });
+                    vehicleList.Add(new SelectListItem() { Text = vehicle.VehicleNumber, Value = vehicle.VIN });
                 }
                 ViewBag.VehicleList = vehicleList;
 
